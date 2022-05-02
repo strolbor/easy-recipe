@@ -1,0 +1,3 @@
+  119  sphinx-quickstart 
+  124  sphinx-apidoc -o . ..
+  125  make html
