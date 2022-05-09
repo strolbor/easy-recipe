@@ -4,4 +4,4 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
-from app import routesbackend, routesfrontend
+from app import routesbackend, routesfrontend, routesdownload
