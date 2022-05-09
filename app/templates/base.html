@@ -1,4 +1,17 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}
+    {% if title %} {{title}} {% else %}Easy Recipe {% endif %}
+
+{% endblock %}
+
+{% block navbar %}
+    <h1>Hallo Welt - ich bin eine Navbar</h1>
+{% endblock %}
+
+{% block content %}
+    {% block app_content %}
+
+
+    {% endblock %}
+{% endblock %}
