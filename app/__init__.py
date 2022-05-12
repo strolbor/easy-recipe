@@ -10,4 +10,4 @@ app.config["MYSQL_PASSWORD"] = 'gha@LfJYQBfYU1Q'
 app.config["MYSQL_DB"] = 'db242501x3347116'
 
 
-from app import routesbackend, routesfrontend, routesdownload
+from app import routesbackend, routesfrontend, routesdownload, forms

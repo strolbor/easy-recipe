@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <html><head>
 {% block title %}
     <title>{% if title %} {{title}} {% else %}Easy Recipe {% endif %}</title>
@@ -5,42 +6,62 @@
 {% endblock %}
 </head>
 <body>
-{% block navbar %} 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <a class="navbar-brand" href="#">Easy-Recipe</a>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav> -->
-  Home-Site
-{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    {% block app_content %}{% endblock %}
+    {% block app_content %}
+    
+    <style>
+        .table th.middle {
+            width: 90px;
+        }
+        .table input {
+            margin: 5px 10px;
+            
+        }
+        .table td.eingabe {
+            width: 300px;
+        }
+        .table td.submit {
+            padding: 5px;
+        }
+        .save {
+            margin-left: 10px;
+        }
+        
+        .table td.buttons {
+            align-content: center;
+            vertical-align: middle;
+        }
+    </style>
+
+
+    <form action="" method="post" novalidate>
+        <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th>Eingabe</th>
+                <th class="middle">Auswahl</th>
+                <th>Auswaehlen</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td class="eingabe">eingeben</td>
+                  <td class="buttons">Pfeile</td>
+                  <td class="eingabe">ausgewaehlt</td>
+                </tr>
+                <tr>
+                    <td class="save">Speichern</td>
+                    <td></td>
+                    <td class="right">Auswahl loeschen</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    
+    
+    {% endblock %}
 </div>
 {% endblock %}
 </body></html>
