@@ -23,7 +23,8 @@ def home():
 
     # Konfig Datei öffnen im Lese Modus
     # Zum zeigen, das es gepeichert wurden ist
-    if form.submit.data == False and form.submit2.data == False and form.submit3.data == False:
+
+    '''if form.submit.data == False and form.submit2.data == False and form.submit3.data == False:
         print("Erster Aufruf")
         try:
             choices_array = []
@@ -117,5 +118,6 @@ def home():
         else:
             flash("Don't hack this!")
             #return redirect(url_for('change_swip_swap', name=name))
+            '''
 
-    return render_template(home_html, title="Home")
+    return render_template(home_html, title="Home", form=form)
