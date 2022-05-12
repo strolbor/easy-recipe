@@ -14,58 +14,75 @@ home_html = "home.html"
 def home():
     global choices_array
     form = forms.d_felder()
-    if form.submit.data == False and form.submit2.data == False and form.submit3.data == False:
-        pass
+    form.selected.choices = choices_array.copy()
+    if form.errors:
+        for error_field, error_message in form.errors.iteritems():
+            print(error_field,error_message)
     if form.validate_on_submit():
-        if form.submit.data:
-            # -> neue Datem speichern
-            # Dateien löschen und öffnen
-            pass
-        elif form.submit2.data:
+        print("validate")
+        ver = form.eingabe.data
+        eingabe = form.selected.data
+        if form.submit2.data:
+            print("submit2")
             # Item soll hinzugefügt werden
-
-            # Choices werden hart kopiert
-            old_choices = form.selected.choices.copy()
-
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
-            for entry in form.ein.data.copy():
-                old_choices.append([entry,entry])
+            for entry in ver.copy():
+                choices_array.append([entry,entry])
             
             # Neue List wird kopiert in die Liste
-            form.selected.choices = old_choices.copy()
-            choices_array = old_choices.copy()
-
-            if len(ver) == 0:
-                flash(c.INPUT_ERROR)
-            else:
-                flash(c.SUC_ADD)
-            # neues Template an Client senden
-            form.ein.data = []
-            form.selected.data = []
-            return render_template(home_html,form=form,label=title)
-        elif form.submit3.data:
-            # Item soll aus choices entfernt werden
-
-            # Aktuelle Auswahl kopieren
-            array = form.selected.choices.copy()
-            # Was wir entfernen wollen, kopieren
-            to_delete = form.selected.data.copy()
-            for entry in to_delete:
-                array.remove([entry,entry])
-            form.selected.choices = array.copy()
-            choices_array = array.copy()
-
-            if len(eing) == 0:
+            form.selected.choices = choices_array.copy()
+            
+            if len(form.eingabe.data) == 0:
                 flash("Input error")
             else:
                 flash("Success")
-            form.ein.data = []
+            # neues Template an Client senden
+            form.eingabe.data = []
             form.selected.data = []
-            return render_template(home_html,form=form,label=title)
-        elif form.submit4.data:
-            pass
+            
+            return render_template(home_html,form=form)
+        
+        if form.submit3.data:
+            print("submit3")
+            # Item soll aus choices entfernt werden
+
+            # Aktuelle Auswahl kopieren
+            form.selected.choices = choices_array.copy()
+            array = choices_array.copy()
+            print(array)
+            # Was wir entfernen wollen, kopieren
+            to_delete = form.selected.data.copy()
+            print(to_delete)
+            for entry in to_delete:
+                array.remove([entry,entry])
+            print(array)
+            form.selected.choices = array.copy()
+            choices_array = array.copy()
+
+            if len(form.eingabe.data) == 0:
+                flash("Input error")
+            else:
+                flash("Success")
+
+            
+            form.eingabe.data = []
+            form.selected.data = []
+            return render_template(home_html,form=form)
+        if form.submit4.data:
+            form.eingabe.data = []
+            form.selected.data = []
+            form.selected.choices = choices_array
+            return render_template(home_html,form=form)
         else:
             flash("Don't hack this!")
 
-    return render_template(home_html, title="Suche", form=form)
+    if form.submit2.data == False and form.submit3.data == False:
+        #erster Aufruf
+        print("first")
+        choices_array = [("hi","hi"),("da","da")]
+        form.selected.choices = choices_array.copy()
+
+    print("last return")
+    form.selected.choices = choices_array
+    return render_template(home_html, form=form)

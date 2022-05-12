@@ -1,8 +1,32 @@
 {% extends "base.html" %}
 
   {% block app_content %}
-    <form action="" method="post" novalidate>
-       
+    <style>
+      .table th.middle {
+          width: 90px;
+      }
+      .table input {
+          margin: 5px 10px;
+          
+      }
+      .table td.eingabe {
+          width: 300px;
+      }
+      .table td.submit {
+          padding: 5px;
+      }
+      .save {
+          margin-left: 10px;
+      }
+      
+      .table td.buttons {
+          align-content: center;
+          vertical-align: middle;
+      }
+  </style>
+    <form action="/home" method="post" novalidate>
+      {{ form.csrf_token }}
+
 
         <table class="table table-hover table-sm">
             <thead> 
@@ -19,7 +43,7 @@
                   <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
                 </tr>
                 <tr>
-                    <td class="save">{{ form.submit(class="btn btn-default") }}</td>
+                    <td class="save"></td>
                     <td></td>
                     <td class="right">{{ form.submit4(class="btn btn-default") }}</td>
                 </tr>

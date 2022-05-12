@@ -10,9 +10,8 @@ zutatenListe = ["Ei", "Apfel"]
 class d_felder(FlaskForm):
     global zutatenListe
     """ Swip Swap Formular"""
-    eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=[])
+    eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
+    selected = SelectMultipleField('Ausgewaehlte Objekte',choices=[])
     submit2 = SubmitField("-->")        # Hinzufuegen
-    selected = SelectMultipleField('Ausgewaehlte Objekte', choices=[])
     submit3 = SubmitField("<--")        #Entfernen
-    submit = SubmitField("Speichern")   #Speichern
     submit4 = SubmitField("Auswahl loesen")
