@@ -4,10 +4,11 @@ from flask import Flask
 
 app = Flask(__name__)
 
+app.config["SECRET_KEY"] ="bhjewjvhewhewhje"
 app.config["MYSQL_HOST"] = ''
 app.config["MYSQL_USER"] = 's242501_3347116'
 app.config["MYSQL_PASSWORD"] = 'gha@LfJYQBfYU1Q'
 app.config["MYSQL_DB"] = 'db242501x3347116'
 
 
-from app import routesbackend, routesfrontend, routesdownload
+from app import routesbackend, routesfrontend, routesdownload, forms
