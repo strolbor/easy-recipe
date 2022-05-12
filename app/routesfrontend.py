@@ -43,7 +43,7 @@ def home():
             # neues Template an Client senden
             form.ein.data = []
             form.selected.data = []
-            return render_template(LISTENFELDER,form=form,label=title)
+            return render_template(home_html,form=form,label=title)
         elif form.submit3.data:
             # Item soll aus choices entfernt werden
 
@@ -57,12 +57,12 @@ def home():
             choices_array = array.copy()
 
             if len(eing) == 0:
-                flash(c.INPUT_ERROR)
+                flash("Input error")
             else:
-                flash(c.SUC_DEL)
+                flash("Success")
             form.ein.data = []
             form.selected.data = []
-            return render_template(LISTENFELDER,form=form,label=title)
+            return render_template(home_html,form=form,label=title)
         elif form.submit4.data:
             pass
         else:
