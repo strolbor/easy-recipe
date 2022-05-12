@@ -1,5 +1,4 @@
 import os
-from flask.app import Flask
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField
 
@@ -9,8 +8,9 @@ zutatenPath = os.path.dirname(os.path.abspath(__file__)) + "\\ZUTATEN.txt"
 zutatenListe = ["Ei", "Apfel"]
 
 class d_felder(FlaskForm):
+    global zutatenListe
     """ Swip Swap Formular"""
-    ein = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
+    eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=[])
     submit2 = SubmitField("-->")        # Hinzufuegen
     selected = SelectMultipleField('Ausgewaehlte Objekte', choices=[])
     submit3 = SubmitField("<--")        #Entfernen
