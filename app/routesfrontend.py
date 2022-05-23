@@ -4,7 +4,11 @@ from app import app, forms
 
 @app.route('/base')
 def index():
-    return render_template('base.html', title="Test")
+    return render_template('base.html', title="base")
+
+@app.route('/rezeptanzeige')
+def rezeptanzeige():
+    return render_template('rezeptanzeige.html', title="Rezeptanzeige")
 
 
 choices_array = []
@@ -14,3 +18,4 @@ def home():
     global choices_array
     form = forms.d_felder()
     return render_template(home_html, title="Suche", form=form)
+
