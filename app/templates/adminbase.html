@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block navbar %} 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <a class="navbar-brand" href="/">Easy-Recipe</a>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item">
+                <a class="nav-link {% if admA %} active {% endif %}" aria-current="page" href="{{url_for('admin')}}">Adminseite</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  {% if admB %} active {% endif %}" aria-current="page" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if admC %} active {% endif %}" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if admD %} active {% endif %}" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if admE %} active {% endif %}" href="{{url_for('addZutat')}}">Zutat_anlegen</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> 
+{% endblock %}

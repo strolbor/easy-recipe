@@ -57,8 +57,11 @@ def home():
             # Was wir entfernen wollen, kopieren
             to_delete = form.selected.data.copy()
             print(to_delete)
-            for entry in to_delete:
-                array.remove([entry,entry])
+            try:
+                for entry in to_delete:
+                    array.remove([entry,entry])
+            except ValueError:
+                pass
             print(array)
             form.selected.choices = array.copy()
             choices_array = array.copy()
@@ -83,7 +86,7 @@ def home():
     if form.submit2.data == False and form.submit3.data == False:
         #erster Aufruf
         print("first")
-        choices_array = [("hi","hi"),("da","da")]
+        choices_array = []
         form.selected.choices = choices_array.copy()
 
     print("last return")
