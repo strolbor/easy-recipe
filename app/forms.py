@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField
 
 # gibt nur parent directory, also app zurück und sucht in app nach ZUTATEN.txt
-zutatenPath = os.path.dirname(os.path.abspath(__file__)) + "\\ZUTATEN.txt"
+#zutatenPath = os.path.dirname(os.path.abspath(__file__)) + "\\ZUTATEN.txt"
 #zutatenListe = open(zutatenPath, 'r').readlines()
 zutatenListe = ["Ei", "Apfel"]
 
