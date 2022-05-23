@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<table cellspacing="0" cellpadding="0">
+    {%for i in range(0, 5)%}
+    <tr>
+        {%for j in range(0, 3)%}
+        <td>
+            <div class="card" style="width: 31rem;">
+                <img src="..." class="card-img-top" alt="<Rezeptbild>">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </td>
+        {%endfor%}
+    </tr>
+    {%endfor%}
+
+</table>
+
+{% endblock %}
