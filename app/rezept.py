@@ -6,7 +6,6 @@ class rezept(db.Model):
     name = db.Column(db.String)
     tags = db.Column(db.String)
     bild = db.Column(db.String)
-    handlungsschritte = db.relationship('rzhat')
 
     def __repr__(self):
         return '<Rezept {}>'.format(self.name)
@@ -17,7 +16,7 @@ class zutat(db.Model):
     einheit = db.Column(db.String)
     bild = db.Column(db.String)
     name = db.Column(db.String)
-    relation = db.relationship("Zutat gehört zum Rezept", db.ForeignKey('rezept.rid'))
+    rezept_id = db.Column(db.Integer, db.ForeignKey('rezept.rid'))
     
     def __repr__(self):
         return '<Rezept {}; Einheit: {}>'.format(self.name,self.einheit)
@@ -28,7 +27,7 @@ class handlungsschritt(db.Model):
     bild = db.Column(db.String)
     bild2 = db.Column(db.String)
     text=db.Column(db.String)
-    relation = db.relationship("Handlungsschritt gehört zum Rezept", db.ForeignKey('rezept.rid'))
+    #relation = db.relationship("Handlungsschritt gehört zum Rezept", db.ForeignKey('rezept.handlungsschritte'))
 
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.hid,self.text)
