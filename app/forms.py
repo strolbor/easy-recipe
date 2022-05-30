@@ -1,7 +1,7 @@
 import os
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, SelectMultipleField, TextField, TextAriaField
+from wtforms import SubmitField, SelectMultipleField,StringField
 from flask_wtf.file import FileField
 
 # gibt nur parent directory, also app zurück und sucht in app nach ZUTATEN.txt
@@ -19,13 +19,13 @@ class d_felder(FlaskForm):
     submit4 = SubmitField("Auswahl loesen")
 
 class rezeptanlegen(FlaskForm):
-    rezeptname = TextField('Name des Rezepts')
+    rezeptname = StringField('Name des Rezepts')
     bildupload = FileField('Bild des Rezepts',validators=[])
     submit = SubmitField('Speichern')
 
 class handlungschrittanlegen(FlaskForm):
     bildupload = FileField('Bild des Rezepts',validators=[])
-    beschreibung = TextAriaField('Handlungschritt')
+    beschreibung = StringField('Handlungschritt')
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
@@ -39,6 +39,6 @@ CREATE TABLE `Zutat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 """
 class zutatanlefen(FlaskForm):
-    namen = TextField('Name der Zutat')
-    einheit = TextField('sinnvolle Einheit der Zutat')
+    namen = StringField('Name der Zutat')
+    einheit = StringField('sinnvolle Einheit der Zutat')
     submit = SubmitField('Speichern')
