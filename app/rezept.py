@@ -6,9 +6,10 @@ class rezept(db.Model):
     name = db.Column(db.String)
     tags = db.Column(db.String)
     bild = db.Column(db.String)
+    zutaten = db.relationship('zutat', backref='zutat', lazy='dynamic')
 
     def __repr__(self):
-        return '<Rezept {}>'.format(self.name)
+        return '<Rezept {}> RID:{}'.format(self.name,self.rid)
 
 class zutat(db.Model):
     __tablename__ = "zutat"
@@ -19,7 +20,7 @@ class zutat(db.Model):
     rezept_id = db.Column(db.Integer, db.ForeignKey('rezept.rid'))
     
     def __repr__(self):
-        return '<Rezept {}; Einheit: {}>'.format(self.name,self.einheit)
+        return '<Rezept {}; Einheit: {}> RID={}'.format(self.name,self.einheit,self.rezept_id)
 
 class handlungsschritt(db.Model):
     __tablename__ = "handlungsschritt"
