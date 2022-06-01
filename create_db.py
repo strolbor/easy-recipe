@@ -28,7 +28,7 @@ z13=zutat(name= 'Fleischwurst', einheit='Gramm',rezept_id=r2,bild="none")
 z14=zutat(name= 'Gewürzgurke(n)', einheit='Gramm',rezept_id=r2,bild="none")
 
 
-if 1 == 0:
+if 1 == 1:
     db.session.rollback()
 
 
