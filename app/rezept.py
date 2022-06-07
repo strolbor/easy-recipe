@@ -20,7 +20,7 @@ class zutat(db.Model):
     rezept_id = db.Column(db.Integer, db.ForeignKey('rezept.rid'))
     
     def __repr__(self):
-        return '<Rezept {}; Einheit: {}> RID={}'.format(self.name,self.einheit,self.rezept_id)
+        return '<Rezept {}; Einheit: {}> ZID={}'.format(self.name,self.einheit,self.zid)
 
 class handlungsschritt(db.Model):
     __tablename__ = "handlungsschritt"
@@ -33,8 +33,14 @@ class handlungsschritt(db.Model):
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.hid,self.text)
 
+rzhat = db.Table("association",
+  db.Model.metadata,
+  db.Column("rezept_id",db.ForeignKey("rezept.rid")),
+  db.Column("zutat_id", db.ForeignKey("zutat.zid")),
+)
 
     
+
 """
 class rezept(db.Model):
     zutaten = ""
