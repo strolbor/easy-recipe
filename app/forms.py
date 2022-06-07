@@ -3,11 +3,21 @@ from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField,StringField
 from flask_wtf.file import FileField
+from app import db
+from app.rezept import zutat
+
 
 # gibt nur parent directory, also app zurück und sucht in app nach ZUTATEN.txt
 #zutatenPath = os.path.dirname(os.path.abspath(__file__)) + "\\ZUTATEN.txt"
 #zutatenListe = open(zutatenPath, 'r').readlines()
-zutatenListe = ["Ei", "Apfel"]
+#zutatenListe = ["Ei", "Apfel"]
+
+zutatenListe = []
+
+for entry in zutat.query.all():
+   zutatenListe.append(entry.name)
+
+
 
 class d_felder(FlaskForm):
     global zutatenListe
