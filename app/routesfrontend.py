@@ -18,6 +18,8 @@ def home():
     global choices_array
     form = forms.d_felder()
     form.selected.choices = choices_array.copy()
+    print("eingabe",form.eingabe.data)
+    print("selected",form.selected.data)
     if form.errors:
         for error_field, error_message in form.errors.iteritems():
             print(error_field,error_message)
@@ -25,6 +27,8 @@ def home():
         print("validate")
         ver = form.eingabe.data
         eingabe = form.selected.data
+        print(ver)
+        print(eingabe)
         if form.submit2.data:
             print("submit2")
             # Item soll hinzugefügt werden

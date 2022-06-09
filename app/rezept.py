@@ -7,8 +7,8 @@ rzhat = db.Table("association",
 )
 
 class rzhat2(db.Model):
-    rid=db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
-    zid=db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
+    rid = db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
+    zid = db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
     
     def __repr__(self):
         return '[rzhat: RID {} <-> ZID: {}]'.format(self.rid,self.zid)
@@ -16,10 +16,10 @@ class rzhat2(db.Model):
 
 class rezept(db.Model):
     __tablename__ = "rezept"
-    rid = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String)
-    tags = db.Column(db.String)
-    bild = db.Column(db.String)
+    rid     = db.Column(db.Integer,primary_key=True)
+    name    = db.Column(db.String)
+    tags    = db.Column(db.String)
+    bild    = db.Column(db.String)
     zutaten = db.relationship('zutat', secondary=rzhat,
         backref=db.backref('rezepte'))
 
@@ -28,24 +28,24 @@ class rezept(db.Model):
 
 class zutat(db.Model):
     __tablename__ = "zutat"
-    zid = db.Column(db.Integer,primary_key=True)
+    zid     = db.Column(db.Integer,primary_key=True)
     einheit = db.Column(db.String)
-    bild = db.Column(db.String)
-    name = db.Column(db.String)
+    bild    = db.Column(db.String)
+    name    = db.Column(db.String)
     
     def __repr__(self):
         return '<Rezept {}; Einheit: {}> ID={}'.format(self.name,self.einheit,self.zid)
 
 class handlungsschritt(db.Model):
     __tablename__ = "handlungsschritt"
-    hid = db.Column(db.Integer,primary_key=True)
-    bild = db.Column(db.String)
+    hid   = db.Column(db.Integer,primary_key=True)
+    bild  = db.Column(db.String)
     bild2 = db.Column(db.String)
-    text=db.Column(db.String)
+    text  = db.Column(db.String)
 
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.hid,self.text)
 
-
 """
+
 """
