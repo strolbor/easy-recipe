@@ -11,7 +11,8 @@ zutatenListe = []
 
 try:
     for entry in zutat.query.all():
-        zutatenListe.append([entry.zid,entry.name])
+        #zutatenListe.append([entry.zid,entry.name])
+        zutatenListe.append(entry.name)
 except Exception as e:
     print(e)
 
