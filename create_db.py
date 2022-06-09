@@ -2,10 +2,10 @@ from app import db
 from app.rezept import rezept, zutat, handlungsschritt, rzhat2
 
 r1 = rezept(name="Omlett",tags="",bild="")
-db.session.add(r1)
 r2 = rezept(name="Kartoffelsalat mit Mayonnaise",tags="",bild="")
-db.session.add(r2)
 r3 = rezept(name="Apfelkuchen",tags="",bild="")
+db.session.add(r1)
+db.session.add(r2)
 db.session.add(r3)
 print(r1)
 print(rezept.query.all())

@@ -1,11 +1,27 @@
 from app import db
 
+rzhat = db.Table("association",
+  db.Model.metadata,
+  db.Column("rezept_id",db.ForeignKey("rezept.rid")),
+  db.Column("zutat_id", db.ForeignKey("zutat.zid")),
+)
+
+class rzhat2(db.Model):
+    rid=db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
+    zid=db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
+    
+    def __repr__(self):
+        return '[rzhat: RID {} <-> ZID: {}]'.format(self.rid,self.zid)
+
+
 class rezept(db.Model):
     __tablename__ = "rezept"
     rid = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String)
     tags = db.Column(db.String)
     bild = db.Column(db.String)
+    zutaten = db.relationship('zutat', secondary=rzhat,
+        backref=db.backref('rezepte'))
 
     def __repr__(self):
         return '<Rezept {}> ID:{}'.format(self.name,self.rid)
@@ -30,16 +46,6 @@ class handlungsschritt(db.Model):
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.hid,self.text)
 
-class rzhat2(db.Model):
-    rid=db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
-    zid=db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
-    
-    def __repr__(self):
-        return '[rzhat: RID {} <-> ZID: {}]'.format(self.rid,self.zid)
 
 """
-rzhat = db.Table("association",
-  db.Model.metadata,
-  db.Column("rezept_id",db.ForeignKey("rezept.rid")),
-  db.Column("zutat_id", db.ForeignKey("zutat.zid")),
-)"""
+"""

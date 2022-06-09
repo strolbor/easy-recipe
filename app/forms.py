@@ -7,16 +7,13 @@ from app import db
 from app.rezept import zutat
 
 
-# gibt nur parent directory, also app zurück und sucht in app nach ZUTATEN.txt
-#zutatenPath = os.path.dirname(os.path.abspath(__file__)) + "\\ZUTATEN.txt"
-#zutatenListe = open(zutatenPath, 'r').readlines()
-#zutatenListe = ["Ei", "Apfel"]
-
 zutatenListe = []
 
-for entry in zutat.query.all():
-   zutatenListe.append(entry.name)
-
+try:
+    for entry in zutat.query.all():
+        zutatenListe.append(entry.name)
+except Exception as e:
+    print(e)
 
 
 class d_felder(FlaskForm):
@@ -27,6 +24,7 @@ class d_felder(FlaskForm):
     submit2 = SubmitField("-->")        # Hinzufuegen
     submit3 = SubmitField("<--")        #Entfernen
     submit4 = SubmitField("Auswahl loesen")
+    submitSuchen = SubmitField("Suchen")
 
 class rezeptanlegen(FlaskForm):
     rezeptname = StringField('Name des Rezepts')
@@ -41,13 +39,6 @@ class handlungschrittanlegen(FlaskForm):
 class rzanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
-"""
-CREATE TABLE `Zutat` (
-  `ZID` bigint(20) NOT NULL,
-  `Zutatname` text,
-  `Einheit` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-"""
 class zutatanlefen(FlaskForm):
     namen = StringField('Name der Zutat')
     einheit = StringField('sinnvolle Einheit der Zutat')

@@ -80,10 +80,13 @@ def home():
             form.selected.data = []
             form.selected.choices = choices_array
             return render_template(home_html,form=form)
+        if form.submitSuchen.data:
+            print("Submit suchen")
+            return render_template(home_html, form=form)
         else:
             flash("Don't hack this!")
 
-    if form.submit2.data == False and form.submit3.data == False:
+    if form.submit2.data == False and form.submit3.data == False and form.submitSuchen.data == False:
         #erster Aufruf
         print("first")
         choices_array = []

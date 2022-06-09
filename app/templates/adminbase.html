@@ -10,26 +10,33 @@
       <a class="navbar-brand" href="/">Easy-Recipe</a>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-           <li class="nav-item">
-                <a class="nav-link {% if admA %} active {% endif %}" aria-current="page" href="{{url_for('admin')}}">Adminseite</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  {% if admB %} active {% endif %}" aria-current="page" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
-          </li>
 
-          <li class="nav-item">
-            <a class="nav-link {% if admC %} active {% endif %}" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
-          </li>
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown link
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
 
-          <li class="nav-item">
-            <a class="nav-link {% if admD %} active {% endif %}" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link {% if admE %} active {% endif %}" href="{{url_for('addZutat')}}">Zutat_anlegen</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> 
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown button
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
+              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
+              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
+              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>
+            </div> <!-- dropdown-menu-->
+          </div> <!-- dropdown -->
+        </ul> <!-- navbar-nav -->
+      </div><!-- collapse navbar-collapse -->
+    </div><!-- container -->
+  </nav> <!--navbar -->
 {% endblock %}
