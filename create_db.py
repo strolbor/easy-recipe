@@ -1,5 +1,5 @@
 from app import db
-from app.rezept import rezept, zutat, handlungsschritt, rzhat2
+from app.rezept import rezept, zutat, handlungsschritt
 
 r1 = rezept(name="Omlett",tags="",bild="")
 r2 = rezept(name="Kartoffelsalat mit Mayonnaise",tags="",bild="")
@@ -30,7 +30,7 @@ if 1 == 0:
     addZutat(name='Senf', einheit='Teelöffel', bild="none")
     addZutat(name='Salz', einheit='Teelöffel', bild="none")
     addZutat(name='Pfeffer', einheit='Teelöffel', bild="none")
-    addZutat(name='Zucker', einheit='Teelöffel', bild="none")
+    addZutat(nam1e='Zucker', einheit='Teelöffel', bild="none")
     addZutat(name='Mayonnaise', einheit='Gramm', bild="none")
     addZutat(name='Fleischwurst', einheit='Gramm', bild="none")
     addZutat(name='Gewürzgurken', einheit='Gramm', bild="none")

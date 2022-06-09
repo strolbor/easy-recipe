@@ -5,9 +5,12 @@
 {% block app_content %}
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
-    <p>{{ form.bildupload.label }} {{ form.bildupload()}}</p>
 
+    <table border="0">
+        <tr><th>{{ form.rezeptname.label }}</th><td>{{ form.rezeptname() }}</td></tr>
+        <tr><th>{{ form.bildupload.label }}</th><td>{{ form.bildupload()}}</td></tr>
+        <tr><th>{{form.submit.label}}</th><td> {{form.submit() }}</td></tr>
+    </table>
 
-    <p>{{form.submit.label}} {{form.submit() }}</p>
 </form>
 {% endblock %}

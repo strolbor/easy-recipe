@@ -6,13 +6,15 @@ rzhat = db.Table("association",
   db.Column("zutat_id", db.ForeignKey("zutat.zid")),
 )
 
+"""
+
 class rzhat2(db.Model):
     rid = db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
     zid = db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
     
     def __repr__(self):
         return '[rzhat: RID {} <-> ZID: {}]'.format(self.rid,self.zid)
-
+"""
 
 class rezept(db.Model):
     __tablename__ = "rezept"
@@ -21,10 +23,10 @@ class rezept(db.Model):
     tags    = db.Column(db.String)
     bild    = db.Column(db.String)
     zutaten = db.relationship('zutat', secondary=rzhat,
-        backref=db.backref('rezepte'))
+        backref=db.backref('inhalte'))
 
     def __repr__(self):
-        return '<Rezept {}> ID:{}'.format(self.name,self.rid)
+        return '<Rezept {}> ID:{} |{}'.format(self.name,self.rid,self.zutaten)
 
 class zutat(db.Model):
     __tablename__ = "zutat"
@@ -34,7 +36,7 @@ class zutat(db.Model):
     name    = db.Column(db.String)
     
     def __repr__(self):
-        return '<Rezept {}; Einheit: {}> ID={}'.format(self.name,self.einheit,self.zid)
+        return '<Zutat {}; Einheit: {}> ID={}'.format(self.name,self.einheit,self.zid)
 
 class handlungsschritt(db.Model):
     __tablename__ = "handlungsschritt"
