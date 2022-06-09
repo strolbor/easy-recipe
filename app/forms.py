@@ -11,7 +11,7 @@ zutatenListe = []
 
 try:
     for entry in zutat.query.all():
-        zutatenListe.append(entry.name)
+        zutatenListe.append([entry.zid,entry.name])
 except Exception as e:
     print(e)
 
@@ -29,17 +29,20 @@ class d_felder(FlaskForm):
 class rezeptanlegen(FlaskForm):
     rezeptname = StringField('Name des Rezepts')
     bildupload = FileField('Bild des Rezepts',validators=[])
+    tags = StringField('Tags')
     submit = SubmitField('Speichern')
 
 class handlungschrittanlegen(FlaskForm):
-    bildupload = FileField('Bild des Rezepts',validators=[])
+    bildupload1 = FileField('Bild des Rezepts',validators=[])
+    bildupload2 = FileField('Bild des Rezepts',validators=[])
     beschreibung = StringField('Handlungschritt')
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
-class zutatanlefen(FlaskForm):
-    namen = StringField('Name der Zutat')
+class zutatanlegen(FlaskForm):
+    name = StringField('Name der Zutat')
     einheit = StringField('sinnvolle Einheit der Zutat')
+    bildupload = FileField('Bild des Rezepts',validators=[])
     submit = SubmitField('Speichern')

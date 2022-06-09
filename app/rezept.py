@@ -26,7 +26,7 @@ class rezept(db.Model):
         backref=db.backref('inhalte'))
 
     def __repr__(self):
-        return '<Rezept {}> ID:{} |{}'.format(self.name,self.rid,self.zutaten)
+        return '{} mit ID:{}'.format(self.name,self.rid)
 
 class zutat(db.Model):
     __tablename__ = "zutat"
@@ -36,7 +36,7 @@ class zutat(db.Model):
     name    = db.Column(db.String)
     
     def __repr__(self):
-        return '<Zutat {}; Einheit: {}> ID={}'.format(self.name,self.einheit,self.zid)
+        return '{} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.zid)
 
 class handlungsschritt(db.Model):
     __tablename__ = "handlungsschritt"

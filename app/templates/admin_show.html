@@ -1,0 +1,7 @@
+{% extends "adminbase.html" %}
+
+{% block app_content %}
+    {% for message in inhalt %}
+               <li>{{ message }}</li>
+    {% endfor %}
+{% endblock %}

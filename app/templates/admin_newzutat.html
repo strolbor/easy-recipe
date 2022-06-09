@@ -1,0 +1,17 @@
+{% extends "adminbase.html" %}
+
+ 
+
+{% block app_content %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    <table border="0">
+        <tr><th>{{ form.name.label }}</th><td>{{ form.name() }}</td></tr>
+        <tr><th>{{ form.bildupload.label }}</th><td>{{ form.bildupload()}}</td></tr>
+        <tr><th>einheit</th><td>{{ form.einheit() }}</td></tr>
+        <tr><th>{{form.submit.label}}</th><td> {{form.submit() }}</td></tr>
+    </table>
+
+</form>
+{% endblock %}
