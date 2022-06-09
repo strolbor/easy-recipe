@@ -6,16 +6,6 @@ rzhat = db.Table("association",
   db.Column("zutat_id", db.ForeignKey("zutat.zid")),
 )
 
-"""
-
-class rzhat2(db.Model):
-    rid = db.Column("rezept_id",db.ForeignKey("rezept.rid"),primary_key=True)
-    zid = db.Column("zutat_id", db.ForeignKey("zutat.zid"),primary_key=True)
-    
-    def __repr__(self):
-        return '[rzhat: RID {} <-> ZID: {}]'.format(self.rid,self.zid)
-"""
-
 class rezept(db.Model):
     __tablename__ = "rezept"
     rid     = db.Column(db.Integer,primary_key=True)
@@ -47,7 +37,3 @@ class handlungsschritt(db.Model):
 
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.hid,self.text)
-
-"""
-
-"""

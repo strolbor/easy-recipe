@@ -1,17 +1,16 @@
 {% extends "adminbase.html" %}
 
-class handlungschrittanlegen(FlaskForm):
-bildupload = FileField('Bild des Rezepts',validators=[])
-beschreibung = StringField('Handlungschritt')
-submit = SubmitField('Speichern')
+
 
 {% block app_content %}
+<h3>Neues Rezept anlegen</h3>
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
 
     <table border="0">
+        <tr><th>{{form.rezeptname.label}}</th><td> {{form.rezeptname() }}</td></tr>
         <tr><th>{{ form.bildupload.label }}</th><td>{{ form.bildupload()}}</td></tr>
-        <tr><th>{{ form.beschreibung.label }}</th><td>{{ form.beschreibung(size=7) }}</td></tr>
+        <tr><th>{{ form.tags.label }}</th><td>{{ form.tags() }}</td></tr>
         <tr><th>{{form.submit.label}}</th><td> {{form.submit() }}</td></tr>
     </table>
 
