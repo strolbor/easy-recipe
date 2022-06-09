@@ -11,30 +11,48 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <div class="dropdown">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown link
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Anlegeoptionen
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </div>
-
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
               <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
               <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
               <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
               <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>
-            </div> <!-- dropdown-menu-->
-          </div> <!-- dropdown -->
+            </ul>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Anzeigeoptionen
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
+              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
+              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
+              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>
+            </ul>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Entfernungsoptionen
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
+              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
+              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
+              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>
+            </ul>
+          </div>
+
         </ul> <!-- navbar-nav -->
       </div><!-- collapse navbar-collapse -->
     </div><!-- container -->
