@@ -21,6 +21,7 @@ def deleteZutat(zid):
 
 if 1 == 0:
     addZutat(name='Ei', einheit='Normalgröße', bild="none")
+    
     addZutat(name='Apfel', einheit='Normalgröße', bild="none")
     addZutat(name='Mehl', einheit='Gramm', bild="none")
     addZutat(name='Kartoffeln', einheit='Kilogramm', bild="none")

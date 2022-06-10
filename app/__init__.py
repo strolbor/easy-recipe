@@ -4,26 +4,27 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 #from flask_mysqldb import MySQL
 
-
-
-
+basedir = ""
 class Config(object):
+    global basedir
     basedir = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
+    print(basedir)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 app = Flask(__name__)
+UPLOAD_FOLDER = os.path.abspath(app.instance_path)
+print("uploadfolder:",UPLOAD_FOLDER)
+ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg'}
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-app.config["SECRET_KEY"] ="bhjewjvhewhewhje"
-app.config["MYSQL_HOST"] = ''
-app.config["MYSQL_USER"] = 's242501_3347116'
-app.config["MYSQL_PASSWORD"] = 'gha@LfJYQBfYU1Q'
-app.config["MYSQL_DB"] = 'db242501x3347116'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-from app import routesbackend, routesfrontend, forms, rezept
+app.debug = True
+
+from app import routesbackend, routesfrontend, routesdownload, forms, rezept
