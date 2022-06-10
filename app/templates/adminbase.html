@@ -46,7 +46,10 @@
               Entfernungsoptionen
             </a>
           
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"><!--
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezept Entferner</a>
+              <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutaten Entferner</a>
+              <!--
               <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
               <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
               <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>

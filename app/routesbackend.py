@@ -65,11 +65,37 @@ def addZutat():
 @app.route('/admin/show/rezepte')
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    list = rezept.query.all()
-    return render_template('admin_show.html',inhalt=list)
+    liste = rezept.query.all()
+    return render_template('admin_show.html',inhalt=liste)
 
 @app.route('/admin/show/zutat')
 @app.route('/admin/show/zutat/')
 def showZutaten():
-    list = zutat.query.all()
-    return render_template('admin_show.html',inhalt=list)
+    liste = zutat.query.all()
+    return render_template('admin_show.html',inhalt=liste)
+
+""" Löschen """
+@app.route('/admin/remove/rezept')
+def removeRezept():
+    liste = rezept.query.all()
+    return render_template('admin_remove.html',inhalt=liste,title="Rezept Entferner",targetrezept=True)
+
+@app.route('/admin/remove/zutat')
+def removeZutat():
+    liste = zutat.query.all()
+    return render_template('admin_remove.html',inhalt=liste,title="Zutaten Entferner",targetzutat=True)
+
+"""Controll Section"""
+@app.route('/admin/delete/zutat?<path:filename>')
+def deleteZutat(filename):
+    db.session.delete(zutat.query.get(filename))
+    db.session.commit()
+    print("azsgegühfrt")
+    
+
+@app.route('/admin/delete/rezept?<path:filename>')
+def deleteRezept(filename):
+    db.session.delete(rezept.query.get(filename))
+    db.session.commit()
+    print("azsgegühfrt")
+

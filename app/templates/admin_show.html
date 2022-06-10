@@ -2,9 +2,18 @@
 
 {% block app_content %}
 <h3>Anzeige</h3>
-<ol>
+<ol class="list-group list-group-numbered">
     {% for message in inhalt %}
-               <li>{{ message }}</li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+            <div class="fw-bold">{{ message.name }}</div>
+            <!-- Hier könnte noch text stehen-->
+            </div>
+           
+        </li>
+
+
+        <!-- <li class="list-group-item">{{ message.name }}</li> -->
     {% endfor %}
 </ol>
 {% endblock %}

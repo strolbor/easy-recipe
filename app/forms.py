@@ -2,6 +2,7 @@ import os
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField,StringField
+from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
 from app.rezept import zutat
@@ -18,8 +19,8 @@ except Exception as e:
 
 
 class d_felder(FlaskForm):
-    global zutatenListe
     """ Swip Swap Formular"""
+    global zutatenListe
     eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
     selected = SelectMultipleField('Ausgewaehlte Objekte',choices=[])
     submit2 = SubmitField("-->")        # Hinzufuegen
@@ -28,22 +29,22 @@ class d_felder(FlaskForm):
     submitSuchen = SubmitField("Suchen")
 
 class rezeptanlegen(FlaskForm):
-    rezeptname = StringField('Name des Rezepts')
+    rezeptname = StringField('Name des Rezepts',validators=[DataRequired()])
     bildupload = FileField('Bild des Rezepts',validators=[])
     tags = StringField('Tags')
     submit = SubmitField('Speichern')
 
 class handlungschrittanlegen(FlaskForm):
-    bildupload1 = FileField('Bild des Rezepts',validators=[])
-    bildupload2 = FileField('Bild des Rezepts',validators=[])
-    beschreibung = StringField('Handlungschritt')
+    bildupload1 = FileField('Bild des Handlungsschrittes 1',validators=[])
+    bildupload2 = FileField('Bild des Handlungsschrittes 2',validators=[])
+    beschreibung = StringField('Handlungschrittbeschreibung',validators=[DataRequired()])
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
 class zutatanlegen(FlaskForm):
-    name = StringField('Name der Zutat')
-    einheit = StringField('sinnvolle Einheit der Zutat')
-    bildupload = FileField('Bild des Rezepts',validators=[])
+    name = StringField('Name der Zutat',validators=[DataRequired()])
+    einheit = StringField('Einheit der Zutat',validators=[DataRequired()])
+    bildupload = FileField('Bild der Zutat hochladen',validators=[])
     submit = SubmitField('Speichern')
