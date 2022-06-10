@@ -5,8 +5,10 @@ rzhat = db.Table("association",
   db.Column("rezept_id",db.ForeignKey("rezept.rid")),
   db.Column("zutat_id", db.ForeignKey("zutat.zid")),
 )
+"""Many to Many Relationship Table"""
 
 class rezept(db.Model):
+    """Rezept Klasse"""
     __tablename__ = "rezept"
     rid     = db.Column(db.Integer,primary_key=True)
     name    = db.Column(db.String)
@@ -19,6 +21,7 @@ class rezept(db.Model):
         return '{} mit ID:{}'.format(self.name,self.rid)
 
 class zutat(db.Model):
+    """Zutaten Klasse"""
     __tablename__ = "zutat"
     zid     = db.Column(db.Integer,primary_key=True)
     einheit = db.Column(db.String)
@@ -29,6 +32,7 @@ class zutat(db.Model):
         return '{} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.zid)
 
 class handlungsschritt(db.Model):
+    """Handlungsschirtt Klasse"""
     __tablename__ = "handlungsschritt"
     hid   = db.Column(db.Integer,primary_key=True)
     bild  = db.Column(db.String)
