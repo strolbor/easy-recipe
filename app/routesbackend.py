@@ -2,7 +2,7 @@ from app import app, db, forms
 from app.rezept import rezept, zutat
 from werkzeug.utils import secure_filename
 import os
-from flask import redirect, render_template
+from flask import redirect, render_template,request
 from flask.helpers import flash, url_for
 
 @app.route('/admin')
@@ -21,20 +21,34 @@ def addrezept():
         # Daten des Uploads holen
         data = form.bildupload.data
         bild_url=""
-        if data is not None:
-            filename = secure_filename(data.filename)
-            data.save(os.path.join(
-                app.instance_path,'fotos',filename
-            ))
-            bild_url="fotos/"+filename
-
-        
+        print(data)
+        if request.method == 'POST':
+            if 'bildupload' not in request.files:
+                flash("Kein Bild gefunden!")
+                return redirect(url_for('addrezept'))
+            file = request.files['bildupload']
+            if file.filename == '':
+                flash('Kein Bild wurde ausgewählt.')
+                return redirect(request.url)
+            if file:
+                file = request.files['bildupload']
+                filename = secure_filename(file.filename)
+                path = os.path.join(
+                        app.instance_path,'fotos',filename
+                )
+                print(path,filename)
+                bild_url=filename
+                file.save(path)
+                flash ('Bild erfolgreich hochgeladen')
         new = rezept(name=form.rezeptname.data,bild=bild_url,tags=form.tags.data)
         print(new)
         db.session.add(new)
         db.session.commit()
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
     return render_template('admin_newrezept.html',form=form)
+
+def savepic():
+    
 
 @app.route('/admin/add/handlungsschritt')
 @app.route('/admin/add/handlungsschritt/')
@@ -43,10 +57,11 @@ def addhandlung():
     form = forms.handlungschrittanlegen()
     return render_template('admin_newhand.html',form=form)
 
-@app.route('/admin/modifyRZ')
+@app.route('/admin/modify/RZ')
 def CHGverknupfung():
     """Dies ist der Admin Hauptindex"""
-    return render_template('admin_index.html')
+    form = forms.rzanlegen()
+    return render_template('admin_rzpicker.html',form=form)
 
 @app.route('/admin/add/Zutat',methods=['GET','POST'])
 @app.route('/admin/add/Zutat/',methods=['GET','POST'])
@@ -86,16 +101,16 @@ def removeZutat():
     return render_template('admin_remove.html',inhalt=liste,title="Zutaten Entferner",targetzutat=True)
 
 """Controll Section"""
-@app.route('/admin/delete/zutat?<path:filename>')
-def deleteZutat(filename):
-    db.session.delete(zutat.query.get(filename))
+@app.route('/admin/delete/zutat/<path:ids>')
+def deleteZutat(ids):
+    db.session.delete(zutat.query.get(ids))
     db.session.commit()
-    print("azsgegühfrt")
+    return redirect(url_for('removeZutat'))
     
 
-@app.route('/admin/delete/rezept?<path:filename>')
-def deleteRezept(filename):
-    db.session.delete(rezept.query.get(filename))
+@app.route('/admin/delete/rezept/<path:ids>')
+def deleteRezept(ids):
+    db.session.delete(rezept.query.get(ids))
     db.session.commit()
-    print("azsgegühfrt")
+    return redirect(url_for('removeRezept'))
 

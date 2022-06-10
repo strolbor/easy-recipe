@@ -6,3 +6,4 @@ _templates/
 venv/
 run_website.bat
 db*
+instance/
