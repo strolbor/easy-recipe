@@ -27,7 +27,7 @@
       vertical-align: middle;
   }
   </style>
-    <form action="/home" method="post" novalidate>
+    <form action="/" method="post" novalidate>
       {{ form.csrf_token }}
 
 
@@ -46,9 +46,9 @@
                   <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
                 </tr>
                 <tr>
-                    <td class="save"></td>
+                    <td class="save">{{ form.submit4(class="btn btn-default") }}</td>
                     <td></td>
-                    <td class="right">{{ form.submit4(class="btn btn-default") }}</td>
+                    <td class="right">{{ form.submitSuchen(class="btn btn-default")}}</td>
                 </tr>
             </tbody>
         </table>
