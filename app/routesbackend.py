@@ -13,6 +13,7 @@ def admin():
 
 
 @app.route('/admin/add/rezept',methods=['GET','POST'])
+@app.route('/admin/add/rezept/',methods=['GET','POST'])
 def addrezept():
     """Seite um ein neues Rezept anzulegen."""
     form = forms.rezeptanlegen()
@@ -36,6 +37,7 @@ def addrezept():
     return render_template('admin_newrezept.html',form=form)
 
 @app.route('/admin/add/handlungsschritt')
+@app.route('/admin/add/handlungsschritt/')
 def addhandlung():
     """Dies ist der Admin Hauptindex"""
     form = forms.handlungschrittanlegen()
@@ -47,10 +49,18 @@ def CHGverknupfung():
     return render_template('admin_index.html')
 
 @app.route('/admin/add/Zutat',methods=['GET','POST'])
+@app.route('/admin/add/Zutat/',methods=['GET','POST'])
 def addZutat():
     """Dies ist der Admin Hauptindex"""
     form = forms.zutatanlegen()
+    if form.validate_on_submit():
+        newzutat = zutat(name=form.name.data,einheit=form.einheit.data)
+        db.session.add(newzutat)
+        db.session.commit()
+        flash(f'{form.name.data} wurde erfolgreich angelegt!')
     return render_template('admin_newzutat.html',form=form)
+
+
 
 @app.route('/admin/show/rezepte')
 @app.route('/admin/show/rezepte/')
