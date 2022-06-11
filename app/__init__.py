@@ -29,4 +29,4 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.debug = True
 
-from app import routesbackend, routesfrontend, routesdownload, forms, rezept
+from app import routesbackend,routesbackend_function, routesfrontend, routesdownload, forms, rezept

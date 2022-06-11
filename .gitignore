@@ -3,7 +3,9 @@
 _build/
 _static/
 _templates/
+app/__pycache__/
 venv/
 run_website.bat
 db*
 instance/
+*.zip

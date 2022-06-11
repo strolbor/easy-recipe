@@ -1,4 +1,5 @@
 import os
+from random import choices
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField,StringField,SelectField
@@ -14,6 +15,7 @@ try:
     for entry in zutat.query.all():
         #zutatenListe.append([entry.zid,entry.name])
         zutatenListe.append(entry.name)
+    pass
 except Exception as e:
     print(e)
 
@@ -43,9 +45,20 @@ class handlungschrittanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
-    choices = rezept.query.all()
-    rezeptpicker = SelectField('Rezept Picker',choices=choices,validators=[DataRequired()])
-    submit = SubmitField('Speichern')
+    all = rezept.query.all()
+    array = []
+    for entry in all:
+        array.append([entry.id,entry.name])
+    rezeptpicker = SelectField('Rezept Picker',choices=array,validators=[DataRequired()])
+    submit = SubmitField('Rezept auswählen')
+
+class rzzutaten(FlaskForm):
+    all = zutat.query.all()
+    array = []
+    for entry in all:
+        array.append([entry.id,entry.name])
+    zutaten = SelectMultipleField('Ausgewaehlte Zutaten',choices=array)
+    submit = SubmitField('Rezeptzutaten speichern')
 
 class zutatanlegen(FlaskForm):
     name = StringField('Name der Zutat',validators=[DataRequired()])
