@@ -23,4 +23,4 @@ def deleterzhat(rid,zid):
     zutatw = zutat.query.get(zid)
     rezeptw.zutaten.remove(zutatw)
     db.session.commit()
-    return redirect(url_for('removeRZhat2',ids=rid))
+    return redirect(url_for('removeRZhat2',rid=rid))

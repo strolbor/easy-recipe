@@ -163,10 +163,10 @@ def CHGver2(ids):
 
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
 def removeRZhat():
-    return render_template('admin_rzremove.html',inhalt= rezept.query.all(),title="Verknüpfung Entferner",GangA=True)
+    return render_template('admin_rzremove.html',inhalt=rezept.query.all(),title="Verknüpfung Entferner",GangA=True)
 
-@app.route('/admin/remove/rzhat/remover/<path:zid>',methods=['GET','POST'])
-def removeRZhat2(zid):
-    ausrezept = rezept.query.get(zid)
+@app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
+def removeRZhat2(rid):
+    ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
     return render_template('admin_rzremove.html',inhalt=zutatenliste,title="RZhat Entferner",rid=ausrezept.id,GangB=True)
