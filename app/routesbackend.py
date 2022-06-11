@@ -54,8 +54,11 @@ def showRezepte():
 @app.route('/admin/remove/rezept')
 def removeRezept():
     """ Löschen eines Rezeptes"""
-    liste = rezept.query.all()
-    return render_template('admin_remove.html',inhalt=liste,title="Rezept Entferner",targetrezept=True)
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeRezept', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeRezept', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_remove.html',inhalt=liste.items,title="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 ##############
 #    Zutat   #
@@ -88,8 +91,11 @@ def showZutaten():
 
 @app.route('/admin/remove/zutat')
 def removeZutat():
-    liste = zutat.query.all()
-    return render_template('admin_remove.html',inhalt=liste,title="Zutaten Entferner",targetzutat=True)
+    page = request.args.get('page', 0, type=int)
+    liste = zutat.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeZutat', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeZutat', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_remove.html',inhalt=liste.items,title="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 
 ##############
@@ -124,6 +130,10 @@ def addhandlung():
             flash(f'Handlungsschritt wurde erfolgreich angelegt!')
     return render_template('admin_newhand.html',form=form)
 
+##############
+#    rzhat   #
+##############
+
 @app.route('/admin/modify/RZ',methods=['GET','POST'])
 def CHGverknupfung():
     """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
@@ -146,7 +156,6 @@ def CHGver2(ids):
     for entry in auswahl.zutaten:
         zumarkieren.append([entry.id,entry.name])
 
-
     if form.validate_on_submit() or form.submit.data:
         """ Hier funktioniert validate on submit nicht"""
         ausgewählte = form.zutaten.data
@@ -163,10 +172,14 @@ def CHGver2(ids):
 
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
 def removeRZhat():
-    return render_template('admin_rzremove.html',inhalt=rezept.query.all(),title="Verknüpfung Entferner",GangA=True)
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeZutat', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeZutat', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_rzremove.html',inhalt=liste.items,title="Verknüpfung Entferner",GangA=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 @app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
 def removeRZhat2(rid):
     ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
-    return render_template('admin_rzremove.html',inhalt=zutatenliste,title="RZhat Entferner",rid=ausrezept.id,GangB=True)
+    return render_template('admin_rzremove.html',inhalt=zutatenliste,title="Verknüpfungs Entferner",rid=ausrezept.id,GangB=True)
