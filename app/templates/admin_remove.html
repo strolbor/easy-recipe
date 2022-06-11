@@ -14,11 +14,11 @@
                 <div class="fw-bold">{{ message.name }}</div>
                     {% if targetrezept %}
                         <!-- message sind Rezepte -->
-                        <a href="{{url_for('deleteRezept',ids=message.rid)}}">Entfernen</a>
+                        <a href="{{url_for('deleteRezept',ids=message.id)}}">Entfernen</a>
                     {% endif %}
                     {% if targetzutat %}
                         <!-- message sind Zutaten -->
-                        <a href="{{url_for('deleteZutat',ids=message.zid)}}">Entfernen</a>
+                        <a href="{{url_for('deleteZutat',ids=message.id)}}">Entfernen</a>
                     {% endif %}
             </div>
             {% if targetrezept %}

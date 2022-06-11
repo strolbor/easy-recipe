@@ -8,21 +8,16 @@ from flask_wtf.file import FileField
 from app import db
 from app.rezept import rezept, zutat
 
-
-zutatenListe = []
-
-try:
-    for entry in zutat.query.all():
-        #zutatenListe.append([entry.zid,entry.name])
-        zutatenListe.append(entry.name)
-    pass
-except Exception as e:
-    print(e)
-
-
 class d_felder(FlaskForm):
     """ Swip Swap Formular auf der Startseite """
-    global zutatenListe
+    zutatenListe = []
+    try:
+        for entry in zutat.query.all():
+            #zutatenListe.append([entry.zid,entry.name])
+            zutatenListe.append(entry.name)
+        pass
+    except Exception as e:
+        print(e)
     eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
     selected = SelectMultipleField('Ausgewaehlte Objekte',choices=[])
     submit2 = SubmitField("-->")        # Hinzufuegen
@@ -45,19 +40,11 @@ class handlungschrittanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
-    all = rezept.query.all()
-    array = []
-    for entry in all:
-        array.append([entry.id,entry.name])
-    rezeptpicker = SelectField('Rezept Picker',choices=array,validators=[DataRequired()])
+    rezeptpicker = SelectField('Rezept Picker',choices=[],validators=[DataRequired()])
     submit = SubmitField('Rezept auswählen')
-
+    
 class rzzutaten(FlaskForm):
-    all = zutat.query.all()
-    array = []
-    for entry in all:
-        array.append([entry.id,entry.name])
-    zutaten = SelectMultipleField('Ausgewaehlte Zutaten',choices=array)
+    zutaten = SelectMultipleField('Ausgewaehlte Zutaten',choices=[])
     submit = SubmitField('Rezeptzutaten speichern')
 
 class zutatanlegen(FlaskForm):

@@ -5,6 +5,7 @@ rzhat = db.Table("association_rzhat",
   db.Column("rezept_id",db.ForeignKey("rezept.id")),
   db.Column("zutat_id", db.ForeignKey("zutat.id")),
   db.Column("optional", db.Boolean),
+  db.Column("Menge", db.Boolean),
 )
 """Many to Many Relationship Table"""
 

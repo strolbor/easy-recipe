@@ -1,19 +1,26 @@
 from app import app, db, forms
 from app.rezept import rezept, zutat,handlungsschritt
-from werkzeug.utils import secure_filename
+
 import os
 from flask import redirect, render_template,request
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
 
-from app.backend_helper import createFolderIfNotExists, getNewID
+from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper
 
+##############
+# Startseite #
+##############
 
 @app.route('/admin/')
 def admin():
     """Dies ist der Admin Hauptindex"""
     return render_template('admin_index.html')
 
+
+##############
+#   Rezept   #
+##############
 
 @app.route('/admin/add/rezept/',methods=['GET','POST'])
 def addrezept():
@@ -38,6 +45,21 @@ def addrezept():
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
     return render_template('admin_newrezept.html',form=form)
 
+
+@app.route('/admin/show/rezepte/')
+def showRezepte():
+    liste = rezept.query.all()
+    return render_template('admin_show.html',inhalt=liste)
+
+@app.route('/admin/remove/rezept')
+def removeRezept():
+    """ Löschen eines Rezeptes"""
+    liste = rezept.query.all()
+    return render_template('admin_remove.html',inhalt=liste,title="Rezept Entferner",targetrezept=True)
+
+##############
+#    Zutat   #
+##############
 @app.route('/admin/add/Zutat/',methods=['GET','POST'])
 def addzutat():
     """Hiermit wird eine neue Zutat angelegt.
@@ -59,25 +81,20 @@ def addzutat():
         flash(f'{form.name.data} wurde erfolgreich angelegt!')
     return render_template('admin_newzutat.html',form=form)
 
-def savepic(feldname, rfiles ,ordner) -> str:
-    if feldname not in rfiles:
-        """ Bild wurde garnicht erst hochgeladen"""
-        return "A"
-    file = rfiles[feldname]
-    if file.filename == '':
-        """ Es wurde kein Bild genommen."""
-        return "B"
-    if file:
-        """ Bild ist vorhanden"""
-        file = request.files[feldname]
-        filename = secure_filename(file.filename)
-        createFolderIfNotExists(os.path.join(app.instance_path,ordner))
-        path = os.path.join(app.instance_path,ordner,filename)
-        bild_url=filename
-        file.save(path)
-        print("Bild gespeichert")
-        return bild_url
+@app.route('/admin/show/zutat/')
+def showZutaten():
+    liste = zutat.query.all()
+    return render_template('admin_show.html',inhalt=liste)
 
+@app.route('/admin/remove/zutat')
+def removeZutat():
+    liste = zutat.query.all()
+    return render_template('admin_remove.html',inhalt=liste,title="Zutaten Entferner",targetzutat=True)
+
+
+##############
+#  Handlung  #
+##############
 
 @app.route('/admin/add/handlungsschritt/',methods=['GET','POST'])
 def addhandlung():
@@ -111,17 +128,19 @@ def addhandlung():
 def CHGverknupfung():
     """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
     form = forms.rzanlegen()
+    form.rezeptpicker.choices = createArrayHelper(rezept.query.all())
     if form.validate_on_submit():
-        flash('Test')
         return redirect(url_for('CHGver2',ids=form.rezeptpicker.data))
-    return render_template('admin_rzpicker.html',form=form)
+    return render_template('admin_rzpicker.html',form=form,title="Verknüpfung anlegen")
 
 @app.route('/admin/modify/RZzutat/<path:ids>',methods=['GET','POST'])
 def CHGver2(ids):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.rzzutaten()
+    
+    form.zutaten.choices = createArrayHelper(zutat.query.all())
     auswahl = rezept.query.get(ids)
-    print("Rezept Zutaten:",auswahl.zutaten[0].id)
+    
 
     zumarkieren =[]
     for entry in auswahl.zutaten:
@@ -142,22 +161,12 @@ def CHGver2(ids):
     return render_template('admin_rzpickerzutat.html',form=form,rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
 
 
+@app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
+def removeRZhat():
+    return render_template('admin_rzremove.html',inhalt= rezept.query.all(),title="Verknüpfung Entferner",GangA=True)
 
-
-
-
-
-
-@app.route('/admin/show/rezepte/')
-def showRezepte():
-    liste = rezept.query.all()
-    return render_template('admin_show.html',inhalt=liste)
-
-
-@app.route('/admin/show/zutat/')
-def showZutaten():
-    liste = zutat.query.all()
-    return render_template('admin_show.html',inhalt=liste)
-
-
-
+@app.route('/admin/remove/rzhat/remover/<path:zid>',methods=['GET','POST'])
+def removeRZhat2(zid):
+    ausrezept = rezept.query.get(zid)
+    zutatenliste = ausrezept.zutaten
+    return render_template('admin_rzremove.html',inhalt=zutatenliste,title="RZhat Entferner",rid=ausrezept.id,GangB=True)
