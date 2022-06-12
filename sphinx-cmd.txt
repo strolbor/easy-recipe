@@ -1,3 +1,3 @@
-  119  sphinx-quickstart # zum initalisieren
-  124  sphinx-apidoc -o . .. # zum kommentare lesen
-  125  make html # zum erstellen
+sphinx-quickstart # zum initalisieren
+sphinx-apidoc -o . .. # zum kommentare lesen
+make html # zum erstellen
