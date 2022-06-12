@@ -21,6 +21,17 @@
                             <!-- message sind Zutaten -->
                             <a href="{{url_for('deleteZutat',ids=message.id)}}">Entfernen</a>
                         {% endif %}
+                        {% if targettags %}
+                            <!-- message sind Tags -->
+                            <a href="">Entfernen</a>
+                        {% endif %}
+                        {% if targerzhat %}
+                            <!-- message sind Rezepte -->
+                            <a href="{{url_for('removeRZhat2',rid=message.id)}}">Auswählen</a>
+                        {% endif %}
+                        {% if targerzhat2 %}
+                            <a href="{{url_for('deleterzhat',zid=message.id,rid=rid)}}">Entfernen</a>
+                        {% endif %}
                 </div>
                 {% if targetrezept %}
                     <!-- message sind Rezepte -->
@@ -29,6 +40,14 @@
                 {% if targetzutat %}
                     <!-- message sind Zutaten -->
                     <span class="badge bg-primary rounded-pill">{{ message.inhalte | count}}</span>
+                {% endif %}
+                {% if targettags %}
+                    <!-- message sind Tags -->
+                    <span class="badge bg-primary rounded-pill">{{ message.belongs | count}}</span>
+                {% endif %}
+                {% if targerzhat %}
+                    <!-- entry sind Rezepte -->
+                    <span class="badge bg-primary rounded-pill">{{ message.zutaten | count}}</span>
                 {% endif %}
             
             </li>
