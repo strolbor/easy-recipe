@@ -1,5 +1,9 @@
 from app import db
 
+####################
+#    Beziehungen   #
+####################
+
 rzhat = db.Table("association_rzhat",
   db.Model.metadata,
   db.Column("rezept_id",db.ForeignKey("rezept.id")),
@@ -7,17 +11,48 @@ rzhat = db.Table("association_rzhat",
   db.Column("optional", db.Boolean),
   db.Column("Menge", db.Boolean),
 )
-"""Many to Many Relationship Table"""
+"""Many to Many Relationship Table bzgl. Rezept und Zutaten"""
+
+rhhat= db.Table("association_rhhat",
+  db.Model.metadata,
+  db.Column("rezept_id",db.ForeignKey("rezept.id")),
+  db.Column("handlungsschrit_id", db.ForeignKey("handlungsschritt.id")),
+  db.Column("position", db.Boolean),
+)
+"""Many to Many Relationship Table bzgl. Rezept und Handlungschritten"""
+
+rthat= db.Table("association_rthat",
+  db.Model.metadata,
+  db.Column("rezept_id",db.ForeignKey("rezept.id")),
+  db.Column("tags_id", db.ForeignKey("tags.id")),
+  db.Column("position", db.Boolean),
+)
+"""Many to Many Relationship Table bzgl. Rezept und Tags"""
+
+####################
+#      Klassen     #
+####################
+
+class tags(db.Model):
+    """ Tags Klasse"""
+    __tablename__ = "tags"
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String)
 
 class rezept(db.Model):
     """Rezept Klasse"""
     __tablename__ = "rezept"
     id     = db.Column(db.Integer,primary_key=True)
     name    = db.Column(db.String)
-    tags    = db.Column(db.String)
     bild    = db.Column(db.String)
-    zutaten = db.relationship('zutat', secondary=rzhat,
+    # Relationsships
+    zutaten = db.relationship('zutat', secondary=rzhat, # rzhat => Rezept-Zutat-Many-Many-Relationship
         backref=db.backref('inhalte'))
+    tags    = db.relationship('tags', secondary=rthat, # rthat => Rezept-Tags-Many-Many-Relationship
+        backref = db.backref('belongs'))
+    handlungsschritte    = db.relationship('handlungsschritt', secondary=rhhat, # rhhat => Rezept-Handlungsschritt-Many-Many-Relationship
+        backref = db.backref('handlungen'))
+    
 
     def __repr__(self):
         return '{} mit ID:{}'.format(self.name,self.id)

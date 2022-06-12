@@ -5,4 +5,4 @@ from flask import send_from_directory, redirect
 @app.route('/ctl/download/<path:filename>')
 def downloadfoto(filename):
     print(app.config['UPLOAD_FOLDER'], filename)
-    return send_from_directory(app.config['UPLOAD_FOLDER']+"/fotos/", filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)

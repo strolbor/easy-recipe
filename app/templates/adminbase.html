@@ -13,41 +13,67 @@
 
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Anlegeoptionen
+              Rezeptoptionen
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
-              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
-              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">Verknüpfung anlegen</a>
-              <a class="dropdown-item" href="{{url_for('addzutat')}}">Zutat anlegen</a>
-            </ul>
-          </div>
-
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Anzeigeoptionen
-            </a>
-          
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezepte</a>
-              <a class="dropdown-item" href="{{url_for('showZutaten')}}">Zutaten</a>
-              <a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsanzeiger mit Entferner</a>
-
-            </ul>
-          </div>
-
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Entfernungsoptionen
-            </a>
-          
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen</a>
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezept anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGrzhat')}}">Verknüpfung anlegen</a>
+              <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezeptentferner</a>
-              <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
               <a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsentferner</a>
             </ul>
           </div>
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Zutatoptionen
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('showZutaten')}}">Zutaten anzeigen</a>
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{url_for('addzutat')}}">Zutat anlegen</a>
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
+
+
+            </ul>
+          </div>
+
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Handlungsschrittoptionen
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('showhandlungsschritt')}}">Handlungsschritt anzeigen</a> 
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a> 
+              
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{url_for('removehandlungsschritt')}}">Handlungsschritt löschen</a>
+              
+            </ul>
+
+          </div><!-- End of div -->
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Tagoptionen
+            </a>
+          
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('showTags') }}">Tags anzeigen</a>
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{ url_for('addTags') }}">Tags anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGrthat',ids=0)}}">Verknüpfung anlegen</a> 
+              <li><hr class="dropdown-divider"></li>
+              <a class="dropdown-item" href="{{ url_for('removeTags') }}">Tags löschen</a>
+              
+              
+            </ul>
 
         </ul> <!-- navbar-nav -->
       </div><!-- collapse navbar-collapse -->

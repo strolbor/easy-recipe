@@ -29,7 +29,7 @@ class rezeptanlegen(FlaskForm):
     """ Rezeptanlege Seite im Backend """
     rezeptname = StringField('Name des Rezepts',validators=[DataRequired()])
     bildupload = FileField('Bild des Rezepts',validators=[])
-    tags = StringField('Tags')
+    tags = SelectField('Tags')
     submit = SubmitField('Speichern')
 
 class handlungschrittanlegen(FlaskForm):
@@ -40,15 +40,19 @@ class handlungschrittanlegen(FlaskForm):
     submit = SubmitField('Speichern')
 
 class rzanlegen(FlaskForm):
-    rezeptpicker = SelectField('Rezept Picker',choices=[],validators=[DataRequired()])
+    rezeptpicker = SelectField('Rezept Picker',validators=[DataRequired()])
     submit = SubmitField('Rezept auswählen')
     
-class rzzutaten(FlaskForm):
-    zutaten = SelectMultipleField('Ausgewaehlte Zutaten',choices=[])
-    submit = SubmitField('Rezeptzutaten speichern')
+class verknupfungsanleger(FlaskForm):# rzzutaten
+    zutaten = SelectMultipleField()
+    submit = SubmitField('Einstellungen speichern')
 
 class zutatanlegen(FlaskForm):
     name = StringField('Name der Zutat',validators=[DataRequired()])
     einheit = StringField('Einheit der Zutat',validators=[DataRequired()])
     bildupload = FileField('Bild der Zutat hochladen',validators=[])
+    submit = SubmitField('Speichern')
+
+class taganlegen(FlaskForm):
+    name = StringField('Name des Tags')
     submit = SubmitField('Speichern')
