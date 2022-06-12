@@ -26,11 +26,14 @@
       align-content: center;
       vertical-align: middle;
   }
+
+  .right{
+    justify-content: right;
+    display: flex;
+  }
   </style>
     <form action="/" method="post" novalidate>
       {{ form.csrf_token }}
-
-
         <table class="table table-hover table-sm asn">
             <thead> 
               <tr>
@@ -46,9 +49,9 @@
                   <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
                 </tr>
                 <tr>
-                    <td class="save">{{ form.submit4(class="btn btn-default") }}</td>
+                    <td class="save">{{ form.submit4(class="btn btn-primary") }}</td>
                     <td></td>
-                    <td class="right">{{ form.submitSuchen(class="btn btn-default")}}</td>
+                    <td class="right">{{ form.submitSuchen(class="btn btn-primary")}}</td>
                 </tr>
             </tbody>
         </table>

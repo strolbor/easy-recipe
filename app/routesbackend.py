@@ -1,75 +1,185 @@
 from app import app, db, forms
-from app.rezept import rezept, zutat
-from werkzeug.utils import secure_filename
-import os
-from flask import redirect, render_template
-from flask.helpers import flash, url_for
+from app.rezept import rezept, zutat,handlungsschritt
 
-@app.route('/admin')
+import os
+from flask import redirect, render_template,request
+from flask.helpers import flash, url_for
+from sqlalchemy import desc
+
+from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper
+
+##############
+# Startseite #
+##############
+
 @app.route('/admin/')
 def admin():
     """Dies ist der Admin Hauptindex"""
     return render_template('admin_index.html')
 
 
-@app.route('/admin/add/rezept',methods=['GET','POST'])
+##############
+#   Rezept   #
+##############
+
 @app.route('/admin/add/rezept/',methods=['GET','POST'])
 def addrezept():
     """Seite um ein neues Rezept anzulegen."""
     form = forms.rezeptanlegen()
     if form.validate_on_submit():
         # Daten des Uploads holen
-        data = form.bildupload.data
         bild_url=""
-        if data is not None:
-            filename = secure_filename(data.filename)
-            data.save(os.path.join(
-                app.instance_path,'fotos',filename
-            ))
-            bild_url="fotos/"+filename
+        if request.method == 'POST':
+            """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
+            idneu = getNewID(rezept)
+            """ Wir suchen die nächste ID"""
 
-        
+            picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """ Bild wurde gefunden und hochgeladen"""
+                bild_url = picure_url
         new = rezept(name=form.rezeptname.data,bild=bild_url,tags=form.tags.data)
-        print(new)
+        """ Neues Rezept wurde erstellt."""
         db.session.add(new)
         db.session.commit()
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
     return render_template('admin_newrezept.html',form=form)
 
-@app.route('/admin/add/handlungsschritt')
-@app.route('/admin/add/handlungsschritt/')
-def addhandlung():
-    """Dies ist der Admin Hauptindex"""
-    form = forms.handlungschrittanlegen()
-    return render_template('admin_newhand.html',form=form)
 
-@app.route('/admin/modifyRZ')
-def CHGverknupfung():
-    """Dies ist der Admin Hauptindex"""
-    return render_template('admin_index.html')
+@app.route('/admin/show/rezepte/')
+def showRezepte():
+    liste = rezept.query.all()
+    return render_template('admin_show.html',inhalt=liste)
 
-@app.route('/admin/add/Zutat',methods=['GET','POST'])
+@app.route('/admin/remove/rezept')
+def removeRezept():
+    """ Löschen eines Rezeptes"""
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeRezept', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeRezept', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_remove.html',inhalt=liste.items,title="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+
+##############
+#    Zutat   #
+##############
 @app.route('/admin/add/Zutat/',methods=['GET','POST'])
-def addZutat():
-    """Dies ist der Admin Hauptindex"""
+def addzutat():
+    """Hiermit wird eine neue Zutat angelegt.
+    """
     form = forms.zutatanlegen()
     if form.validate_on_submit():
-        newzutat = zutat(name=form.name.data,einheit=form.einheit.data)
+        # Daten des Uploads holen
+        bild_url=""
+        if request.method == 'POST':
+            idneu = getNewID(zutat)
+            picure_url = savepic('bildupload', request.files, f'zutat{idneu}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                bild_url = picure_url
+        newzutat = zutat(name=form.name.data,einheit=form.einheit.data,bild=bild_url)
         db.session.add(newzutat)
         db.session.commit()
         flash(f'{form.name.data} wurde erfolgreich angelegt!')
     return render_template('admin_newzutat.html',form=form)
 
-
-
-@app.route('/admin/show/rezepte')
-@app.route('/admin/show/rezepte/')
-def showRezepte():
-    list = rezept.query.all()
-    return render_template('admin_show.html',inhalt=list)
-
-@app.route('/admin/show/zutat')
 @app.route('/admin/show/zutat/')
 def showZutaten():
-    list = zutat.query.all()
-    return render_template('admin_show.html',inhalt=list)
+    liste = zutat.query.all()
+    return render_template('admin_show.html',inhalt=liste)
+
+@app.route('/admin/remove/zutat')
+def removeZutat():
+    page = request.args.get('page', 0, type=int)
+    liste = zutat.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeZutat', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeZutat', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_remove.html',inhalt=liste.items,title="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+
+
+##############
+#  Handlung  #
+##############
+
+@app.route('/admin/add/handlungsschritt/',methods=['GET','POST'])
+def addhandlung():
+    """Dies ist der Admin Hauptindex"""
+    form = forms.handlungschrittanlegen()
+    if form.validate_on_submit():
+        if request.method == 'POST':
+            bild_url = ""
+            bild_url2 = ""
+            idneu = getNewID(handlungsschritt)
+            picure_url = savepic('bildupload1', request.files, f'hand{idneu}')
+            print(picure_url)
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                bild_url = picure_url
+            # Zweites Handlungsbild
+            picure_url = savepic('bildupload2', request.files, f'hand{idneu}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                bild_url2 = picure_url
+            newhand = handlungsschritt(bild=bild_url,bild2=bild_url2,text=form.beschreibung.data)
+            print(newhand)
+            db.session.add(newhand)
+            db.session.commit()
+            flash(f'Handlungsschritt wurde erfolgreich angelegt!')
+    return render_template('admin_newhand.html',form=form)
+
+##############
+#    rzhat   #
+##############
+
+@app.route('/admin/modify/RZ',methods=['GET','POST'])
+def CHGverknupfung():
+    """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
+    form = forms.rzanlegen()
+    form.rezeptpicker.choices = createArrayHelper(rezept.query.all())
+    if form.validate_on_submit():
+        return redirect(url_for('CHGver2',ids=form.rezeptpicker.data))
+    return render_template('admin_rzpicker.html',form=form,title="Verknüpfung anlegen")
+
+@app.route('/admin/modify/RZzutat/<path:ids>',methods=['GET','POST'])
+def CHGver2(ids):
+    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
+    form = forms.rzzutaten()
+    
+    form.zutaten.choices = createArrayHelper(zutat.query.all())
+    auswahl = rezept.query.get(ids)
+    
+
+    zumarkieren =[]
+    for entry in auswahl.zutaten:
+        zumarkieren.append([entry.id,entry.name])
+
+    if form.validate_on_submit() or form.submit.data:
+        """ Hier funktioniert validate on submit nicht"""
+        ausgewählte = form.zutaten.data
+        """Alle Zutaten, die man ausgewählt holen"""
+        for entry in ausgewählte:
+            zutate = zutat.query.get(entry)
+            """ Zutat zum Adden hinzufügen als Objekt holen"""
+            auswahl.zutaten.append(zutate)
+        db.session.commit()
+        flash("Gespeichert!")
+        return redirect(url_for('CHGver2',ids=ids))
+    return render_template('admin_rzpickerzutat.html',form=form,rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
+
+
+@app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
+def removeRZhat():
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('removeZutat', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('removeZutat', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_rzremove.html',inhalt=liste.items,title="Verknüpfung Entferner",GangA=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+
+@app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
+def removeRZhat2(rid):
+    ausrezept = rezept.query.get(rid)
+    zutatenliste = ausrezept.zutaten
+    return render_template('admin_rzremove.html',inhalt=zutatenliste,title="Verknüpfungs Entferner",rid=ausrezept.id,GangB=True)

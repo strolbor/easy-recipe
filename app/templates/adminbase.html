@@ -19,8 +19,8 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
               <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
-              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
-              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>
+              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">Verknüpfung anlegen</a>
+              <a class="dropdown-item" href="{{url_for('addzutat')}}">Zutat anlegen</a>
             </ul>
           </div>
 
@@ -32,12 +32,8 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezepte</a>
               <a class="dropdown-item" href="{{url_for('showZutaten')}}">Zutaten</a>
-              <!-- 
-              <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
-              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
-              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
-              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
-              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>-->
+              <a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsanzeiger mit Entferner</a>
+
             </ul>
           </div>
 
@@ -46,12 +42,10 @@
               Entfernungsoptionen
             </a>
           
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"><!--
-              <a class="dropdown-item" href="{{url_for('admin')}}">Adminseite</a>
-              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezeptanlegen</a>
-              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a>
-              <a class="dropdown-item" href="{{url_for('CHGverknupfung')}}">RZ-Verknüpfung</a>
-              <a class="dropdown-item" href="{{url_for('addZutat')}}">Zutat anlegen</a>-->
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezeptentferner</a>
+              <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
+              <a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsentferner</a>
             </ul>
           </div>
 
