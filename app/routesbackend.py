@@ -79,7 +79,9 @@ def remover(mode : int,classes, redirect_url: str):
         return render_template('admin_remove.html',inhalt=liste.items,title="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_RZHAT:
         return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
-    
+    if mode == MODE_HAND:
+        return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+
 
 ##############
 #    Zutat   #

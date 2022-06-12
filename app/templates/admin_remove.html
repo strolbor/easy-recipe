@@ -12,7 +12,13 @@
         {% for message in inhalt %}
             <li class="list-group-item d-flex justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold">{{ message.name }}</div>
+                    <div class="fw-bold">
+                        {% if handlung %}
+                        {{ message.text }}
+                        {% else %}
+                        {{ message.name }} 
+                        {% endif %}
+                    </div>
                         {% if targetrezept %}
                             <!-- message sind Rezepte -->
                             <a href="{{url_for('deleteRezept',ids=message.id)}}">Entfernen</a>
@@ -32,6 +38,9 @@
                         {% if targerzhat2 %}
                             <a href="{{url_for('deleterzhat',zid=message.id,rid=rid)}}">Entfernen</a>
                         {% endif %}
+                        {% if handlung %}
+                            <a href="">nicht programmiert</a>
+                        {% endif %}
                 </div>
                 {% if targetrezept %}
                     <!-- message sind Rezepte -->
@@ -46,8 +55,12 @@
                     <span class="badge bg-primary rounded-pill">{{ message.belongs | count}}</span>
                 {% endif %}
                 {% if targerzhat %}
-                    <!-- entry sind Rezepte -->
+                    <!-- message sind Rezepte -->
                     <span class="badge bg-primary rounded-pill">{{ message.zutaten | count}}</span>
+                {% endif %}
+                {% if handlung %}
+                    <!-- message sind Handlungsschritte -->
+                    <span class="badge bg-primary rounded-pill">{{ message.handlungen | count}}</span>
                 {% endif %}
             
             </li>
