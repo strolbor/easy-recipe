@@ -1,6 +1,6 @@
 from flask import render_template, flash
 from app import app, forms
-from RezeptRanking import getRezepteByZutatNamen
+from app.RezeptRanking import getRezepteByZutatNamen
 
 
 @app.route('/base')
