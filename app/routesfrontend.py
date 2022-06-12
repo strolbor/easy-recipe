@@ -1,5 +1,6 @@
 from flask import render_template, flash
 from app import app, forms
+from app.RezeptRanking import getRezepteByZutatNamen
 
 
 @app.route('/base')
@@ -86,7 +87,15 @@ def home():
             return render_template(home_html,form=form)
         if form.submitSuchen.data:
             print("Submit suchen")
-            return render_template(home_html, form=form)
+            """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
+            chosenOnes = []
+            for entry in form.selected.choices.copy():
+                for _entry in entry:
+                    chosenOnes.append(_entry)
+                    break
+            _rezeptRankings = getRezepteByZutatNamen(chosenOnes)
+
+            return render_template("rezeptanzeige.html", form=form, rezeptRankings = _rezeptRankings)
         else:
             flash("Don't hack this!")
 

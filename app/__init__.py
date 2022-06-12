@@ -12,6 +12,7 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     print(basedir)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    REZEPTRANKINGS_PER_PAGE = 30
 
 
 app = Flask(__name__)
