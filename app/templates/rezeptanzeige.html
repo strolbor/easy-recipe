@@ -2,23 +2,34 @@
 
 {% block app_content %}
 <table cellspacing="0" cellpadding="0">
-    {%for i in range(0, 5)%}
+    {% set rezeptSpalten = 3 %}
+    {% set anzRezepte = rezeptRankings|length %}
+    {% set rezeptZeilen = anzRezepte/rezeptSpalten %}
+    {% set rezeptZeilen = rezeptZeilen|round(method='ceil')|int %}
+    {# hast bestimmte Anzahl an Zeilen, je nachdem wie viele Spalten #}
+    {# in RezeptIndex steht Index vom angezeigten Rezept, für zugriff auf rezeptRankings Array #}
+    {%for i in range(0, rezeptZeilen) %}
+    {# erschaffe nur neue Zellen, wenn auch mit rezept gefüllt wird #}
     <tr>
-        {%for j in range(0, 3)%}
+        {%for j in range(0, rezeptSpalten)%}
+        {% set rezeptIndex = 3*i+j %}
+        {% if rezeptIndex < anzRezepte %}
         <td>
             <div class="card" style="width: 31rem;">
-                <img src="..." class="card-img-top" alt="<Rezeptbild>">
+                <img src={{rezeptRankings[rezeptIndex].bild}} class="card-img-top" alt="Kein Bild">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">{{ rezeptRankings[rezeptIndex].name }}</h5>
+                    <p class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</p>
+                    <p class="card-text">Du hast folgende Zutaten: {{ rezeptRankings[rezeptIndex].vorhandeneZutatenNamen }}</p>
+                    <p class="card-text">Dir fehlen folgende Zutaten: {{ rezeptRankings[rezeptIndex].fehlendeZutatenNamen }}</p>
+                    <a href="#" class="btn btn-primary">Nachkochen </a>
                 </div>
             </div>
         </td>
+        {%endif %}
         {%endfor%}
     </tr>
     {%endfor%}
-
 </table>
 
 {% endblock %}
