@@ -16,7 +16,6 @@ class Config(object):
 
 app = Flask(__name__)
 UPLOAD_FOLDER = os.path.abspath(app.instance_path)
-print("uploadfolder:",UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = { 'png', 'jpg', 'jpeg'}
 
 app.config.from_object(Config)
