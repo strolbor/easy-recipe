@@ -23,7 +23,7 @@
                         {% endif %}
                         {% if targettags %}
                             <!-- message sind Tags -->
-                            <a href="">Entfernen</a>
+                            <a href="{{ url_for('deleteTags',ids=message.id) }}">Entfernen</a>
                         {% endif %}
                         {% if targerzhat %}
                             <!-- message sind Rezepte -->

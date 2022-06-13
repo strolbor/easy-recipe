@@ -1,10 +1,12 @@
 from app import db
 from app.rezept import rezept, zutat
 
-r1 = rezept(name="Omlett",tags="",bild="")
-r2 = rezept(name="Kartoffelsalat mit Mayonnaise",tags="",bild="")
-r3 = rezept(name="Apfelkuchen",tags="",bild="")
+r1 = rezept(name="Omlett",bild="")
+r2 = rezept(name="Kartoffelsalat mit Mayonnaise",bild="")
+r3 = rezept(name="Apfelkuchen",bild="")
 
+db.session.add_all([r1,r2,r3])
+db.session.commit()
 print(r1)
 print(rezept.query.all())
 

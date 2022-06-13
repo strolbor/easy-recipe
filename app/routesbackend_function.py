@@ -1,6 +1,6 @@
 from app import app, db, forms
 from flask import redirect, render_template
-from app.rezept import rezept, zutat
+from app.rezept import rezept, zutat, tags
 from flask.helpers import flash, url_for
 
 """Controll Section"""
@@ -24,3 +24,9 @@ def deleterzhat(rid,zid):
     rezeptw.zutaten.remove(zutatw)
     db.session.commit()
     return redirect(url_for('removeRZhat2',rid=rid))
+
+@app.route('/adminctl/delete/tags/<path:ids>')
+def deleteTags(ids):
+    db.session.delete(tags.query.get(ids))
+    db.session.commit()
+    return redirect(url_for('removeTags'))

@@ -51,7 +51,7 @@ def addrezept():
 
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    liste = rezept.query.all()
+    liste = rezept.query.order_by(rezept.name).all()
     return render_template('admin_show.html',inhalt=liste,title="Rezepte")
 
 @app.route('/admin/remove/rezept')
@@ -106,7 +106,7 @@ def addzutat():
 
 @app.route('/admin/show/zutat/')
 def showZutaten():
-    liste = zutat.query.all()
+    liste = zutat.query.order_by(zutat.name).all()
     return render_template('admin_show.html',inhalt=liste,title="Zutaten")
 
 @app.route('/admin/remove/zutat')
@@ -155,7 +155,7 @@ def removehandlungsschritt():
 @app.route('/admin/show/handlungsschritt/')
 def showhandlungsschritt():
     liste = handlungsschritt.query.all()
-    return render_template('admin_show.html',inhalt=liste,title="Tags")
+    return render_template('admin_show.html',inhalt=liste,title="Handlungsschritte")
 
 ##############
 #    rzhat   #
@@ -188,7 +188,7 @@ def removeRZhat2(rid):
 def entfernerAnzeiger(classes,redirect_url : str,title):
     """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
     form = forms.rzanlegen()
-    form.rezeptpicker.choices = createArrayHelper(classes.query.all())
+    form.rezeptpicker.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     if form.validate_on_submit():
         return redirect(url_for(redirect_url,ids=form.rezeptpicker.data))
     return render_template('admin_rzpicker.html',form=form,title=title)
@@ -197,7 +197,7 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.verknupfungsanleger()
     
-    form.zutaten.choices = createArrayHelper(classes.query.all())
+    form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     auswahl = ursprung_class.query.get(ids)
     if auswahl is None:
         abort(404) 
@@ -235,7 +235,7 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
 
 @app.route('/admin/show/tags/')
 def showTags():
-    liste = tags.query.all()
+    liste = tags.query.order_by(tags.name).all()
     return render_template('admin_show.html',inhalt=liste,title="Tags")
 
 @app.route("/admin/add/tag",methods=['GET','POST'])
