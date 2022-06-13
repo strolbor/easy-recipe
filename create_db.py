@@ -9,7 +9,7 @@ print(r1)
 print(rezept.query.all())
 
 def addZutat(name, einheit, bild):
-    new_zutat = zutat(name, einheit, bild)
+    new_zutat = zutat(name=name, einheit=einheit, bild=bild)
     db.session.add(new_zutat)
     db.session.commit()
 
