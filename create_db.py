@@ -72,3 +72,4 @@ rezept.query.get(3).zutaten.append(zutat.query.get(14))
 # Das Rezept Apfelkuchen hat folgende Tags: [<tags 1>]
 rezept.query.get(3).tags.append(tags.query.get(1))
 
+db.session.commit()

@@ -1,5 +1,5 @@
 from app import app
-from flask import send_from_directory, redirect
+from flask import send_from_directory
 
 
 @app.route('/ctl/download/<path:filename>')

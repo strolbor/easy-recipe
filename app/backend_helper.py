@@ -1,5 +1,5 @@
 import os
-
+from app import app
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
 from flask import request
@@ -36,7 +36,8 @@ def savepic(feldname, rfiles ,ordner) -> str:
         filename = secure_filename(file.filename)
         createFolderIfNotExists(os.path.join(app.instance_path,ordner))
         path = os.path.join(app.instance_path,ordner,filename)
-        bild_url=filename
+        #bild_url=filename
+        bild_url = os.path.join(ordner,filename)
         file.save(path)
-        print("Bild gespeichert")
+        print("Bild gespeichert @",bild_url)
         return bild_url
