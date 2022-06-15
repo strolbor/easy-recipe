@@ -1,6 +1,6 @@
 from app import app, db, forms
 from flask import redirect, render_template
-from app.rezept import rezept, zutat, tags
+from app.rezept import handlungsschritt, rezept, zutat, tags
 from flask.helpers import flash, url_for
 
 """Controll Section"""
@@ -30,3 +30,10 @@ def deleteTags(ids):
     db.session.delete(tags.query.get(ids))
     db.session.commit()
     return redirect(url_for('removeTags'))
+
+
+# Backup
+@app.route("/backupctl/showdata")
+def showData():
+
+    return render_template('backup.html',rezept=rezept.query.all(),zutaten=zutat.query.all(),handlungsschritte=handlungsschritt.query.all(), tags=tags.query.all())
