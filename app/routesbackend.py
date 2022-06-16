@@ -174,7 +174,7 @@ def CHGrzhat2(ids):
 
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
 def removeRZhat():
-    return remover(MODE_RZHAT,rezept,'removeRZhat2')    
+    return remover(MODE_RZHAT,rezept,'removeRZhat')    
 
 @app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
 def removeRZhat2(rid):

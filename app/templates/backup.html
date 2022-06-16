@@ -50,14 +50,18 @@ def addTags(name):<br />
     <br />
     {% for entry2 in rezept %}
         {% for entry3 in rezept.zutaten %}
-            rezept.query.get({{entry2.id}}).zutaten.append(zutat.query.get({{entry2.id}}))<br />
+            r = rezept.query.get({{entry2.id}})<br />
+            r.zutaten.append(zutat.query.get({{entry2.id}}))<br />
+            db.session.commit()<br />
         {% endfor %}
     {% endfor %}
     <br />
     {% for entry in rezept %}
     # Das Rezept {{entry.name}} hat folgende Zutaten: {{entry.zutaten}}<br />
         {% for entry2 in entry.zutaten %}
-            rezept.query.get({{entry.id}}).zutaten.append(zutat.query.get({{entry2.id}}))<br />
+            r = rezept.query.get({{entry.id}})<br />
+            r.zutaten.append(zutat.query.get({{entry2.id}}))<br />
+            db.session.commit()<br />
         {% endfor %}
     {% endfor %}
     <br />
@@ -65,7 +69,9 @@ def addTags(name):<br />
     {% for entry in rezept %}
     # Das Rezept {{entry.name}} hat folgende Tags: {{entry.tags}}<br />
         {% for entry2 in entry.tags %}
-            rezept.query.get({{entry.id}}).tags.append(tags.query.get({{entry2.id}}))<br />
+            r = rezept.query.get({{entry.id}})<br />
+            r.tags.append(tags.query.get({{entry2.id}}))<br />
+            db.session.commit()<br />
         {% endfor %}
     {% endfor %}
     <br />
