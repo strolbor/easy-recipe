@@ -1,0 +1,73 @@
+<html>   
+<body>
+from app import db<br />
+from app.rezept import rezept, zutat, tags<br />
+<br />
+def addZutat(name, einheit, bild):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;new = zutat(name=name, einheit=einheit, bild=bild)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
+    <br />
+def addRezept(name, bild):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;new = rezept(name=name, bild=bild)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
+    <br />
+def addHandlung(bild, bild2,text):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;new = rezept(bild=bild, bild2=bild2,text=text)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
+    <br />
+def addTags(name):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;new = rezept(name=name)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
+
+
+    <br />
+    # Es werden alle Rezepte angelegt<br />
+    {% for entry in rezept %}
+        addRezept(name="{{entry.name}}",bild="{{entry.bild}}")<br />
+    {% endfor %}   
+    <br />
+
+    # Es werden alle Zutaten angelegt<br />
+    {% for entry in zutaten %}
+        addZutat(name="{{entry.name}}",bild="{{entry.bild}}",einheit="{{entry.einheit}}")<br />
+    {% endfor %}
+    <br />
+
+    # Es werden alle handlungsschritte angelegt<br />
+    {% for entry in handlungsschritte %}
+        addHandlung(text="{{entry.text}}",bild="{{entry.bild}}",bild2="{{entry.bild2}}")<br />
+    {% endfor %}    
+    <br />
+
+    # Es werden alle Tags angelegt<br />
+    {% for entry in tags %}
+        addTags(name="{{entry.name}}")<br />
+    {% endfor %}
+    <br />
+    {% for entry2 in rezept %}
+        {% for entry3 in rezept.zutaten %}
+            rezept.query.get({{entry2.id}}).zutaten.append(zutat.query.get({{entry2.id}}))<br />
+        {% endfor %}
+    {% endfor %}
+    <br />
+    {% for entry in rezept %}
+    # Das Rezept {{entry.name}} hat folgende Zutaten: {{entry.zutaten}}<br />
+        {% for entry2 in entry.zutaten %}
+            rezept.query.get({{entry.id}}).zutaten.append(zutat.query.get({{entry2.id}}))<br />
+        {% endfor %}
+    {% endfor %}
+    <br />
+    # Es werden alle Tags angelegt<br /><br />
+    {% for entry in rezept %}
+    # Das Rezept {{entry.name}} hat folgende Tags: {{entry.tags}}<br />
+        {% for entry2 in entry.tags %}
+            rezept.query.get({{entry.id}}).tags.append(tags.query.get({{entry2.id}}))<br />
+        {% endfor %}
+    {% endfor %}
+    <br />
+    db.session.commit()
+</body></html>
