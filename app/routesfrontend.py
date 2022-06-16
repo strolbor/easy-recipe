@@ -1,4 +1,6 @@
-from flask import render_template, flash
+from flask import render_template, flash, url_for
+from werkzeug.utils import redirect
+
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
 
@@ -7,10 +9,11 @@ from app.RezeptRanking import getRezepteByZutatNamen
 def index():
     return render_template('base.html', title="base")
 
-@app.route('/rezeptanzeige')
+#TODO: irgendwie rezeptanzeige die rezeptRankings vermitteln, nicht über globale variable
+globalRezeptRankings = []
+@app.route('/rezeptanzeige', methods=['GET', 'POST'])
 def rezeptanzeige():
-    return render_template('rezeptanzeige.html', title="Rezeptanzeige")
-
+    return render_template('rezeptanzeige.html', title="Rezeptanzeige", rezeptRankings=globalRezeptRankings)
 
 choices_array = []
 home_html = "home.html"
@@ -95,7 +98,10 @@ def home():
                     break
             _rezeptRankings = getRezepteByZutatNamen(chosenOnes)
 
-            return render_template("rezeptanzeige.html", form=form, rezeptRankings = _rezeptRankings)
+            global globalRezeptRankings
+            globalRezeptRankings = _rezeptRankings
+            return redirect(url_for('rezeptanzeige'))
+            #return render_template("rezeptanzeige.html", rezeptRankings = _rezeptRankings)
         else:
             flash("Don't hack this!")
 
