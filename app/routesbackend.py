@@ -35,11 +35,11 @@ def addrezept():
             """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
             idneu = getNewID(rezept)
             """ Wir suchen die nächste ID"""
-
             picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
             if not (picure_url == "A" or picure_url == "B"):
                 """ Bild wurde gefunden und hochgeladen"""
                 bild_url = picure_url
+                # TODO: Absprache mmit Tom, wie wir das Bild abrufen.
         new = rezept(name=form.rezeptname.data,bild=bild_url)
         new.tags.append(tags.query.get(form.tags.data))
         """ Neues Rezept wurde erstellt."""

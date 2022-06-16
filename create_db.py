@@ -1,5 +1,5 @@
 from app import db
-from app.rezept import rezept, zutat, tags
+from app.rezept import handlungsschritt, rezept, zutat, tags
 
 def addZutat(name, einheit, bild):
     new = zutat(name=name, einheit=einheit, bild=bild)
@@ -12,7 +12,7 @@ def addRezept(name, bild):
     db.session.commit()
 
 def addHandlung(bild, bild2,text):
-    new = rezept(bild=bild, bild2=bild2,text=text)
+    new = handlungsschritt(bild=bild, bild2=bild2,text=text)
     db.session.add(new)
     db.session.commit()
 
