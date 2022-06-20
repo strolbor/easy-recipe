@@ -51,13 +51,26 @@ def addrezept():
 @app.route('/admin/modify/rezept/<path:ids>',methods=['GET','POST'])
 def modifyrezept(ids):
     form = forms.rezeptanlegen()
+    form.tags.choices = createArrayHelper(tags.query.all())
     zuRezept = rezept.query.get(ids)
+
     if form.validate_on_submit():
-        pass
+        # Name speichern
+        zuRezept.name = form.rezeptname.data
+        if request.method == 'POST':
+            # Bild aktualisieren
+            picure_url = savepic('bildupload', request.files, f'rezept{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                zuRezept.bild = picure_url
+        # Speichern des Eintrages
+        db.session.commit()
+        flash(f"{zuRezept.name} wzrde gespeichert!")
+        return redirect(url_for('modifyrezept',ids=ids))
+
     form.rezeptname.data = zuRezept.name
     print(zuRezept.tags,tags.query.all())
-    #form.tags.data = createArrayHelper(zuRezept.tags)
-    form.tags.choices = createArrayHelper(tags.query.all())
+    form.tags.data = createArrayHelper(zuRezept.tags)
+    
     if zuRezept.bild != "":
          # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
         return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
@@ -153,7 +166,7 @@ def modifyZutat(ids):
                 modifyZutat.bild = picure_url
                 print("Bild neu gesetzt")
         db.session.commit()
-        flash("Gespeichert")
+        flash(f"{modifyZutat.name}  wurde gespeichert")
         return redirect(url_for('modifyZutat',ids=ids))
 
     form.name.data = modifyZutat.name

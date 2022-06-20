@@ -1,7 +1,7 @@
 from app import app, db, forms
 from flask import redirect, render_template
 from app.rezept import handlungsschritt, rezept, zutat, tags
-from flask.helpers import flash, url_for
+from flask.helpers import url_for
 
 #
 # Objekte entfernen
