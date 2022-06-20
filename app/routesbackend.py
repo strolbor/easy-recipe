@@ -116,6 +116,37 @@ def removeZutat():
     """Hiermit wird eine Zutat entfernt"""
     return remover(MODE_ZUTATEN,zutat,'removeZutat')
 
+@app.route('/admin/modify/zutat/<path:ids>',methods=['GET','POST'])
+def modifyZutat(ids):
+    """Hiermit wird eine Zutat modifiziert."""
+    form = forms.zutatanlegen()
+    modifyZutat = zutat.query.get(ids)
+
+    if form.validate_on_submit():
+        modifyZutat.name = form.name.data
+        modifyZutat.einheit = form.einheit.data
+        if request.method == 'POST': 
+            picure_url = savepic('bildupload', request.files, f'zutat{modifyZutat.id}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyZutat.bild = picure_url
+                print("Bild neu gesetzt")
+        db.session.commit()
+        flash("Gespeichert")
+        return redirect(url_for('modifyZutat',ids=ids))
+
+    form.name.data = modifyZutat.name
+    form.einheit.data = modifyZutat.einheit
+    print("Bild",modifyZutat.bild)
+    if modifyZutat.bild == "None":
+        return render_template('admin_newzutat.html',form=form,title="Zutat Eigenschaften ändern")
+    else:
+        return render_template('admin_newzutat.html',form=form,title="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
+       
+
+
+
 ##############
 #  Handlung  #
 ##############

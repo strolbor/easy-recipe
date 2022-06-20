@@ -3,7 +3,7 @@
  
 
 {% block app_content %}
-<h3>Neue Zutat anlegen</h3>
+<h3>{{title}}</h3>
 <form class="row g-3" action="" method="post" novalidate enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
@@ -15,6 +15,12 @@
         <label class="form-label">{{ form.bildupload.label }}</label>
         {{ form.bildupload(class="form-control")}}
     </div>
+    {% if showbilds %}
+        <div class="col-12">
+            <label class="form-label">Bild der Zutat</label><br />
+            <img src="/ctl/download/{{showbild}}" />
+        </div>
+    {% endif %}
     <div class="col-12">
         <label class="form-label">{{ form.einheit.label }}</label>
         {{ form.einheit(class="form-control") }}

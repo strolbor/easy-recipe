@@ -6,7 +6,12 @@
     {% for message in inhalt %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ message.name }}</div>
+                {% if title == "Zutaten" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyZutat',ids=message.id) }}">{{ message.name }}</a></div>
+                {% endif %}
+                {% if title == "Rezepte" %}
+                    <div class="fw-bold"><a href="">{{ message.name }}</a></div>
+                {% endif %}
             <!-- Hier könnte noch text stehen-->
             </div>          
         </li>
