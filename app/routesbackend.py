@@ -46,7 +46,19 @@ def addrezept():
         db.session.add(new)
         db.session.commit()
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
-    return render_template('admin_newrezept.html',form=form)
+    return render_template('admin_rezept.html',form=form,title="Neues Rezept anlegen")
+
+@app.route('/admin/modify/rezept/<path:ids>',methods=['GET','POST'])
+def modifyrezept(ids):
+    form = forms.rezeptanlegen()
+    zuRezept = rezept.query.get(ids)
+    if form.validate_on_submit():
+        pass
+    form.rezeptname.data = zuRezept.name
+    print(zuRezept.tags,tags.query.all())
+    #form.tags.data = createArrayHelper(zuRezept.tags)
+    form.tags.choices = createArrayHelper(tags.query.all())
+    return render_template('admin_rezept.html',form=form,title="Rezepts ändern") 
 
 
 @app.route('/admin/show/rezepte/')
@@ -104,7 +116,7 @@ def addzutat():
         db.session.add(newzutat)
         db.session.commit()
         flash(f'{form.name.data} wurde erfolgreich angelegt!')
-    return render_template('admin_newzutat.html',form=form)
+    return render_template('admin_zutat.html',form=form)
 
 @app.route('/admin/show/zutat/')
 def showZutaten():
@@ -140,9 +152,9 @@ def modifyZutat(ids):
     form.einheit.data = modifyZutat.einheit
     print("Bild",modifyZutat.bild)
     if modifyZutat.bild == "None":
-        return render_template('admin_newzutat.html',form=form,title="Zutat Eigenschaften ändern")
+        return render_template('admin_zutat.html',form=form,title="Zutat Eigenschaften ändern")
     else:
-        return render_template('admin_newzutat.html',form=form,title="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
+        return render_template('admin_zutat.html',form=form,title="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
        
 
 
@@ -177,7 +189,34 @@ def addhandlung():
             db.session.add(newhand)
             db.session.commit()
             flash(f'Handlungsschritt wurde erfolgreich angelegt!')
-    return render_template('admin_newhand.html',form=form)
+    return render_template('admin_hand.html',form=form)
+
+@app.route('/admin/modify/handlungsschritt/<path:ids>',methods=['GET','POST'])
+def modifyHandlung(ids):
+    """Hiermit wird eine Zutat modifiziert."""
+    form = forms.handlungschrittanlegen()
+    modifyHand = handlungsschritt.query.get(ids)
+
+    if form.validate_on_submit():
+        modifyHand.text = form.beschreibung.data
+        if request.method == 'POST': 
+            picure_url = savepic('bildupload1', request.files, f'hand{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyHand.bild = picure_url
+                print("Bild neu gesetzt")
+            picure_url = savepic('bildupload2', request.files, f'hand{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyHand.bild2 = picure_url
+                print("Bild neu gesetzt")
+        db.session.commit()
+        flash(f"{modifyHand.text} wurde gespeichert")
+        return redirect(url_for('modifyHandlung',ids=ids))
+    form.beschreibung.data = modifyHand.text
+    return render_template('admin_hand.html',form=form)
 
 @app.route('/admin/remove/removehandlungsschritt')
 def removehandlungsschritt():
@@ -281,7 +320,20 @@ def addTags():
         flash(f'Tag <{form.name.data}> wurde erfolgreich angelegt.')
         return redirect(url_for('addTags'))
 
-    return render_template('admin_newtag.html',form=form)
+    return render_template('admin_tag.html',form=form)
+
+@app.route("/admin/modify/tag/<path:ids>",methods=['GET','POST'])
+def modifyTags(ids):
+    form = forms.taganlegen()
+    zuTag = tags.query.get(ids)
+    if form.validate_on_submit():
+        zuTag.name = form.name.data
+        db.session.commit()
+        flash(f"{zuTag.name} wurde gespeichert!")
+        return redirect(url_for('modifyTags',ids=ids))
+    form.name.data = zuTag.name
+    return render_template('admin_tag.html',form=form,title="Tag ändern")
+
 
 @app.route('/admin/modify/rthat',methods=['GET','POST'])
 def CHGrthat():

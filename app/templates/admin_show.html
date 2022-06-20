@@ -10,7 +10,13 @@
                     <div class="fw-bold"><a href="{{ url_for('modifyZutat',ids=message.id) }}">{{ message.name }}</a></div>
                 {% endif %}
                 {% if title == "Rezepte" %}
-                    <div class="fw-bold"><a href="">{{ message.name }}</a></div>
+                    <div class="fw-bold"><a href="{{ url_for('modifyrezept',ids=message.id) }}">{{ message.name }}</a></div>
+                {% endif %}
+                {% if title == "Handlungsschritte" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyHandlung',ids=message.id) }}">{{ message.text }}</a></div>
+                {% endif %}
+                {% if title == "Tags" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyTags',ids=message.id) }}">{{ message.name }}</a></div>
                 {% endif %}
             <!-- Hier könnte noch text stehen-->
             </div>          
