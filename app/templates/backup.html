@@ -1,5 +1,6 @@
 <html>   
 <body>
+{% if html == true%}
 from app import db<br />
 from app.rezept import rezept, zutat, tags<br />
 <br />
@@ -22,7 +23,30 @@ def addTags(name):<br />
 &nbsp;&nbsp;&nbsp;&nbsp;new = rezept(name=name)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
-
+{% else %}
+from app import db<br />
+from app.rezept import rezept, zutat, tags<br />
+<br />
+def addZutat(name, einheit, bild):<br />
+   new = zutat(name=name, einheit=einheit, bild=bild)<br />
+   db.session.add(new)<br />
+   db.session.commit()<br />
+    <br />
+def addRezept(name, bild):<br />
+    new = rezept(name=name, bild=bild)<br />
+    db.session.add(new)<br />
+    db.session.commit()<br />
+    <br />
+def addHandlung(bild, bild2,text):<br />
+    new = rezept(bild=bild, bild2=bild2,text=text)<br />
+    db.session.add(new)<br />
+    db.session.commit()<br />
+    <br />
+def addTags(name):<br />
+    new = rezept(name=name)<br />
+    db.session.add(new)<br />
+    db.session.commit()<br />
+{% endif %}
 
     <br />
     # Es werden alle Rezepte angelegt<br />
