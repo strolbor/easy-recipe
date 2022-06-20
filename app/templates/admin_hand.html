@@ -2,7 +2,7 @@
 
  
 {% block app_content %}
-<h3>Neuer Handlungsschritt anlegen</h3>
+<h3>{{title}}</h3>
 <form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
@@ -20,17 +20,14 @@
         <label for="formGroupExampleInput" class="form-label">{{ form.beschreibung.label }}</label>
         {{form.beschreibung(class="form-control")}}
     </div>
-    {% if showbilds1 %}
-    <div class="col-12">
-        <label class="form-label">Bild des Rezepts</label><br />
-        <img src="/ctl/download/{{showbild1}}" />
-    </div>
-    {% endif %}
-    {% if showbilds2 %}
-    <div class="col-12">
-        <label class="form-label">Bild des Rezepts</label><br />
-        <img src="/ctl/download/{{showbild2}}" />
-    </div>
+    {% if showbilds %}
+        {% for entry in array_pic %}
+        <div class="col-12">
+            <label class="form-label">Bild des Rezepts</label><br />
+            <img src="/ctl/download/{{entry}}" /><br />
+        </div>
+        {% endfor %}
+
     {% endif %}
     <div class="col-12">
         {{form.submit(class="btn btn-success") }}

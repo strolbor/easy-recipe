@@ -58,7 +58,12 @@ def modifyrezept(ids):
     print(zuRezept.tags,tags.query.all())
     #form.tags.data = createArrayHelper(zuRezept.tags)
     form.tags.choices = createArrayHelper(tags.query.all())
-    return render_template('admin_rezept.html',form=form,title="Rezepts ändern") 
+    if zuRezept.bild != "":
+         # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
+        return render_template('admin_rezept.html',form=form,title="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
+    else:
+        # Diese Aufruf wird gemacht, wenn kein Bild vorhanden ist
+        return render_template('admin_rezept.html',form=form,title="Rezepts ändern") 
 
 
 @app.route('/admin/show/rezepte/')
@@ -189,7 +194,7 @@ def addhandlung():
             db.session.add(newhand)
             db.session.commit()
             flash(f'Handlungsschritt wurde erfolgreich angelegt!')
-    return render_template('admin_hand.html',form=form)
+    return render_template('admin_hand.html',form=form,title="Neuen Handlungsschritt anlegen")
 
 @app.route('/admin/modify/handlungsschritt/<path:ids>',methods=['GET','POST'])
 def modifyHandlung(ids):
@@ -212,11 +217,22 @@ def modifyHandlung(ids):
                 Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
                 modifyHand.bild2 = picure_url
                 print("Bild neu gesetzt")
+
         db.session.commit()
         flash(f"{modifyHand.text} wurde gespeichert")
         return redirect(url_for('modifyHandlung',ids=ids))
+    array_pic =[]
+    print(modifyHand.bild,modifyHand.bild2,modifyHand.id)
+    if modifyHand.bild != "":
+        array_pic.append(modifyHand.bild)
+    if modifyHand.bild2 != "":
+        array_pic.append(modifyHand.bild2)
+    print(array_pic)
     form.beschreibung.data = modifyHand.text
-    return render_template('admin_hand.html',form=form)
+    if len(array_pic) == 0:
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,title="Handlungsschritt ändern")
+    else:
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,title="Handlungsschritt ändern")
 
 @app.route('/admin/remove/removehandlungsschritt')
 def removehandlungsschritt():
