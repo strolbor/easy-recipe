@@ -68,8 +68,11 @@ def modifyrezept(ids):
 
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    liste = rezept.query.order_by(rezept.name).all()
-    return render_template('admin_show.html',inhalt=liste,titlet="Rezepte")
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('showRezepte', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('showRezepte', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_show.html',liste=liste.items,titlet="Rezepte",next_url=next_url,prev_url=prev_url,showCase=True,page=page)
 
 @app.route('/admin/remove/rezept')
 def removeRezept():
@@ -126,7 +129,7 @@ def addzutat():
 @app.route('/admin/show/zutat/')
 def showZutaten():
     liste = zutat.query.order_by(zutat.name).all()
-    return render_template('admin_show.html',inhalt=liste,titlet="Zutaten")
+    return render_template('admin_show.html',liste=liste,titlet="Zutaten")
 
 @app.route('/admin/remove/zutat')
 def removeZutat():
@@ -243,7 +246,7 @@ def removehandlungsschritt():
 @app.route('/admin/show/handlungsschritt/')
 def showhandlungsschritt():
     liste = handlungsschritt.query.all()
-    return render_template('admin_show.html',inhalt=liste,titlet="Handlungsschritte")
+    return render_template('admin_show.html',liste=liste,titlet="Handlungsschritte")
 
 ##############
 #    rzhat   #
@@ -324,7 +327,7 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
 @app.route('/admin/show/tags/')
 def showTags():
     liste = tags.query.order_by(tags.name).all()
-    return render_template('admin_show.html',inhalt=liste,titlet="Tags")
+    return render_template('admin_show.html',liste=liste,titlet="Tags")
 
 @app.route("/admin/add/tag",methods=['GET','POST'])
 def addTags():
