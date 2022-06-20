@@ -46,7 +46,7 @@ def addrezept():
         db.session.add(new)
         db.session.commit()
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
-    return render_template('admin_rezept.html',form=form,title="Neues Rezept anlegen")
+    return render_template('admin_rezept.html',form=form,titlet="Neues Rezept anlegen")
 
 @app.route('/admin/modify/rezept/<path:ids>',methods=['GET','POST'])
 def modifyrezept(ids):
@@ -60,16 +60,16 @@ def modifyrezept(ids):
     form.tags.choices = createArrayHelper(tags.query.all())
     if zuRezept.bild != "":
          # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
-        return render_template('admin_rezept.html',form=form,title="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
+        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
     else:
         # Diese Aufruf wird gemacht, wenn kein Bild vorhanden ist
-        return render_template('admin_rezept.html',form=form,title="Rezepts ändern") 
+        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern") 
 
 
 @app.route('/admin/show/rezepte/')
 def showRezepte():
     liste = rezept.query.order_by(rezept.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Rezepte")
+    return render_template('admin_show.html',inhalt=liste,titlet="Rezepte")
 
 @app.route('/admin/remove/rezept')
 def removeRezept():
@@ -89,15 +89,15 @@ def remover(mode : int,classes, redirect_url: str):
     next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
     prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
     if mode == MODE_ZUTATEN:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_REZEPT:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_TAGS:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_RZHAT:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_HAND:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 
 ##############
@@ -126,7 +126,7 @@ def addzutat():
 @app.route('/admin/show/zutat/')
 def showZutaten():
     liste = zutat.query.order_by(zutat.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Zutaten")
+    return render_template('admin_show.html',inhalt=liste,titlet="Zutaten")
 
 @app.route('/admin/remove/zutat')
 def removeZutat():
@@ -157,9 +157,9 @@ def modifyZutat(ids):
     form.einheit.data = modifyZutat.einheit
     print("Bild",modifyZutat.bild)
     if modifyZutat.bild == "None":
-        return render_template('admin_zutat.html',form=form,title="Zutat Eigenschaften ändern")
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
     else:
-        return render_template('admin_zutat.html',form=form,title="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
        
 
 
@@ -194,7 +194,7 @@ def addhandlung():
             db.session.add(newhand)
             db.session.commit()
             flash(f'Handlungsschritt wurde erfolgreich angelegt!')
-    return render_template('admin_hand.html',form=form,title="Neuen Handlungsschritt anlegen")
+    return render_template('admin_hand.html',form=form,titlet="Neuen Handlungsschritt anlegen")
 
 @app.route('/admin/modify/handlungsschritt/<path:ids>',methods=['GET','POST'])
 def modifyHandlung(ids):
@@ -230,9 +230,9 @@ def modifyHandlung(ids):
     print(array_pic)
     form.beschreibung.data = modifyHand.text
     if len(array_pic) == 0:
-        return render_template('admin_hand.html',form=form,id=modifyHand.id,title="Handlungsschritt ändern")
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,titlet="Handlungsschritt ändern")
     else:
-        return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,title="Handlungsschritt ändern")
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,titlet="Handlungsschritt ändern")
 
 @app.route('/admin/remove/removehandlungsschritt')
 def removehandlungsschritt():
@@ -243,7 +243,7 @@ def removehandlungsschritt():
 @app.route('/admin/show/handlungsschritt/')
 def showhandlungsschritt():
     liste = handlungsschritt.query.all()
-    return render_template('admin_show.html',inhalt=liste,title="Handlungsschritte")
+    return render_template('admin_show.html',inhalt=liste,titlet="Handlungsschritte")
 
 ##############
 #    rzhat   #
@@ -266,7 +266,7 @@ def removeRZhat():
 def removeRZhat2(rid):
     ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
-    return render_template('admin_remove.html',inhalt=zutatenliste,title="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
+    return render_template('admin_remove.html',inhalt=zutatenliste,titlet="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
 
 
 
@@ -279,7 +279,7 @@ def entfernerAnzeiger(classes,redirect_url : str,title):
     form.rezeptpicker.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     if form.validate_on_submit():
         return redirect(url_for(redirect_url,ids=form.rezeptpicker.data))
-    return render_template('admin_rzpicker.html',form=form,title=title)
+    return render_template('admin_rzpicker.html',form=form,titlet=title)
 
 def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
@@ -324,7 +324,7 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
 @app.route('/admin/show/tags/')
 def showTags():
     liste = tags.query.order_by(tags.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Tags")
+    return render_template('admin_show.html',inhalt=liste,titlet="Tags")
 
 @app.route("/admin/add/tag",methods=['GET','POST'])
 def addTags():
@@ -348,7 +348,7 @@ def modifyTags(ids):
         flash(f"{zuTag.name} wurde gespeichert!")
         return redirect(url_for('modifyTags',ids=ids))
     form.name.data = zuTag.name
-    return render_template('admin_tag.html',form=form,title="Tag ändern")
+    return render_template('admin_tag.html',form=form,titlet="Tag ändern")
 
 
 @app.route('/admin/modify/rthat',methods=['GET','POST'])
