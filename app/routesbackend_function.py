@@ -68,7 +68,3 @@ def showData():
     """Alle Daten sicherin in Python Syntax"""
     return render_template('backup.html',rezept=rezept.query.all(),zutaten=zutat.query.all(),handlungsschritte=handlungsschritt.query.all(), tags=tags.query.all(),html=True)
 
-@app.route("/backupctl/showdata/txt")
-def showDataTXT():
-    """Alle Daten sicherin in Python Syntax"""
-    return render_template('backup.html',rezept=rezept.query.all(),zutaten=zutat.query.all(),handlungsschritte=handlungsschritt.query.all(), tags=tags.query.all(),html=False)

@@ -1,6 +1,18 @@
 from app import db
 
 ####################
+#        Nutzer    #
+####################
+
+class konto(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String)
+    rights = db.Column(db.String)
+    def __repr__(self):
+        return '{}'.format(self.name)
+
+
+####################
 #    Beziehungen   #
 ####################
 

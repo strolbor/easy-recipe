@@ -1,57 +1,59 @@
 from app import db
-from app.rezept import rezept, zutat, tags
+from app.rezept import rezept, zutat, tags, handlungsschritt
 
-def addZutat(name, einheit, bild):
-    new = zutat(name=name, einheit=einheit, bild=bild)
+def addZutat(name, einheit, bild, id):
+    new = zutat(name=name, einheit=einheit, bild=bild,id=id)
     db.session.add(new)
     db.session.commit()
 
-def addRezept(name, bild):
-    new = rezept(name=name, bild=bild)
+def addRezept(name, bild,id):
+    new = rezept(name=name, bild=bild,id=id)
     db.session.add(new)
     db.session.commit()
 
-def addHandlung(bild, bild2,text):
-    new = rezept(bild=bild, bild2=bild2,text=text)
+def addHandlung(bild, bild2,text,id):
+    new = handlungsschritt(bild=bild, bild2=bild2,text=text,id=id)
     db.session.add(new)
     db.session.commit()
 
-def addTags(name):
-    new = rezept(name=name)
+def addTags(name,id):
+    new = tags(name=name,id=id)
     db.session.add(new)
     db.session.commit()
-
+"""
 # Es werden alle Rezepte angelegt
-addRezept(name="Omlett",bild="")
-addRezept(name="Kartoffelsalat mit Mayonnaise",bild="")
-addRezept(name="Apfelkuchen",bild="")
+addRezept(name="Omlett",bild="",id=1)
+addRezept(name="Kartoffelsalat mit Mayonnaise",bild="",id=2)
+addRezept(name="Apfelkuchen",bild="",id=3)
+addRezept(name="Rührei",bild="rezept4/Screenshot_2022-05-26_000200.png",id=4)
 
 # Es werden alle Zutaten angelegt
-addZutat(name="Mehl",bild="none",einheit="Gramm")
-addZutat(name="Zwiebeln",bild="none",einheit="Gramm")
-addZutat(name="Gemüsebrühe",bild="none",einheit="Milliliter")
-addZutat(name="Essig",bild="none",einheit="Esslöffel")
-addZutat(name="Senf",bild="none",einheit="Teelöffel")
-addZutat(name="Salz",bild="none",einheit="Teelöffel")
-addZutat(name="Pfeffer",bild="none",einheit="Teelöffel")
-addZutat(name="Zucker",bild="none",einheit="Teelöffel")
-addZutat(name="Mayonnaise",bild="none",einheit="Gramm")
-addZutat(name="Fleischwurst",bild="none",einheit="Gramm")
-addZutat(name="Gewürzgurken",bild="none",einheit="Gramm")
-addZutat(name="Ei",bild="",einheit="Normalgröße")
-
+addZutat(name="Mehl",bild="None",einheit="Gramm",id=1)
+addZutat(name="Zwiebeln",bild="None",einheit="Gramm",id=2)
+addZutat(name="Gemüsebrühe",bild="None",einheit="Milliliter",id=3)
+addZutat(name="Essig",bild="None",einheit="Esslöffel",id=4)
+addZutat(name="Senf",bild="None",einheit="Teelöffel",id=5)
+addZutat(name="Salz",bild="None",einheit="Teelöffel",id=6)
+addZutat(name="Pfeffer",bild="None",einheit="Teelöffel",id=7)
+addZutat(name="Zucker",bild="None",einheit="Teelöffel",id=8)
+addZutat(name="Mayonnaise",bild="None",einheit="Gramm",id=9)
+addZutat(name="Fleischwurst",bild="None",einheit="Gramm",id=10)
+addZutat(name="Gewürzgurken",bild="None",einheit="Gramm",id=11)
+addZutat(name="Ei",bild="None",einheit="Normalgröße",id=12)
+"""
 # Es werden alle handlungsschritte angelegt
-addHandlung(text="reer",bild="Screenshot_2022-05-25_235554.png",bild2="Screenshot_2022-05-26_000200.png")
+addHandlung(text="reer",bild="Screenshot_2022-05-25_235554.png",bild2="Screenshot_2022-05-26_000200.png",id=1)
 
 # Es werden alle Tags angelegt
-addTags(name="Keine Angabe")
-addTags(name="Vegan")
-addTags(name="Vegetarisch")
+addTags(name="Keine Angabe",id=1)
+addTags(name="Vegan",id=2)
+addTags(name="Vegetarisch",id=3)
+addTags(name="Ei",id=4)
 
 
-# Das Rezept Omlett hat folgende Zutaten: [Ei in der Einheit: Normalgröße und der ID: 12]
+# Das Rezept Omlett hat folgende Zutaten: [Zwiebeln in der Einheit: Gramm und der ID: 2]
 r = rezept.query.get(1)
-r.zutaten.append(zutat.query.get(12))
+r.zutaten.append(zutat.query.get(2))
 db.session.commit()
 # Das Rezept Kartoffelsalat mit Mayonnaise hat folgende Zutaten: [Essig in der Einheit: Esslöffel und der ID: 4, Senf in der Einheit: Teelöffel und der ID: 5, Salz in der Einheit: Teelöffel und der ID: 6, Gewürzgurken in der Einheit: Gramm und der ID: 11, Ei in der Einheit: Normalgröße und der ID: 12]
 r = rezept.query.get(2)
@@ -79,11 +81,28 @@ db.session.commit()
 r = rezept.query.get(3)
 r.zutaten.append(zutat.query.get(10))
 db.session.commit()
+# Das Rezept Rührei hat folgende Zutaten: [Mayonnaise in der Einheit: Gramm und der ID: 9]
+r = rezept.query.get(4)
+r.zutaten.append(zutat.query.get(9))
+db.session.commit()
 
 # Es werden alle Tags angelegt
 
-# Das Rezept Omlett hat folgende Tags: []
-# Das Rezept Kartoffelsalat mit Mayonnaise hat folgende Tags: []
-# Das Rezept Apfelkuchen hat folgende Tags: []
-
+# Das Rezept Omlett hat folgende Tags: [Ei]
+r = rezept.query.get(1)
+r.tags.append(tags.query.get(4))
 db.session.commit()
+# Das Rezept Kartoffelsalat mit Mayonnaise hat folgende Tags: []
+# Das Rezept Apfelkuchen hat folgende Tags: [Keine Angabe]
+r = rezept.query.get(3)
+r.tags.append(tags.query.get(1))
+db.session.commit()
+# Das Rezept Rührei hat folgende Tags: [Keine Angabe, Ei]
+r = rezept.query.get(4)
+r.tags.append(tags.query.get(1))
+db.session.commit()
+r = rezept.query.get(4)
+r.tags.append(tags.query.get(4))
+db.session.commit()
+
+db.session.commit() 

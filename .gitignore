@@ -9,5 +9,3 @@ run_website.bat
 db*
 instance/
 *.zip
-migrations/
-app/*.db*
