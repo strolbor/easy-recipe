@@ -18,11 +18,11 @@ class d_felder(FlaskForm):
         pass
     except Exception as e:
         print(e)
-    eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
-    selected = SelectMultipleField('Ausgewaehlte Objekte',choices=[])
+    eingabe = SelectMultipleField('Zur Verfügung stehende Objekte', choices=zutatenListe)
+    selected = SelectMultipleField('Ausgewählte Objekte',choices=[])
     submit2 = SubmitField("-->")        # Hinzufuegen
     submit3 = SubmitField("<--")        #Entfernen
-    submit4 = SubmitField("Auswahl loesen")
+    submit4 = SubmitField("Auswahl lösen")
     submitSuchen = SubmitField("Suchen")
 
 class rezeptanlegen(FlaskForm):
