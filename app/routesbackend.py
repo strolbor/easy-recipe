@@ -98,6 +98,7 @@ MODE_TAGS = 1
 MODE_REZEPT = 2
 MODE_HAND = 3
 MODE_RZHAT = 4
+MODE_HANDCHG = 5
 
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
@@ -114,7 +115,8 @@ def remover(mode : int,classes, redirect_url: str):
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_HAND:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
-
+    if mode == MODE_HANDCHG:
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 ##############
 #    Zutat   #
@@ -274,6 +276,19 @@ def CHGrzhat():
 def CHGrzhat2(ids):
     return entfernerfuction(ids,zutat,rezept,MODE_ZUTATEN,'CHGrzhat2')
 
+
+##
+@app.route('/admin/modify/rhhat',methods=['GET','POST'])
+def CHGrhhat():
+    return entfernerAnzeiger(rezept,"CHGrhhat2","Verknüpfung zwischen Rezept und Handlungsschritt anlegen")
+
+@app.route('/admin/modify/rhhat-picker/<path:ids>',methods=['GET','POST'])
+def CHGrhhat2(ids):
+    return entfernerfuction(ids,handlungsschritt,rezept,MODE_HAND,'CHGrhhat2')
+
+##
+
+
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
 def removeRZhat():
     return remover(MODE_RZHAT,rezept,'removeRZhat')    
@@ -285,8 +300,9 @@ def removeRZhat2(rid):
     return render_template('admin_remove.html',inhalt=zutatenliste,titlet="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
 
 
-
-
+##############
+#   generic  #
+##############
 
 
 def entfernerAnzeiger(classes,redirect_url : str,title):
@@ -301,7 +317,11 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.verknupfungsanleger()
     
-    form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
+    if classes == handlungsschritt:
+        # Handlungsschritt hat keinen .name Attribut
+        form.zutaten.choices = createArrayHelper(classes.query.all())
+    else:
+        form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     auswahl = ursprung_class.query.get(ids)
     if auswahl is None:
         abort(404) 
@@ -320,6 +340,8 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
             if mode == MODE_TAGS:
                 """ Zielobjekt ist Klasse Tags """
                 auswahl.tags.append(gettingclass)
+            if mode == MODE_HAND:
+                auswahl.handlungsschritte.append(gettingclass)
         db.session.commit()
         flash("Gespeichert!")
         return redirect(url_for(redirect_url,ids=ids))
@@ -327,8 +349,10 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
         return render_template('admin_rzpickerzutat.html',form=form,modus="Zutaten",rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
     if mode == MODE_TAGS:
         return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
+    if mode == MODE_HAND:
+        return render_template('admin_rzpickerzutat.html',form=form,modus="Handlungsschritte",rezeptnamen=auswahl.name,inhalt=auswahl.handlungsschritte)
     else:
-        return "Error!"
+        return "Error! <br />Kein Template gefunden!"
 
 
 
