@@ -48,12 +48,7 @@ def home():
             print(error_field,error_message)
     if form.validate_on_submit():
         print("validate")
-        """
-        ver = form.eingabe.data
-        eingabe = form.selected.data
-        print(ver)
-        print(eingabe)
-        """
+
         if form.submitAdd.data:
             print("submitAdd")
             # Item soll hinzugefügt werden
@@ -121,6 +116,8 @@ def home():
                 ausgewZutaten.append((entry))
             globalRezeptRankings = getRezepteByZutatNamen(ausgewZutaten)
 
+            updateZutatenlisten()
+
             return redirect(url_for('rezeptanzeige'))
             #return render_template("rezeptanzeige.html", rezeptRankings = _rezeptRankings)
         #if form.submitSuchtext.data:
@@ -132,8 +129,8 @@ def home():
         #erster Aufruf
         print("first")
         choices_array = []
-        form.selected.choices = choices_array.copy()
+        updateZutatenlisten()
 
     print("last return")
-    form.selected.choices = choices_array
+    updateZutatenlisten()
     return render_template(home_html, form=form)
