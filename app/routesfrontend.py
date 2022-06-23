@@ -5,6 +5,7 @@ from werkzeug.utils import redirect
 
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
+from app.rezept import zutat
 
 
 @app.route('/base')
@@ -18,13 +19,22 @@ def rezeptanzeige():
     return render_template('rezeptanzeige.html', title="Rezeptanzeige", rezeptRankings=globalRezeptRankings)
 
 choices_array = []
-alleZutaten = forms.d_felder.zutatenListe.copy()
+alleZutaten = []
 
 home_html = "home.html"
 @app.route('/', methods=['GET', 'POST'])
 def home():
     global choices_array
     form = forms.d_felder()
+
+    global alleZutaten
+    alleZutaten = []
+    try:
+        for entry in zutat.query.all():
+            alleZutaten.append(entry.name)
+        pass
+    except Exception as e:
+        print(e)
 
     def updateZutatenlisten():
         global choices_array
@@ -40,7 +50,6 @@ def home():
         #verbleibendeZutaten = updateMitSuchtext( verbleibendeZutaten=verbleibendeZutaten.copy() ).copy()
 
         if form.suchtext.data != "" and form.suchtext.data != None :
-            flash(form.suchtext.data)
             uebrigeZutaten = []
             for entry in verbleibendeZutaten.copy():
                 if str(form.suchtext.data) in entry:
@@ -49,18 +58,6 @@ def home():
             #form.suchtext.data = ""
 
         form.eingabe.choices = verbleibendeZutaten
-
-    """
-    def updateMitSuchtext(verbleibendeZutaten: list):
-        if form.suchtext.data == "":
-            return verbleibendeZutaten.copy()
-        uebrigeZutaten = []
-        for entry in verbleibendeZutaten.copy():
-            if str(form.suchtext.data) in entry:
-                uebrigeZutaten.append(entry)
-        form.suchtext.data = ""
-        return uebrigeZutaten.copy()
-    """
 
     updateZutatenlisten()
 
