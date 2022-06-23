@@ -24,6 +24,7 @@ home_html = "home.html"
 @app.route('/', methods=['GET', 'POST'])
 def home():
     global choices_array
+    form = forms.d_felder()
 
     def updateZutatenlisten():
         global choices_array
@@ -35,9 +36,31 @@ def home():
                 verbleibendeZutaten.remove(entry)
             except:
                 no = "thing"
+
+        #verbleibendeZutaten = updateMitSuchtext( verbleibendeZutaten=verbleibendeZutaten.copy() ).copy()
+
+        if form.suchtext.data != "" and form.suchtext.data != None :
+            flash(form.suchtext.data)
+            uebrigeZutaten = []
+            for entry in verbleibendeZutaten.copy():
+                if str(form.suchtext.data) in entry:
+                    uebrigeZutaten.append(entry)
+            verbleibendeZutaten = uebrigeZutaten.copy()
+            #form.suchtext.data = ""
+
         form.eingabe.choices = verbleibendeZutaten
 
-    form = forms.d_felder()
+    """
+    def updateMitSuchtext(verbleibendeZutaten: list):
+        if form.suchtext.data == "":
+            return verbleibendeZutaten.copy()
+        uebrigeZutaten = []
+        for entry in verbleibendeZutaten.copy():
+            if str(form.suchtext.data) in entry:
+                uebrigeZutaten.append(entry)
+        form.suchtext.data = ""
+        return uebrigeZutaten.copy()
+    """
 
     updateZutatenlisten()
 
@@ -120,10 +143,14 @@ def home():
 
             return redirect(url_for('rezeptanzeige'))
             #return render_template("rezeptanzeige.html", rezeptRankings = _rezeptRankings)
-        #if form.submitSuchtext.data:
 
+        if form.submitSuchtext.data:
+            updateZutatenlisten()
+            return render_template(home_html, form=form)
         else:
             flash("Don't hack this!")
+
+
 
     if form.submitAdd.data == False and form.submitRm.data == False and form.submitSuchen.data == False:
         #erster Aufruf
