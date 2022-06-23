@@ -1,4 +1,4 @@
-{% extends "adminbase.html" %}
+{% extends "admin_base.html" %}
 
 
 
@@ -22,7 +22,7 @@
     {% for entry in inhalt %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ entry.name }}</div>
+            <div class="fw-bold">{% if modus == "Handlungsschritte"%}{{entry.text}}{% else %}{{ entry.name }}{% endif %}</div>
             <!-- Hier könnte noch text stehen-->
             </div>          
         </li>

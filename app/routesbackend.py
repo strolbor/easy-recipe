@@ -46,13 +46,46 @@ def addrezept():
         db.session.add(new)
         db.session.commit()
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
-    return render_template('admin_newrezept.html',form=form)
+    return render_template('admin_rezept.html',form=form,titlet="Neues Rezept anlegen")
+
+@app.route('/admin/modify/rezept/<path:ids>',methods=['GET','POST'])
+def modifyrezept(ids):
+    form = forms.rezeptanlegen()
+    form.tags.choices = createArrayHelper(tags.query.all())
+    zuRezept = rezept.query.get(ids)
+
+    if form.validate_on_submit():
+        # Name speichern
+        zuRezept.name = form.rezeptname.data
+        if request.method == 'POST':
+            # Bild aktualisieren
+            picure_url = savepic('bildupload', request.files, f'rezept{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                zuRezept.bild = picure_url
+        # Speichern des Eintrages
+        db.session.commit()
+        flash(f"{zuRezept.name} wzrde gespeichert!")
+        return redirect(url_for('modifyrezept',ids=ids))
+
+    form.rezeptname.data = zuRezept.name
+    print(zuRezept.tags,tags.query.all())
+    form.tags.data = createArrayHelper(zuRezept.tags)
+    
+    if zuRezept.bild != "":
+         # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
+        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
+    else:
+        # Diese Aufruf wird gemacht, wenn kein Bild vorhanden ist
+        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern") 
 
 
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    liste = rezept.query.order_by(rezept.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Rezepte")
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('showRezepte', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('showRezepte', page=liste.prev_num)  if liste.has_prev else None
+    return render_template('admin_show.html',liste=liste.items,titlet="Rezepte",next_url=next_url,prev_url=prev_url,showCase=True,page=page)
 
 @app.route('/admin/remove/rezept')
 def removeRezept():
@@ -65,6 +98,7 @@ MODE_TAGS = 1
 MODE_REZEPT = 2
 MODE_HAND = 3
 MODE_RZHAT = 4
+MODE_HANDCHG = 5
 
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
@@ -72,16 +106,17 @@ def remover(mode : int,classes, redirect_url: str):
     next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
     prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
     if mode == MODE_ZUTATEN:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_REZEPT:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_TAGS:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_RZHAT:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_HAND:
-        return render_template('admin_remove.html',inhalt=liste.items,title="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
-
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+    if mode == MODE_HANDCHG:
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 ##############
 #    Zutat   #
@@ -104,17 +139,48 @@ def addzutat():
         db.session.add(newzutat)
         db.session.commit()
         flash(f'{form.name.data} wurde erfolgreich angelegt!')
-    return render_template('admin_newzutat.html',form=form)
+    return render_template('admin_zutat.html',form=form)
 
 @app.route('/admin/show/zutat/')
 def showZutaten():
     liste = zutat.query.order_by(zutat.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Zutaten")
+    return render_template('admin_show.html',liste=liste,titlet="Zutaten")
 
 @app.route('/admin/remove/zutat')
 def removeZutat():
     """Hiermit wird eine Zutat entfernt"""
     return remover(MODE_ZUTATEN,zutat,'removeZutat')
+
+@app.route('/admin/modify/zutat/<path:ids>',methods=['GET','POST'])
+def modifyZutat(ids):
+    """Hiermit wird eine Zutat modifiziert."""
+    form = forms.zutatanlegen()
+    modifyZutat = zutat.query.get(ids)
+
+    if form.validate_on_submit():
+        modifyZutat.name = form.name.data
+        modifyZutat.einheit = form.einheit.data
+        if request.method == 'POST': 
+            picure_url = savepic('bildupload', request.files, f'zutat{modifyZutat.id}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyZutat.bild = picure_url
+                print("Bild neu gesetzt")
+        db.session.commit()
+        flash(f"{modifyZutat.name}  wurde gespeichert")
+        return redirect(url_for('modifyZutat',ids=ids))
+
+    form.name.data = modifyZutat.name
+    form.einheit.data = modifyZutat.einheit
+    print("Bild",modifyZutat.bild)
+    if modifyZutat.bild == "None":
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
+    else:
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
+       
+
+
 
 ##############
 #  Handlung  #
@@ -146,7 +212,45 @@ def addhandlung():
             db.session.add(newhand)
             db.session.commit()
             flash(f'Handlungsschritt wurde erfolgreich angelegt!')
-    return render_template('admin_newhand.html',form=form)
+    return render_template('admin_hand.html',form=form,titlet="Neuen Handlungsschritt anlegen")
+
+@app.route('/admin/modify/handlungsschritt/<path:ids>',methods=['GET','POST'])
+def modifyHandlung(ids):
+    """Hiermit wird eine Zutat modifiziert."""
+    form = forms.handlungschrittanlegen()
+    modifyHand = handlungsschritt.query.get(ids)
+
+    if form.validate_on_submit():
+        modifyHand.text = form.beschreibung.data
+        if request.method == 'POST': 
+            picure_url = savepic('bildupload1', request.files, f'hand{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyHand.bild = picure_url
+                print("Bild neu gesetzt")
+            picure_url = savepic('bildupload2', request.files, f'hand{ids}')
+            if not (picure_url == "A" or picure_url == "B"):
+                """Bild wurde gefunden und benutzt.
+                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
+                modifyHand.bild2 = picure_url
+                print("Bild neu gesetzt")
+
+        db.session.commit()
+        flash(f"{modifyHand.text} wurde gespeichert")
+        return redirect(url_for('modifyHandlung',ids=ids))
+    array_pic =[]
+    print(modifyHand.bild,modifyHand.bild2,modifyHand.id)
+    if modifyHand.bild != "":
+        array_pic.append(modifyHand.bild)
+    if modifyHand.bild2 != "":
+        array_pic.append(modifyHand.bild2)
+    print(array_pic)
+    form.beschreibung.data = modifyHand.text
+    if len(array_pic) == 0:
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,titlet="Handlungsschritt ändern")
+    else:
+        return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,titlet="Handlungsschritt ändern")
 
 @app.route('/admin/remove/removehandlungsschritt')
 def removehandlungsschritt():
@@ -157,7 +261,7 @@ def removehandlungsschritt():
 @app.route('/admin/show/handlungsschritt/')
 def showhandlungsschritt():
     liste = handlungsschritt.query.all()
-    return render_template('admin_show.html',inhalt=liste,title="Handlungsschritte")
+    return render_template('admin_show.html',liste=liste,titlet="Handlungsschritte")
 
 ##############
 #    rzhat   #
@@ -172,19 +276,33 @@ def CHGrzhat():
 def CHGrzhat2(ids):
     return entfernerfuction(ids,zutat,rezept,MODE_ZUTATEN,'CHGrzhat2')
 
+
+##
+@app.route('/admin/modify/rhhat',methods=['GET','POST'])
+def CHGrhhat():
+    return entfernerAnzeiger(rezept,"CHGrhhat2","Verknüpfung zwischen Rezept und Handlungsschritt anlegen")
+
+@app.route('/admin/modify/rhhat-picker/<path:ids>',methods=['GET','POST'])
+def CHGrhhat2(ids):
+    return entfernerfuction(ids,handlungsschritt,rezept,MODE_HAND,'CHGrhhat2')
+
+##
+
+
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])
 def removeRZhat():
-    return remover(MODE_RZHAT,rezept,'removeRZhat2')    
+    return remover(MODE_RZHAT,rezept,'removeRZhat')    
 
 @app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
 def removeRZhat2(rid):
     ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
-    return render_template('admin_remove.html',inhalt=zutatenliste,title="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
+    return render_template('admin_remove.html',inhalt=zutatenliste,titlet="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
 
 
-
-
+##############
+#   generic  #
+##############
 
 
 def entfernerAnzeiger(classes,redirect_url : str,title):
@@ -193,13 +311,17 @@ def entfernerAnzeiger(classes,redirect_url : str,title):
     form.rezeptpicker.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     if form.validate_on_submit():
         return redirect(url_for(redirect_url,ids=form.rezeptpicker.data))
-    return render_template('admin_rzpicker.html',form=form,title=title)
+    return render_template('admin_rzpicker.html',form=form,titlet=title)
 
 def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.verknupfungsanleger()
     
-    form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
+    if classes == handlungsschritt:
+        # Handlungsschritt hat keinen .name Attribut
+        form.zutaten.choices = createArrayHelper(classes.query.all())
+    else:
+        form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
     auswahl = ursprung_class.query.get(ids)
     if auswahl is None:
         abort(404) 
@@ -218,6 +340,8 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
             if mode == MODE_TAGS:
                 """ Zielobjekt ist Klasse Tags """
                 auswahl.tags.append(gettingclass)
+            if mode == MODE_HAND:
+                auswahl.handlungsschritte.append(gettingclass)
         db.session.commit()
         flash("Gespeichert!")
         return redirect(url_for(redirect_url,ids=ids))
@@ -225,8 +349,10 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
         return render_template('admin_rzpickerzutat.html',form=form,modus="Zutaten",rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
     if mode == MODE_TAGS:
         return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
+    if mode == MODE_HAND:
+        return render_template('admin_rzpickerzutat.html',form=form,modus="Handlungsschritte",rezeptnamen=auswahl.name,inhalt=auswahl.handlungsschritte)
     else:
-        return "Error!"
+        return "Error! <br />Kein Template gefunden!"
 
 
 
@@ -238,7 +364,7 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
 @app.route('/admin/show/tags/')
 def showTags():
     liste = tags.query.order_by(tags.name).all()
-    return render_template('admin_show.html',inhalt=liste,title="Tags")
+    return render_template('admin_show.html',liste=liste,titlet="Tags")
 
 @app.route("/admin/add/tag",methods=['GET','POST'])
 def addTags():
@@ -250,7 +376,20 @@ def addTags():
         flash(f'Tag <{form.name.data}> wurde erfolgreich angelegt.')
         return redirect(url_for('addTags'))
 
-    return render_template('admin_newtag.html',form=form)
+    return render_template('admin_tag.html',form=form)
+
+@app.route("/admin/modify/tag/<path:ids>",methods=['GET','POST'])
+def modifyTags(ids):
+    form = forms.taganlegen()
+    zuTag = tags.query.get(ids)
+    if form.validate_on_submit():
+        zuTag.name = form.name.data
+        db.session.commit()
+        flash(f"{zuTag.name} wurde gespeichert!")
+        return redirect(url_for('modifyTags',ids=ids))
+    form.name.data = zuTag.name
+    return render_template('admin_tag.html',form=form,titlet="Tag ändern")
+
 
 @app.route('/admin/modify/rthat',methods=['GET','POST'])
 def CHGrthat():

@@ -1,12 +1,11 @@
 import os
-from random import choices
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField,StringField,SelectField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
-from app.rezept import rezept, zutat
+from app.rezept import zutat
 
 class d_felder(FlaskForm):
     """ Swip Swap Formular auf der Startseite """

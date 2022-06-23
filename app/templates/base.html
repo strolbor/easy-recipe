@@ -25,28 +25,14 @@
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('admin')}}">Adminbereich</a>
           </li>
-          <!--
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>-->
         </ul>
-        <!--
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>-->
       </div>
     </div>
   </nav> 
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid" style="padding-left: 325px;padding-right: 325px;">
+<div class="container-fluid"><!-- style="padding-left: 325px;padding-right: 325px;"-->
   {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}

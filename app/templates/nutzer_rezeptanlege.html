@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block app_content %}
+<form>
+    {{ form.csrf_token }}
+
+    <div class="col-12">
+        <!-- Rezeptnamen -->
+        <label for="formGroupExampleInput" class="form-label">{{ form.name.label }}</label>
+        {{form.name(class="form-control")}}
+    </div>
+
+    <div class="col-12">
+         <!-- Rezeptbild hochladen -->
+        <label class="form-label">{{ form.bildupload.label }}</label>
+        {{ form.bildupload(class="form-control")}}
+    </div>
+
+    <div class="col-12">
+        <!-- Zutatenverknüpfen -->
+       <label class="form-label">{{ form.bildupload.label }}</label>
+       {{ form.zutaten(class="form-control")}} {{form.menge(class="form-control")}}
+   </div>
+
+   <div class="col-12">
+    <!-- Handlungschrittverknüpfer -->
+   <label class="form-label">{{ form.bildupload.label }}</label>
+        {{ form.bildupload(class="form-control")}}
+    </div>
+
+    <div class="col-12">
+        <!-- Tags verknüpfer -->
+       <label class="form-label">{{ form.bildupload.label }}</label>
+            {{ form.bildupload(class="form-control")}}
+        </div>
+
+
+    <div class="col-12">
+        <!-- Submit des Feldes -->
+        {{form.submit(class="btn btn-success") }}
+    </div>
+</form>
+{% endblock %}

@@ -3,6 +3,7 @@ from app import app
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
 from flask import request
+from app.rezept import handlungsschritt
 
 def createFolderIfNotExists(name):
     if not os.path.exists(name):
@@ -19,7 +20,10 @@ def getNewID(classes):
 def createArrayHelper(arrayeingabe: list) :
     array = []
     for entry in arrayeingabe:
-        array.append([entry.id,entry.name])
+        try:
+            array.append([entry.id,entry.name])
+        except AttributeError:
+            array.append([entry.id,entry.text])
     return array
 
 def savepic(feldname, rfiles ,ordner) -> str:

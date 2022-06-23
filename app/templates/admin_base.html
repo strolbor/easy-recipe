@@ -10,14 +10,17 @@
       <a class="navbar-brand" href="/">Easy-Recipe</a>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" target="_blank" href="{{url_for('showData')}}">Backup</a>
+          </li>
+          <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Rezeptoptionen
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen</a>
+              <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen und ändern</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezept anlegen</a>
               <a class="dropdown-item" href="{{url_for('CHGrzhat')}}">Verknüpfung anlegen</a>
@@ -27,6 +30,7 @@
             </ul>
           </div>
 
+          <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Zutatoptionen
@@ -38,11 +42,10 @@
               <a class="dropdown-item" href="{{url_for('addzutat')}}">Zutat anlegen</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
-
-
             </ul>
           </div>
 
+          <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Handlungsschrittoptionen
@@ -52,13 +55,14 @@
               <a class="dropdown-item" href="{{url_for('showhandlungsschritt')}}">Handlungsschritt anzeigen</a> 
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a> 
+              <a class="dropdown-item" href="{{url_for('CHGrhhat')}}">Handlungsschritt Verknüpfung</a>
               
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removehandlungsschritt')}}">Handlungsschritt löschen</a>
-              
             </ul>
-
           </div><!-- End of div -->
+
+          <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Tagoptionen
@@ -71,12 +75,23 @@
               <a class="dropdown-item" href="{{url_for('CHGrthat',ids=0)}}">Verknüpfung anlegen</a> 
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{ url_for('removeTags') }}">Tags löschen</a>
-              
-              
             </ul>
+          </div>
+      
+      <!-- Neues Dropdown Menü -->
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          Nutzeroptionen
+        </a>
+      
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="{{ url_for('showTags') }}">Nutzerverwaltung</a>
+          <li><hr class="dropdown-divider"></li>
+        </ul>
 
-        </ul> <!-- navbar-nav -->
+      </ul> <!-- navbar-nav -->
       </div><!-- collapse navbar-collapse -->
+
     </div><!-- container -->
   </nav> <!--navbar -->
 {% endblock %}

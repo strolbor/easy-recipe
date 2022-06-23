@@ -1,15 +1,42 @@
-{% extends "adminbase.html" %}
+{% extends "admin_base.html" %}
 
 {% block app_content %}
-<h3>Anzeige {{title}}</h3>
-<ol class="list-group list-group-numbered">
-    {% for message in inhalt %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-            <div class="fw-bold">{{ message.name }}</div>
-            <!-- Hier könnte noch text stehen-->
-            </div>          
-        </li>
-    {% endfor %}
-</ol>
+    <h3>{{titlet}}</h3>
+    <style>
+        .a {
+            color: white;
+        }
+        
+    </style>
+    <ol class="list-group list-group-numbered">
+        {% for message in liste %}
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold">
+                        {% if handlung %}
+                        {{ message.text }}
+                        {% else %}
+                        {{ message.name }} 
+                        {% endif %}
+                    </div>
+                    {% if titlet == "Zutaten" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyZutat',ids=message.id) }}">ändern</a></div>
+                {% endif %}
+                {% if titlet == "Rezepte" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyrezept',ids=message.id) }}">ändern</a></div>
+                {% endif %}
+                {% if titlet == "Handlungsschritte" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyHandlung',ids=message.id) }}">ändern</a></div>
+                {% endif %}
+                {% if titlet == "Tags" %}
+                    <div class="fw-bold"><a href="{{ url_for('modifyTags',ids=message.id) }}">ändern</a></div>
+                {% endif %}
+                </div>
+            
+            </li>
+        {% endfor %}
+    </ol>
+    {% if showCase %}
+        {% include 'admin_inc_pagi.html' %}
+    {% endif %}
 {% endblock %}

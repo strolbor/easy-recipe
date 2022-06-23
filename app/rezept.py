@@ -1,6 +1,18 @@
 from app import db
 
 ####################
+#        Nutzer    #
+####################
+
+class konto(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String)
+    rights = db.Column(db.String)
+    def __repr__(self):
+        return '{}'.format(self.name)
+
+
+####################
 #    Beziehungen   #
 ####################
 
@@ -9,7 +21,7 @@ rzhat = db.Table("association_rzhat",
   db.Column("rezept_id",db.ForeignKey("rezept.id")),
   db.Column("zutat_id", db.ForeignKey("zutat.id")),
   db.Column("optional", db.Boolean),
-  db.Column("Menge", db.Boolean),
+  db.Column("Menge", db.Integer),
 )
 """Many to Many Relationship Table bzgl. Rezept und Zutaten"""
 
@@ -17,7 +29,7 @@ rhhat= db.Table("association_rhhat",
   db.Model.metadata,
   db.Column("rezept_id",db.ForeignKey("rezept.id")),
   db.Column("handlungsschrit_id", db.ForeignKey("handlungsschritt.id")),
-  db.Column("position", db.Boolean),
+  db.Column("position", db.Integer),
 )
 """Many to Many Relationship Table bzgl. Rezept und Handlungschritten"""
 
@@ -25,7 +37,6 @@ rthat= db.Table("association_rthat",
   db.Model.metadata,
   db.Column("rezept_id",db.ForeignKey("rezept.id")),
   db.Column("tags_id", db.ForeignKey("tags.id")),
-  db.Column("position", db.Boolean),
 )
 """Many to Many Relationship Table bzgl. Rezept und Tags"""
 

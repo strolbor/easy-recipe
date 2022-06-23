@@ -1,7 +1,7 @@
 from app import app, db, forms
 from flask import redirect, render_template
 from app.rezept import handlungsschritt, rezept, zutat, tags
-from flask.helpers import flash, url_for
+from flask.helpers import url_for
 
 #
 # Objekte entfernen
@@ -63,7 +63,8 @@ def deleterhhat(rid,hid):
 #
 # Backup
 #
-@app.route("/backupctl/showdata")
+@app.route("/backupctl/showdata/html")
 def showData():
     """Alle Daten sicherin in Python Syntax"""
-    return render_template('backup.html',rezept=rezept.query.all(),zutaten=zutat.query.all(),handlungsschritte=handlungsschritt.query.all(), tags=tags.query.all())
+    return render_template('backup.html',rezept=rezept.query.all(),zutaten=zutat.query.all(),handlungsschritte=handlungsschritt.query.all(), tags=tags.query.all(),html=True)
+
