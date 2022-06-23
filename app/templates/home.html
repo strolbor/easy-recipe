@@ -44,12 +44,15 @@
             </thead>
             <tbody>
                 <tr>
+                    <td class="suchtext"> Suche eine Zutat: {{ form.suchtext() }} {{ form.submitSuchtext }}</td>
+                </tr>
+                <tr>
                   <td class="eingabe"> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td>
-                  <td class="buttons">{{ form.submit3(class="btn btn-danger") }} {{ form.submit2(class="btn btn-success") }}</td>
+                  <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td>
                   <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
                 </tr>
                 <tr>
-                    <td class="save">{{ form.submit4(class="btn btn-primary") }}</td>
+                    <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td>
                     <td></td>
                     <td class="right">{{ form.submitSuchen(class="btn btn-primary")}}</td>
                 </tr>
