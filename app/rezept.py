@@ -1,4 +1,4 @@
-fo
+from app import db
 
 ####################
 #        Nutzer    #
