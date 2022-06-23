@@ -52,7 +52,7 @@ def home():
         if form.suchtext.data != "" and form.suchtext.data != None :
             uebrigeZutaten = []
             for entry in verbleibendeZutaten.copy():
-                if str(form.suchtext.data) in entry:
+                if str(form.suchtext.data).lower() in str(entry).lower():
                     uebrigeZutaten.append(entry)
             verbleibendeZutaten = uebrigeZutaten.copy()
             #form.suchtext.data = ""
