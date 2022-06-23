@@ -17,12 +17,14 @@ class d_felder(FlaskForm):
         pass
     except Exception as e:
         print(e)
-    eingabe = SelectMultipleField('Zur Verfuegung stehende Objekte', choices=zutatenListe)
-    selected = SelectMultipleField('Ausgewaehlte Objekte',choices=[])
-    submit2 = SubmitField("-->")        # Hinzufuegen
-    submit3 = SubmitField("<--")        #Entfernen
-    submit4 = SubmitField("Auswahl loesen")
+    eingabe = SelectMultipleField('Zur Verfügung stehende Objekte', choices=zutatenListe)
+    selected = SelectMultipleField('Ausgewählte Objekte',choices=[])
+    submitAdd = SubmitField("-->")        # Hinzufuegen
+    submitRm = SubmitField("<--")        #Entfernen
+    submitLoesen = SubmitField("Auswahl lösen")
     submitSuchen = SubmitField("Suchen")
+    suchtext = StringField('Zutat suchen',validators=[])
+    submitSuchtext = SubmitField('Starte Zutatensuche')
 
 class rezeptanlegen(FlaskForm):
     """ Rezeptanlege Seite im Backend """
