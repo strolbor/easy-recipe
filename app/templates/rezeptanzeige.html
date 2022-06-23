@@ -15,8 +15,8 @@
         {% set rezeptIndex = 3*i+j %}
         {% if rezeptIndex < anzRezepte %}
         <td>
-            <div class="card" style="width: 31rem;">
-                <img src=/ctl/download/{{rezeptRankings[rezeptIndex].bild}} class="card-img-top" alt="Kein Bild">
+            <div class="card" style="width: 31rem; height: 40rem;">
+                <img src=/ctl/download/{{rezeptRankings[rezeptIndex].bild}} class="card-img-top" alt="Kein Bild" style="width: 31rem">
                 <div class="card-body">
                     <h5 class="card-title">{{ rezeptRankings[rezeptIndex].name }}</h5>
                     <p class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</p>
