@@ -3,31 +3,57 @@ from app import db
 ####################
 #        Nutzer    #
 ####################
-
+"""
 class konto(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String)
     rights = db.Column(db.String)
     def __repr__(self):
         return '{}'.format(self.name)
+"""
 
+####################
+#                  #
+####################
+
+class Association(db.Model):
+    __tablename__ = "association"
+    rid = db.Column(db.ForeignKey("rezeptsql.id"), primary_key=True)
+    zid = db.Column(db.ForeignKey("zutatsql.id"), primary_key=True)
+    menge = db.Column(db.Integer())
+    optional = db.Column(db.Boolean())
+    hatzutat = db.relationship("zutat", back_populates="rezepte") # child relationship
+    rezept = db.relationship("rezept", back_populates="zutaten") # parents relationship
+
+class rezept(db.Model):
+    """Rezept Klasse"""
+    __tablename__ = "rezeptsql"
+    id     = db.Column(db.Integer,primary_key=True)
+    name    = db.Column(db.String)
+    bild    = db.Column(db.String)
+    zutaten = db.relationship("Association", back_populates="rezept")
+
+
+class zutat(db.Model):
+    """Zutaten Klasse"""
+    __tablename__ = "zutatsql"
+    id     = db.Column(db.Integer,primary_key=True)
+    einheit = db.Column(db.String)
+    bild    = db.Column(db.String)
+    name    = db.Column(db.String)
+    #parents = db.relationship("Association", back_populates="child")
+    rezepte = db.relationship("Association", back_populates="hatzutat")
+    
+    def __repr__(self):
+        return '{} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.id)
 
 ####################
 #    Beziehungen   #
 ####################
 
-rzhat = db.Table("association_rzhat",
-  db.Model.metadata,
-  db.Column("rezept_id",db.ForeignKey("rezept.id")),
-  db.Column("zutat_id", db.ForeignKey("zutat.id")),
-  db.Column("optional", db.Boolean),
-  db.Column("Menge", db.Integer),
-)
-"""Many to Many Relationship Table bzgl. Rezept und Zutaten"""
-
 rhhat= db.Table("association_rhhat",
   db.Model.metadata,
-  db.Column("rezept_id",db.ForeignKey("rezept.id")),
+  db.Column("rezept_id",db.ForeignKey("rezeptsql.id")),
   db.Column("handlungsschrit_id", db.ForeignKey("handlungsschritt.id")),
   db.Column("position", db.Integer),
 )
@@ -35,7 +61,7 @@ rhhat= db.Table("association_rhhat",
 
 rthat= db.Table("association_rthat",
   db.Model.metadata,
-  db.Column("rezept_id",db.ForeignKey("rezept.id")),
+  db.Column("rezept_id",db.ForeignKey("rezeptsql.id")),
   db.Column("tags_id", db.ForeignKey("tags.id")),
 )
 """Many to Many Relationship Table bzgl. Rezept und Tags"""
@@ -51,35 +77,6 @@ class tags(db.Model):
     name = db.Column(db.String)
     def __repr__(self):
         return '{}'.format(self.name)
-
-class rezept(db.Model):
-    """Rezept Klasse"""
-    __tablename__ = "rezept"
-    id     = db.Column(db.Integer,primary_key=True)
-    name    = db.Column(db.String)
-    bild    = db.Column(db.String)
-    # Relationsships
-    zutaten = db.relationship('zutat', secondary=rzhat, # rzhat => Rezept-Zutat-Many-Many-Relationship
-        backref=db.backref('inhalte'))
-    tags    = db.relationship('tags', secondary=rthat, # rthat => Rezept-Tags-Many-Many-Relationship
-        backref = db.backref('belongs'))
-    handlungsschritte    = db.relationship('handlungsschritt', secondary=rhhat, # rhhat => Rezept-Handlungsschritt-Many-Many-Relationship
-        backref = db.backref('handlungen'))
-    
-
-    def __repr__(self):
-        return '{} mit ID:{}'.format(self.name,self.id)
-
-class zutat(db.Model):
-    """Zutaten Klasse"""
-    __tablename__ = "zutat"
-    id     = db.Column(db.Integer,primary_key=True)
-    einheit = db.Column(db.String)
-    bild    = db.Column(db.String)
-    name    = db.Column(db.String)
-    
-    def __repr__(self):
-        return '{} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.id)
 
 class handlungsschritt(db.Model):
     """Handlungsschirtt Klasse"""

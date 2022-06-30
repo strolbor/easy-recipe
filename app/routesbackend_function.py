@@ -1,6 +1,6 @@
 from app import app, db, forms
 from flask import redirect, render_template
-from app.rezept import handlungsschritt, rezept, zutat, tags
+from app.rezept import Association, handlungsschritt, rezept, zutat, tags
 from flask.helpers import url_for
 
 #
@@ -36,8 +36,9 @@ def deleteTags(ids):
 def deleterzhat(rid,zid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Zutat"""
     rezeptw = rezept.query.get(rid)
-    zutatw = zutat.query.get(zid)
-    rezeptw.zutaten.remove(zutatw)
+    assoc = Association.query.get((rid,zid))
+    print(assoc)
+    rezeptw.zutaten.remove(assoc)
     db.session.commit()
     return redirect(url_for('removeRZhat2',rid=rid))
 
