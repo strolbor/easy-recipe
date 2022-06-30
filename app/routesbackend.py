@@ -112,11 +112,11 @@ def remover(mode : int,classes, redirect_url: str):
     if mode == MODE_TAGS:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_RZHAT:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Rezept <-> Zutat",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_HAND:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
     if mode == MODE_HANDCHG:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
 
 ##############
 #    Zutat   #
