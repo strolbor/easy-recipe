@@ -22,8 +22,11 @@ class Association(db.Model):
     zid = db.Column(db.ForeignKey("zutatsql.id"), primary_key=True)
     menge = db.Column(db.Integer())
     optional = db.Column(db.Boolean())
-    hatzutat = db.relationship("zutat", back_populates="rezepte") # child relationship
-    rezept = db.relationship("rezept", back_populates="zutaten") # parents relationship
+    hatzutat = db.relationship("zutat", back_populates="rezepte", cascade="save-update") # child relationship
+    rezept = db.relationship("rezept", back_populates="zutaten", cascade="save-update") # parents relationship
+
+    def __repr__(self) -> str:
+        return "RZ-Verknüpfung mit {} und {}".format(self.rezept,self.hatzutat)
 
 class rezept(db.Model):
     """Rezept Klasse"""
@@ -31,7 +34,10 @@ class rezept(db.Model):
     id     = db.Column(db.Integer,primary_key=True)
     name    = db.Column(db.String)
     bild    = db.Column(db.String)
-    zutaten = db.relationship("Association", back_populates="rezept")
+    zutaten = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
+
+    def __repre__(self):
+        return "Rezept: {} mit der ID: {}".format(self.name,self.id)
 
 
 class zutat(db.Model):
@@ -42,7 +48,7 @@ class zutat(db.Model):
     bild    = db.Column(db.String)
     name    = db.Column(db.String)
     #parents = db.relationship("Association", back_populates="child")
-    rezepte = db.relationship("Association", back_populates="hatzutat")
+    rezepte = db.relationship("Association", back_populates="hatzutat",cascade="all, delete-orphan")
     
     def __repr__(self):
         return '{} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.id)
