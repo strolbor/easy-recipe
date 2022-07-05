@@ -30,4 +30,6 @@ app.config['ITEMS_PER_PAGE'] = 10
 
 app.debug = True
 
-from app import forms, rezept, routesnutzer,routesbackend,routesbackend_function, routesfrontend, routesdownload
+from app import forms, rezept, routesnutzer, \
+    routesbackend,routesbackend_function, routes_handlung, routes_hat, routes_rezept, routes_tags, routes_zutat, \
+        routesfrontend, routesdownload

@@ -59,6 +59,7 @@ class rezept(db.Model):
     id     = db.Column(db.Integer,primary_key=True)
     name    = db.Column(db.String)
     bild    = db.Column(db.String)
+
     # Relationsship zu den Assocation: Rezept <-> Zutat
     zutaten = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
     # Relationsship zu den Assocation: Rezept <-> Handlungsschritt
@@ -91,7 +92,7 @@ class zutat(db.Model):
     einheit = db.Column(db.String)
     bild    = db.Column(db.String)
     name    = db.Column(db.String)
-    #parents = db.relationship("Association", back_populates="child")
+
     rezepte = db.relationship("Association", back_populates="hatzutat",cascade="all, delete-orphan")
     
     def __repr__(self):
