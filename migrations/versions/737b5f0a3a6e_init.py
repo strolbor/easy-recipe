@@ -1,8 +1,8 @@
 """init
 
-Revision ID: c3d8d79e90c9
+Revision ID: 737b5f0a3a6e
 Revises: 
-Create Date: 2022-06-30 14:56:31.361397
+Create Date: 2022-07-05 09:44:51.630375
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c3d8d79e90c9'
+revision = '737b5f0a3a6e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -53,11 +53,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('rid', 'zid')
     )
     op.create_table('association_rhhat',
-    sa.Column('rezept_id', sa.Integer(), nullable=True),
-    sa.Column('handlungsschrit_id', sa.Integer(), nullable=True),
+    sa.Column('rid', sa.Integer(), nullable=False),
+    sa.Column('hid', sa.Integer(), nullable=False),
     sa.Column('position', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['handlungsschrit_id'], ['handlungsschritt.id'], ),
-    sa.ForeignKeyConstraint(['rezept_id'], ['rezeptsql.id'], )
+    sa.ForeignKeyConstraint(['hid'], ['handlungsschritt.id'], ),
+    sa.ForeignKeyConstraint(['rid'], ['rezeptsql.id'], ),
+    sa.PrimaryKeyConstraint('rid', 'hid'),
+    sa.UniqueConstraint('position')
     )
     op.create_table('association_rthat',
     sa.Column('rezept_id', sa.Integer(), nullable=True),

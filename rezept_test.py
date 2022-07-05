@@ -3,7 +3,7 @@ from app.rezept import rezept,zutat,  Association
 import sqlalchemy
 
 print("[Add Assoc]")
-rezept1 = rezept.query.filter_by(id=1).first()
+rezept1 = rezept.query.get(1)
 print("Rezept:",rezept1)
 zutat1 = zutat.query.filter_by(id=1).first()
 print("Zutat:",zutat1)
@@ -26,7 +26,7 @@ print("\r\nTest Assoc")
 # attributes
 for assoc in rezept1.zutaten:
     print(">",assoc.menge)
-    print(">",assoc.hatzutat)
+    print(">",assoc.hatzutat) #[23,323,243]
     print(">",assoc.menge)
     print(">",assoc.optional)
     print(">---")
