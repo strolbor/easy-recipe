@@ -1,5 +1,5 @@
 from app import app, db, forms
-from app.rezept import rezept, zutat,handlungsschritt,tags,Association
+from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
 from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper, savepic
 
 
@@ -68,14 +68,13 @@ def modifyrezept(ids):
                 zuRezept.bild = picure_url
         # Speichern des Eintrages
         db.session.commit()
-        flash(f"{zuRezept.name} wzrde gespeichert!")
+        flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept',ids=ids))
 
     form.rezeptname.data = zuRezept.name
-    print(zuRezept.tags,tags.query.all())
     form.tags.data = createArrayHelper(zuRezept.tags)
     
-    if zuRezept.bild != "":
+    if zuRezept.bild is not None:
          # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
         return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
     else:
@@ -346,13 +345,17 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
                 # gettingclass = Klasse von Zutat
                 a = Association(menge=25,optional=True)
                 a.hatzutat = gettingclass
-                auswahl.zutaten.append(a)
+                with db.session.no_autoflush:
+                    auswahl.zutaten.append(a)
             if mode == MODE_TAGS:
                 """ Zielobjekt ist Klasse Tags """
                 auswahl.tags.append(gettingclass)
             if mode == MODE_HAND:
-                auswahl.handlungsschritte.append(gettingclass)
-
+                """Wir fügen Handlungsschritte mit Positionen zu."""
+                a = AssociationRHhat(position=1)
+                a.hatid = gettingclass
+                with db.session.no_autoflush:
+                    auswahl.handlungsschritte.append(a)
             db.session.commit()
         flash("Gespeichert!")
         return redirect(url_for(redirect_url,ids=ids))

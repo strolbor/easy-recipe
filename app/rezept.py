@@ -63,6 +63,10 @@ class rezept(db.Model):
     zutaten = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
     # Relationsship zu den Assocation: Rezept <-> Handlungsschritt
     handlungsschritte = db.relationship("AssociationRHhat", back_populates="rezept", cascade="all, delete-orphan")
+    # Relationsship Rezepte <-> Tags
+    tags    = db.relationship('tags', secondary=rthat, # rthat => Rezept-Tags-Many-Many-Relationship
+        backref = db.backref('belongs'))
+
 
     def __repre__(self):
         return "Rezept: {} mit der ID: {}".format(self.name,self.id)
