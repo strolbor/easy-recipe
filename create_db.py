@@ -20,7 +20,7 @@ def addTags(name,id):
     new = tags(name=name,id=id)
     db.session.add(new)
     db.session.commit()
-"""
+
 # Es werden alle Rezepte angelegt
 addRezept(name="Omlett",bild="",id=1)
 addRezept(name="Kartoffelsalat mit Mayonnaise",bild="",id=2)
@@ -40,7 +40,7 @@ addZutat(name="Mayonnaise",bild="None",einheit="Gramm",id=9)
 addZutat(name="Fleischwurst",bild="None",einheit="Gramm",id=10)
 addZutat(name="Gewürzgurken",bild="None",einheit="Gramm",id=11)
 addZutat(name="Ei",bild="None",einheit="Normalgröße",id=12)
-"""
+
 # Es werden alle handlungsschritte angelegt
 addHandlung(text="reer",bild="Screenshot_2022-05-25_235554.png",bild2="Screenshot_2022-05-26_000200.png",id=1)
 

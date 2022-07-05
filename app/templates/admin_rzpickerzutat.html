@@ -22,7 +22,7 @@
     {% for entry in inhalt %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-            <div class="fw-bold">{% if modus == "Handlungsschritte"%}{{entry.text}}{% else %}{{ entry.name }}{% endif %}</div>
+            <div class="fw-bold">{% if modus == "Handlungsschritte"%}{{entry.hatzutat.text}}{% else %}{{ entry.hatzutat.name }}{% endif %}</div>
             <!-- Hier könnte noch text stehen-->
             </div>          
         </li>

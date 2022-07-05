@@ -1,5 +1,5 @@
 from app import app, db, forms
-from app.rezept import rezept, zutat,handlungsschritt,tags
+from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
 from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper, savepic
 
 
@@ -27,21 +27,25 @@ def admin():
 def addrezept():
     """Seite um ein neues Rezept anzulegen."""
     form = forms.rezeptanlegen()
+    # Alle Tags holen
     form.tags.choices = createArrayHelper(tags.query.all())
+
+    #Formular wird abgesendet
     if form.validate_on_submit():
         # Daten des Uploads holen
         bild_url=""
         if request.method == 'POST':
             """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
             idneu = getNewID(rezept)
+            
             """ Wir suchen die nächste ID"""
             picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
             if not (picure_url == "A" or picure_url == "B"):
                 """ Bild wurde gefunden und hochgeladen"""
                 bild_url = picure_url
-                # TODO: Absprache mmit Tom, wie wir das Bild abrufen.
+
         new = rezept(name=form.rezeptname.data,bild=bild_url)
-        new.tags.append(tags.query.get(form.tags.data))
+        #new.tags.append(tags.query.get(form.tags.data))
         """ Neues Rezept wurde erstellt."""
         db.session.add(new)
         db.session.commit()
@@ -64,14 +68,13 @@ def modifyrezept(ids):
                 zuRezept.bild = picure_url
         # Speichern des Eintrages
         db.session.commit()
-        flash(f"{zuRezept.name} wzrde gespeichert!")
+        flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept',ids=ids))
 
     form.rezeptname.data = zuRezept.name
-    print(zuRezept.tags,tags.query.all())
     form.tags.data = createArrayHelper(zuRezept.tags)
     
-    if zuRezept.bild != "":
+    if zuRezept.bild is not None:
          # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
         return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
     else:
@@ -297,6 +300,8 @@ def removeRZhat():
 def removeRZhat2(rid):
     ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
+    for assoc in zutatenliste:
+        print(assoc.hatzutat.id)
     return render_template('admin_remove.html',inhalt=zutatenliste,titlet="Verknüpfungs Entferner",rid=rid,targerzhat2=True)
 
 
@@ -316,7 +321,7 @@ def entfernerAnzeiger(classes,redirect_url : str,title):
 def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.verknupfungsanleger()
-    
+    # Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden
     if classes == handlungsschritt:
         # Handlungsschritt hat keinen .name Attribut
         form.zutaten.choices = createArrayHelper(classes.query.all())
@@ -336,13 +341,22 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
             """ Zielobjekt aus der entsprechen Klasse zum Adden hinzufügen holen"""
             if mode == MODE_ZUTATEN:
                 """ Zielobjekt ist Zutat"""
-                auswahl.zutaten.append(gettingclass)
+                # auswahl = Klasse von rezept
+                # gettingclass = Klasse von Zutat
+                a = Association(menge=25,optional=True)
+                a.hatzutat = gettingclass
+                with db.session.no_autoflush:
+                    auswahl.zutaten.append(a)
             if mode == MODE_TAGS:
                 """ Zielobjekt ist Klasse Tags """
                 auswahl.tags.append(gettingclass)
             if mode == MODE_HAND:
-                auswahl.handlungsschritte.append(gettingclass)
-        db.session.commit()
+                """Wir fügen Handlungsschritte mit Positionen zu."""
+                a = AssociationRHhat(position=1)
+                a.hatid = gettingclass
+                with db.session.no_autoflush:
+                    auswahl.handlungsschritte.append(a)
+            db.session.commit()
         flash("Gespeichert!")
         return redirect(url_for(redirect_url,ids=ids))
     if mode == MODE_ZUTATEN:

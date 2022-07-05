@@ -15,6 +15,8 @@
                     <div class="fw-bold">
                         {% if handlung %}
                         {{ message.text }}
+                        {% elif targerzhat2 %}
+                        {{ message.hatzutat.name }} 
                         {% else %}
                         {{ message.name }} 
                         {% endif %}
@@ -36,7 +38,7 @@
                             <a href="{{url_for('removeRZhat2',rid=message.id)}}">Auswählen</a>
                         {% endif %}
                         {% if targerzhat2 %}
-                            <a href="{{url_for('deleterzhat',zid=message.id,rid=rid)}}">Entfernen</a>
+                            <a href="{{url_for('deleterzhat',zid=message.hatzutat.id,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if handlung %}
                             <a href="">nicht programmiert</a>
