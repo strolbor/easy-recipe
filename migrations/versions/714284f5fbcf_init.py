@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 737b5f0a3a6e
+Revision ID: 714284f5fbcf
 Revises: 
-Create Date: 2022-07-05 09:44:51.630375
+Create Date: 2022-07-06 13:29:45.735719
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '737b5f0a3a6e'
+revision = '714284f5fbcf'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -53,13 +53,13 @@ def upgrade():
     sa.PrimaryKeyConstraint('rid', 'zid')
     )
     op.create_table('association_rhhat',
-    sa.Column('rid', sa.Integer(), nullable=False),
-    sa.Column('hid', sa.Integer(), nullable=False),
+    sa.Column('aid', sa.Integer(), nullable=False),
+    sa.Column('rid', sa.Integer(), nullable=True),
+    sa.Column('hid', sa.Integer(), nullable=True),
     sa.Column('position', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['hid'], ['handlungsschritt.id'], ),
     sa.ForeignKeyConstraint(['rid'], ['rezeptsql.id'], ),
-    sa.PrimaryKeyConstraint('rid', 'hid'),
-    sa.UniqueConstraint('position')
+    sa.PrimaryKeyConstraint('aid')
     )
     op.create_table('association_rthat',
     sa.Column('rezept_id', sa.Integer(), nullable=True),

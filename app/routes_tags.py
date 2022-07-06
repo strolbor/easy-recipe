@@ -13,13 +13,13 @@ from sqlalchemy import desc
 ##############
 
 # Um die Tags anzuzeigen
-@app.route('/admin/show/tags/')
+@app.route('/admin/tags/showTags/')
 def showTags():
     liste = tags.query.order_by(tags.name).all()
     return render_template('admin_show.html',liste=liste,titlet="Tags")
 
 # Tags hiunzufügen
-@app.route("/admin/add/tag",methods=['GET','POST'])
+@app.route("/admin/tags/addTags",methods=['GET','POST'])
 def addTags():
     form = forms.taganlegen()
     if form.validate_on_submit():
@@ -34,7 +34,7 @@ def addTags():
 # Verknüpfunganlegen
 # Part 1
 # Auswählen der Rezepte
-@app.route("/admin/addbind/tag/<path:ids>",methods=['GET','POST'])
+@app.route("/admin/tags/modifyTags/<path:ids>",methods=['GET','POST'])
 def modifyTags(ids):
     form = forms.taganlegen()
     zuTag = tags.query.get(ids)
@@ -49,7 +49,7 @@ def modifyTags(ids):
 # Verknüpfunganlegen
 # Part 2
 # Tags mit dem vorgenannten Rezept verknüpfen.
-@app.route('/admin/addbind/rthat',methods=['GET','POST'])
+@app.route('/admin/tags/CHGrthat',methods=['GET','POST'])
 def CHGrthat():
     """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
     form = forms.rzanlegen()
@@ -61,7 +61,7 @@ def CHGrthat():
 # Verknüpfunganlegen
 # Part 2a
 # Tags mit dem vorgenannten Rezept verknüpfen.
-@app.route('/admin/modify/rthat-picker/<path:ids>',methods=['GET','POST'])
+@app.route('/admin/tags/CHGrthat2/<path:ids>',methods=['GET','POST'])
 def CHGrthat2(ids):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
     form = forms.verknupfungsanleger()
@@ -84,7 +84,7 @@ def CHGrthat2(ids):
 
 # Tagsverknüpfer entfernen
 # Part 1
-@app.route('/admin/remove/tags/picker/',methods=['GET','POST'])
+@app.route('/admin/tags/removeTagshat/',methods=['GET','POST'])
 def removeTagshat():
     return remover(MODE_TAGver,rezept,'removeTagshat')    
 
@@ -92,7 +92,7 @@ def removeTagshat():
 # Tagsverknüpfer entfernen
 # Part 2
 # Übersicht der Tags zu eine nRezept erstellen
-@app.route("/admin/remove/tags/remover/<path:rid>")
+@app.route("/admin/tags/removeTagshat2/<path:rid>")
 def removeTagshat2(rid):
     ausrezept = rezept.query.get(rid)
     liste = ausrezept.tags
@@ -100,6 +100,6 @@ def removeTagshat2(rid):
 
 
 # Tag löschen lassen
-@app.route('/admin/remove/tags')
+@app.route('/admin/tags/removeTags')
 def removeTags():
     return remover(MODE_TAGS,tags,'removeTags')

@@ -57,3 +57,8 @@ class zutatanlegen(FlaskForm):
 class taganlegen(FlaskForm):
     name = StringField('Name des Tags')
     submit = SubmitField('Speichern')
+
+class handlungverknüpfer(FlaskForm):
+    position = StringField("Position",validators=[DataRequired()])
+    handlungschritt = SelectField("Handlungschritt")
+    submit = SubmitField('Speichern')

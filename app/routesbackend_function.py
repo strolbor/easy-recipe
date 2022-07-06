@@ -58,14 +58,14 @@ def deleterthat(rid,tid):
     db.session.commit()
     return redirect(url_for('removeTagshat2',rid=rid))
 
-@app.route('/adminctl/delete/rhhat/<path:rid>/<path:hid>')
-def deleterhhat(rid,hid):
+@app.route('/adminctl/delete/rhhat/<path:rid>-<path:aid>')
+def deleterhhat(rid,aid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Handlungsschritten"""
     rezeptw = rezept.query.get(rid)
-    assoc = AssociationRHhat.query.get((rid,hid))
+    assoc = AssociationRHhat.query.get(aid)
     rezeptw.handlungsschritte.remove(assoc)
     db.session.commit()
-    return redirect(url_for('home',rid=rid))
+    return redirect(url_for('handdeleter2',rid=rid))
 
 
 ##########

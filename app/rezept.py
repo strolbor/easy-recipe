@@ -33,9 +33,10 @@ class Association(db.Model):
 class AssociationRHhat(db.Model):
   """Many to Many Relationship Table bzgl. Rezept und Handlungschritten"""
   __tablename__ = "association_rhhat"
-  rid = db.Column(db.ForeignKey("rezeptsql.id"),primary_key=True)
-  hid = db.Column(db.ForeignKey("handlungsschritt.id"),primary_key=True)
-  position = db.Column("position", db.Integer, unique=True)
+  aid = db.Column(db.Integer,primary_key=True)
+  rid = db.Column(db.ForeignKey("rezeptsql.id"))
+  hid = db.Column(db.ForeignKey("handlungsschritt.id"))
+  position = db.Column("position", db.Integer)
   
   #Relationsship
   hatid = db.relationship("handlungsschritt", back_populates="rezepte", cascade="save-update") # child relationship
