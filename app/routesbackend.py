@@ -27,7 +27,7 @@ MODE_TAGS = 1
 MODE_REZEPT = 2
 MODE_HAND = 3
 MODE_RZHAT = 4
-MODE_HANDCHG = 5
+MODE_TAGver = 5
 
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
@@ -35,48 +35,25 @@ def remover(mode : int,classes, redirect_url: str):
     next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
     prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
     if mode == MODE_ZUTATEN:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Zutat Entferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="endgültiger Zutatentferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page)
     if mode == MODE_REZEPT:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Rezept Entferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="endgültiger Rezeptentferner",targetrezept=True,next_url=next_url,prev_url=prev_url,page=page)
     if mode == MODE_TAGS:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Tags Entferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="endgültiger Tagsentferner",targettags=True,next_url=next_url,prev_url=prev_url,page=page)
     if mode == MODE_RZHAT:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Rezept <-> Zutat",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Rezept <-> Zutat",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page)
     if mode == MODE_HAND:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
-    if mode == MODE_HANDCHG:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfung Entferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page,showCase=True)
-
-
-
-
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page)
+    if mode == MODE_TAGver:
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Tags",Tagver=True,next_url=next_url,prev_url=prev_url,page=page)
+    else:
+        print("Kein Tamplate fgefunden!")
 
 
 
 ##############
 #    rzhat   #
 ##############
-
-
-@app.route('/admin/modify/rzhat',methods=['GET','POST'])
-def CHGrzhat():
-    return entfernerAnzeiger(rezept,"CHGrzhat2","Verknüpfung anlegen")
-
-@app.route('/admin/modify/rzhat-picker/<path:ids>',methods=['GET','POST'])
-def CHGrzhat2(ids):
-    return entfernerfuction(ids,zutat,rezept,MODE_ZUTATEN,'CHGrzhat2')
-
-
-##
-@app.route('/admin/modify/rhhat',methods=['GET','POST'])
-def CHGrhhat():
-    return entfernerAnzeiger(rezept,"CHGrhhat2","Verknüpfung zwischen Rezept und Handlungsschritt anlegen")
-
-@app.route('/admin/modify/rhhat-picker/<path:ids>',methods=['GET','POST'])
-def CHGrhhat2(ids):
-    return entfernerfuction(ids,handlungsschritt,rezept,MODE_HAND,'CHGrhhat2')
-
-##
 
 
 @app.route('/admin/remove/rzhat/picker/',methods=['GET','POST'])

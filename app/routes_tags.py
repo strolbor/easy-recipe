@@ -1,7 +1,7 @@
 from app import app, db, forms
 from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
-from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper, savepic
-
+from app.backend_helper import createArrayHelper
+from app.routesbackend import remover,MODE_TAGS,MODE_TAGver
 
 import os
 from flask import redirect, render_template,request, abort
@@ -44,11 +44,44 @@ def modifyTags(ids):
 
 @app.route('/admin/modify/rthat',methods=['GET','POST'])
 def CHGrthat():
-    return entfernerAnzeiger(rezept,"CHGrthat2","Verknüpfung anlegen")
+    """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
+    form = forms.rzanlegen()
+    form.rezeptpicker.choices = createArrayHelper(rezept.query.order_by(rezept.name).all())
+    if form.validate_on_submit():
+        return redirect(url_for('CHGrthat2',ids=form.rezeptpicker.data))
+    return render_template('admin_rzpicker.html',form=form,titlet="Verknüpfung anlegen")
 
 @app.route('/admin/modify/rthat-picker/<path:ids>',methods=['GET','POST'])
 def CHGrthat2(ids):
-    return entfernerfuction(ids,tags,rezept,MODE_TAGS,'CHGrthat')
+    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
+    form = forms.verknupfungsanleger()
+    # Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden
+    form.zutaten.choices = createArrayHelper(tags.query.order_by(tags.name).all())
+    auswahl = rezept.query.get(ids)
+    if form.validate_on_submit() or form.submit.data:
+        """ Hier funktioniert validate on submit nicht"""
+        
+        ausgewählte = form.zutaten.data
+        """Alle Zutaten, die man ausgewählt holen"""
+        for entry in ausgewählte:
+            gettingclass = tags.query.get(entry)
+            """ Zielobjekt aus der entsprechen Klasse zum Adden hinzufügen holen"""
+            auswahl.tags.append(gettingclass)
+            db.session.commit()
+        flash("Gespeichert!")
+        return redirect(url_for('CHGrthat2',ids=ids))
+    return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
+
+@app.route('/admin/remove/tags/picker/',methods=['GET','POST'])
+def removeTagshat():
+    return remover(MODE_TAGver,rezept,'removeTagshat')    
+    # Erst Rezept auswählen
+
+@app.route("/admin/remove/tags/remover/<path:rid>")
+def removeTagshat2(rid):
+    ausrezept = rezept.query.get(rid)
+    liste = ausrezept.tags
+    return render_template('admin_remove.html',inhalt=liste,titlet="Verknüpfungsentferner Tags (keine Löschung der Tags)",rid=rid,removeTagshat2=True)
 
 @app.route('/admin/remove/tags')
 def removeTags():

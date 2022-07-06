@@ -2,7 +2,6 @@ from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-#from flask_mysqldb import MySQL
 
 basedir = ""
 class Config(object):

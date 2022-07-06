@@ -1,11 +1,11 @@
 from app import app, db, forms
 from flask import redirect, render_template
-from app.rezept import Association, handlungsschritt, rezept, zutat, tags
+from app.rezept import Association,AssociationRHhat, handlungsschritt, rezept, zutat, tags
 from flask.helpers import url_for
 
-#
-# Objekte entfernen
-#
+#####################
+# Objekte entfernen #
+#####################
 @app.route('/adminctl/delete/zutat/<path:ids>')
 def deleteZutat(ids):
     """Zutaten Objekt entfernen"""
@@ -28,42 +28,49 @@ def deleteTags(ids):
     db.session.commit()
     return redirect(url_for('removeTags'))
 
-#
-# M:n Beziehungen entfernen
-#
+@app.route('/adminctl/delete/handlung/<path:ids>')
+def deleteHandlung(ids):
+    """Handlungsschritt Objekt entfernen"""
+    db.session.delete(handlungsschritt.query.get(ids))
+    db.session.commit()
+    return redirect(url_for('removehandlungsschritt'))
 
-@app.route('/adminctl/delete/rzhat/<path:rid>/<path:zid>')
+
+#############################
+# M:n Beziehungen entfernen #
+#############################
+
+@app.route('/adminctl/delete/rzhat/<path:rid>-<path:zid>')
 def deleterzhat(rid,zid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Zutat"""
     rezeptw = rezept.query.get(rid)
     assoc = Association.query.get((rid,zid))
-    print(assoc)
     rezeptw.zutaten.remove(assoc)
     db.session.commit()
     return redirect(url_for('removeRZhat2',rid=rid))
 
-@app.route('/adminctl/delete/rthat/<path:rid>/<path:tid>')
+@app.route('/adminctl/delete/rthat/<path:rid>-<path:tid>')
 def deleterthat(rid,tid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Tags"""
     rezeptw = rezept.query.get(rid)
     tagw = tags.query.get(tid)
     rezeptw.tags.remove(tagw)
     db.session.commit()
-    return redirect(url_for('home',rid=rid))
+    return redirect(url_for('removeTagshat2',rid=rid))
 
 @app.route('/adminctl/delete/rhhat/<path:rid>/<path:hid>')
 def deleterhhat(rid,hid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Handlungsschritten"""
     rezeptw = rezept.query.get(rid)
-    handh = handlungsschritt.query.get(hid)
-    rezeptw.handlungsschritte.remove(handh)
+    assoc = AssociationRHhat.query.get((rid,hid))
+    rezeptw.handlungsschritte.remove(assoc)
     db.session.commit()
     return redirect(url_for('home',rid=rid))
 
 
-#
-# Backup
-#
+##########
+# Backup #
+##########
 @app.route("/backupctl/showdata/html")
 def showData():
     """Alle Daten sicherin in Python Syntax"""

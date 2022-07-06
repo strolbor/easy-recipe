@@ -1,7 +1,8 @@
+import imp
 from app import app, db, forms
 from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
 from app.backend_helper import createFolderIfNotExists, getNewID,createArrayHelper, savepic
-
+from app.routesbackend import remover, MODE_REZEPT
 
 import os
 from flask import redirect, render_template,request, abort
@@ -34,7 +35,7 @@ def addrezept():
                 bild_url = picure_url
 
         new = rezept(name=form.rezeptname.data,bild=bild_url)
-        #new.tags.append(tags.query.get(form.tags.data))
+        new.tags.append(tags.query.get(form.tags.data))
         """ Neues Rezept wurde erstellt."""
         db.session.add(new)
         db.session.commit()
@@ -63,7 +64,7 @@ def modifyrezept(ids):
     form.rezeptname.data = zuRezept.name
     form.tags.data = createArrayHelper(zuRezept.tags)
     
-    if zuRezept.bild is not None:
+    if zuRezept.bild != "":
          # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
         return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
     else:

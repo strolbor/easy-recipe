@@ -41,9 +41,15 @@
                             <a href="{{url_for('deleterzhat',zid=message.hatzutat.id,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if handlung %}
-                            <a href="">nicht programmiert</a>
+                            <a href="{{url_for('deleteHandlung',ids=message.id)}}">Entfernen</a>
                         {% endif %}
-                </div>
+                        {% if Tagver %}
+                            <a href="{{url_for('removeTagshat2',rid=message.id)}}">Auswählen</a>
+                        {% endif %}
+                        {% if removeTagshat2%}
+                            <a href="{{url_for('deleterthat',rid=rid,tid=message.id)}}">Verbindungentfernen</a>
+                        {% endif %}
+                </div> 
                 {% if targetrezept %}
                     <!-- message sind Rezepte -->
                     <span class="badge bg-primary rounded-pill">{{ message.zutaten | count}}</span>
@@ -64,11 +70,13 @@
                     <!-- message sind Handlungsschritte -->
                     <span class="badge bg-primary rounded-pill">{{ message.handlungen | count}}</span>
                 {% endif %}
+                {% if Tagver %}
+                    <!-- message sind Handlungsschritte -->
+                    <span class="badge bg-primary rounded-pill">{{ message.tags | count}}</span>
+                {% endif %}
             
             </li>
         {% endfor %}
     </ol>
-    {% if showCase %}
         {% include 'admin_inc_pagi.html' %}
-    {% endif %}
 {% endblock %}
