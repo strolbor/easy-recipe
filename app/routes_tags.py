@@ -12,11 +12,13 @@ from sqlalchemy import desc
 #    tags   #
 ##############
 
+# Um die Tags anzuzeigen
 @app.route('/admin/show/tags/')
 def showTags():
     liste = tags.query.order_by(tags.name).all()
     return render_template('admin_show.html',liste=liste,titlet="Tags")
 
+# Tags hiunzufügen
 @app.route("/admin/add/tag",methods=['GET','POST'])
 def addTags():
     form = forms.taganlegen()
@@ -29,7 +31,10 @@ def addTags():
 
     return render_template('admin_tag.html',form=form)
 
-@app.route("/admin/modify/tag/<path:ids>",methods=['GET','POST'])
+# Verknüpfunganlegen
+# Part 1
+# Auswählen der Rezepte
+@app.route("/admin/addbind/tag/<path:ids>",methods=['GET','POST'])
 def modifyTags(ids):
     form = forms.taganlegen()
     zuTag = tags.query.get(ids)
@@ -41,8 +46,10 @@ def modifyTags(ids):
     form.name.data = zuTag.name
     return render_template('admin_tag.html',form=form,titlet="Tag ändern")
 
-
-@app.route('/admin/modify/rthat',methods=['GET','POST'])
+# Verknüpfunganlegen
+# Part 2
+# Tags mit dem vorgenannten Rezept verknüpfen.
+@app.route('/admin/addbind/rthat',methods=['GET','POST'])
 def CHGrthat():
     """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
     form = forms.rzanlegen()
@@ -51,6 +58,9 @@ def CHGrthat():
         return redirect(url_for('CHGrthat2',ids=form.rezeptpicker.data))
     return render_template('admin_rzpicker.html',form=form,titlet="Verknüpfung anlegen")
 
+# Verknüpfunganlegen
+# Part 2a
+# Tags mit dem vorgenannten Rezept verknüpfen.
 @app.route('/admin/modify/rthat-picker/<path:ids>',methods=['GET','POST'])
 def CHGrthat2(ids):
     """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
@@ -72,17 +82,24 @@ def CHGrthat2(ids):
         return redirect(url_for('CHGrthat2',ids=ids))
     return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
 
+# Tagsverknüpfer entfernen
+# Part 1
 @app.route('/admin/remove/tags/picker/',methods=['GET','POST'])
 def removeTagshat():
     return remover(MODE_TAGver,rezept,'removeTagshat')    
-    # Erst Rezept auswählen
 
+
+# Tagsverknüpfer entfernen
+# Part 2
+# Übersicht der Tags zu eine nRezept erstellen
 @app.route("/admin/remove/tags/remover/<path:rid>")
 def removeTagshat2(rid):
     ausrezept = rezept.query.get(rid)
     liste = ausrezept.tags
     return render_template('admin_remove.html',inhalt=liste,titlet="Verknüpfungsentferner Tags (keine Löschung der Tags)",rid=rid,removeTagshat2=True)
 
+
+# Tag löschen lassen
 @app.route('/admin/remove/tags')
 def removeTags():
     return remover(MODE_TAGS,tags,'removeTags')
