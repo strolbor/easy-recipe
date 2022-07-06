@@ -125,6 +125,8 @@ def handdeleter1():
 def handdeleter2(rid):
     # Dann die aussocication suchen
     assoc1 =  AssociationRHhat.query.filter_by(rid=rid).all()
+    r1 = rezept.query.get(rid)
+    print(len(r1.handlungsschritte))
     print(assoc1)
     return render_template('admin_remove.html',inhalt=assoc1,titlet="Verknüpfungsentferner Handlungsschritte (keine Löschung der Handlungsschritte)",rid=rid,handdeleter2=True)
     # Dann entsorechend der Auswahl die Handlungsschritte löschen
