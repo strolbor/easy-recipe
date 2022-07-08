@@ -59,8 +59,9 @@ def addTags(name,id):<br />
         {% for assoc in entry.zutaten %}
             assoc1 = Association(menge={{assoc.menge}},optional={{assoc.optional}})<br />
             zutat = zutat.query.get({{assoc.zid}})<br />
-            assoc1.hatzutat= zutat<br />
             rezept1 = rezept.query.get({{assoc.rid}})<br />
+            assoc1.hatzutat= zutat<br />
+            
             with db.session.no_autoflush:<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;rezept1.zutaten.append(assoc1)<br />
             db.session.commit()<br /><br />
@@ -86,9 +87,10 @@ def addTags(name,id):<br />
         {% for assoc in entry.handlungsschritte %}
             assoc1  = AssociationRHhat(position={{assoc.position}})<br />
             handlung = handlungsschritt.query.get({{assoc.hid}})<br />
+            rezept1 = rezept.query.get({{assoc.rid}})<br />
             assoc1.hatid= handlung<br />
 
-            rezept1 = rezept.query.get({{assoc.rid}})<br />
+            
             with db.session.no_autoflush:<br />
                 &nbsp;&nbsp;&nbsp;&nbsp;rezept1.handlungsschritte.append(assoc1)<br />
             db.session.commit()<br /><br />
