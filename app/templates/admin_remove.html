@@ -14,11 +14,13 @@
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">
                         {% if handlung %}
-                        {{ message.text }}
+                            {{ message.text }}
                         {% elif targerzhat2 %}
-                        {{ message.hatzutat.name }} 
+                            {{ message.hatzutat.name }} 
+                        {% elif handdeleter2 %}
+                            {{message.hatid.text}}
                         {% else %}
-                        {{ message.name }} 
+                            {{ message.name }} 
                         {% endif %}
                     </div>
                         {% if targetrezept %}
@@ -41,9 +43,27 @@
                             <a href="{{url_for('deleterzhat',zid=message.hatzutat.id,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if handlung %}
-                            <a href="">nicht programmiert</a>
+                            <a href="{{url_for('deleteHandlung',ids=message.id)}}">Entfernen</a>
                         {% endif %}
-                </div>
+                        {% if Tagver %}
+                            <a href="{{url_for('removeTagshat2',rid=message.id)}}">Auswählen</a>
+                        {% endif %}
+                        {% if removeTagshat2%}
+                            <a href="{{url_for('deleterthat',rid=rid,tid=message.id)}}">Verbindungentfernen</a>
+                        {% endif %}
+                        {% if MODE_HANDadd %}
+                            <a href="{{url_for('handver2',rid=message.id)}}">Auswählen</a>
+                        {% endif %}
+                        {% if HANDver %}
+                            <a href="{{url_for('handdeleter2',rid=message.id)}}">Auswählen</a>
+                        {% endif %}
+                        {% if handdeleter2 %}
+                            <a href="{{url_for('deleterhhat',aid=message.aid,rid=rid)}}">Entfernen</a>
+                        {% endif %}
+                        {% if MODE_REZEPTadd %}
+                            <a href="{{url_for('rezeptver2',rid=message.id)}}">Auswählen</a> (Neues Formular um die Zutaten mit Menge und optionalität hinzufügen)
+                        {% endif %}
+                </div> 
                 {% if targetrezept %}
                     <!-- message sind Rezepte -->
                     <span class="badge bg-primary rounded-pill">{{ message.zutaten | count}}</span>
@@ -62,13 +82,19 @@
                 {% endif %}
                 {% if handlung %}
                     <!-- message sind Handlungsschritte -->
-                    <span class="badge bg-primary rounded-pill">{{ message.handlungen | count}}</span>
+                    <span class="badge bg-primary rounded-pill">{{ message.rezepte | count}}</span>
+                {% endif %}
+                {% if Tagver %}
+                    <!-- message sind Handlungsschritte -->
+                    <span class="badge bg-primary rounded-pill">{{ message.tags | count}}</span>
+                {% endif %}
+                {% if HANDver %}
+                    <!-- message sind Handlungsschritte -->
+                    <span class="badge bg-primary rounded-pill">{{ message.handlungsschritte | count}}</span>
                 {% endif %}
             
             </li>
         {% endfor %}
     </ol>
-    {% if showCase %}
-        {% include 'admin_inc_pagi.html' %}
-    {% endif %}
+    {% include 'admin_inc_pagi.html' %}
 {% endblock %}

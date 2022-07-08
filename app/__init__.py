@@ -2,7 +2,6 @@ from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-#from flask_mysqldb import MySQL
 
 basedir = ""
 class Config(object):
@@ -30,4 +29,6 @@ app.config['ITEMS_PER_PAGE'] = 10
 
 app.debug = True
 
-from app import forms, rezept, routesnutzer,routesbackend,routesbackend_function, routesfrontend, routesdownload
+from app import forms, rezept, routesnutzer, \
+    routesbackend,routesbackend_function, routes_handlung, routes_hat, routes_rezept, routes_tags, routes_zutat, \
+        routesfrontend, routesdownload

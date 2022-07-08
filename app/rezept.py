@@ -33,9 +33,10 @@ class Association(db.Model):
 class AssociationRHhat(db.Model):
   """Many to Many Relationship Table bzgl. Rezept und Handlungschritten"""
   __tablename__ = "association_rhhat"
-  rid = db.Column(db.ForeignKey("rezeptsql.id"),primary_key=True)
-  hid = db.Column(db.ForeignKey("handlungsschritt.id"),primary_key=True)
-  position = db.Column("position", db.Integer, unique=True)
+  aid = db.Column(db.Integer,primary_key=True)
+  rid = db.Column(db.ForeignKey("rezeptsql.id"))
+  hid = db.Column(db.ForeignKey("handlungsschritt.id"))
+  position = db.Column("position", db.Integer)
   
   #Relationsship
   hatid = db.relationship("handlungsschritt", back_populates="rezepte", cascade="save-update") # child relationship
@@ -59,6 +60,7 @@ class rezept(db.Model):
     id     = db.Column(db.Integer,primary_key=True)
     name    = db.Column(db.String)
     bild    = db.Column(db.String)
+
     # Relationsship zu den Assocation: Rezept <-> Zutat
     zutaten = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
     # Relationsship zu den Assocation: Rezept <-> Handlungsschritt
@@ -91,7 +93,7 @@ class zutat(db.Model):
     einheit = db.Column(db.String)
     bild    = db.Column(db.String)
     name    = db.Column(db.String)
-    #parents = db.relationship("Association", back_populates="child")
+
     rezepte = db.relationship("Association", back_populates="hatzutat",cascade="all, delete-orphan")
     
     def __repr__(self):
