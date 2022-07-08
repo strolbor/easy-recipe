@@ -23,14 +23,23 @@ def admin():
 
 
 MODE_ZUTATEN = 0
+"""Diese Einstellung ist da um Zutaten zu entfernen"""
 MODE_TAGS = 1
-MODE_REZEPT = 2
+"""Diese Einstellung ist da um Tags zu entfernen"""
+MODE_REZEPT = 2 # Rezepte entfernen
+"""Diese Einstellung ist da um Rezepte zu entfernen"""
 MODE_HAND = 3
+"""Diese Einstellung ist da um Handlungsschritte zu entfernen"""
 MODE_RZHAT = 4
+"""Diese Einstellung ist da um Verknüpfungen zw.  Zutat <-> Rezept zu entfernen"""
 MODE_TAGver = 5
+"""Diese Einstellung ist da um Verknüpfungen zw.  Tags <-> Rezept zu entfernen"""
 MODE_HANDver = 6
+"""Diese Einstellung ist da um Verknüpfungen zw.  Handlungschritten <-> Rezept zu entfernen"""
 MODE_HANDadd = 7
-
+"""Diese Einstellung ist da um Verknüpfungen zw.  Handlungschritten <-> Rezept hinzuzufügen"""
+MODE_REZEPTadd = 8
+"""Diese Einstellung ist da um Verknüpfungen zw.  Zutat <-> Rezept hinzuzufügen"""
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
     liste = classes.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
@@ -45,14 +54,15 @@ def remover(mode : int,classes, redirect_url: str):
     elif mode == MODE_RZHAT:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Zutat <-> Rezept",targerzhat=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_HAND:
-        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Handlungsschritten (old)",handlung=True,next_url=next_url,prev_url=prev_url,page=page)
+        return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Handlungsschritten",handlung=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_TAGver:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Tags <-> Rezept",Tagver=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_HANDver:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungentferner von Handlungschritten <-> Rezept",HANDver=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_HANDadd:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungadder von Handlungschritten <-> Rezept",MODE_HANDadd=True,next_url=next_url,prev_url=prev_url,page=page)
-   
+    elif mode == MODE_REZEPTadd:
+        return(render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungadder von Handlungschritten <-> Rezept",MODE_REZEPTadd=True,next_url=next_url,prev_url=prev_url,page=page))
     else:
         print("Kein Tamplate gefunden!")
         return "Kein Tamplate gefunden!"

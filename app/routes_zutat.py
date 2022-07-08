@@ -65,8 +65,7 @@ def modifyZutat(ids):
 
     form.name.data = modifyZutat.name
     form.einheit.data = modifyZutat.einheit
-    print("Bild",modifyZutat.bild)
-    if modifyZutat.bild == "None":
+    if modifyZutat.bild == "":
         return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
     else:
         return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)

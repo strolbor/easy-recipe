@@ -2,7 +2,7 @@ import imp
 from app import app, db, forms
 from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
 from app.backend_helper import  getNewID,createArrayHelper, savepic
-from app.routesbackend import  remover, MODE_REZEPT,MODE_RZHAT
+from app.routesbackend import  remover, MODE_REZEPT,MODE_RZHAT,MODE_REZEPTadd
 
 import os
 from flask import redirect, render_template,request, abort
@@ -82,7 +82,7 @@ def modifyrezept(ids):
 # Rezept <-> Handlungschritt Verknüpfer
 @app.route("/admin/rezept/rezeptver1")
 def rezeptver1():
-    return remover(0,rezept,'rezeptver1') 
+    return remover(MODE_REZEPTadd,rezept,'rezeptver1') 
 
 @app.route("/admin/rezept/rezeptver2/<path:rid>",methods=['GET','POST'])
 def rezeptver2(rid):
