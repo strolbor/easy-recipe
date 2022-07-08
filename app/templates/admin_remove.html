@@ -61,7 +61,7 @@
                             <a href="{{url_for('deleterhhat',aid=message.aid,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if MODE_REZEPTadd %}
-                            <a href="">Auswählen</a> (Neues Formular um die Zutaten mit Menge und optionalität hinzufügen)
+                            <a href="{{url_for('rezeptver2',rid=message.id)}}">Auswählen</a> (Neues Formular um die Zutaten mit Menge und optionalität hinzufügen)
                         {% endif %}
                 </div> 
                 {% if targetrezept %}

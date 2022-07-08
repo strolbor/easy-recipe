@@ -1,0 +1,30 @@
+{% extends "admin_base.html" %}
+
+ 
+{% block app_content %}
+<h3>{{titlet}}</h3>
+<form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="col-12">
+        <label for="formGroupExampleInput" class="form-label">{{form.zutat.label}}</label>
+        {{form.zutat(class="form-control")}}
+    </div>
+    <div class="col-12">
+        <label for="formGroupExampleInput" class="form-label">{{form.menge.label}}</label>
+        {{form.menge(class="form-control")}}
+    </div>
+    <div class="col-12">
+        <label for="formGroupExampleInput" class="form-label">{{form.optionaliat.label}}</label>
+        {{form.optionaliat(class="form-control")}}
+    </div>
+    <div class="col-12">
+        {{form.submit(class="btn btn-success") }}
+    </div>
+</form>
+{% endblock %}
+
+
+zutat = SelectField("Zutat auswählen")
+optionaliat = SelectField("Optionalität",choices=["Nein","Ja"])
+menge = StringField("Menge der Zutaten",validators=[DataRequired()])
+submit = SubmitField("Speichern")

@@ -86,7 +86,23 @@ def rezeptver1():
 
 @app.route("/admin/rezept/rezeptver2/<path:rid>",methods=['GET','POST'])
 def rezeptver2(rid):
-    return "Nothing"
+    rezept1 = rezept.query.get(rid)
+    form = forms.rezeptzutatadder()
+    # Zutaten auswählbar machen
+    form.zutat.choices = createArrayHelper(zutat.query.all())
+    if form.validate_on_submit and request.method == "POST":
+        # Wir speichern  das Formular
+        optionalbool = False
+        if form.optionaliat.data == "Ja":
+            optionalbool = True
+        assoc1 = Association(menge=int(form.menge.data),optional=optionalbool)
+        zutat1 = zutat.query.get(int(form.zutat.data))
+        assoc1.hatzutat = zutat1
+        with db.session.no_autoflush:
+            rezept1.zutaten.append(assoc1)
+        db.session.commit()
+        flash("Gespeichert!")
+    return render_template('admin_addrzver.html',form=form)
 
 
 @app.route('/admin/rezept/removeRezept')
