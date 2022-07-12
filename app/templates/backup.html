@@ -2,7 +2,7 @@
 <body>
 <h1># Importe</h1>
 from app import db<br />
-from app.rezept import rezept, zutat, tags, handlungsschritt<br />
+from app.rezept import rezept, zutat, tags, handlungsschritt, Association, AssociationRHhat<br />
 <br />
 <h1># Funktionen</h1>
 def addZutat(name, einheit, bild, id):<br />
@@ -55,7 +55,7 @@ def addTags(name,id):<br />
 
     <br />
     {% for entry in rezept %}
-    # Das Rezept {{entry.name}} hat folgende Zutaten: {{entry.zutaten}}<br />
+    # Das Rezept {{entry.name}} hat folgende Zutaten: {{entry.zutaten}}<br /><br />
         {% for assoc in entry.zutaten %}
             assoc1 = Association(menge={{assoc.menge}},optional={{assoc.optional}})<br />
             zutat = zutat.query.get({{assoc.zid}})<br />

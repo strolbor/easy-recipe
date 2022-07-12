@@ -23,6 +23,8 @@ def showhandlungsschritt():
 @app.route('/admin/hand/modifyHandlung/<path:ids>',methods=['GET','POST'])
 def modifyHandlung(ids):
     """Hiermit wird eine Zutat modifiziert."""
+    # ids => Rezeptid
+    rezept1 = rezept.query.get(ids)
     # Formular initalisieren
     form = forms.handlungschrittanlegen()
     # Handlungschritt Objekt holen
@@ -106,7 +108,7 @@ def handver2(rid):
     rezeptw = rezept.query.get(rid)
     if request.method == "POST":
         if form.validate_on_submit:
-            assoc1 = AssociationRHhat(position=1) # Extra Daten hinzufügen
+            assoc1 = AssociationRHhat(position=int(form.position.data)) # Extra Daten hinzufügen
             hand = handlungsschritt.query.get(form.handlungschritt.data)
             print("Handlungsschritt",hand,form.handlungschritt.data)
             assoc1.hatid =  hand# Verknüpfung
@@ -114,7 +116,8 @@ def handver2(rid):
                 rezeptw.handlungsschritte.append(assoc1)
             db.session.commit()
             flash("Gespeichert")
-    return render_template('admin_handlungver.html',form=form)
+            return redirect(url_for('handver2',rid=rid))
+    return render_template('admin_handlungver.html',form=form,rezept1=rezeptw)
 
 @app.route("/admin/hand/handdeleter1")
 def handdeleter1():

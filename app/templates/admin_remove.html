@@ -58,6 +58,7 @@
                             <a href="{{url_for('handdeleter2',rid=message.id)}}">Auswählen</a>
                         {% endif %}
                         {% if handdeleter2 %}
+                            Position: {{message.position}}<br />
                             <a href="{{url_for('deleterhhat',aid=message.aid,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if MODE_REZEPTadd %}
