@@ -14,7 +14,23 @@
                 <div class="ms-2 me-auto">
                     <div class="fw-bold">
                         {% if handlung %}
-                            {{ message.text }}
+
+                            <!-- Aufklapp Menu -->
+                            {% if message.text | count > 50 %}
+                                <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse">
+                                    {{message.text[0:50]}}
+                                </a> [v]
+                                
+                                <div class="collapse" id="collapse-{{loop.index}}">
+                                <div class="card card-body" style="width: 600px;">
+                                    {{message.text}}
+                                </div>
+                                </div>
+                                {% else %}
+                                    {{message.text}}
+                            {% endif %}
+
+                            
                         {% elif targerzhat2 %}
                             {{ message.hatzutat.name }} 
                         {% elif handdeleter2 %}
@@ -62,7 +78,7 @@
                             <a href="{{url_for('deleterhhat',aid=message.aid,rid=rid)}}">Entfernen</a>
                         {% endif %}
                         {% if MODE_REZEPTadd %}
-                            <a href="{{url_for('rezeptver2',rid=message.id)}}">Auswählen</a> (Neues Formular um die Zutaten mit Menge und optionalität hinzufügen)
+                            <a href="{{url_for('rezeptver2',rid=message.id)}}">Auswählen</a>
                         {% endif %}
                 </div> 
                 {% if targetrezept %}

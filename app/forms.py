@@ -1,6 +1,3 @@
-import os
-from tkinter.tix import Select
-from tokenize import String
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField,StringField,SelectField

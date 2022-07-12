@@ -1,4 +1,5 @@
 import imp
+import re
 from app import app, db, forms
 from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
 from app.backend_helper import  getNewID,createArrayHelper, savepic
@@ -8,6 +9,7 @@ import os
 from flask import redirect, render_template,request, abort
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
+import sqlalchemy
 
 ##############
 #   Rezept   #
@@ -98,11 +100,17 @@ def rezeptver2(rid):
         assoc1 = Association(menge=int(form.menge.data),optional=optionalbool)
         zutat1 = zutat.query.get(int(form.zutat.data))
         assoc1.hatzutat = zutat1
-        with db.session.no_autoflush:
-            rezept1.zutaten.append(assoc1)
-        db.session.commit()
-        flash("Gespeichert!")
-    return render_template('admin_addrzver.html',form=form)
+        try:
+            with db.session.no_autoflush:
+                rezept1.zutaten.append(assoc1)
+            db.session.commit()
+            flash("Gespeichert!")
+            return redirect(url_for('rezeptver2',rid=rid))
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()
+            flash("Fehler: Zutat wurde bereits verknüpft!")
+        
+    return render_template('admin_addrzver.html',form=form,rezept1=rezept1)
 
 
 @app.route('/admin/rezept/removeRezept')
