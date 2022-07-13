@@ -1,0 +1,4 @@
+200 ml|Milch
+300 ml|Sahne
+150 g|Zucker
+150 g|Mascarpone

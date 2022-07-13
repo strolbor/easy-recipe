@@ -1,0 +1,5 @@
+1 Flasche|Amaretto
+1 Flasche|Sekt, trocken
+1 Flasche|Kirschsaft
+1 Flasche|Apfelsaft
+n. B.|Früchte (z. B. Kirschen, Beeren, Äpfel)
