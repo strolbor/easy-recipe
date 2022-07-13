@@ -77,6 +77,7 @@ class rezept(db.Model):
     ruhezeit            = db.Column(db.Integer)
     schwierigkeit       = db.Column(db.String)
     kalorienportion     = db.Column(db.String)
+    kurzbeschreibung    = db.Column(db.String)
 
     # Relationsship zu den Assocation: Rezept <-> Zutat
     zutaten             = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
