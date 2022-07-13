@@ -100,7 +100,7 @@ class handlungsschritt(db.Model):
     text                = db.Column(db.String)
 
     # Relationsship zu den Assocation: Rezept <-> Handlungsschritt
-    rezepte = db.relationship("AssociationRHhat",back_populates="hatid",cascade="all, delete-orphan")
+    rezepte             = db.relationship("AssociationRHhat",back_populates="hatid",cascade="all, delete-orphan")
 
     def __repr__(self):
         return '<handlungsschritt {}; Text: {}>'.format(self.id,self.text)
