@@ -70,6 +70,14 @@ class rezept(db.Model):
     name                = db.Column(db.String)
     bild                = db.Column(db.String)
 
+    # Extra Attribute
+    # arbeitszeit, kochzeit, ruhezeit, schwierigkeit,kalorien
+    arbeitszeit         = db.Column(db.Integer)
+    kochzeit            = db.Column(db.Integer)
+    ruhezeit            = db.Column(db.Integer)
+    schwierigkeit       = db.Column(db.String)
+    kalorienportion     = db.Column(db.String)
+
     # Relationsship zu den Assocation: Rezept <-> Zutat
     zutaten             = db.relationship("Association", back_populates="rezept", cascade="all, delete-orphan")
     
