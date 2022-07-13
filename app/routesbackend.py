@@ -62,7 +62,7 @@ def remover(mode : int,classes, redirect_url: str):
     elif mode == MODE_HANDadd:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungadder von Handlungschritten <-> Rezept",MODE_HANDadd=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_REZEPTadd:
-        return(render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungadder von Handlungschritten <-> Rezept",MODE_REZEPTadd=True,next_url=next_url,prev_url=prev_url,page=page))
+        return(render_template('admin_remove.html',inhalt=liste.items,titlet="Verknüpfungadder von Zutaten <-> Rezept",MODE_REZEPTadd=True,next_url=next_url,prev_url=prev_url,page=page))
     else:
         print("Kein Tamplate gefunden!")
         return "Kein Tamplate gefunden!"

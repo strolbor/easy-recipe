@@ -83,7 +83,7 @@ def addTags(name,id):<br />
     <br />
     <h2># Rezept & Handlungsschritte</h2>
     {% for entry in rezept %}
-    # Das Rezept {{entry.name}} hat folgende Handlungsschritte: {{entry.handlungsschritte}}<br />
+    # Das Rezept {{entry.name}} hat folgende Handlungsschritte: {{entry.handlungsschritte}}<br /><br />
         {% for assoc in entry.handlungsschritte %}
             assoc1  = AssociationRHhat(position={{assoc.position}})<br />
             handlung = handlungsschritt.query.get({{assoc.hid}})<br />

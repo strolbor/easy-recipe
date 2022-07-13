@@ -110,7 +110,6 @@ def handver2(rid):
         if form.validate_on_submit:
             assoc1 = AssociationRHhat(position=int(form.position.data)) # Extra Daten hinzufügen
             hand = handlungsschritt.query.get(form.handlungschritt.data)
-            print("Handlungsschritt",hand,form.handlungschritt.data)
             assoc1.hatid =  hand# Verknüpfung
             with db.session.no_autoflush:
                 rezeptw.handlungsschritte.append(assoc1)
@@ -129,8 +128,6 @@ def handdeleter2(rid):
     # Dann die aussocication suchen
     assoc1 =  AssociationRHhat.query.filter_by(rid=rid).all()
     r1 = rezept.query.get(rid)
-    print(len(r1.handlungsschritte))
-    print(assoc1)
     return render_template('admin_remove.html',inhalt=assoc1,titlet="Verknüpfungsentferner Handlungsschritte (keine Löschung der Handlungsschritte)",rid=rid,handdeleter2=True)
     # Dann entsorechend der Auswahl die Handlungsschritte löschen
 
