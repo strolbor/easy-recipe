@@ -1,7 +1,7 @@
 import os
 import time
 
-from os import path, replace
+from os import path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -22,11 +22,16 @@ link_list = open("chefkochlinks.txt", "r").readlines().copy()
 '''speichere Rezeptdaten für jedes Element in der Link-Liste'''
 
 rezCounter = 0
+rezMaximum = 10
 
 """falls bei rezept etwas schief geht """
 corrupted = []
 
 for link in link_list:
+
+    if rezCounter > rezMaximum:
+        break
+
     try:
         if len(link) == 0:
             continue
@@ -90,12 +95,19 @@ for link in link_list:
             except:
                 menge = ""
 
-            """wenn zName nicht gefundne werden kann gibt es keine Zutaten mehr"""
+            """wenn zName nicht gefunden werden kann könnte es sich um Überschrift handeln -> suche 1 weiter unten"""
             try:
                 zName = driver.find_element(By.XPATH,
                                             "/html/body/main/div[3]/div[1]/div[2]/table/tbody/tr[%d]/td[2]/span" % zutatRow).text
             except:
-                break
+                """wenn das nur Überschrift ist wie 'für Belag', dann mach doch weiter """
+                try:
+                    zName = driver.find_element(By.XPATH,
+                                                "/html/body/main/div[3]/div[1]/div[2]/table/tbody/tr[%d]/td[2]/span" % (zutatRow+1)).text
+                    zutatRow += 1
+                    continue
+                except:
+                    break
 
             """| als Trennzeichen"""
             menge = menge.replace("|", "/")
@@ -108,6 +120,29 @@ for link in link_list:
             """Zutaten untereinander in Liste schreiben"""
             file.write("\n".join(zutaten))
             file.close()
+
+
+
+        main_link = link.replace("/drucken","")
+        driver.get(main_link)
+
+
+        """finde alle Tags"""
+        tags = []
+        while True:
+            try:
+                tag = driver.find_element(By.XPATH, "/html/body/main/article[4]/div[3]/amp-carousel/div/div[1]/div[%d]/a" % (len(tags)+1)).text
+                tags.append(tag)
+            except:
+                break
+
+        if tags.__len__() != 0:
+            file = open(rezept_dir + "tags.txt", "w")
+            """tags untereinander in Liste schreiben"""
+            file.write("\n".join(tags))
+            file.close()
+
+        print(",".join(tags))
 
         rezCounter += 1
 
@@ -129,3 +164,18 @@ file.write("\n".join(corrupted))
 file.close()
 
 driver.quit()
+
+
+"""
+Fehler im Scraper: bei neuer Überchrift wird aufgehört weiter Zutaten zu scrapen -> bsp 
+https://www.chefkoch.de/rezepte/drucken/1219221227428135/Tomaten-Tarte-mit-Ziegenkaese.html
+
+
+Überschrift NICHT MIT SCRAPEN! : 
+/html/body/main/div[3]/div[1]/div[2]/table/tbody/tr[6]/td/span
+
+Das hier mit scrapen
+/html/body/main/div[3]/div[1]/div[2]/table/tbody/tr[4]/td[1]/span/strong
+/html/body/main/div[3]/div[1]/div[2]/table/tbody/tr[7]/td[1]/span/strong
+
+"""

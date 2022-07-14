@@ -1,5 +1,0 @@
-1|Banane(n)
-1 Tasse|Haferflocken
-1 Tasse|Wasser
-1 Tasse|Milch
-n. B.|Honig oder Zucker

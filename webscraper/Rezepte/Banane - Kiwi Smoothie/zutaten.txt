@@ -1,4 +1,0 @@
-1|Banane(n)
-1|Kiwi(s)
-½ Liter|Orangensaft
-½ TL|Honig

@@ -1,9 +1,0 @@
-500 g|Kartoffel(n)
-500 g|Schmand
-2|Ei(er)
-etwas|Mehl
-|Salz
-|Mohn
-|Speck, Bauchfleisch oder Mettwurst
-|Teig (Brotteig vom Bäcker oder Backmischung)
-500 g|Quark (Magerquark)

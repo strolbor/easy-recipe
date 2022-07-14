@@ -61,9 +61,10 @@ def getRezepteByZutatNamen(zutatnamen):
             if not zutatid in zutatIDList:
                 zutatIDList.append(zutatid)
         """finde Rezepte, die diese Zutat beinhalten"""
-        for entry in zutat.query.get(zutatid).inhalte:
-            if not entry.id in rezeptIDList:
-                rezeptIDList.append(entry.id)
+        for entry in zutat.query.get(zutatid).rezepte:
+            """entry sind Association-Object (siehe rezept.py)"""
+            if not entry.rid in rezeptIDList:
+                rezeptIDList.append(entry.rid)
 
     """Rückgabewert: diese Liste, wird von rezeptanzeige.html interpretiert und genutzt"""
     rezeptRankings = []
@@ -72,10 +73,11 @@ def getRezepteByZutatNamen(zutatnamen):
         fehlendeZutatenNamen = []
         _rezept = rezept.query.get(rid)
         for entryZutat in _rezept.zutaten:
-            if entryZutat.id in zutatIDList:
-                vorhandeneZutatenNamen.append(entryZutat.name)
+            """entryZutat ist Association"""
+            if entryZutat.zid in zutatIDList:
+                vorhandeneZutatenNamen.append(entryZutat.hatzutat.name)
             else:
-                fehlendeZutatenNamen.append(entryZutat.name)
+                fehlendeZutatenNamen.append(entryZutat.hatzutat.name)
 
         strTags = ""
         if _rezept.tags != None:
