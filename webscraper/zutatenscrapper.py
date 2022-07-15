@@ -12,22 +12,30 @@ fileout2 = open("add.txt","w")
 zutatenarray = []
 for entry in ldir:
     file = open(os.path.join(path2,entry,"zutaten.txt"))
+    print("Rezeptname:",entry)
     for line in file:
+        
         arraytmp = line.split("|")
 
         # Zutatennamen filtern
         zutateninhalt = arraytmp[1]
+        tmpanz = []
+        
         zutateninhalt = zutateninhalt.split(",")[0]
-        zutateninhalt = zutateninhalt.split(" ")[0]
-        zutateninhalt = zutateninhalt.replace(" ","")
-        zutateninhalt = zutateninhalt.replace('\n',"")
+        #zutateninhalt = zutateninhalt.split(" ")[0]
+        #zutateninhalt = zutateninhalt.replace(" ","")
+        zutateninhalt = zutateninhalt.replace('\n','')
         zutateninhalt = zutateninhalt.split("(")[0]
 
+        tmpanz.append(zutateninhalt)
+        print("> Zutatnamen:",tmpanz)
+        
         # einheit
         mengeRAW = arraytmp[0]
+        
         tmp = re.search("[^0-9]+",mengeRAW)
         if tmp is not None:
-            print(tmp)
+            print(">",tmp)
             tmp3 = tmp.span()
             menge = mengeRAW[tmp3[0]:tmp3[1]]
             if menge.startswith(" "):
@@ -38,6 +46,7 @@ for entry in ldir:
             zutatenarray.append(zutateninhalt)
             #print("Zutat",zutateninhalt, "im Rezept", entry)
             #addZutat(name="{zutateninhalt}",bild="",einheit="{mengeRAW}")
+            zutateninhalt = zutateninhalt.replace('\n','')
             fileout2.write(f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n")
 
     file.close()

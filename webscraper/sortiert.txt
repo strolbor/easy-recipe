@@ -1,4 +1,4 @@
-Aceto
+Aceto balsamico
 Ahornsirup
 Ananasstücke
 Backpulver
@@ -12,32 +12,40 @@ Basilikumblätter
 Bier
 Blattspinat
 Blätterteig
+Blätterteig 
+Blätterteig aus dem Kühlregal
 Brötchen
 Brühe
 Brühepulver
 Butter
+Butter für die Form
 Butterflöckchen
 Butterkeks
 Butterschmalz
 Cashewkerne
 Cayennepfeffer
 Champignons
+Champignons in Scheiben
 Cheddarkäse
 Cherrytomate
 Chiliflocken
-Chilifäden
+Chiliflocken oder frische Chilis
+Chilifäden zum Garnieren
 Chilipulver
 Chilisauce
 Chilischote
 Chiliöl
 Cocktailtomaten
-Crème
+Crème double
+Crème fraîche
+Crème fraîche oder Schmand
 Currypaste
 Currypulver
 Dill
+Dill 
 Drillinge
-Duftreis
-Edamer
+Duftreis 
+Edamer Käse
 Ei
 Eigelb
 Eiweiß
@@ -46,35 +54,50 @@ Erdnussbutter
 Erdnussöl
 Erdnüsse
 Essig
-Farfalle
-Fertigmischung
+Farfalle 
+Fertigmischung für Salatsauce 
 Fett
+Fett für die Form
+Fett für die Formen
 Fischsauce
 Fleisch
+Fleisch oder Fisch nach Wahl
 Fleischbrühe
-Fleur
+Fleischbrühe oder Gemüsebrühe
+Fleur de Sel
 Frischhefe
 Frischkäse
+Frischkäse 
+Frischkäse oder Schmand
 Frühlingszwiebel
 Frühstücksspeck
-Garam
+Garam Masala
 Geflügelfleisch
 Gemüse
+Gemüse nach Wahl
 Gemüsebrühe
+Gemüsebrühe zum Ablöschen
 Gemüsebrühepulver
 Gemüsebrühwürfel
 Gemüsezwiebel
 Gewürz
 Gewürzgurke
 Gnocchi
+Gnocchi 
 Gouda
-Gulasch
+Gulasch vom Schwein
 Gurke
 Gurkenflüssigkeit
-HENGLEIN
+HENGLEIN Eierspätzle
+HENGLEIN Kartoffelnudeln
+HENGLEIN Kartoffelnudeln 
+HENGLEIN Mini-Knödel
+HENGLEIN Strudelteig 
+HENGLEIN frischer Pizzateig 
 Hackfleisch
+Hackfleisch vom Rind oder Lamm
 Hefe
-Henglein
+Henglein Blätterteig
 Hokkaidokürbis
 Honig
 Hähnchenbrust
@@ -82,13 +105,16 @@ Hähnchenbrustfilet
 Hühnerbrust
 Hühnerbrustfilet
 Hühnerbrühe
+Hühnerbrühe oder Gemüsebrühe
 Hühnerbrüste
 Hühnerfleisch
 Ingwer
-Ingwerpaste
+Ingwerpaste 
 Ingwerwurzel
-Jasminreis
+Ingwerwurzel oder 2 TL gemahlen
+Jasminreis oder Duftreis
 Joghurt
+Joghurt 
 Johannisbeeren
 Kakaopulver
 Kardamomkapsel
@@ -99,7 +125,7 @@ Kartoffeln
 Kasseler
 Katenschinken
 Ketchup
-Kichererbsen
+Kichererbsen aus der Dose
 Kirschtomate
 Knoblauch
 Knoblauchgranulat
@@ -108,15 +134,20 @@ Knoblauchzehe
 Knollensellerie
 Kochschinken
 Kokosmilch
+Kokosmilch 
 Koriander
 Korianderblätter
 Koriandergrün
+Koriandergrün zum Garnieren
 Kreuzkümmel
+Kreuzkümmel 
 Kreuzkümmelpulver
-Kritharaki
+Kritharaki 
 Kräuter
+Kräuter 
+Kräuter der Provence
 Kräuterbutter
-Kräutersalz
+Kräutersalz und Pfeffer
 Kurkuma
 Käse
 Kümmel
@@ -124,58 +155,76 @@ Kümmelpulver
 Lachsfilet
 Lasagneplatte
 Lauch
+Lauch 
 Lauchzwiebel
-Liebstöckel
-Limonensaft
+Liebstöckel - Blättchen
+Limonensaft oder Zitronensaft
 Linsen
 Lorbeerblätter
 Magerquark
 Maggi
 Mais
-Maiskölbchen
+Maiskölbchen 
 Majoran
 Mandel
 Mandelmehl
 Margarine
+Margarine zum Braten
 Meersalz
 Mehl
+Mehl für die Arbeitsfläche
+Mehl oder Mondamin zum Binden
+Mehl oder Semmelbrösel zum Wenden
 Milch
+Milch zum Bestreichen
 Mineralwasser
 Mozzarella
 Mungobohnensprossen
 Muskat
 Möhre
 Naturjoghurt
+Naturjoghurt 
 Nelke
 Nudeln
 Oliven
 Olivenöl
+Olivenöl extra vergine
+Olivenöl oder anderes Öl
+Olivenöl zum Braten
 Oregano
 Palmzucker
+Palmzucker oder brauner Rohrzucker
 Paprikapulver
 Paprikaschote
 Parmaschinken
 Parmesan
 Penne
+Penne oder andere Nudeln nach Wahl
 Peperoni
 Pesto
 Petersilie
+Petersilie oder TK
 Pfeffer
+Pfeffer aus der Mühle
 Pflanzenöl
 Piment
 Pinienkerne
 Pizzatomaten
+Pizzatomaten 
 Porree
-Preiselbeeren
+Preiselbeeren 
 Puderzucker
 Quark
-Rapskernöl
+Rapskernöl oder Erdnussöl
 Reis
 Rigatoni
+Rigatoni oder Penne
 Rinderbrühe
+Rinderbrühe oder Gemüsebrühe
 Rinderfond
 Rindergulasch
 Rinderhackfleisch
+Rinderhackfleisch oder Lammhackfleisch
 Rinderroulade
 Rindfleisch
 Rosinen
@@ -183,19 +232,24 @@ Rosmarin
 Rosmarinnadeln
 Rotwein
 Rucola
-Räucherlachs
+Räucherlachs in Scheiben
 Räucherschinken
 Röstzwiebeln
 Sahne
 Sahne-Schmelzkäse
 Salat
 Salz
+Salz oder Fondor und Pfeffer
+Salz und Pfeffer
+Salz und Pfeffer aus der Mühle
 Salzwasser
-Sambal
+Sambal Oelek
 Saucenbinder
 Sauerkraut
 Sauerrahm
 Schafskäse
+Schafskäse 
+Schafskäse am Stück
 Schalotte
 Schinken
 Schinkenspeck
@@ -203,12 +257,14 @@ Schinkenwürfel
 Schlagsahne
 Schmand
 Schmelzkäse
+Schmelzkäse 
 Schnittlauch
 Schnittlauchröllchen
-Schupfnudeln
+Schupfnudeln aus dem Kühlregal
 Schweinefilet
 Semmelbrösel
 Senf
+Senf oder Ketchup
 Sesam
 Sesamöl
 Sojasauce
@@ -220,7 +276,8 @@ Speisestärke
 Spätzle
 Strauchtomate
 Szechuanpfeffer
-TULIP
+TULIP Bacon-Scheiben
+TULIP Bacon-Scheiben oder auch 16 Scheiben
 Thai-Basilikum
 Thymian
 Toastbrot
@@ -230,6 +287,7 @@ Tomatenketchup
 Tomatenmark
 Tomatenpüree
 Tomatensauce
+Tomatensauce 
 Tortellini
 Trockenhefe
 Vanillepuddingpulver
@@ -239,27 +297,33 @@ Veggie-Hack
 Vollmilch
 Walnüsse
 Wasser
-Weizenmehl
+Wasser 
+Weizenmehl Type 405
 Weißwein
+Weißwein 
 Weißweinessig
 Wirsing
+Wirsing 
 Worcestersauce
-Wurzelgemüse
+Wurzelgemüse 
 Ziegenfrischkäse
 Zimt
 Zimtpulver
 Zimtstange
 Zitrone
-Zitronengras
+Zitronengras oder 1 - 2 TL getrocknet
 Zitronengraspaste
+Zitronengraspaste oder fein gehacktes Zitronengras
 Zitronensaft
 Zucchini
 Zucker
 Zuckerschote
 Zwiebel
 Zwiebelpulver
-chinesische
-saure
-süße
-Äpfel
+chinesische Eiernudeln
+saure Sahne
+süße Sahne
+Äpfel 
 Öl
+Öl von den Tomaten
+Öl zum Braten
