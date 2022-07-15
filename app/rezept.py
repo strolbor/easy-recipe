@@ -24,8 +24,8 @@ class Association(db.Model):
     zid             = db.Column(db.ForeignKey("zutatsql.id"), primary_key=True)
 
     # Extra Daten Einträge
-    menge           = db.Column(db.Integer())
-    optional        = db.Column(db.Boolean())
+    menge           = db.Column(db.String)
+    optional        = db.Column(db.Boolean)
     
     # Relationships
     hatzutat        = db.relationship("zutat", back_populates="rezepte", cascade="save-update") # child relationship
@@ -42,7 +42,7 @@ class AssociationRHhat(db.Model):
   hid               = db.Column(db.ForeignKey("handlungsschritt.id"))
 
   # Extra Daten
-  position          = db.Column("position", db.Integer)
+  position          = db.Column("position", db.Integer())
   
   #Relationsship
   hatid             = db.relationship("handlungsschritt", back_populates="rezepte", cascade="save-update") # child relationship
