@@ -7,7 +7,7 @@ path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"Rezepte") 
 ldir = os.listdir(path2)
 
-fileout2 = open("add.txt","w")
+fileout2 = open("zutaten-add.txt","w")
 
 zutatenarray = []
 for entry in ldir:
@@ -47,11 +47,12 @@ for entry in ldir:
             #print("Zutat",zutateninhalt, "im Rezept", entry)
             #addZutat(name="{zutateninhalt}",bild="",einheit="{mengeRAW}")
             zutateninhalt = zutateninhalt.replace('\n','')
+            menge = menge.replace('\n','')
             fileout2.write(f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n")
 
     file.close()
 zutatenarray.sort()
-fileout = open("sortiert.txt","w")
+fileout = open("zutaten-sortiert.txt","w")
 
 for entry in zutatenarray:
     fileout.write(entry + "\n")

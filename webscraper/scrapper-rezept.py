@@ -8,7 +8,7 @@ path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"Rezepte") 
 ldir = os.listdir(path2)
 
-fileout2 = open("add-rezept.txt","w")
+fileout2 = open("rezept-add.txt","w")
 
 rezeptarray = []
 zahler = 1
