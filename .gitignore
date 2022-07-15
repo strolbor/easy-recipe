@@ -10,3 +10,4 @@ db*
 instance/
 *.zip
 webscraper/Rezepte
+webscraper/dummy
