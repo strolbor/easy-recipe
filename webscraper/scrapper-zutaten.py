@@ -10,11 +10,17 @@ ldir = os.listdir(path2)
 fileout2 = open("zutaten-add.txt","w")
 
 zutatenarray = []
+zutatenclasar = []
+
+class zutatinhalt():
+    def __init__(self,name,einheit):
+        self.name = name
+        self.einheit = einheit
+        
 for entry in ldir:
     file = open(os.path.join(path2,entry,"zutaten.txt"))
     print("Rezeptname:",entry)
     for line in file:
-        
         arraytmp = line.split("|")
 
         # Zutatennamen filtern
@@ -22,8 +28,6 @@ for entry in ldir:
         tmpanz = []
         
         zutateninhalt = zutateninhalt.split(",")[0]
-        #zutateninhalt = zutateninhalt.split(" ")[0]
-        #zutateninhalt = zutateninhalt.replace(" ","")
         zutateninhalt = zutateninhalt.replace('\n','')
         zutateninhalt = zutateninhalt.split("(")[0]
 
@@ -44,13 +48,22 @@ for entry in ldir:
         
         if zutateninhalt not in zutatenarray:
             zutatenarray.append(zutateninhalt)
+            
             #print("Zutat",zutateninhalt, "im Rezept", entry)
             #addZutat(name="{zutateninhalt}",bild="",einheit="{mengeRAW}")
             zutateninhalt = zutateninhalt.replace('\n','')
             menge = menge.replace('\n','')
+            menge = menge.replace('/n','(n)')#/e
+            menge = menge.replace('/e','(e)')#/e
+            menge = menge.replace('½','1/2')
+            menge = menge.replace('¼','1/4')
+            
+            zwischenspeicher = zutatinhalt(name=zutateninhalt,einheit=menge)
+            zutatenclasar.append(zwischenspeicher)
             towrite = f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n"
             print(towrite)
             fileout2.write(towrite)
+            
 
     file.close()
 zutatenarray.sort()
@@ -58,7 +71,10 @@ fileout = open("zutaten-sortiert.txt","w")
 
 for entry in zutatenarray:
     fileout.write(entry + "\n")
-    
+print(zutatenclasar)
+for entry in zutatenclasar:
+    towrite = f"addZutat(name=\"{entry.name}\",bild=\"\",einheit=\"{entry.einheit}\")\n"
+    fileout2.write(towrite)
     
 fileout.flush()
 fileout.close()
