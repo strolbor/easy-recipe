@@ -6,7 +6,7 @@ from app.rezept import rezept, zutat, tags, handlungsschritt, Association, Assoc
 <br />
 <h1># Funktionen</h1>
 def addZutat(name, einheit, bild, id):<br />
-&nbsp;&nbsp;&nbsp;&nbsp;new = zutat(name=name, einheit=einheit, bild=bild,id=id))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;new = zutat(name=name, einheit=einheit, bild=bild,id=id)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;db.session.add(new)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;db.session.commit()<br />
     <br />
