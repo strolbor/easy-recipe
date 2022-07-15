@@ -71,7 +71,8 @@ fileout = open("zutaten-sortiert.txt","w")
 
 for entry in zutatenarray:
     fileout.write(entry + "\n")
-print(zutatenclasar)
+
+
 for entry in zutatenclasar:
     towrite = f"addZutat(name=\"{entry.name}\",bild=\"\",einheit=\"{entry.einheit}\")\n"
     fileout2.write(towrite)
