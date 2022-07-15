@@ -48,7 +48,9 @@ for entry in ldir:
             #addZutat(name="{zutateninhalt}",bild="",einheit="{mengeRAW}")
             zutateninhalt = zutateninhalt.replace('\n','')
             menge = menge.replace('\n','')
-            fileout2.write(f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n")
+            towrite = f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n"
+            print(towrite)
+            fileout2.write(towrite)
 
     file.close()
 zutatenarray.sort()
