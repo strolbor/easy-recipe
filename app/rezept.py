@@ -71,12 +71,6 @@ class rezept(db.Model):
     bild                = db.Column(db.String)
 
     # Extra Attribute
-    # arbeitszeit, kochzeit, ruhezeit, schwierigkeit,kalorien
-    arbeitszeit         = db.Column(db.Integer)
-    kochzeit            = db.Column(db.Integer)
-    ruhezeit            = db.Column(db.Integer)
-    schwierigkeit       = db.Column(db.String)
-    kalorienportion     = db.Column(db.String)
     kurzbeschreibung    = db.Column(db.String)
 
     # Relationsship zu den Assocation: Rezept <-> Zutat
