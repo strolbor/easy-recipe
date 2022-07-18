@@ -148,7 +148,6 @@ def home():
             flash("Don't hack this!")
 
 
-
     if form.submitAdd.data == False and form.submitRm.data == False and form.submitSuchen.data == False:
         #erster Aufruf
         print("first")
@@ -158,3 +157,4 @@ def home():
     print("last return")
     updateZutatenlisten()
     return render_template(home_html, form=form)
+

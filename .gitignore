@@ -9,3 +9,5 @@ run_website.bat
 db*
 instance/
 *.zip
+webscraper/Rezepte
+webscraper/dummy
