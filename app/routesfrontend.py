@@ -30,7 +30,7 @@ def home():
     global alleZutaten
     alleZutaten = []
     try:
-        for entry in zutat.query.all():
+        for entry in zutat.query.order_by(zutat.name).all():
             alleZutaten.append(entry.name)
         pass
     except Exception as e:

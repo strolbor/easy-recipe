@@ -2,44 +2,54 @@ import os
 import pathlib
 from Levenshtein import distance
 import re
+import operator
 
 path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"Rezepte") 
 ldir = os.listdir(path2)
 
+fileout = open("zutaten-sortiert.txt","w")
 fileout2 = open("zutaten-add.txt","w")
+fileout3 = open("scrapper-zutat.log","w")
 
 zutatenarray = []
 zutatenclasar = []
 
 class zutatinhalt():
-    def __init__(self,name,einheit):
+    name : str
+    def getname(self) -> str:
+        return self.name
+    def __init__(self,name : str,einheit):
         self.name = name
         self.einheit = einheit
-        
+
+
+def write(file,eintrag):
+    file.write(eintrag+"\n")
+
 for entry in ldir:
     file = open(os.path.join(path2,entry,"zutaten.txt"))
-    print("Rezeptname:",entry)
+    fileout3.write("Rezeptname: "+entry+"\n")
     for line in file:
         arraytmp = line.split("|")
 
         # Zutatennamen filtern
         zutateninhalt = arraytmp[1]
-        tmpanz = []
         
         zutateninhalt = zutateninhalt.split(",")[0]
         zutateninhalt = zutateninhalt.replace('\n','')
         zutateninhalt = zutateninhalt.split("(")[0]
+        if zutateninhalt.endswith(" "):
+            zutateninhalt = zutateninhalt[:len(zutateninhalt)-1]
 
-        tmpanz.append(zutateninhalt)
-        print("> Zutatnamen:",tmpanz)
+        fileout3.write("> Zutatnamen:" + zutateninhalt + "\n")
         
         # einheit
         mengeRAW = arraytmp[0]
         
         tmp = re.search("[^0-9]+",mengeRAW)
         if tmp is not None:
-            print(">",tmp)
+            fileout3.write("> Match: " + tmp.string + "\n") 
             tmp3 = tmp.span()
             menge = mengeRAW[tmp3[0]:tmp3[1]]
             if menge.startswith(" "):
@@ -49,8 +59,6 @@ for entry in ldir:
         if zutateninhalt not in zutatenarray:
             zutatenarray.append(zutateninhalt)
             
-            #print("Zutat",zutateninhalt, "im Rezept", entry)
-            #addZutat(name="{zutateninhalt}",bild="",einheit="{mengeRAW}")
             zutateninhalt = zutateninhalt.replace('\n','')
             menge = menge.replace('\n','')
             menge = menge.replace('/n','(n)')#/e
@@ -61,23 +69,45 @@ for entry in ldir:
             zwischenspeicher = zutatinhalt(name=zutateninhalt,einheit=menge)
             zutatenclasar.append(zwischenspeicher)
             towrite = f"addZutat(name=\"{zutateninhalt}\",bild=\"\",einheit=\"{menge}\")\n"
-            print(towrite)
+            fileout3.write(towrite)
             fileout2.write(towrite)
             
 
     file.close()
-zutatenarray.sort()
-fileout = open("zutaten-sortiert.txt","w")
+#zutatenclasar.sort(key=operator.attrgetter('name'))
 
-for entry in zutatenarray:
-    fileout.write(entry + "\n")
+# Ab hier erst verändern #
 
 
 for entry in zutatenclasar:
-    towrite = f"addZutat(name=\"{entry.name}\",bild=\"\",einheit=\"{entry.einheit}\")\n"
-    fileout2.write(towrite)
-    
+    tmpar = entry.getname().split(" ")
+    write(fileout3,entry.getname() + " gab es Probleme" + "\n" )
+    if len(tmpar) >= 2:
+        print("Beim ITEM:", entry.getname())
+        print("Mehrere Leerzeichen erkannt.")
+        print("Wollen Sie das Item behalten?")
+        eingabe = input("[y/N]")
+        if eingabe == "y" or eingabe == "Y":
+            print("-> genommen")
+            write(fileout,entry.name)#Fileout ist -sortet.txt
+            towrite = f"addZutat(name=\"{entry.name}\",bild=\"\",einheit=\"{entry.einheit}\")"
+            write(fileout2,towrite)
+        else:
+            print("->verworfen")
+            write(fileout3,"->verworfen")
+            # Ich will es nicht übernehmen, also nichts tun
+
+    else:
+        write(fileout,entry.name)#Fileout ist -sortet.txt
+        towrite = f"addZutat(name=\"{entry.name}\",bild=\"\",einheit=\"{entry.einheit}\")"
+        write(fileout2,towrite)
+
+
+
+
 fileout.flush()
 fileout.close()
 fileout2.flush()
 fileout2.close()
+fileout3.flush()
+fileout3.close()
