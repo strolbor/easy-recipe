@@ -1,13 +1,12 @@
 {% extends "admin_base.html" %}
 
-
 {% block app_content %}
 <h1>Systemverwaltung</h1>
 <p>Foldende Möglichkeiten haben Sie zur Modifizierung der Rezepte:</p>
 <ol>
-    <li><a>Rezept(namen)</a></li>
-    <li><a>Zutaten</a></li>
-    <li><a>Handlungsschritte</a></li>
-    <li><a>Tags</a></li>
+    <li><a href="{{url_for('showRezepte')}}""">Rezept(namen)</a></li>
+    <li><a href="{{url_for('showZutaten')}}">Zutaten</a></li>
+    <li><a href="{{url_for('showZutaten')}}">Handlungsschritte</a></li>
+    <li><a href="{{url_for('showTags')}}">Tags</a></li>
 </ol>
 {% endblock %}
