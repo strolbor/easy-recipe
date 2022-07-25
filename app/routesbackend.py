@@ -101,7 +101,12 @@ def entfernerAnzeiger(classes,redirect_url : str,title):
     return render_template('admin_rzpicker.html',form=form,titlet=title)
 
 def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
-    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
+    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen.
+    ids => ID der Zutat, Rezept, etc
+    classes => Die Klasse die man anhängen will
+    ursprungclass => Klasse, die man bearbeiten will
+    mode => was wird genutzt
+    redirect_url => wohin soll es dann gehen"""
     form = forms.verknupfungsanleger()
     # Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden
     if classes == handlungsschritt:
@@ -143,9 +148,9 @@ def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
         return redirect(url_for(redirect_url,ids=ids))
     if mode == MODE_ZUTATEN:
         return render_template('admin_rzpickerzutat.html',form=form,modus="Zutaten",rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
-    if mode == MODE_TAGS:
+    elif mode == MODE_TAGS:
         return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
-    if mode == MODE_HAND:
+    elif mode == MODE_HAND:
         return render_template('admin_rzpickerzutat.html',form=form,modus="Handlungsschritte",rezeptnamen=auswahl.name,inhalt=auswahl.handlungsschritte)
     else:
         return "Error! <br />Kein Template gefunden!"

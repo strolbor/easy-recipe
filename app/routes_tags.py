@@ -15,8 +15,12 @@ from sqlalchemy import desc
 # Um die Tags anzuzeigen
 @app.route('/admin/tags/showTags/')
 def showTags():
-    liste = tags.query.order_by(tags.name).all()
-    return render_template('admin_show.html',liste=liste,titlet="Tags")
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.order_by(tags.name).paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    next_url = url_for('showTags', page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for('showTags', page=liste.prev_num)  if liste.has_prev else None
+    #liste = tags.query.order_by(tags.name).all()
+    #return render_template('admin_show.html',liste=liste,titlet="Tags")
 
 # Tags hiunzufügen
 @app.route("/admin/tags/addTags",methods=['GET','POST'])
