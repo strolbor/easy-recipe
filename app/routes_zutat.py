@@ -36,13 +36,12 @@ def addzutat():
 @app.route('/admin/show/zutat/')
 def showZutaten():
     page = request.args.get('page', 0, type=int)
-    liste = rezept.query.order_by(zutat.name).paginate(page,app.config['ITEMS_PER_PAGE'], False)
+    liste = zutat.query.order_by(zutat.name).paginate(page,app.config['ITEMS_PER_PAGE'], False)
     next_url = url_for('showZutaten', page=liste.next_num)  if liste.has_next else None
     prev_url = url_for('showZutaten', page=liste.prev_num)  if liste.has_prev else None
     #liste = zutat.query.order_by(zutat.name).all()
     #return render_template('admin_show.html',liste=liste,titlet="Zutaten")
-    return render_template('admin_show.html',liste=liste.items,titlet="Zutaten",next_url=next_url, \    
-        prev_url=prev_url,showCase=True,page=page)
+    return render_template('admin_show.html',liste=liste.items,titlet="Zutaten",next_url=next_url, prev_url=prev_url,showCase=True,page=page)
 
 @app.route('/admin/remove/zutat')
 def removeZutat():
