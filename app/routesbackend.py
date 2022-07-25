@@ -40,6 +40,8 @@ MODE_HANDadd = 7
 """Diese Einstellung ist da um Verknüpfungen zw.  Handlungschritten <-> Rezept hinzuzufügen"""
 MODE_REZEPTadd = 8
 """Diese Einstellung ist da um Verknüpfungen zw.  Zutat <-> Rezept hinzuzufügen"""
+
+
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
     liste = classes.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
@@ -99,63 +101,4 @@ def entfernerAnzeiger(classes,redirect_url : str,title):
     if form.validate_on_submit():
         return redirect(url_for(redirect_url,ids=form.rezeptpicker.data))
     return render_template('admin_rzpicker.html',form=form,titlet=title)
-
-def entfernerfuction(ids,classes,ursprung_class,mode,redirect_url):
-    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen.
-    ids => ID der Zutat, Rezept, etc
-    classes => Die Klasse die man anhängen will
-    ursprungclass => Klasse, die man bearbeiten will
-    mode => was wird genutzt
-    redirect_url => wohin soll es dann gehen"""
-    form = forms.verknupfungsanleger()
-    # Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden
-    if classes == handlungsschritt:
-        # Handlungsschritt hat keinen .name Attribut
-        form.zutaten.choices = createArrayHelper(classes.query.all())
-    else:
-        form.zutaten.choices = createArrayHelper(classes.query.order_by(classes.name).all())
-    auswahl = ursprung_class.query.get(ids)
-    if auswahl is None:
-        abort(404) 
-
-    if form.validate_on_submit() or form.submit.data:
-        """ Hier funktioniert validate on submit nicht"""
-        
-        ausgewählte = form.zutaten.data
-        """Alle Zutaten, die man ausgewählt holen"""
-        for entry in ausgewählte:
-            gettingclass = classes.query.get(entry)
-            """ Zielobjekt aus der entsprechen Klasse zum Adden hinzufügen holen"""
-            if mode == MODE_ZUTATEN:
-                """ Zielobjekt ist Zutat"""
-                # auswahl = Klasse von rezept
-                # gettingclass = Klasse von Zutat
-                a = Association(menge=25,optional=True)
-                a.hatzutat = gettingclass
-                with db.session.no_autoflush:
-                    auswahl.zutaten.append(a)
-            if mode == MODE_TAGS:
-                """ Zielobjekt ist Klasse Tags """
-                auswahl.tags.append(gettingclass)
-            if mode == MODE_HAND:
-                """Wir fügen Handlungsschritte mit Positionen zu."""
-                a = AssociationRHhat(position=1)
-                a.hatid = gettingclass
-                with db.session.no_autoflush:
-                    auswahl.handlungsschritte.append(a)
-            db.session.commit()
-        flash("Gespeichert!")
-        return redirect(url_for(redirect_url,ids=ids))
-    if mode == MODE_ZUTATEN:
-        return render_template('admin_rzpickerzutat.html',form=form,modus="Zutaten",rezeptnamen=auswahl.name,inhalt=auswahl.zutaten)
-    elif mode == MODE_TAGS:
-        return render_template('admin_rzpickerzutat.html',form=form,modus="Tags",rezeptnamen=auswahl.name,inhalt=auswahl.tags)
-    elif mode == MODE_HAND:
-        return render_template('admin_rzpickerzutat.html',form=form,modus="Handlungsschritte",rezeptnamen=auswahl.name,inhalt=auswahl.handlungsschritte)
-    else:
-        return "Error! <br />Kein Template gefunden!"
-
-
-
-
 
