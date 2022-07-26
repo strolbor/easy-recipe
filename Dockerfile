@@ -16,6 +16,7 @@ RUN pip freeze > req-now.txt
 # Copy App
 COPY easy-recipe.py easy-recipe.py
 COPY app/ app/
+COPY instance/ instance/
 
 EXPOSE 5000
 CMD ["python3","easy-recipe.py"]
