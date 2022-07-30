@@ -2,7 +2,7 @@ from app import app, db, forms
 from app.rezept import handlungsschritt, rezept,AssociationRHhat
 from app.backend_helper import getNewID, savepic,createArrayHelper
 from app.routesbackend import remover
-from app.routesbackend import remover, MODE_HANDver,MODE_HANDadd,MODE_HANDver,MODE_HAND
+from app.routesbackend import remover, MODE_HANDver,MODE_HANDadd,MODE_HANDver,MODE_HAND,showclass
 
 import os
 from flask import redirect, render_template,request
@@ -16,16 +16,7 @@ from sqlalchemy import desc
 # Handlungschritte anzeigen lassen
 @app.route('/admin/hand/showhandlungsschritt')
 def showhandlungsschritt():
-    page = request.args.get('page', 0, type=int)
-    liste = rezept.query.order_by(handlungschritt.name).paginate(page,app.config['ITEMS_PER_PAGE'], False)
-    next_url = url_for('showhandlungsschritt', page=liste.next_num)  if liste.has_next else None
-    prev_url = url_for('showhandlungsschritt', page=liste.prev_num)  if liste.has_prev else None
-    return render_template('admin_show.html',liste=liste.items,titlet="Zutaten",next_url=next_url, \ 
-        prev_url=prev_url,showCase=True,page=page)
-    
-    #liste = handlungsschritt.query.all()
-    
-    #return render_template('admin_show.html',liste=liste,titlet="Handlungsschritte")
+    return showclass(handlungsschritt,handlungsschritt.id,"Handlungsschritte")
 
 # Handlungschritte Editor, bei der Anzeige
 @app.route('/admin/hand/modifyHandlung/<path:ids>',methods=['GET','POST'])
