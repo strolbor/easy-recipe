@@ -11,3 +11,5 @@ instance/
 *.zip
 webscraper/Rezepte
 webscraper/dummy
+*log
+*txt
