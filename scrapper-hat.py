@@ -61,9 +61,9 @@ for entry in ldir:
 
 
 
-        write(fileAdder,"assoc1 = Association(menge=500,optional=False)")
-        write(fileAdder,"zutat = zutat.query.get(73)")
-        write(fileAdder,"rezept1 = rezept.query.get(1)")
+        write(fileAdder,f"assoc1 = Association(menge=,optional=False)")
+        write(fileAdder,f"zutat = zutat.query.get({str(zutat_aus[0].id)})")
+        write(fileAdder,f"rezept1 = rezept.query.get({str(rezept_aus.id)})")
         write(fileAdder,"assoc1.hatzutat= zutat")
         write(fileAdder,"with db.session.no_autoflush:")
         write(fileAdder,"    rezept1.zutaten.append(assoc1)")
