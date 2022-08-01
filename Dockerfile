@@ -10,7 +10,6 @@ RUN apk update &&\
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     rm -rf requirements.txt && \
-
     apk del make automake gcc g++ subversion python3-dev 
 
 # Copy App
