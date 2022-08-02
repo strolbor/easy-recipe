@@ -99,7 +99,8 @@ for entry in ldir:
         write(fileAdder,f"       rezept1.zutaten.append(assoc1)")
         write(fileAdder,f"   db.session.commit()")
         write(fileAdder,f"except sqlalchemy.exc.IntegrityError:")
-        write(fileAdder,f"   print('Fehler: hier über mir')\n")
+        write(fileAdder,f"   print('Fehler: hier über mir')")
+        write(fileAdder,f"   db.session.rollback()\n")
 
     file.close()
 
