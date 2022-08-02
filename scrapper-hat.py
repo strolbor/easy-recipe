@@ -10,10 +10,8 @@ path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"webscraper","Rezepte") 
 ldir = os.listdir(path2)
 
-fileout = open("hat-fileout.1.txt","w")
 fileAdder = open("hat-add.py","w")
 fileLog = open("hat-scrapper.log","w")
-fileWarning = open("hat-warning.log","w")
 
 
 def write(file,eintrag):
@@ -106,11 +104,7 @@ for entry in ldir:
 
 
 
-fileout.flush()
-fileout.close()
 fileAdder.flush()
 fileAdder.close()
 fileLog.flush()
 fileLog.close()
-fileWarning.flush()
-fileWarning.close()
