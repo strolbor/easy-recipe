@@ -19,6 +19,16 @@ fileWarning = open("hat-warning.log","w")
 def write(file,eintrag):
     file.write(eintrag+"\n")
 
+def info(rezept,line):
+    maxs = max(len(rezept.name),len(line)) +len("Rezept:") + 5
+    for i in range(0,maxs): print("=",end='')
+    print()
+    print(f"Rezept: {rezept.name}")
+    tmp = line.replace('\n','')
+    print(f"Line: {tmp}")
+    for i in range(0,maxs): print("=",end='')
+    print()
+
 
 for entry in ldir:
     # = open(os.path.join(path2,entry,"zutaten.txt"))
@@ -31,38 +41,56 @@ for entry in ldir:
         arr = line.split("|")
         name = arr[1]
         name = name.replace('\n','')
+   
         # TODO: Zutat auswählen
-        zutat_aus = zutat.query.filter_by(name=name).all()
+        #zutat_aus = zutat.query.filter_by(name=name).all()
+        zutat_aus = zutat.query.filter(zutat.name.like(name+"%")).all()
         write(fileLog,f"{arr[1]},{zutat_aus}")
-        while len(zutat_aus) == 0:
-            print(f"Zutat: {name} im Rezept: {entry} wurde nicht gefunden.")
-            x = input("Bitte geben Sie den richtigen Namen ein:")
-            zutat_aus = zutat.query.filter_by(name=x).all()
-            if len(zutat_aus) > 1:
-                k = 0
-                print("Es wurde folgendes gefunden:")
+        zutat_wahl  = None
+        # Abfrage, ob wir keine Elemente haben
+        if len(zutat_aus) == 0:
+            while len(zutat_aus) == 0:
+                info(rezept_aus,line)
+                print("Es wurde nichts gefunden.")
+                x = input("Bitte geben Sie den richtigen Namen ein:")
+                zutat_aus = zutat.query.filter(zutat.name.like(x+"%")).all()
+        # Haben wir genau 1 Element, so ist es 
+        # Und geben es weiter an den Appender
+        if len(zutat_aus) == 1:
+            zutat_wahl = zutat_aus[0]
+
+        # Haben wir mehr als ein Element, so müssen wir wählen
+        while len(zutat_aus) > 1:
+            info(rezept_aus,line)
+            k = 0
+            if len(zutat_aus) > 0:
+                print(f"Es wurde zur Eingabe mehrere verschiedene Begriffe gefunden:")
                 for entry in zutat_aus:
                     print(f"{k}: {entry} ")
+                    k += 1
                 auswahl = input("Welcher Eintrag soll genommen werden:")
-                zutat_aus = zutat_aus[auswahl]
-            print(zutat_aus, "wurde gefunden.")
-            
 
-                #write(fileLog,"-- abort")
-                #write(fileWarning,f"Aborting at {entry} bei {line}")
+            try:
+                zutat_wahl = zutat_aus[int(auswahl)]
+                zutat_aus = []
+            except IndexError:
+                print(f"Ihre Eingabe ({auswahl}) ist außerhalb des Arrays. Bitt erneut versuchen.\n")
+            print(zutat_wahl, "wurde gewählt.\n")
+        
         # TODO: Regex für die Zahlen einrichten
+        print(line)
+        tmp = re.search("[0-9]+",line)
+        menge = -1
+        if not tmp is None:
+            menge = int(line[tmp.span()[0]:tmp.span()[1]])
+            print("Einheit:",menge)
+
+
         
         # TODO: Appenden und comitten
-        
-
-
-
-
-
-
-
-        write(fileAdder,f"assoc1 = Association(menge=,optional=False)")
-        write(fileAdder,f"zutat = zutat.query.get({str(zutat_aus[0].id)})")
+        write(fileAdder,f"# Rezept: {str(rezept_aus.name)} wird {zutat_wahl.name} hinzugefügt.")
+        write(fileAdder,f"assoc1 = Association(menge={menge},optional=False)")
+        write(fileAdder,f"zutat = zutat.query.get({str(zutat_wahl.id)})")
         write(fileAdder,f"rezept1 = rezept.query.get({str(rezept_aus.id)})")
         write(fileAdder,"assoc1.hatzutat= zutat")
         write(fileAdder,"with db.session.no_autoflush:")
