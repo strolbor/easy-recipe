@@ -11,7 +11,7 @@ path2 = os.path.join(path,"webscraper","Rezepte")
 ldir = os.listdir(path2)
 
 fileout = open("hat-fileout.1.txt","w")
-fileAdder = open("hat-add.txt","w")
+fileAdder = open("hat-add.py","w")
 fileLog = open("hat-scrapper.log","w")
 fileWarning = open("hat-warning.log","w")
 
@@ -29,23 +29,23 @@ def info(rezept,line):
     for i in range(0,maxs): print("=",end='')
     print()
 
+# add-file vorbereiten
+write(fileAdder,"from app import db")
+write(fileAdder,"from app.rezept import Association, rezept, zutat\n")
 
 for entry in ldir:
     # = open(os.path.join(path2,entry,"zutaten.txt"))
     file = codecs.open(os.path.join(path2,entry,"zutaten.txt") ,'r', encoding='ISO8859')
     write(fileLog,"Rezeptname: "+entry) # entry => Ordnername 
     rezept_aus = rezept.query.filter_by(name=entry).first()
-    write(fileLog,str(rezept_aus))
     for line in file:
-        write(fileLog,f"- {line}")
+        write(fileLog,f"- {line}".replace('\n',''))
         arr = line.split("|")
         name = arr[1]
         name = name.replace('\n','')
    
-        # TODO: Zutat auswählen
-        #zutat_aus = zutat.query.filter_by(name=name).all()
         zutat_aus = zutat.query.filter(zutat.name.like(name+"%")).all()
-        write(fileLog,f"{arr[1]},{zutat_aus}")
+        
         zutat_wahl  = None
         # Abfrage, ob wir keine Elemente haben
         if len(zutat_aus) == 0:
@@ -54,6 +54,7 @@ for entry in ldir:
                 print("Es wurde nichts gefunden.")
                 x = input("Bitte geben Sie den richtigen Namen ein:")
                 zutat_aus = zutat.query.filter(zutat.name.like(x+"%")).all()
+                write(fileWarning,f"Bei {name} wurde nichts gefunden.")
         # Haben wir genau 1 Element, so ist es 
         # Und geben es weiter an den Appender
         if len(zutat_aus) == 1:
@@ -61,6 +62,7 @@ for entry in ldir:
 
         # Haben wir mehr als ein Element, so müssen wir wählen
         while len(zutat_aus) > 1:
+            write(fileWarning,f"Bei {name} wurden mehrere Zutaten gefunden.")
             info(rezept_aus,line)
             k = 0
             if len(zutat_aus) > 0:
@@ -77,17 +79,16 @@ for entry in ldir:
                 print(f"Ihre Eingabe ({auswahl}) ist außerhalb des Arrays. Bitt erneut versuchen.\n")
             print(zutat_wahl, "wurde gewählt.\n")
         
-        # TODO: Regex für die Zahlen einrichten
-        print(line)
         tmp = re.search("[0-9]+",line)
         menge = -1
         if not tmp is None:
             menge = int(line[tmp.span()[0]:tmp.span()[1]])
-            print("Einheit:",menge)
+        else:
+            menge = 0
 
 
         
-        # TODO: Appenden und comitten
+        write(fileLog,f">  wird {zutat_wahl.name} hinzugefügt.")
         write(fileAdder,f"# Rezept: {str(rezept_aus.name)} wird {zutat_wahl.name} hinzugefügt.")
         write(fileAdder,f"assoc1 = Association(menge={menge},optional=False)")
         write(fileAdder,f"zutat = zutat.query.get({str(zutat_wahl.id)})")
