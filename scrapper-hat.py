@@ -54,7 +54,7 @@ for entry in ldir:
                 print("Es wurde nichts gefunden.")
                 x = input("Bitte geben Sie den richtigen Namen ein:")
                 zutat_aus = zutat.query.filter(zutat.name.like(x+"%")).all()
-                write(fileWarning,f"Bei {name} wurde nichts gefunden.")
+                write(fileLog,f"> (W) Bei {name} wurde nichts gefunden.")
         # Haben wir genau 1 Element, so ist es 
         # Und geben es weiter an den Appender
         if len(zutat_aus) == 1:
@@ -62,7 +62,7 @@ for entry in ldir:
 
         # Haben wir mehr als ein Element, so müssen wir wählen
         while len(zutat_aus) > 1:
-            write(fileWarning,f"Bei {name} wurden mehrere Zutaten gefunden.")
+            write(fileLog,f"> (W) Bei {name} wurden mehrere Zutaten gefunden.")
             info(rezept_aus,line)
             k = 0
             if len(zutat_aus) > 0:
@@ -79,24 +79,27 @@ for entry in ldir:
                 print(f"Ihre Eingabe ({auswahl}) ist außerhalb des Arrays. Bitt erneut versuchen.\n")
             print(zutat_wahl, "wurde gewählt.\n")
         
+        write(fileLog,f"> {zutat_wahl.name} wurde genommen.")
+        # Die Zahl der Menge holen
         tmp = re.search("[0-9]+",line)
-        menge = -1
+        menge = 0
         if not tmp is None:
             menge = int(line[tmp.span()[0]:tmp.span()[1]])
-        else:
-            menge = 0
 
 
         
-        write(fileLog,f">  wird {zutat_wahl.name} hinzugefügt.")
-        write(fileAdder,f"# Rezept: {str(rezept_aus.name)} wird {zutat_wahl.name} hinzugefügt.")
-        write(fileAdder,f"assoc1 = Association(menge={menge},optional=False)")
-        write(fileAdder,f"zutat = zutat.query.get({str(zutat_wahl.id)})")
-        write(fileAdder,f"rezept1 = rezept.query.get({str(rezept_aus.id)})")
-        write(fileAdder,"assoc1.hatzutat= zutat")
-        write(fileAdder,"with db.session.no_autoflush:")
-        write(fileAdder,"    rezept1.zutaten.append(assoc1)")
-        write(fileAdder,"db.session.commit()\n")
+        write(fileLog,f"> wird {zutat_wahl.name} hinzugefügt.")
+        write(fileAdder,f"try:")
+        write(fileAdder,f"   print('Rezept: {str(rezept_aus.name)} wird {zutat_wahl.name} hinzugefügt.')")
+        write(fileAdder,f"   assoc1 = Association(menge={menge},optional=False)")
+        write(fileAdder,f"   zutat = zutat.query.get({str(zutat_wahl.id)})")
+        write(fileAdder,f"   rezept1 = rezept.query.get({str(rezept_aus.id)})")
+        write(fileAdder,f"   assoc1.hatzutat= zutat")
+        write(fileAdder,f"   with db.session.no_autoflush:")
+        write(fileAdder,f"       rezept1.zutaten.append(assoc1)")
+        write(fileAdder,f"   db.session.commit()")
+        write(fileAdder,f"except sqlalchemy.exc.IntegrityError:")
+        write(fileAdder,f"   print('Fehler: hier über mir')\n")
 
     file.close()
 
