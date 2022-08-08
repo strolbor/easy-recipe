@@ -104,6 +104,9 @@ for entry in ldir:
         write(fileAdder,f"except sqlalchemy.exc.IntegrityError:")
         write(fileAdder,f"   print('Fehler: hier über mir')")
         write(fileAdder,f"   db.session.rollback()\n")
+        
+        path3 = os.path.join(path2,entry)
+        print(path)
 
     file.close()
 
