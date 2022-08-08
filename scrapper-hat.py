@@ -12,6 +12,7 @@ ldir = os.listdir(path2)
 
 fileAdder = open("hat-add.py","w")
 fileLog = open("hat-scrapper.log","w")
+bigerror = open("bigerror.txt","w")
 
 
 def write(file,eintrag):
@@ -46,15 +47,19 @@ for entry in ldir:
         
         zutat_wahl  = None
         # Abfrage, ob wir keine Elemente haben
-        if len(zutat_aus) == 0:
-            while len(zutat_aus) == 0:
+        if len(zutat_aus) == 0 or len(zutat_aus) > 50:
+            while (len(zutat_aus) == 0 or len(zutat_aus) > 50):
                 info(rezept_aus,line)
+                write(fileLog,f"> (W) Bei {name} wurde nichts gefunden.")
                 print("Es wurde nichts gefunden.")
                 x = input("Bitte geben Sie den richtigen Namen ein:")
                 zutat_aus = zutat.query.filter(zutat.name.like(x+"%")).all()
-                write(fileLog,f"> (W) Bei {name} wurde nichts gefunden.")
+                
+        if len(zutat_aus) > 50:
+            write(bigerror,f"{rezept_aus} {line}")
         # Haben wir genau 1 Element, so ist es 
         # Und geben es weiter an den Appender
+        print("zutat aus:",len(zutat_aus))
         if len(zutat_aus) == 1:
             zutat_wahl = zutat_aus[0]
 
@@ -108,3 +113,5 @@ fileAdder.flush()
 fileAdder.close()
 fileLog.flush()
 fileLog.close()
+bigerror.flush()
+bigerror.close()
