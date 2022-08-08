@@ -67,3 +67,6 @@ class rezeptzutatadder(FlaskForm):
     optionaliat = SelectField("Optionalität",choices=["Nein","Ja"])
     menge = StringField("Menge der Zutaten",validators=[DataRequired()])
     submit = SubmitField("Speichern")
+
+class rezeptanzeige():
+    submitTest = SubmitField("Test")
