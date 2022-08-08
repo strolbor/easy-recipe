@@ -11,3 +11,8 @@ instance/
 *.zip
 webscraper/Rezepte
 webscraper/dummy
+*log
+*txt
+app/app.db
+webscraper/schon
+webscraper/Rezepte

@@ -5,18 +5,18 @@ from werkzeug.utils import redirect
 
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
-from app.rezept import zutat
+from app.rezept import zutat, rezept
 
 
 @app.route('/base')
 def index():
     return render_template('base.html', title="base")
 
-#TODO: irgendwie rezeptanzeige die rezeptRankings vermitteln, nicht über globale variable
+#TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
-@app.route('/rezeptanzeige', methods=['GET', 'POST'])
-def rezeptanzeige():
-    return render_template('rezeptanzeige.html', title="Rezeptanzeige", rezeptRankings=globalRezeptRankings)
+@app.route('/rezeptranking', methods=['GET', 'POST'])
+def rezeptranking():
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings)
 
 choices_array = []
 alleZutaten = []
@@ -138,8 +138,8 @@ def home():
 
             updateZutatenlisten()
 
-            return redirect(url_for('rezeptanzeige'))
-            #return render_template("rezeptanzeige.html", rezeptRankings = _rezeptRankings)
+            return redirect(url_for('rezeptranking'))
+            #return render_template("rezeptranking.html", rezeptRankings = _rezeptRankings)
 
         if form.submitSuchtext.data:
             updateZutatenlisten()
@@ -158,3 +158,9 @@ def home():
     updateZutatenlisten()
     return render_template(home_html, form=form)
 
+
+@app.route('/rezept/<path:ids>', methods=['GET', 'POST'])
+def rezeptanzeige(ids):
+    form = forms.rezeptanzeige()
+    thisrezept = rezept.query.get(ids)
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept)
