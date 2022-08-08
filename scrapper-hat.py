@@ -30,7 +30,9 @@ def info(rezept,line):
 
 # add-file vorbereiten
 write(fileAdder,"from app import db")
+write(fileAdder,"import sqlalchemy")
 write(fileAdder,"from app.rezept import Association, rezept, zutat\n")
+
 
 for entry in ldir:
     # = open(os.path.join(path2,entry,"zutaten.txt"))
@@ -40,7 +42,12 @@ for entry in ldir:
     for line in file:
         write(fileLog,f"- {line}".replace('\n',''))
         arr = line.split("|")
-        name = arr[1]
+        
+        try:
+            name = arr[1]
+        except IndexError:
+            print("INFO:",entry,line,arr)
+            exit()
         name = name.replace('\n','')
         name = name.split("(")[0]
         name = name.split(",")[0]
