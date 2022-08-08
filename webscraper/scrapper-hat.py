@@ -30,7 +30,9 @@ def info(rezept,line):
 
 # add-file vorbereiten
 write(fileAdder,"from app import db")
+write(fileAdder,"import sqlalchemy")
 write(fileAdder,"from app.rezept import Association, rezept, zutat\n")
+
 
 for entry in ldir:
     # = open(os.path.join(path2,entry,"zutaten.txt"))
@@ -40,8 +42,15 @@ for entry in ldir:
     for line in file:
         write(fileLog,f"- {line}".replace('\n',''))
         arr = line.split("|")
-        name = arr[1]
+        
+        try:
+            name = arr[1]
+        except IndexError:
+            print("INFO:",entry,line,arr)
+            exit()
         name = name.replace('\n','')
+        name = name.split("(")[0]
+        name = name.split(",")[0]
    
         zutat_aus = zutat.query.filter(zutat.name.like(name+"%")).all()
         
@@ -80,6 +89,8 @@ for entry in ldir:
                 zutat_aus = []
             except IndexError:
                 print(f"Ihre Eingabe ({auswahl}) ist außerhalb des Arrays. Bitt erneut versuchen.\n")
+            except ValueError:
+                write(bigerror,f"{auswahl} war ein ValueEroor.")
             print(zutat_wahl, "wurde gewählt.\n")
         
         write(fileLog,f"> {zutat_wahl.name} wurde genommen.")
@@ -104,9 +115,7 @@ for entry in ldir:
         write(fileAdder,f"except sqlalchemy.exc.IntegrityError:")
         write(fileAdder,f"   print('Fehler: hier über mir')")
         write(fileAdder,f"   db.session.rollback()\n")
-        
-        path3 = os.path.join(path2,entry)
-        print(path)
+
 
     file.close()
 
