@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d1065c95cdb9ea32",
+        "id": "0e71ee281631a6d4",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Easy-Recipe.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "graph",
+          "state": {}
         }
       }
     ],
@@ -77,7 +73,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Easy-Recipe.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +89,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Easy-Recipe.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -116,9 +110,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Easy-Recipe.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -128,10 +120,12 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "d1065c95cdb9ea32",
+  "active": "0e71ee281631a6d4",
   "lastOpenFiles": [
-    "Ausblick 2 Datenverarbeitung.md",
     "Easy-Recipe.md",
+    "Productbacklog.md",
+    "Treffen.md",
+    "Ausblick 2 Datenverarbeitung.md",
     "Ausblick 1.md",
     "Meilenstein 3.md"
   ]

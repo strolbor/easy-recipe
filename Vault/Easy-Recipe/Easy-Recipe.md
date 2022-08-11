@@ -94,7 +94,7 @@ Servern befinden (verteilte Systemdienste)
   * 2x20h  
 * Meilenstein 3 Backend  
   * Übernimmt einer  
-  * Dauer: 1*60h  
+  * Dauer: 1x60h  
 * Meilenstein 4 Datensatz erweitern mit Zutaten  
   * 2x20h  
 * Meilenstein 5 Schwierigkeit  
@@ -106,7 +106,7 @@ Ergibt: 360h/2 Personen => 180h/Person => 6CP/Person
 Diese Frameworks werden wir mit höchster Wahrscheinlichkeit benutzen:  
 • PHP  
 • MySQL  
-• Bootstrap (CSS-Framework)  
+• [[Bootstrap]] (CSS-Framework)  
 Diese überprüfen wir auf die Kompatibilität mit unserem Projekt.  
 • Node.js  
 • Ruby on Rails (speziell fürs Backend entwickeltes Framework)  
