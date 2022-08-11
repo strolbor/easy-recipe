@@ -1,0 +1,138 @@
+{
+  "main": {
+    "id": "06c80cea9f7f21ec",
+    "type": "split",
+    "children": [
+      {
+        "id": "d1065c95cdb9ea32",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Easy-Recipe.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "bbb64e5f1a791d85",
+    "type": "split",
+    "children": [
+      {
+        "id": "2e0913f329739f84",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4647d817353ea713",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "f0ae70d25fb12b0e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "39e1301a9acb2d2f",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "b038abd3f7d24654",
+    "type": "split",
+    "children": [
+      {
+        "id": "ce855a91c8b79e75",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5e321bbaa2515503",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Easy-Recipe.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8301a863f427987a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Easy-Recipe.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d45da05e3fcf35a2",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3b2ed0250d48af30",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Easy-Recipe.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "active": "d1065c95cdb9ea32",
+  "lastOpenFiles": [
+    "Ausblick 2 Datenverarbeitung.md",
+    "Easy-Recipe.md",
+    "Ausblick 1.md",
+    "Meilenstein 3.md"
+  ]
+}
