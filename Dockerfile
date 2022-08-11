@@ -10,7 +10,8 @@ RUN apk update &&\
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     rm -rf requirements.txt && \
-    apk del make automake gcc g++ subversion python3-dev 
+    apk del make automake gcc g++ subversion python3-dev && \
+    rm -rf /var/cache/apk/*
 
 # Copy App
 COPY easy-recipe.py easy-recipe.py
