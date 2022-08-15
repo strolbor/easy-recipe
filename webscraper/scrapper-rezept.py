@@ -1,6 +1,5 @@
 import os
 import pathlib
-import re
 import shutil
 
 path = pathlib.Path(__file__).parent.absolute()

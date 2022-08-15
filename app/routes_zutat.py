@@ -35,7 +35,7 @@ def addzutat():
 
 @app.route('/admin/show/zutat/')
 def showZutaten():
-    return showclass(zutat,zutat.name,"Zutaten")
+    return showclass(zutat,zutat.name,"Zutaten","showZutaten")
 
 @app.route('/admin/remove/zutat')
 def removeZutat():

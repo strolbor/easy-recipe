@@ -15,7 +15,7 @@ from sqlalchemy import desc
 # Um die Tags anzuzeigen
 @app.route('/admin/tags/showTags/')
 def showTags():
-    return showclass(tags,tags.name,"Tags")
+    return showclass(tags,tags.name,"Tags","showTags")
 
 # Tags hiunzufügen
 @app.route("/admin/tags/addTags",methods=['GET','POST'])
