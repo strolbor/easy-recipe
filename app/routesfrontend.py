@@ -182,11 +182,11 @@ def rezeptanzeige(ids):
     # Ich hatte dir mal die aktuelle Datenstruktur erklärt, oder?
     # Wir können nicht direkt auf die Zutat zugreifen. Wir müssen ein Umweg über die Association machen.
     # Das bedeutet wir rufen das Rezept -> Association -> Zutat auf
-    # Du hast allerdings noch ds allte Schema: Rezept -> Zutat versucht. Das klappt ja nicht.
+    # Du hast allerdings noch das alte Schema: Rezept -> Zutat versucht. Das klappt ja nicht.
     # Du hast permanent auf die Assoc. zugegriffen und es als Zutat behandelt.
     # Das war der Fehler ;)
     # Naja, ich hätte es dir anscheinend nochmal in Erinnerung rufen sollten.
-    
+
 
 
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten)
