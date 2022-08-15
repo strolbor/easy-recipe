@@ -163,24 +163,30 @@ def home():
 def rezeptanzeige(ids):
     form = forms.rezeptanzeige()
     thisrezept = rezept.query.get(ids)
+    print(thisrezept.zutaten)
+
+    for entry in thisrezept.zutaten:
+        print(entry.hatzutat.name)
 
     r_tags = ""
     for tag in thisrezept.tags:
-        r_tags += "%s, " % tag
-    if (len(r_tags) >= 2):
-        r_tags = r_tags[-2]
-    if (len(r_tags) == 0):
-        r_tags = "Keine Tags"
+        r_tags += f"{tag}, "
 
     flash(r_tags)
 
     r_zutaten = ""
     for zutat in thisrezept.zutaten:
-        r_zutaten += "%s, " % zutat
-    if(len(r_zutaten) >= 2):
-        r_zutaten = r_zutaten[-2]
-    if (len(r_zutaten) == 0):
-        r_tags = "Keine Zutaten gefunden - Fehler"
+        r_zutaten += f"{zutat.hatzutat.name}, "
+    flash(r_zutaten)
+
+    # Ich hatte dir mal die aktuelle Datenstruktur erklärt, oder?
+    # Wir können nicht direkt auf die Zutat zugreifen. Wir müssen ein Umweg über die Association machen.
+    # Das bedeutet wir rufen das Rezept -> Association -> Zutat auf
+    # Du hast allerdings noch ds allte Schema: Rezept -> Zutat versucht. Das klappt ja nicht.
+    # Du hast permanent auf die Assoc. zugegriffen und es als Zutat behandelt.
+    # Das war der Fehler ;)
+    # Naja, ich hätte es dir anscheinend nochmal in Erinnerung rufen sollten.
+    
 
 
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten)
