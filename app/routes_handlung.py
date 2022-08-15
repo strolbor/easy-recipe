@@ -16,7 +16,7 @@ from sqlalchemy import desc
 # Handlungschritte anzeigen lassen
 @app.route('/admin/hand/showhandlungsschritt')
 def showhandlungsschritt():
-    return showclass(handlungsschritt,handlungsschritt.id,"Handlungsschritte")
+    return showclass(handlungsschritt,handlungsschritt.id,"Handlungsschritte","showhandlungsschritt")
 
 # Handlungschritte Editor, bei der Anzeige
 @app.route('/admin/hand/modifyHandlung/<path:ids>',methods=['GET','POST'])

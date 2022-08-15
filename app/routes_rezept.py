@@ -16,7 +16,7 @@ import sqlalchemy
 ##############
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    return showclass(rezept,rezept.name, "Rezepte")
+    return showclass(rezept,rezept.name, "Rezepte","showRezepte")
 
 
 @app.route('/admin/add/rezept/',methods=['GET','POST'])

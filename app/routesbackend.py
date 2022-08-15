@@ -19,12 +19,12 @@ def admin():
     return render_template('admin_index.html')
 
 # Anzeiger
-def showclass(classes, sortedby,title):
+def showclass(classes, sortedby,title,redirect_url):
     """Paginate a section"""
     page = request.args.get('page', 0, type=int)
     liste = classes.query.order_by(sortedby).paginate(page,app.config['ITEMS_PER_PAGE'], False)
-    next_url = url_for('showZutaten', page=liste.next_num)  if liste.has_next else None
-    prev_url = url_for('showZutaten', page=liste.prev_num)  if liste.has_prev else None
+    next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
+    prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
     return render_template('admin_show.html',liste=liste.items,titlet=title,next_url=next_url, prev_url=prev_url,showCase=True,page=page)
 
 
