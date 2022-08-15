@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 {% block app_content %}
     <h3>{{titlet}}</h3>
@@ -13,7 +13,9 @@
       <img src="/ctl/download/{{rezept.bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
       <div class="card-body">
           <h5 class="card-title">{{ rezept.name }}</h5>
-          <p class="card-text">{{ rezept.tags }}</p>
+          <p class="card-text">{{ r_tags }}</p>
+          <p class="card-text">Benötigte Zutaten: {{ r_zutaten }}</p>
+
 
           <!-- TODO: Handlungsschritte anzeigen lassen -->
 

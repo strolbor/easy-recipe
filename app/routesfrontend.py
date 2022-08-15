@@ -163,4 +163,24 @@ def home():
 def rezeptanzeige(ids):
     form = forms.rezeptanzeige()
     thisrezept = rezept.query.get(ids)
-    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept)
+
+    r_tags = ""
+    for tag in thisrezept.tags:
+        r_tags += "%s, " % tag
+    if (len(r_tags) >= 2):
+        r_tags = r_tags[-2]
+    if (len(r_tags) == 0):
+        r_tags = "Keine Tags"
+
+    flash(r_tags)
+
+    r_zutaten = ""
+    for zutat in thisrezept.zutaten:
+        r_zutaten += "%s, " % zutat
+    if(len(r_zutaten) >= 2):
+        r_zutaten = r_zutaten[-2]
+    if (len(r_zutaten) == 0):
+        r_tags = "Keine Zutaten gefunden - Fehler"
+
+
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten)
