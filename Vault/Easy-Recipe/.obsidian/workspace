@@ -7,8 +7,12 @@
         "id": "0e71ee281631a6d4",
         "type": "leaf",
         "state": {
-          "type": "graph",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Webscraper.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -73,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Webscraper.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Webscraper.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -110,11 +116,12 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Webscraper.md"
+              }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
@@ -122,11 +129,15 @@
   },
   "active": "0e71ee281631a6d4",
   "lastOpenFiles": [
+    "Verknüpfung-Rezept-Tags.md",
+    "Webscraper.md",
+    "Verknüpfung-Rezept-Zutaten.md",
+    "Verknüpfung-Rezept-Handlungsschritten.md",
+    "Webscraper-Chefkoch.md",
+    "Verknüpfung-Rezepte-Zutaten.md",
     "Easy-Recipe.md",
     "Productbacklog.md",
     "Treffen.md",
-    "Ausblick 2 Datenverarbeitung.md",
-    "Ausblick 1.md",
-    "Meilenstein 3.md"
+    "Ausblick 2 Datenverarbeitung.md"
   ]
 }
