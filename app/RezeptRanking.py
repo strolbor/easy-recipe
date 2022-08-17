@@ -83,6 +83,7 @@ def getRezepteByZutatNamen(zutatnamen):
         if _rezept.tags != None:
             for tag in _rezept.tags:
                 strTags += f"{tag}{', '}"
+            strTags = strTags[:-2]
         rezeptRanking = RezeptRanking(_rezept.id, _rezept.name, strTags, _rezept.bild, vorhandeneZutatenNamen, fehlendeZutatenNamen)
         if not rezeptRanking in rezeptRankings:
             rezeptRankings.append(rezeptRanking)
