@@ -15,9 +15,9 @@
                     <div class="fw-bold">
                         {% if titlet == "Handlungsschritte" %}
                         <!-- Wenn ein Handlungsschritt länger geschrieben ist, werden nur die ersten 50 Zeichen angezeigt, der Rest muss zum aufklappen anklicken -->
-                            {% if message.text | count > 50 %}
+                            {% if message.text | count > 100 %}
                                 <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse">
-                                    {{message.text[0:50]}}
+                                    {{message.text[0:50]}} 
                                 </a> [v]
                                 <div class="collapse" id="collapse-{{loop.index}}">
                                 <div class="card card-body" style="width: 600px;">
