@@ -3,6 +3,7 @@ import pathlib
 from turtle import position
 from app.rezept import rezept,tags, handlungsschritt,AssociationRHhat
 from app import db
+import codecs
 
 #Predefined Fkt
 def write(file,eintrag):
@@ -19,19 +20,21 @@ write(fileWriter,"import sqlalchemy")
 write(fileWriter,"from app.rezept import Association,AssociationRHhat,handlungsschritt, rezept, zutat,tags\n")
 
 
-ldir = ["Bauerntopf"]
+#ldir = ["Bauerntopf"]
 for rezeptentry in ldir:
     rezaus = rezept.query.filter_by(name=rezeptentry).first()
     print("#",rezeptentry,rezaus)
-    inputfile = open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r")
+    inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r", encoding='ISO8859')#ds#ds
+    pos = 0
     for line in inputfile:
-        pos = 0
         if len(line) > 10:
             pos +=1
             # Line ist langgenugt ein eigener Eintrag zu sein
             # um die Leerzeilen rauszufiltern
             line = line.replace("\n","")
-            print(">",line)
+            line = line.replace("\r","")
+            line = line.replace('"',"")
+            #print(">",line.split(" "))
 
             # Objekt erstellen
             write(fileWriter,f"handob = handlungsschritt(text=\"{line}\")")

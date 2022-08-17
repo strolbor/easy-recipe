@@ -1,4 +1,4 @@
-sudo docker container rm -f docker.ursb.de/easyrecipe
+sudo docker container rm -f er
 sudo docker build -t docker.ursb.de/easyrecipe .
 sudo docker run --restart=always -p 5000:5000 --name er docker.ursb.de/easyrecipe &
 
