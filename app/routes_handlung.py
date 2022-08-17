@@ -124,6 +124,7 @@ def handdeleter1():
 
 @app.route("/admin/hand/handdeleter2/<path:rid>")
 def handdeleter2(rid):
+    
     # Dann die aussocication suchen
     assoc1 =  AssociationRHhat.query.filter_by(rid=rid).all()
     r1 = rezept.query.get(rid)
@@ -134,4 +135,4 @@ def handdeleter2(rid):
 @app.route('/admin/hand/removehandlungsschritt/')
 def removehandlungsschritt():
     """Hiermit wird ein Handlungsschritt entfernt"""
-    return remover(MODE_HAND,handlungsschritt,"Handlungsschritt Entferner")
+    return remover(MODE_HAND,handlungsschritt,"removehandlungsschritt")
