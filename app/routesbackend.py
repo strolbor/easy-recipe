@@ -53,8 +53,13 @@ MODE_REZEPTadd = 8
 def remover(mode : int,classes, redirect_url: str):
     page = request.args.get('page', 0, type=int)
     liste = classes.query.paginate(page,app.config['ITEMS_PER_PAGE'], False)
-    next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
-    prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
+    rid = request.args.get('rid',0,type=int)
+    if mode != MODE_HANDver:
+        next_url = url_for(redirect_url, page=liste.next_num)  if liste.has_next else None
+        prev_url = url_for(redirect_url, page=liste.prev_num)  if liste.has_prev else None
+    else:
+        next_url = url_for(redirect_url, page=liste.next_num,rid=rid)  if liste.has_next else None
+        prev_url = url_for(redirect_url, page=liste.prev_num,rid=rid)  if liste.has_prev else None
     if mode == MODE_ZUTATEN:
         return render_template('admin_remove.html',inhalt=liste.items,titlet="endgültiger Zutatentferner",targetzutat=True,next_url=next_url,prev_url=prev_url,page=page)
     elif mode == MODE_REZEPT:
@@ -90,6 +95,7 @@ def removeRZhat():
 
 @app.route('/admin/remove/rzhat/remover/<path:rid>',methods=['GET','POST'])
 def removeRZhat2(rid):
+    page = request.args.get('page', 0, type=int)
     ausrezept = rezept.query.get(rid)
     zutatenliste = ausrezept.zutaten
     for assoc in zutatenliste:

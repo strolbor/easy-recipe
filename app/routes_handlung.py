@@ -28,6 +28,8 @@ def modifyHandlung(ids):
     form = forms.handlungschrittanlegen()
     # Handlungschritt Objekt holen
     modifyHand = handlungsschritt.query.get(ids)
+    page = request.args.get('page', 0, type=int)
+
 
     # Wenn Formular abgeschickt ist
     if form.validate_on_submit():
@@ -67,6 +69,8 @@ def modifyHandlung(ids):
 @app.route('/admin/hand/addhandlung/',methods=['GET','POST'])
 def addhandlung():
     """Dies ist der Admin Hauptindex"""
+    page = request.args.get('page', 0, type=int)
+    
     form = forms.handlungschrittanlegen()
     if form.validate_on_submit():
         if request.method == 'POST':
@@ -124,7 +128,6 @@ def handdeleter1():
 
 @app.route("/admin/hand/handdeleter2/<path:rid>")
 def handdeleter2(rid):
-    
     # Dann die aussocication suchen
     assoc1 =  AssociationRHhat.query.filter_by(rid=rid).all()
     r1 = rezept.query.get(rid)
@@ -134,5 +137,5 @@ def handdeleter2(rid):
 # Handlungschritt entfernen
 @app.route('/admin/hand/removehandlungsschritt/')
 def removehandlungsschritt():
-    """Hiermit wird ein Handlungsschritt entfernt"""
+    """Hiermit wird ein Handlungsschrittbeziehung entfernt"""
     return remover(MODE_HAND,handlungsschritt,"removehandlungsschritt")
