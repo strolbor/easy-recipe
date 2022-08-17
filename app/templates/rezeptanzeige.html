@@ -16,7 +16,10 @@
           <p class="card-text">{{ r_tags }}</p>
           <p class="card-text">Benötigte Zutaten: {{ r_zutaten }}</p>
 
-
+          <p class="card-text">Zubereitung</p>
+          {%for i in range(0, anz_handl) %}
+            <p class="card-text">{{ r_handl[i] }}</p>
+          {%endfor%}
           <!-- TODO: Handlungsschritte anzeigen lassen -->
 
       </div>

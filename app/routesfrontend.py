@@ -165,19 +165,21 @@ def rezeptanzeige(ids):
     thisrezept = rezept.query.get(ids)
     print(thisrezept.zutaten)
 
-    for entry in thisrezept.zutaten:
-        print(entry.hatzutat.name)
 
     r_tags = ""
     for tag in thisrezept.tags:
         r_tags += f"{tag}, "
-
-    flash(r_tags)
+    r_tags = r_tags[:-2]
 
     r_zutaten = ""
     for zutat in thisrezept.zutaten:
         r_zutaten += f"{zutat.hatzutat.name}, "
-    flash(r_zutaten)
+    r_zutaten = r_zutaten[:-2]
+
+    r_handl = []
+    for handlungsschritt in thisrezept.handlungsschritte:
+        r_handl.append(handlungsschritt.hatid.text)
+
 
     # Ich hatte dir mal die aktuelle Datenstruktur erklärt, oder?
     # Wir können nicht direkt auf die Zutat zugreifen. Wir müssen ein Umweg über die Association machen.
@@ -189,4 +191,4 @@ def rezeptanzeige(ids):
 
 
 
-    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten)
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten, r_handl=r_handl, anz_handl=len(r_handl))
