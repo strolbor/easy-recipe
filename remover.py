@@ -12,7 +12,7 @@ while True:
         zutat0 = zutat.query.get(int(zid))
         print(f"Die Zutat {zutat0.name} hat folgende Verknüpfungen:")
         for entry in zutat0.rezepte:
-            print(f"> {entry}")
+            print(f"> {entry.rezept.name} ID: {entry.rezept.id}")
         eingabe = input("Wollen Sie das neu verknüpfen?")
         if eingabe == "y":
             rid = input("Bitte geben Sie die ID des Rezepts ein:")
