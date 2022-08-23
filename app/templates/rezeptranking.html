@@ -19,9 +19,10 @@
                 <img src="/ctl/download/{{rezeptRankings[rezeptIndex].bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ rezeptRankings[rezeptIndex].name }}</h5>
-                    <p class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</p>
-                    <p class="card-text">Du hast folgende Zutaten: {{ rezeptRankings[rezeptIndex].vorhandeneZutatenNamen }}</p>
-                    <p class="card-text">Dir fehlen folgende Zutaten: {{ rezeptRankings[rezeptIndex].fehlendeZutatenNamen }}</p>
+                    <i class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</i>
+                    <p></p>
+                    <p class="card-text"><b>Du hast folgende Zutaten:</b> {{ rezeptRankings[rezeptIndex].vorhandeneZutatenNamen }}</p>
+                    <p class="card-text"><b>Dir fehlen folgende Zutaten:</b> {{ rezeptRankings[rezeptIndex].fehlendeZutatenNamen }}</p>
                     <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[rezeptIndex].rid)}}" class="btn btn-primary">Nachkochen </a>
                 </div>
             </div>

@@ -12,9 +12,8 @@ class RezeptRanking:
     """Bewertung 0 bis 1, 1 ist gut und 0 schlecht = 1 - fehlendeZutaten/zutatenGesamtNötig"""
     bewertung = 0
 
-    def __init__(self, _rid, _name, _tags, _bild, _vorhandeneZutatenNamen, _fehlendeZutatenNamen):
-        if (len(_fehlendeZutatenNamen) + len(_vorhandeneZutatenNamen)) > 0:
-            self.bewertung = 1 - len(_fehlendeZutatenNamen) / (len(_fehlendeZutatenNamen) + len(_vorhandeneZutatenNamen))
+    def __init__(self, _rid, _name, _tags, _bild, _vorhandeneZutatenNamen, _fehlendeZutatenNamen, _bewertung):
+        self.bewertung = _bewertung
         self.rid=_rid
         self.name = _name
         if len(_tags) > 0:
@@ -84,7 +83,25 @@ def getRezepteByZutatNamen(zutatnamen):
             for tag in _rezept.tags:
                 strTags += f"{tag}{', '}"
             strTags = strTags[:-2]
-        rezeptRanking = RezeptRanking(_rezept.id, _rezept.name, strTags, _rezept.bild, vorhandeneZutatenNamen, fehlendeZutatenNamen)
+
+        bewertung=0
+        #TODO: Bewertungsmodus Buttons auf home implementieren und folgende Zeile löschen
+        bewertungsmodus = 1
+        """Bewertung des Rezeptes je nach ausgewähltem Modus von home-site"""
+        '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
+        if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
+            bewertung = 0 - len(fehlendeZutatenNamen)
+        elif bewertungsmodus == 2: #möglichst viele vorhandene Zutaten
+            bewertung = len(vorhandeneZutatenNamen)
+        else:   #Standard 0: Verhältnis von fehlende Zutaten durch vorhandene Zutaten möglichst gering
+            if (len(fehlendeZutatenNamen) + len(vorhandeneZutatenNamen)) > 0:
+                bewertung = 1 - len(fehlendeZutatenNamen) / (len(fehlendeZutatenNamen) + len(vorhandeneZutatenNamen))
+
+
+        rezeptRanking = RezeptRanking(_rid=_rezept.id, _name=_rezept.name, _tags=strTags, _bild=_rezept.bild,
+                                      _vorhandeneZutatenNamen=vorhandeneZutatenNamen,
+                                      _fehlendeZutatenNamen=fehlendeZutatenNamen,
+                                      _bewertung=bewertung)
         if not rezeptRanking in rezeptRankings:
             rezeptRankings.append(rezeptRanking)
 

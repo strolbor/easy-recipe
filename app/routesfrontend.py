@@ -165,30 +165,36 @@ def rezeptanzeige(ids):
     thisrezept = rezept.query.get(ids)
     print(thisrezept.zutaten)
 
+    class r_zutat:
+        name = ""
+        einheit = ""
+        menge = ""
+
+        def __init__(self, _name, _einheit, _menge):
+            self.name = _name
+            self.einheit = _einheit
+            self.menge = _menge
+
 
     r_tags = ""
     for tag in thisrezept.tags:
         r_tags += f"{tag}, "
     r_tags = r_tags[:-2]
 
-    r_zutaten = ""
+    r_zutaten = []
     for zutat in thisrezept.zutaten:
-        r_zutaten += f"{zutat.hatzutat.name}, "
-    r_zutaten = r_zutaten[:-2]
+        zname = zutat.hatzutat.name
+        zeineit = zutat.hatzutat.einheit
+        zmenge = zutat.menge
+        #wenn menge gleich 0 dann daten kaputt -> nix anzeigen
+        if zmenge == "0":
+            zmenge = ""
+        r_z = r_zutat(_name=zname, _einheit=zeineit, _menge=zmenge)
+        r_zutaten.append(r_z)
 
     r_handl = []
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
 
 
-    # Ich hatte dir mal die aktuelle Datenstruktur erklärt, oder?
-    # Wir können nicht direkt auf die Zutat zugreifen. Wir müssen ein Umweg über die Association machen.
-    # Das bedeutet wir rufen das Rezept -> Association -> Zutat auf
-    # Du hast allerdings noch das alte Schema: Rezept -> Zutat versucht. Das klappt ja nicht.
-    # Du hast permanent auf die Assoc. zugegriffen und es als Zutat behandelt.
-    # Das war der Fehler ;)
-    # Naja, ich hätte es dir anscheinend nochmal in Erinnerung rufen sollten.
-
-
-
-    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten, r_handl=r_handl, anz_handl=len(r_handl))
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten, anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
