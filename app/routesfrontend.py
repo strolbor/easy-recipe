@@ -58,6 +58,7 @@ def home():
             #form.suchtext.data = ""
 
         form.eingabe.choices = verbleibendeZutaten
+        form.suchfeld.choices = verbleibendeZutaten
 
     updateZutatenlisten()
 
@@ -70,7 +71,6 @@ def home():
         print("validate")
 
         if form.submitAdd.data:
-            print("submitAdd")
             # Item soll hinzugefügt werden
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
@@ -90,7 +90,24 @@ def home():
             form.selected.data = []
             
             return render_template(home_html,form=form)
-        
+
+        if form.sumbitAddSuchbegriff.data:
+            # Item soll hinzugefügt werden
+            # Neue ausgewählte Elemente werden kopiert
+            # und hinzugefügt
+            entry = form.suchfeld.data
+            if not choices_array.__contains__(entry):
+                choices_array.append(entry)
+
+            # Neue List wird kopiert in die Liste
+            updateZutatenlisten()
+
+            # neues Template an Client senden
+            form.eingabe.data = []
+            form.selected.data = []
+
+            return render_template(home_html, form=form)
+
         if form.submitRm.data:
             print("submitRm")
             # Item soll aus choices entfernt werden
@@ -127,6 +144,7 @@ def home():
             form.selected.data = []
             form.selected.choices = choices_array
             return render_template(home_html,form=form)
+
         if form.submitSuchen.data:
             print("Submit suchen")
             """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""

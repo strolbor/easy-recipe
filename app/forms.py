@@ -22,8 +22,14 @@ class d_felder(FlaskForm):
     submitRm = SubmitField("<--")        #Entfernen
     submitLoesen = SubmitField("Auswahl lösen")
     submitSuchen = SubmitField("Suchen")
+
+
     suchtext = StringField('Zutat suchen',validators=[])
     submitSuchtext = SubmitField('Starte Zutatensuche')
+
+    suchfeld = SelectField("Starte Zutatensuche", choices=zutatenListe)
+
+    sumbitAddSuchbegriff = SubmitField("Hinzufügen")
 
 class rezeptanlegen(FlaskForm):
     """ Rezeptanlege Seite im Backend """
