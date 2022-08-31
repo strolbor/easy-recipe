@@ -59,6 +59,12 @@ rthat= db.Table("association_rthat",
 )
 """Many to Many Relationship Table bzgl. Rezept und Tags"""
 
+zkhat= db.Table("association_zkhat",
+  db.Model.metadata,
+  db.Column("zutat_id",db.ForeignKey("zutatsql.id")),
+  db.Column("kategorie_id", db.ForeignKey("kategorie.id")),
+)
+
 ####################
 #      Klassen     #
 ####################
@@ -117,6 +123,15 @@ class zutat(db.Model):
 class tags(db.Model):
     """ Tags Klasse"""
     __tablename__       = "tags"
+    id                  = db.Column(db.Integer,primary_key=True)
+    name                = db.Column(db.String)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
+
+class kategorie(db.Model):
+    """ Kategorie für Zutat Klasse"""
+    __tablename__       = "kategorie"
     id                  = db.Column(db.Integer,primary_key=True)
     name                = db.Column(db.String)
 

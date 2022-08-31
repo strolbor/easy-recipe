@@ -25,6 +25,7 @@ class d_felder(FlaskForm):
 
 
     suchtext = StringField('Zutat suchen',validators=[])
+
     submitSuchtext = SubmitField('Starte Zutatensuche')
 
     suchfeld = SelectField("Starte Zutatensuche", choices=zutatenListe)
