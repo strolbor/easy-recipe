@@ -61,16 +61,30 @@
                 -->
 
                 <tr>
+                <script type="text/javascript">
+                    function textboxtest() {
+                        document.getElementById('id01').value = "test"
 
-                    <td class="suchfeld"> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff }}</td>
+                        return
+                    }
+                </script>
+                <input type="text" id="id01" onKeyUp="return textboxtest()" />
 
                 </tr>
 
+
                 <tr>
-                  <td class="eingabe"> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td>
+                    <td class="suchfeld"> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff }}</td>
+                </tr>
+
+
+                <tr>
+                  <td class="eingabe" id=""> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td>
                   <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td>
                   <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
                 </tr>
+
+
                 <tr>
                     <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td>
                     <td></td>
@@ -88,6 +102,6 @@
                 "width": "style"
             });
         });
-</script>
+    </script>
 
   {% endblock %}

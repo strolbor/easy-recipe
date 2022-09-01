@@ -37,9 +37,9 @@ def home():
         print(e)
 
     def updateZutatenlisten():
-        global choices_array
+        #global choices_array
         form.selected.choices = choices_array.copy()
-        global alleZutaten
+        #global alleZutaten
         verbleibendeZutaten = alleZutaten.copy()
         for entry in choices_array:
             try:
@@ -91,10 +91,11 @@ def home():
             
             return render_template(home_html,form=form)
 
-        if form.sumbitAddSuchbegriff.data:
+        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0:
             # Item soll hinzugefügt werden
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
+            print(str(form.suchfeld.choices) + " zutaten links übrig")
             entry = form.suchfeld.data
             if not choices_array.__contains__(entry):
                 choices_array.append(entry)
@@ -166,11 +167,12 @@ def home():
             flash("Don't hack this!")
 
 
-    if form.submitAdd.data == False and form.submitRm.data == False and form.submitSuchen.data == False:
+    """if form.submitAdd.data == False and form.submitRm.data == False and form.submitSuchen.data == False:
         #erster Aufruf
         print("first")
         choices_array = []
-        updateZutatenlisten()
+        updateZutatenlisten()"""
+
 
     print("last return")
     updateZutatenlisten()

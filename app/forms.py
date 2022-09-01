@@ -32,6 +32,9 @@ class d_felder(FlaskForm):
 
     sumbitAddSuchbegriff = SubmitField("Hinzufügen")
 
+    zutatkategorien = []
+
+
 class rezeptanlegen(FlaskForm):
     """ Rezeptanlege Seite im Backend """
     rezeptname = StringField('Name des Rezepts',validators=[DataRequired()])

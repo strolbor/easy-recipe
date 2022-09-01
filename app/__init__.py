@@ -24,7 +24,7 @@ migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] ="bhjewjvhewhewhje"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['ITEMS_PER_PAGE'] = 10
+app.config['ITEMS_PER_PAGE'] = 1000
 
 
 app.debug = True

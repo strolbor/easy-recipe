@@ -86,7 +86,7 @@ def getRezepteByZutatNamen(zutatnamen):
 
         bewertung=0
         #TODO: Bewertungsmodus Buttons auf home implementieren und folgende Zeile löschen
-        bewertungsmodus = 1
+        bewertungsmodus = 2
         """Bewertung des Rezeptes je nach ausgewähltem Modus von home-site"""
         '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
         if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
