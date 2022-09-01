@@ -23,16 +23,13 @@ class d_felder(FlaskForm):
     submitLoesen = SubmitField("Auswahl lösen")
     submitSuchen = SubmitField("Suchen")
 
-
+    #Altes Suchfeld
     suchtext = StringField('Zutat suchen',validators=[])
-
     submitSuchtext = SubmitField('Starte Zutatensuche')
 
-    suchfeld = SelectField("Starte Zutatensuche", choices=zutatenListe)
-
+    #"Neues" Suchfeld, Script mit Dropdown Menü
+    suchfeld = SelectField("Starte Zutatensuche", choices=[""] + zutatenListe)
     sumbitAddSuchbegriff = SubmitField("Hinzufügen")
-
-    zutatkategorien = []
 
 
 class rezeptanlegen(FlaskForm):

@@ -58,7 +58,8 @@ def home():
             #form.suchtext.data = ""
 
         form.eingabe.choices = verbleibendeZutaten
-        form.suchfeld.choices = verbleibendeZutaten
+        form.suchfeld.choices = [""] + verbleibendeZutaten
+
 
     updateZutatenlisten()
 
@@ -91,7 +92,7 @@ def home():
             
             return render_template(home_html,form=form)
 
-        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0:
+        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
             # Item soll hinzugefügt werden
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
