@@ -4,6 +4,7 @@ from sqlalchemy import desc
 from werkzeug.utils import secure_filename
 from flask import request
 from app.rezept import handlungsschritt
+import cv2
 
 def createFolderIfNotExists(name):
     if not os.path.exists(name):
@@ -43,5 +44,13 @@ def savepic(feldname, rfiles ,ordner) -> str:
         #bild_url=filename
         bild_url = os.path.join(ordner,filename)
         file.save(path)
+
+        img = cv2.imread(path)
+        width = 396
+        height = 370
+        dim = (width, height)
+        resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+        cv2.imwrite(path,resized)
+
         print("Bild gespeichert @",bild_url)
         return bild_url
