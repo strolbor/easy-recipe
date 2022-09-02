@@ -45,8 +45,8 @@ def savepic(feldname, rfiles ,ordner) -> str:
         bild_url = os.path.join(ordner,filename)
         file.save(path)
 
-        img = cv2.imread(path)
-        width = 396
+        img = cv2.imread(path)#496 x 370 
+        width = 496
         height = 370
         dim = (width, height)
         resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
