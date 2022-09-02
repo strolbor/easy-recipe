@@ -16,7 +16,9 @@
         {% if rezeptIndex < anzRezepte %}
         <td>
             <div class="card" style="width: 31rem; height: 45rem;">
+                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[rezeptIndex].rid)}}">
                 <img src="/ctl/download/{{rezeptRankings[rezeptIndex].bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">{{ rezeptRankings[rezeptIndex].name }}</h5>
                     <i class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</i>

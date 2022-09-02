@@ -11,7 +11,7 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     print(basedir)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    REZEPTRANKINGS_PER_PAGE = 30
+    REZEPTRANKINGS_PER_PAGE = 1000
 
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ migrate = Migrate(app, db)
 
 app.config["SECRET_KEY"] ="bhjewjvhewhewhje"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['ITEMS_PER_PAGE'] = 1000
+app.config['ITEMS_PER_PAGE'] = 10
 
 
 app.debug = True

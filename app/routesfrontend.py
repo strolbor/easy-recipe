@@ -68,7 +68,16 @@ def home():
     if form.errors:
         for error_field, error_message in form.errors.iteritems():
             print(error_field,error_message)
-    if form.validate_on_submit():
+
+    '''FÜR ERSTEN AUFRUF IMMER MIT NEUEN SUBMIT BUTTONS ANPASSEN!!!!!'''
+    if not form.submitAdd.data and not form.submitRm.data and not form.submitSuchen.data and not form.submitLoesen.data \
+            and not form.submitSuchtext.data and not form.sumbitAddSuchbegriff.data:
+        # erster Aufruf
+        print("first")
+        choices_array = []
+        updateZutatenlisten()
+
+    elif form.validate_on_submit():
         print("validate")
 
         if form.submitAdd.data:
@@ -89,14 +98,13 @@ def home():
             # neues Template an Client senden
             form.eingabe.data = []
             form.selected.data = []
-            
             return render_template(home_html,form=form)
 
-        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
+        elif form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
             # Item soll hinzugefügt werden
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
-            print(str(form.suchfeld.choices) + " zutaten links übrig")
+            #print(str(form.suchfeld.choices) + " zutaten links übrig")
             entry = form.suchfeld.data
             if not choices_array.__contains__(entry):
                 choices_array.append(entry)
@@ -110,7 +118,7 @@ def home():
 
             return render_template(home_html, form=form)
 
-        if form.submitRm.data:
+        elif form.submitRm.data:
             print("submitRm")
             # Item soll aus choices entfernt werden
 
@@ -141,13 +149,13 @@ def home():
             form.eingabe.data = []
             form.selected.data = []
             return render_template(home_html,form=form)
-        if form.submitLoesen.data:
+        elif form.submitLoesen.data:
             form.eingabe.data = []
             form.selected.data = []
             form.selected.choices = choices_array
             return render_template(home_html,form=form)
 
-        if form.submitSuchen.data:
+        elif form.submitSuchen.data:
             print("Submit suchen")
             """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
             ausgewZutaten = []
@@ -161,18 +169,13 @@ def home():
             return redirect(url_for('rezeptranking'))
             #return render_template("rezeptranking.html", rezeptRankings = _rezeptRankings)
 
-        if form.submitSuchtext.data:
+        elif form.submitSuchtext.data:
             updateZutatenlisten()
             return render_template(home_html, form=form)
+
         else:
             flash("Don't hack this!")
 
-
-    """if form.submitAdd.data == False and form.submitRm.data == False and form.submitSuchen.data == False:
-        #erster Aufruf
-        print("first")
-        choices_array = []
-        updateZutatenlisten()"""
 
 
     print("last return")
