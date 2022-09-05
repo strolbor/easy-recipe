@@ -1,11 +1,12 @@
 from random import random
 
-from flask import render_template, flash, url_for
+from flask import render_template, flash, url_for, request
 from werkzeug.utils import redirect
 
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
 from app.rezept import zutat, rezept
+
 
 
 @app.route('/base')
@@ -45,7 +46,7 @@ def home():
             try:
                 verbleibendeZutaten.remove(entry)
             except:
-                no = "thing"
+                pass
 
         #verbleibendeZutaten = updateMitSuchtext( verbleibendeZutaten=verbleibendeZutaten.copy() ).copy()
 
@@ -60,7 +61,6 @@ def home():
         form.eingabe.choices = verbleibendeZutaten
         form.suchfeld.choices = [""] + verbleibendeZutaten
 
-
     updateZutatenlisten()
 
     print("eingabe",form.eingabe.data)
@@ -69,15 +69,32 @@ def home():
         for error_field, error_message in form.errors.iteritems():
             print(error_field,error_message)
 
+
+
     '''FÜR ERSTEN AUFRUF IMMER MIT NEUEN SUBMIT BUTTONS ANPASSEN!!!!!'''
     if not form.submitAdd.data and not form.submitRm.data and not form.submitSuchen.data and not form.submitLoesen.data \
             and not form.submitSuchtext.data and not form.sumbitAddSuchbegriff.data:
-        # erster Aufruf
-        print("first")
-        choices_array = []
-        updateZutatenlisten()
+        #prüfe welche Zutat gedrückt wurde
+        erstes = True
+        for zut in alleZutaten:
+            if 'btn%s'%zut in request.form:
+                if zut not in choices_array:
+                    choices_array.append(zut)
+                else:
+                    choices_array.remove(zut)
+                updateZutatenlisten()
+                erstes = False
+                break
 
-    elif form.validate_on_submit():
+        # wenn sonst erster Aufruf
+        if erstes:
+            print("first")
+            choices_array = []
+            updateZutatenlisten()
+
+
+    #TODO: Legacy Ifs aufräumen
+    if form.validate_on_submit():
         print("validate")
 
         if form.submitAdd.data:
@@ -98,7 +115,7 @@ def home():
             # neues Template an Client senden
             form.eingabe.data = []
             form.selected.data = []
-            return render_template(home_html,form=form)
+            return render_template(home_html,form=form,choices_array=choices_array)
 
         elif form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
             # Item soll hinzugefügt werden
@@ -116,7 +133,7 @@ def home():
             form.eingabe.data = []
             form.selected.data = []
 
-            return render_template(home_html, form=form)
+            return render_template(home_html, form=form,choices_array=choices_array)
 
         elif form.submitRm.data:
             print("submitRm")
@@ -125,16 +142,16 @@ def home():
             # Aktuelle Auswahl kopieren
             #form.selected.choices = choices_array.copy()
             array = choices_array.copy()
-            print(array)
+            #print(array)
             # Was wir entfernen wollen, kopieren
             to_delete = form.selected.data.copy()
-            print(to_delete)
+            #print(to_delete)
             try:
                 for entry in to_delete:
                     array.remove(entry)
             except ValueError:
                 pass
-            print(array)
+            #print(array)
             #form.selected.choices = array.copy()
             choices_array = array.copy()
 
@@ -148,12 +165,12 @@ def home():
             
             form.eingabe.data = []
             form.selected.data = []
-            return render_template(home_html,form=form)
+            return render_template(home_html,form=form,choices_array=choices_array)
         elif form.submitLoesen.data:
             form.eingabe.data = []
             form.selected.data = []
             form.selected.choices = choices_array
-            return render_template(home_html,form=form)
+            return render_template(home_html,form=form,choices_array=choices_array)
 
         elif form.submitSuchen.data:
             print("Submit suchen")
@@ -171,23 +188,23 @@ def home():
 
         elif form.submitSuchtext.data:
             updateZutatenlisten()
-            return render_template(home_html, form=form)
+            return render_template(home_html, form=form,choices_array=choices_array)
 
         else:
-            flash("Don't hack this!")
-
+            #flash("Don't hack this!")
+            pass
 
 
     print("last return")
     updateZutatenlisten()
-    return render_template(home_html, form=form)
+    return render_template(home_html, form=form,choices_array=choices_array)
 
 
 @app.route('/rezept/<path:ids>', methods=['GET', 'POST'])
 def rezeptanzeige(ids):
     form = forms.rezeptanzeige()
     thisrezept = rezept.query.get(ids)
-    print(thisrezept.zutaten)
+    #print(thisrezept.zutaten)
 
     class r_zutat:
         name = ""
