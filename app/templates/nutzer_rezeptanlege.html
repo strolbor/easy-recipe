@@ -2,43 +2,53 @@
 
 
 {% block app_content %}
+<style>
+    div {
+        padding-left: 5px;margin-left: 0px;margin-right: 0px;padding-bottom: 7px;
+    }
+</style>
 <form>
     {{ form.csrf_token }}
+    <div class="row">
+        <!-- Überschrift -->
+        <div class="col-md-12"><h2>Neues Rezept anlegen.</h2></div>
+    </div>
 
-    <div class="col-12">
+    <div class="row">
         <!-- Rezeptnamen -->
-        <label for="formGroupExampleInput" class="form-label">{{ form.name.label }}</label>
-        {{form.name(class="form-control")}}
+        <div class="col-md-6"><h3>{{ form.rname.label }}</h3></div>
+    </div>
+    <div class="row " >
+        <div class="col-md-6">{{form.rname(class="form-control",title="rezeptnamen eingabe")}}</div>
     </div>
 
-    <div class="col-12">
-         <!-- Rezeptbild hochladen -->
-        <label class="form-label">{{ form.bildupload.label }}</label>
-        {{ form.bildupload(class="form-control")}}
+    <div class="row  ">
+        <div><label class="form-label">{{ form.bildupload.label }}</label></div>
+        <div>{{ form.bildupload(class="form-control")}}</div>
     </div>
 
-    <div class="col-12">
-        <!-- Zutatenverknüpfen -->
-       <label class="form-label">{{ form.bildupload.label }}</label>
-       {{ form.zutaten(class="form-control")}} {{form.menge(class="form-control")}}
-   </div>
-
-   <div class="col-12">
-    <!-- Handlungschrittverknüpfer -->
-   <label class="form-label">{{ form.bildupload.label }}</label>
-        {{ form.bildupload(class="form-control")}}
+    <div class="row ">
+         <!-- Zutatenverknüpfen -->
+        <div>{{ form.zutaten.label }}</div>
+        <div class="col-md-7">{{ form.zutaten(class="form-control")}}</div>
+        <div class="col-md-3">{{form.menge(class="form-control")}}</div>
+        <div class="col-md-2">{{form.zadd(class="btn btn-success")}} {{form.zre(class="btn btn-danger")}}</div>
     </div>
 
-    <div class="col-12">
-        <!-- Tags verknüpfer -->
-       <label class="form-label">{{ form.bildupload.label }}</label>
-            {{ form.bildupload(class="form-control")}}
-        </div>
+    <div class="row" >
+        <!-- Handlungschrittverknüpfer -->
+        <div>{{ form.handlung.label }}</div>
+        <div>{{ form.handlung(class="form-control")}}</div>
+    </div>
+    <div class="row">
+        <div>{{ form.tags.label }}</div>
+        <div>{{ form.tags(class="form-control")}}</div>
+    </div>   
 
-
-    <div class="col-12">
+    <div class="row">
         <!-- Submit des Feldes -->
-        {{form.submit(class="btn btn-success") }}
+        <div><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p></div>
+        <div>{{form.submit(class="btn btn-success") }}</div>
     </div>
 </form>
 {% endblock %}
