@@ -72,7 +72,7 @@ def modifyZutat(ids):
     form.kategorie.data = modifyZutat.kategorie
     
     if modifyZutat.bild == "":
-        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",zukate=modifyZutat.kategorie)
     else:
-        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True)
+        return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern",showbild=modifyZutat.bild,showbilds=True,zukate=modifyZutat.kategorie)
        

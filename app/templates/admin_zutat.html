@@ -1,6 +1,6 @@
 {% extends "admin_base.html" %}
 
- 
+
 
 {% block app_content %}
 <h3>{{titlet}}</h3>
@@ -8,7 +8,7 @@
     {{ form.hidden_tag() }}
 
     <div class="col-12">
-        <label  class="form-label">{{form.name.label}}</label>
+        <label class="form-label">{{form.name.label}}</label>
         {{form.name(class="form-control") }}
     </div>
     <div class="col-12">
@@ -16,10 +16,10 @@
         {{ form.bildupload(class="form-control")}}
     </div>
     {% if showbilds %}
-        <div class="col-12">
-            <label class="form-label">Bild der Zutat</label><br />
-            <img src="/ctl/download/{{showbild}}" width="512px" height="384px"/>
-        </div>
+    <div class="col-12">
+        <label class="form-label">Bild der Zutat</label><br />
+        <img src="/ctl/download/{{showbild}}" width="512px" height="384px" />
+    </div>
     {% endif %}
     <div class="col-12">
         <label class="form-label">{{ form.einheit.label }}</label>
@@ -27,6 +27,9 @@
     </div>
     <div class="col-12">
         <label class="form-label">{{ form.kategorie.label }}</label>
+        <ol>
+            <li>{{zukate}}</li>
+        </ol>
         {{ form.kategorie(class="form-control") }}
     </div>
     <div class="col-12">

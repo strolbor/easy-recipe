@@ -39,15 +39,15 @@ MODE_REZEPT = 2 # Rezepte entfernen
 MODE_HAND = 3
 """Diese Einstellung ist da um Handlungsschritte zu entfernen"""
 MODE_RZHAT = 4
-"""Diese Einstellung ist da um Verknüpfungen zw.  Zutat <-> Rezept zu entfernen"""
+"""Diese Einstellung ist da um Verknüpfungen zw. Zutat <-> Rezept zu entfernen"""
 MODE_TAGver = 5
-"""Diese Einstellung ist da um Verknüpfungen zw.  Tags <-> Rezept zu entfernen"""
+"""Diese Einstellung ist da um Verknüpfungen zw. Tags <-> Rezept zu entfernen"""
 MODE_HANDver = 6
-"""Diese Einstellung ist da um Verknüpfungen zw.  Handlungschritten <-> Rezept zu entfernen"""
+"""Diese Einstellung ist da um Verknüpfungen zw. Handlungschritten <-> Rezept zu entfernen"""
 MODE_HANDadd = 7
-"""Diese Einstellung ist da um Verknüpfungen zw.  Handlungschritten <-> Rezept hinzuzufügen"""
+"""Diese Einstellung ist da um Verknüpfungen zw. Handlungschritten <-> Rezept hinzuzufügen"""
 MODE_REZEPTadd = 8
-"""Diese Einstellung ist da um Verknüpfungen zw.  Zutat <-> Rezept hinzuzufügen"""
+"""Diese Einstellung ist da um Verknüpfungen zw. Zutat <-> Rezept hinzuzufügen"""
 
 
 def remover(mode : int,classes, redirect_url: str):
