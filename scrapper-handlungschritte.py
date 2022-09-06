@@ -24,30 +24,39 @@ write(fileWriter,"from app.rezept import Association,AssociationRHhat,handlungss
 for rezeptentry in ldir:
     rezaus = rezept.query.filter_by(name=rezeptentry).first()
     print("#",rezeptentry,rezaus)
-    inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r", encoding='ISO8859')#ds#ds
+    #inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r", encoding='ISO8859')
+    inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r")
     pos = 0
-    for line in inputfile:
-        if len(line) > 10:
-            pos +=1
-            # Line ist langgenugt ein eigener Eintrag zu sein
-            # um die Leerzeilen rauszufiltern
-            line = line.replace("\n","")
-            line = line.replace("\r","")
-            line = line.replace('"',"")
-            #print(">",line.split(" "))
-
-            # Objekt erstellen
-            write(fileWriter,f"handob = handlungsschritt(text=\"{line}\")")
-            write(fileWriter,"db.session.add(handob)")
-            write(fileWriter,"db.session.commit()")
-            
-            write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
-            write(fileWriter,f"assoc = AssociationRHhat(position=\"{pos}\")")
-            write(fileWriter,"assoc.hatid = handob")
-            write(fileWriter,"with db.session.no_autoflush:")
-            write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
-            write(fileWriter,"db.session.commit()\n")
-            fileWriter.flush()
+    array = inputfile.readlines()
+    #print(array)
+    try:
+        array.remove('\r\n')
+        array.remove('\n')
+    except ValueError:
+        pass
+    arr2 = []
+    for line in array:
+        line = line.replace("\n","")
+        line = line.replace("\r","")
+        line = line.replace('"',"")
+        arr2.append(line)
+    pos +=1
+    #print(arr2)
+    line = "".join(arr2)
+    #print(line)
+   
+    # Objekt erstellen
+    write(fileWriter,f"handob = handlungsschritt(text=\"{line}\")")
+    write(fileWriter,"db.session.add(handob)")
+    write(fileWriter,"db.session.commit()")
+    
+    write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
+    write(fileWriter,f"assoc = AssociationRHhat(position=1)")
+    write(fileWriter,"assoc.hatid = handob")
+    write(fileWriter,"with db.session.no_autoflush:")
+    write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
+    write(fileWriter,"db.session.commit()\n")
+    fileWriter.flush()
     inputfile.close()
 
 # Closer
