@@ -116,6 +116,7 @@ class zutat(db.Model):
 
     # Relationship
     rezepte             = db.relationship("Association", back_populates="hatzutat",cascade="all, delete-orphan")
+    kategorie           = db.relationship('kategorie', secondary=zkhat, backref = db.backref('bkat'))
     
     def __repr__(self):
         return 'Zutat: {} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.id)

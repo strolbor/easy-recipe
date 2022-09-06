@@ -51,6 +51,7 @@ def modifyZutat(ids):
     if form.validate_on_submit():
         modifyZutat.name = form.name.data
         modifyZutat.einheit = form.einheit.data
+        modifyZutat.kategorie = form.kategorie.data
         if request.method == 'POST': 
             picure_url = savepic('bildupload', request.files, f'zutat{modifyZutat.id}')
             if not (picure_url == "A" or picure_url == "B"):
@@ -64,6 +65,7 @@ def modifyZutat(ids):
 
     form.name.data = modifyZutat.name
     form.einheit.data = modifyZutat.einheit
+    form.kategorie.data = modifyZutat.kategorie
     if modifyZutat.bild == "":
         return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
     else:

@@ -24,7 +24,7 @@ class d_felder(FlaskForm):
     submitSuchen = SubmitField("Suchen")
 
     #Altes Suchfeld
-    suchtext = StringField('Zutat suchen',validators=[])
+    suchtext = StringField('Zutat suchen')
     submitSuchtext = SubmitField('Starte Zutatensuche')
 
     #"Neues" Suchfeld, Script mit Dropdown Menü
@@ -35,14 +35,14 @@ class d_felder(FlaskForm):
 class rezeptanlegen(FlaskForm):
     """ Rezeptanlege Seite im Backend """
     rezeptname = StringField('Name des Rezepts',validators=[DataRequired()])
-    bildupload = FileField('Bild des Rezepts',validators=[])
+    bildupload = FileField('Bild des Rezepts')
     tags = SelectField('Tags')
     submit = SubmitField('Speichern')
 
 class handlungschrittanlegen(FlaskForm):
     """ Handlungsschrittanzeige Seite im Backend """
-    bildupload1 = FileField('Bild des Handlungsschrittes 1',validators=[])
-    bildupload2 = FileField('Bild des Handlungsschrittes 2',validators=[])
+    bildupload1 = FileField('Bild des Handlungsschrittes 1')
+    bildupload2 = FileField('Bild des Handlungsschrittes 2')
     beschreibung = StringField('Handlungschrittbeschreibung',validators=[DataRequired()])
     submit = SubmitField('Speichern')
 
@@ -57,7 +57,8 @@ class verknupfungsanleger(FlaskForm):# rzzutaten
 class zutatanlegen(FlaskForm):
     name = StringField('Name der Zutat',validators=[DataRequired()])
     einheit = StringField('Einheit der Zutat',validators=[DataRequired()])
-    bildupload = FileField('Bild der Zutat hochladen',validators=[])
+    bildupload = FileField('Bild der Zutat hochladen')
+    kategorie = StringField("Kategorie")
     submit = SubmitField('Speichern')
 
 class taganlegen(FlaskForm):
@@ -75,8 +76,6 @@ class rezeptzutatadder(FlaskForm):
     menge = StringField("Menge der Zutaten",validators=[DataRequired()])
     submit = SubmitField("Speichern")
 
-class rezeptanzeige():
-    submitTest = SubmitField("Test")
 
 class nutzerein(FlaskForm):
     rname = StringField('Name')
