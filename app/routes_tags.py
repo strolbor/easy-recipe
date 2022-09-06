@@ -62,7 +62,7 @@ def CHGrthat():
 # Tags mit dem vorgenannten Rezept verknüpfen.
 @app.route('/admin/tags/CHGrthat2/<path:ids>',methods=['GET','POST'])
 def CHGrthat2(ids):
-    """Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen."""
+    """Wir wählen, die Zutaten aus, die wir zum Rezept speichern wollen."""
     form = forms.verknupfungsanleger()
     # Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden
     form.zutaten.choices = createArrayHelper(tags.query.order_by(tags.name).all())

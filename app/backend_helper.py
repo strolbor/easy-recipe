@@ -6,28 +6,42 @@ from flask import request
 from app.rezept import handlungsschritt
 import cv2
 
+
 def createFolderIfNotExists(name):
     if not os.path.exists(name):
         os.makedirs(name)
 
+
 def getNewID(classes):
     queryobj = classes.query.order_by(desc(classes.id)).first()
-    idneu=0
+    idneu = 0
     if not queryobj is None:
         idneu = int(queryobj.id)+1
     """ Wir suchen die nächste ID"""
     return idneu
 
-def createArrayHelper(arrayeingabe: list) :
+
+def createArrayHelper(arrayeingabe: list):
     array = []
     for entry in arrayeingabe:
         try:
-            array.append([entry.id,entry.name])
+            array.append([entry.id, entry.name])
         except AttributeError:
-            array.append([entry.id,entry.text])
+            array.append([entry.id, entry.text])
     return array
 
-def savepic(feldname, rfiles ,ordner) -> str:
+
+def createArrayHelper2(arrayeingabe: list):
+    array = []
+    for entry in arrayeingabe:
+        try:
+            array.append([entry.id, str(f"{entry.name} ({entry.einheit})")])
+        except AttributeError:
+            array.append([entry.id, entry.text])
+    return array
+
+
+def savepic(feldname, rfiles, ordner) -> str:
     if feldname not in rfiles:
         """ Bild wurde garnicht erst hochgeladen"""
         return "A"
@@ -39,18 +53,18 @@ def savepic(feldname, rfiles ,ordner) -> str:
         """ Bild ist vorhanden"""
         file = request.files[feldname]
         filename = secure_filename(file.filename)
-        createFolderIfNotExists(os.path.join(app.instance_path,ordner))
-        path = os.path.join(app.instance_path,ordner,filename)
-        #bild_url=filename
-        bild_url = os.path.join(ordner,filename)
+        createFolderIfNotExists(os.path.join(app.instance_path, ordner))
+        path = os.path.join(app.instance_path, ordner, filename)
+        # bild_url=filename
+        bild_url = os.path.join(ordner, filename)
         file.save(path)
 
-        img = cv2.imread(path)#496 x 370 
+        img = cv2.imread(path)  # 496 x 370
         width = 496
         height = 370
         dim = (width, height)
-        resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-        cv2.imwrite(path,resized)
+        resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+        cv2.imwrite(path, resized)
 
-        print("Bild gespeichert @",bild_url)
+        print("Bild gespeichert @", bild_url)
         return bild_url
