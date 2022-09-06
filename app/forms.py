@@ -76,6 +76,8 @@ class rezeptzutatadder(FlaskForm):
     menge = StringField("Menge der Zutaten",validators=[DataRequired()])
     submit = SubmitField("Speichern")
 
+class rezeptanzeige(FlaskForm):
+    submitTest = SubmitField("Suchen")
 
 class nutzerein(FlaskForm):
     rname = StringField('Name')
