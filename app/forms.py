@@ -89,6 +89,8 @@ class rezeptzutatadder(FlaskForm):
 
 class rezeptanzeige(FlaskForm):
     submitTest = SubmitField("Suchen")
+    # Nicht löschen
+    # Das heißt nur dämlich mit Test
 
 
 class nutzerein(FlaskForm):

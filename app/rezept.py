@@ -104,7 +104,7 @@ class handlungsschritt(db.Model):
     rezepte             = db.relationship("AssociationRHhat",back_populates="hatid",cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '<handlungsschritt {}; Text: {}>'.format(self.id,self.text)
+        return f'Handlungsschritt {self.id} zu {self.rezepte}; Text: {self.text}>'
 
 class zutat(db.Model):
     """Zutaten Klasse"""
@@ -128,7 +128,7 @@ class tags(db.Model):
     name                = db.Column(db.String)
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return 'Tag {}'.format(self.name)
 
 class kategorie(db.Model):
     """ Kategorie für Zutat Klasse"""
@@ -137,6 +137,6 @@ class kategorie(db.Model):
     name                = db.Column(db.String)
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return 'Kategorie {}'.format(self.name)
 
 
