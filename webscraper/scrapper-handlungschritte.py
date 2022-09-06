@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: ISO8859 -*-
+
 import os
 import pathlib
 from turtle import position
@@ -41,7 +44,8 @@ for rezeptentry in ldir:
     for line in array:
         line = line.replace("\n","")
         line = line.replace("\r","")
-        line = line.replace('"',"")
+        line = line.replace('"',"")#
+        line = line.replace('�',"�")
         line= line.replace("ß","ss")
         line= line.replace("ü","ue")
         line= line.replace("ä","ae")
@@ -49,7 +53,7 @@ for rezeptentry in ldir:
         arr2.append(line)
     pos +=1
     #print(arr2)
-    line = ''.join(arr2)
+    line = ' '.join(arr2)
     
     print(line)
    
