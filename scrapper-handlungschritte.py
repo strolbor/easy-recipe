@@ -15,6 +15,8 @@ path2 = os.path.join(path,"webscraper","Rezepte")
 ldir = os.listdir(path2)
 
 fileWriter = open("handlungschritte-adder.py","w")
+write(fileWriter,"#!/usr/bin/python")
+write(fileWriter,"# -*- coding: ISO8859 -*-")
 write(fileWriter,"from app import db")
 write(fileWriter,"import sqlalchemy")
 write(fileWriter,"from app.rezept import Association,AssociationRHhat,handlungsschritt, rezept, zutat,tags\n")
@@ -25,6 +27,7 @@ for rezeptentry in ldir:
     rezaus = rezept.query.filter_by(name=rezeptentry).first()
     print("#",rezeptentry,rezaus)
     #inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r", encoding='ISO8859')
+    #
     inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r")
     pos = 0
     array = inputfile.readlines()
@@ -39,11 +42,16 @@ for rezeptentry in ldir:
         line = line.replace("\n","")
         line = line.replace("\r","")
         line = line.replace('"',"")
+        line= line.replace("ß","ss")
+        line= line.replace("ü","ue")
+        line= line.replace("ä","ae")
+        line= line.replace("ö","oe")
         arr2.append(line)
     pos +=1
     #print(arr2)
-    line = "".join(arr2)
-    #print(line)
+    line = ''.join(arr2)
+    
+    print(line)
    
     # Objekt erstellen
     write(fileWriter,f"handob = handlungsschritt(text=\"{line}\")")

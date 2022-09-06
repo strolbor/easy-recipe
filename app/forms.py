@@ -79,8 +79,8 @@ class rezeptanzeige():
     submitTest = SubmitField("Test")
 
 class nutzerein(FlaskForm):
-    rname = StringField('Name des Rezept',validators=[DataRequired()])
-    bildupload = FileField('Bild des Rezepts',validators=[])
+    rname = StringField('Name')
+    bildupload = FileField('Bild')
     zutaten = SelectField('Zutaten')
     zadd = SubmitField("+")
     zre = SubmitField("-")
