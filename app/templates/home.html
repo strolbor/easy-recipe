@@ -84,18 +84,19 @@
                   <!-- <td class="eingabe" id=""> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td> -->
 
                   <!-- Hier ist Zelle mit verschiedenen Kategorien -->
-                  <td width="70%">
+                  <td width="80%">
+                  <div style="overflow-y:scroll;height:800px">
                   {% for i in range(0, form.kategorien|length) %}
                       <div>
                       {% set kategorie = form.kategorien[i] %}
-                          <p><h5>{{ kategorie.name }}</h5></p>
+                          <p><h4><b>{{ kategorie.name }}</b></h4></p>
 
                       <!-- Buttons mit allen Zutaten: -->
                       <p>
                       {% for j in range(0, kategorie.zutaten|length) %}
                           {% set zutatname = kategorie.zutaten[j].name %}
                           {% if not zutatname in choices_array %}
-                          <button name="btn{{ zutatname }}" style="border-color:white; background-color:white" > {{ zutatname }} </button>
+                          <button name="btn{{ zutatname }}" class="btn btn-light btn-lg"> {{ zutatname }} </button>
                           {% endif %}
                       {% endfor %}
                       </p>
@@ -103,7 +104,9 @@
                       </div>
 
                   {% endfor %}
+                  </div>
                   </td>
+
 
                     <!-- alte Buttons für hinzufügen / entfernen -->
                   <!-- <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td> -->
@@ -113,10 +116,15 @@
                       <table>
                       {% for chosenZutat in choices_array %}
                         <tr>
-                            <td><button name="btn{{ chosenZutat }}" style="border-color:white; background-color:white" > {{ chosenZutat }} </button></td>
+                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%; background-color:white" > {{ chosenZutat }} </button></td>
                         </tr>
                       {% endfor %}
-                          <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary")}}</td></tr>
+
+                          <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
+                          {% if choices_array|length != 0 %}
+                          <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg")}}</td></tr>
+                          <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
+                          {% endif %}
                       </table>
                   </td>
 
