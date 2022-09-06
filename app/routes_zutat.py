@@ -1,5 +1,5 @@
 from app import app, db, forms
-from app.rezept import zutat
+from app.rezept import kategorie, zutat
 from app.backend_helper import getNewID, savepic
 from app.routesbackend import remover,MODE_ZUTATEN,showclass
 
@@ -47,11 +47,14 @@ def modifyZutat(ids):
     """Hiermit wird eine Zutat modifiziert."""
     form = forms.zutatanlegen()
     modifyZutat = zutat.query.get(ids)
+    form.kategorie.choices = kategorie.query.all()
+
 
     if form.validate_on_submit():
         modifyZutat.name = form.name.data
         modifyZutat.einheit = form.einheit.data
         modifyZutat.kategorie = form.kategorie.data
+
         if request.method == 'POST': 
             picure_url = savepic('bildupload', request.files, f'zutat{modifyZutat.id}')
             if not (picure_url == "A" or picure_url == "B"):
@@ -60,12 +63,14 @@ def modifyZutat(ids):
                 modifyZutat.bild = picure_url
                 print("Bild neu gesetzt")
         db.session.commit()
+        
         flash(f"{modifyZutat.name}  wurde gespeichert")
         return redirect(url_for('modifyZutat',ids=ids))
-
+    print(form.kategorie.data)
     form.name.data = modifyZutat.name
     form.einheit.data = modifyZutat.einheit
     form.kategorie.data = modifyZutat.kategorie
+    
     if modifyZutat.bild == "":
         return render_template('admin_zutat.html',form=form,titlet="Zutat Eigenschaften ändern")
     else:

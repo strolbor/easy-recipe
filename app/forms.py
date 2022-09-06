@@ -58,7 +58,7 @@ class zutatanlegen(FlaskForm):
     name = StringField('Name der Zutat',validators=[DataRequired()])
     einheit = StringField('Einheit der Zutat',validators=[DataRequired()])
     bildupload = FileField('Bild der Zutat hochladen')
-    kategorie = StringField("Kategorie")
+    kategorie = SelectMultipleField("Kategorie")
     submit = SubmitField('Speichern')
 
 class taganlegen(FlaskForm):
