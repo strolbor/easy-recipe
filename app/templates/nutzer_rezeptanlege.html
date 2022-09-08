@@ -12,6 +12,8 @@
         var x = hinzufueger.length; //Counter der bereits vorhanden Felder
         var CounterZutaten = 1; //Counter
 
+        var zutaten = '{{}}';
+
         $(mehrBtn).click(function (e)  //On-Click Event
         {
             if (x <= maxBox) // Methode zum begrenzen
@@ -110,6 +112,9 @@
                         <!-- TODO: Optionen einfügen-->
                         <option value="-1">Keine angabe</option>
                         <option value="-1">----</option>
+                        {%for entry in zutaten%}
+                        <option value="{{entry.id}}">{{entry.name}}</option>
+                        {% endfor%}
                     </select>
                 </div>
                 <div class="col-md-5">
