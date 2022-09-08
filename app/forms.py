@@ -48,9 +48,9 @@ class d_felder(FlaskForm):
     for entry in kategorie.query.all():
         kategorieName = entry.name
         kat_zutatsubmits = []
-        for zut in AssociationZKhat.query.filter_by(kategorie_id=entry.id):
+        for zut in entry.bkat:
             # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
-            kat_zutatsubmits.append(zutat.query.get(zut.zutat_id))
+            kat_zutatsubmits.append(zutat.query.get(zut.id))
 
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 

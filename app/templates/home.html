@@ -85,7 +85,7 @@
 
                   <!-- Hier ist Zelle mit verschiedenen Kategorien -->
                   <td width="80%">
-                  <div style="overflow-y:scroll;height:800px">
+                  <!-- <div style="overflow-y:scroll;height:800px"> -->
                   {% for i in range(0, form.kategorien|length) %}
                       <div>
                       {% set kategorie = form.kategorien[i] %}
@@ -104,7 +104,7 @@
                       </div>
 
                   {% endfor %}
-                  </div>
+                  <!-- </div> BEENDET SCROLLLEISTE -->
                   </td>
 
 
