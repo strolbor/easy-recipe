@@ -21,16 +21,16 @@ def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
 
-def newRezept(rname: str, tname: str,):
+def newRezept(rname: str, tname: str, reqe):
     """Kapselung von Rezepte"""
     # Daten des Uploads holen
     bild_url = ""
-    if request.method == 'POST':
+    if reqe.method == 'POST':
         """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
         idneu = getNewID(rezept)
 
         """ Wir suchen die nächste ID"""
-        picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
+        picure_url = savepic('bildupload', reqe.files, f'rezept{idneu}')
         if not (picure_url == "A" or picure_url == "B"):
             """ Bild wurde gefunden und hochgeladen"""
             bild_url = picure_url
@@ -51,41 +51,44 @@ def addrezept():
 
     # Formular wird abgesendet
     if form.validate_on_submit():
-        newRezept(form.rezeptname.data, form.tags.data)
+        newRezept(form.rezeptname.data, form.tags.data, request)
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
     return render_template('admin_rezept.html', form=form, titlet="Neues Rezept anlegen")
 
 
 @app.route("/nutzer/rezept/eingabe")
 def nutzerrezeptein():
+    """Nutzereingabe Menü"""
     form = forms.nutzerein()
     # Alle Tags holen
     form.tags.choices = createArrayHelper(tags.query.all())
-    if form.validate_on_submit():
-        bild_url = ""
-        idneu = getNewID(rezept)
-        """ Wir suchen die nächste ID"""
-
-        picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
-        if not (picure_url == "A" or picure_url == "B"):
-            """ Bild wurde gefunden und hochgeladen"""
-            bild_url = picure_url
-    new = rezept(name=form.rezeptname.data, bild=bild_url)
-
+    # Das ist schon so fertig
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all())
 
 
 @app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
-def postskill():
+def postrezept():
+    # GET /nutzer/rezept/eingabe?
+    # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&rname=we432&
+    # bildupload=
+    # &zutat%5B%5D=3& menge%5B%5D=1&
+    # zutat%5B%5D=17& menge%5B%5D=2&
+    # zutat%5B%5D=16& menge%5B%5D=3
+    # handlung=ew&tags=1&
+    # submit=Speichern
     if request.method == 'POST':
         zutaten = request.form.getlist('zutat[]')
         menge = request.form.getlist('menge[]')
+        rezeptname = request.form.get('rname')
+        tagname = request.form.get('tags')
+        newRezept(rezeptname, tagname,  request)
+        print("Rezept:", rezeptname)
         for value in zutaten:
             print(f"Erhalten in Zutaten: {value}")
         for value in menge:
             print(f"Erhalten in Menge: {value}")
-        msg = 'New record created successfully'
-    return str(msg)
+        flash('New record created successfully')
+    return "ok"
 
 
 @app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])

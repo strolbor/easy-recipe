@@ -25,7 +25,7 @@
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-5"><input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
+                    <div class="col-md-5"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
                     <div class="col-md-2">\
                         <a href="#" class="btn btn-danger removeclass">-</a> \
                     </div></div>');
@@ -43,7 +43,7 @@
         })
         $('#submit').click(function () {
             $.ajax({
-                url: "/ctl/post",
+                url: "{{url_for('postrezept')}}",//"/ctl/nutzer/rezept/post",
                 method: "POST",
                 data: $('#add_rezept').serialize(),
                 success: function (data) {
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-md-5">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="form-control">
+                        class="form-control" value="0">
                 </div>
                 <div class="col-md-2">
                     <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
