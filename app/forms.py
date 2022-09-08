@@ -53,10 +53,6 @@ class d_felder(FlaskForm):
             # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
             kat_zutatsubmits.append(zutat.query.get(zutats.id))
 
-        # for zut in AssociationZKhat.query.filter_by(kategorie_id=entry.id):
-        # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
-        #    kat_zutatsubmits.append(zutat.query.get(zut.zutat_id))
-
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 
 

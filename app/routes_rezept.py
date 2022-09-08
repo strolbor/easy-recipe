@@ -1,12 +1,12 @@
 import imp
 import re
 from app import app, db, forms
-from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
-from app.backend_helper import  getNewID,createArrayHelper, savepic
-from app.routesbackend import  remover, MODE_REZEPT,MODE_RZHAT,MODE_REZEPTadd,showclass
+from app.rezept import rezept, zutat, handlungsschritt, tags, Association, AssociationRHhat
+from app.backend_helper import getNewID, createArrayHelper, savepic
+from app.routesbackend import remover, MODE_REZEPT, MODE_RZHAT, MODE_REZEPTadd, showclass
 
 import os
-from flask import redirect, render_template,request, abort
+from flask import redirect, render_template, request, abort
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
 import sqlalchemy
@@ -14,41 +14,81 @@ import sqlalchemy
 ##############
 #   Rezept   #
 ##############
+
+
 @app.route('/admin/show/rezepte/')
 def showRezepte():
-    return showclass(rezept,rezept.name, "Rezepte","showRezepte")
+    return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
 
-@app.route('/admin/add/rezept/',methods=['GET','POST'])
+def newRezept(rname: str, tname: str,):
+    """Kapselung von Rezepte"""
+    # Daten des Uploads holen
+    bild_url = ""
+    if request.method == 'POST':
+        """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
+        idneu = getNewID(rezept)
+
+        """ Wir suchen die nächste ID"""
+        picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
+        if not (picure_url == "A" or picure_url == "B"):
+            """ Bild wurde gefunden und hochgeladen"""
+            bild_url = picure_url
+
+    new = rezept(name=rname, bild=bild_url)
+    new.tags.append(tags.query.get(tname))
+    """ Neues Rezept wurde erstellt."""
+    db.session.add(new)
+    db.session.commit()
+
+
+@app.route('/admin/add/rezept/', methods=['GET', 'POST'])
 def addrezept():
     """Seite um ein neues Rezept anzulegen."""
     form = forms.rezeptanlegen()
     # Alle Tags holen
     form.tags.choices = createArrayHelper(tags.query.all())
 
-    #Formular wird abgesendet
+    # Formular wird abgesendet
     if form.validate_on_submit():
-        # Daten des Uploads holen
-        bild_url=""
-        if request.method == 'POST':
-            """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
-            idneu = getNewID(rezept)
-            
-            """ Wir suchen die nächste ID"""
-            picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
-            if not (picure_url == "A" or picure_url == "B"):
-                """ Bild wurde gefunden und hochgeladen"""
-                bild_url = picure_url
-
-        new = rezept(name=form.rezeptname.data,bild=bild_url)
-        new.tags.append(tags.query.get(form.tags.data))
-        """ Neues Rezept wurde erstellt."""
-        db.session.add(new)
-        db.session.commit()
+        newRezept(form.rezeptname.data, form.tags.data)
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
-    return render_template('admin_rezept.html',form=form,titlet="Neues Rezept anlegen")
+    return render_template('admin_rezept.html', form=form, titlet="Neues Rezept anlegen")
 
-@app.route('/admin/modify/rezept/<path:ids>',methods=['GET','POST'])
+
+@app.route("/nutzer/rezept/eingabe")
+def nutzerrezeptein():
+    form = forms.nutzerein()
+    # Alle Tags holen
+    form.tags.choices = createArrayHelper(tags.query.all())
+    if form.validate_on_submit():
+        bild_url = ""
+        idneu = getNewID(rezept)
+        """ Wir suchen die nächste ID"""
+
+        picure_url = savepic('bildupload', request.files, f'rezept{idneu}')
+        if not (picure_url == "A" or picure_url == "B"):
+            """ Bild wurde gefunden und hochgeladen"""
+            bild_url = picure_url
+    new = rezept(name=form.rezeptname.data, bild=bild_url)
+
+    return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all())
+
+
+@app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
+def postskill():
+    if request.method == 'POST':
+        zutaten = request.form.getlist('zutat[]')
+        menge = request.form.getlist('menge[]')
+        for value in zutaten:
+            print(f"Erhalten in Zutaten: {value}")
+        for value in menge:
+            print(f"Erhalten in Menge: {value}")
+        msg = 'New record created successfully'
+    return str(msg)
+
+
+@app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])
 def modifyrezept(ids):
     form = forms.rezeptanlegen()
     form.tags.choices = createArrayHelper(tags.query.all())
@@ -65,24 +105,27 @@ def modifyrezept(ids):
         # Speichern des Eintrages
         db.session.commit()
         flash(f"{zuRezept.name} wurde gespeichert!")
-        return redirect(url_for('modifyrezept',ids=ids))
+        return redirect(url_for('modifyrezept', ids=ids))
 
     form.rezeptname.data = zuRezept.name
     form.tags.data = createArrayHelper(zuRezept.tags)
-    
+
     if zuRezept.bild != "":
-         # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
-        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern",showbilds=True,showbild=zuRezept.bild) 
+        # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
+        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", showbilds=True, showbild=zuRezept.bild)
     else:
         # Diese Aufruf wird gemacht, wenn kein Bild vorhanden ist
-        return render_template('admin_rezept.html',form=form,titlet="Rezepts ändern") 
+        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern")
 
 # Rezept <-> Handlungschritt Verknüpfer
+
+
 @app.route("/admin/rezept/rezeptver1")
 def rezeptver1():
-    return remover(MODE_REZEPTadd,rezept,'rezeptver1') 
+    return remover(MODE_REZEPTadd, rezept, 'rezeptver1')
 
-@app.route("/admin/rezept/rezeptver2/<path:rid>",methods=['GET','POST'])
+
+@app.route("/admin/rezept/rezeptver2/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
     form = forms.rezeptzutatadder()
@@ -93,7 +136,7 @@ def rezeptver2(rid):
         optionalbool = False
         if form.optionaliat.data == "Ja":
             optionalbool = True
-        assoc1 = Association(menge=int(form.menge.data),optional=optionalbool)
+        assoc1 = Association(menge=int(form.menge.data), optional=optionalbool)
         zutat1 = zutat.query.get(int(form.zutat.data))
         assoc1.hatzutat = zutat1
         try:
@@ -101,15 +144,15 @@ def rezeptver2(rid):
                 rezept1.zutaten.append(assoc1)
             db.session.commit()
             flash("Gespeichert!")
-            return redirect(url_for('rezeptver2',rid=rid))
+            return redirect(url_for('rezeptver2', rid=rid))
         except sqlalchemy.exc.IntegrityError:
             db.session.rollback()
             flash("Fehler: Zutat wurde bereits verknüpft!")
-        
-    return render_template('admin_addrzver.html',form=form,rezept1=rezept1)
+
+    return render_template('admin_addrzver.html', form=form, rezept1=rezept1)
 
 
 @app.route('/admin/rezept/removeRezept')
 def removeRezept():
     """ Löschen eines Rezeptes"""
-    return remover(MODE_REZEPT,rezept,'removeRezept')
+    return remover(MODE_REZEPT, rezept, 'removeRezept')
