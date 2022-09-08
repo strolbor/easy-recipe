@@ -19,11 +19,12 @@
                 CounterZutaten++;
                 //Mehr Buttons
                 $(hinzufueger).append('<div class="row"> \
-                    <div class="col-md-6"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
                         <!-- TODO: Zutateneinfügen -->\
                         </select>\
                     </div> \
-                    <div class="col-md-6">\
+                    <div class="col-md-5"><input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
+                    <div class="col-md-2">\
                         <a href="#" class="btn btn-danger removeclass">-</a> \
                     </div></div>');
                 x++; //text box erhöhen
