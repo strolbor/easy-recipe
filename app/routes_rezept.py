@@ -69,7 +69,8 @@ def nutzerrezeptein():
 @app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
 def postrezept():
     # GET /nutzer/rezept/eingabe?
-    # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&rname=we432&
+    # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&
+    # rname=we432&
     # bildupload=
     # &zutat%5B%5D=3& menge%5B%5D=1&
     # zutat%5B%5D=17& menge%5B%5D=2&
