@@ -1,6 +1,32 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+
+{% set anzRezepte = rezeptRankings|length %}
+{%for i in range(0, anzRezepte) %}
+    {% if i < anzRezepte %}
+
+            <div class="card" style="width: 31rem; height: 45rem; float:left">
+                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
+                <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
+                    <i class="card-text">{{ rezeptRankings[i].tags }}</i>
+                    <p></p>
+                    <p class="card-text"><b>Du hast folgende Zutaten:</b> {{ rezeptRankings[i].vorhandeneZutatenNamen }}</p>
+                    <p class="card-text"><b>Dir fehlen folgende Zutaten:</b> {{ rezeptRankings[i].fehlendeZutatenNamen }}</p>
+                    <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}" class="btn btn-primary">Nachkochen </a>
+                </div>
+            </div>
+
+    {%endif %}
+{% endfor %}
+
+
+
+
+<!--
 <table cellspacing="0" cellpadding="0">
     {% set rezeptSpalten = 3 %}
     {% set anzRezepte = rezeptRankings|length %}
@@ -11,7 +37,7 @@
     {%for i in range(0, rezeptZeilen) %}
     {# erschaffe nur neue Zellen, wenn auch mit rezept gefüllt wird #}
     <tr>
-        {%for j in range(0, rezeptSpalten)%}
+        {% for j in range(0, rezeptSpalten) %}
         {% set rezeptIndex = 3*i+j %}
         {% if rezeptIndex < anzRezepte %}
         <td>
@@ -32,7 +58,10 @@
         {%endif %}
         {%endfor%}
     </tr>
+
+
     {%endfor%}
 </table>
+-->
 
 {% endblock %}
