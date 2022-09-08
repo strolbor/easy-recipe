@@ -44,12 +44,12 @@
 
     <form action="/" method="post" novalidate>
       {{ form.csrf_token }}
-        <table class="table table-hover table-sm asn">
+        <table class="table table-sm asn">
             <thead> 
               <tr>
                 <th>{{ form.eingabe.label }}</th>
-                <th class="middle">Auswahl</th>
-                <th>{{ form.selected.label }}</th>
+                <!-- <th class="middle">Auswahl</th> -->
+                <th >{{ form.selected.label }}</th>
               </tr>
             </thead>
             <tbody>
@@ -81,16 +81,61 @@
 
 
                 <tr>
-                  <td class="eingabe" id=""> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td>
-                  <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td>
-                  <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td>
+                  <!-- <td class="eingabe" id=""> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td> -->
+
+                  <!-- Hier ist Zelle mit verschiedenen Kategorien -->
+                  <td width="80%">
+                  <div style="overflow-y:scroll;height:800px">
+                  {% for i in range(0, form.kategorien|length) %}
+                      <div>
+                      {% set kategorie = form.kategorien[i] %}
+                          <p><h4><b>{{ kategorie.name }}</b></h4></p>
+
+                      <!-- Buttons mit allen Zutaten: -->
+                      <p>
+                      {% for j in range(0, kategorie.zutaten|length) %}
+                          {% set zutatname = kategorie.zutaten[j].name %}
+                          {% if not zutatname in choices_array %}
+                          <button name="btn{{ zutatname }}" class="btn btn-light btn-lg"> {{ zutatname }} </button>
+                          {% endif %}
+                      {% endfor %}
+                      </p>
+
+                      </div>
+
+                  {% endfor %}
+                  </div>
+                  </td>
+
+
+                    <!-- alte Buttons für hinzufügen / entfernen -->
+                  <!-- <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td> -->
+
+                    <!-- Liste ausgewählter ZUtaten -->
+                  <td>
+                      <table>
+                      {% for chosenZutat in choices_array %}
+                        <tr>
+                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%; background-color:white" > {{ chosenZutat }} </button></td>
+                        </tr>
+                      {% endfor %}
+
+                          <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
+                          {% if choices_array|length != 0 %}
+                          <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg")}}</td></tr>
+                          <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
+                          {% endif %}
+                      </table>
+                  </td>
+
+                    <!-- Alte AUswahlliste -->
+                  <!-- <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td> -->
                 </tr>
 
 
                 <tr>
-                    <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td>
-                    <td></td>
-                    <td class="right">{{ form.submitSuchen(class="btn btn-primary")}}</td>
+                    <!-- ALter AUswahl lösen <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td> -->
+
                 </tr>
             </tbody>
         </table>
