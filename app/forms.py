@@ -4,7 +4,7 @@ from wtforms import SubmitField, SelectMultipleField, StringField, SelectField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
-from app.rezept import zutat, kategorie, AssociationZKhat
+from app.rezept import zutat, kategorie
 
 
 class d_felder(FlaskForm):
@@ -33,7 +33,7 @@ class d_felder(FlaskForm):
     suchfeld = SelectField("Starte Zutatensuche", choices=[""] + zutatenListe)
     sumbitAddSuchbegriff = SubmitField("Hinzufügen")
 
-    #Kategorien mit Buttons für Zutaten und Stringfields für Kategorienamen
+    # Kategorien mit Buttons für Zutaten und Stringfields für Kategorienamen
     class homepage_kategorie():
         name = ""
         zutaten = []
@@ -42,18 +42,17 @@ class d_felder(FlaskForm):
             self.name = _name
             self.zutaten = _zutaten
 
-    #Kategorien beinhaltet Objekte der Klasse oben, jeweils ein Stringfield für Name und Array von Submitfields
+    # Kategorien beinhaltet Objekte der Klasse oben, jeweils ein Stringfield für Name und Array von Submitfields
     kategorien = []
 
     for entry in kategorie.query.all():
         kategorieName = entry.name
         kat_zutatsubmits = []
         for zut in AssociationZKhat.query.filter_by(kategorie_id=entry.id):
-            #hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
-            kat_zutatsubmits.append( zutat.query.get(zut.zutat_id) )
+            # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
+            kat_zutatsubmits.append(zutat.query.get(zut.zutat_id))
 
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
-
 
 
 class rezeptanlegen(FlaskForm):
