@@ -100,8 +100,9 @@
 
     <br />
     <h2># Zutat und KAtegorien</h2>
-    {% for entry in zutaten %}<br />
-    {% for kategorie in entry.kategorie %}<br />
+    {% for entry in zutaten %}
+    # {{entry.name}} hat {{entry.kategorie[0]}}<br />
+    {% for kategorie in entry.kategorie %}
     zuta = zutat.query.get({{entry.id}})<br />
     kat = kategorie.query.get({{kategorie.id}})<br />
     zuta.kategorie.append(kat)<br />
