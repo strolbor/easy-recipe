@@ -12,7 +12,6 @@ from sqlalchemy import desc
 @app.route("/tmp/eingabe")
 def tmpein():
     form = forms.nutzerein()
-    form.zutaten.choices = createArrayHelper2(zutat.query.all())
 
     form.tags.choices = createArrayHelper(tags.query.all())
     if form.validate_on_submit():
@@ -21,12 +20,14 @@ def tmpein():
     return render_template('nutzer_rezeptanlege.html', form=form)
 
 
-@app.route("/postskill", methods=["POST", "GET"])
+@app.route("/ctl/post", methods=["POST", "GET"])
 def postskill():
     if request.method == 'POST':
-        skills = request.form.getlist('zutat[]')
-        for value in skills:
-            print(f"Erhalten: {value}")
-
+        zutaten = request.form.getlist('zutat[]')
+        menge = request.form.getlist('menge[]')
+        for value in zutaten:
+            print(f"Erhalten in Zutaten: {value}")
+        for value in menge:
+            print(f"Erhalten in Menge: {value}")
         msg = 'New record created successfully'
     return str(msg)

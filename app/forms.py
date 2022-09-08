@@ -96,10 +96,6 @@ class rezeptanzeige(FlaskForm):
 class nutzerein(FlaskForm):
     rname = StringField('Name')
     bildupload = FileField('Bild')
-    zutaten = SelectField('Zutaten')
-    zadd = SubmitField("+")
-    zre = SubmitField("-")
-    handlung = StringField('Handlungschritte')
+    handlung = StringField('Handlungschritt')
     tags = SelectField('Tags')
-    menge = StringField("Menge")
     submit = SubmitField("Speichern")
