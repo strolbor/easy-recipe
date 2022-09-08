@@ -52,18 +52,6 @@ class AssociationRHhat(db.Model):
     return "Rezept-Handlungsschritt-Verknüpfung: ({},{}) mit ID: {}".format(self.rid,self.hid,self.aid)
 
 
-class AssociationZKhat(db.Model):
-    __tablename__   = "association_zkhat"
-    zutat_id = db.Column(db.ForeignKey("zutatsql.id") , primary_key=True)
-    kategorie_id = db.Column(db.ForeignKey("kategorie.id") , primary_key=True)
-
-
-"""zkhat= db.Table("association_zkhat",
-  db.Model.metadata,
-  db.Column("zutat_id",db.ForeignKey("zutatsql.id")),
-  db.Column("kategorie_id", db.ForeignKey("kategorie.id")),
-)"""
-
 rthat= db.Table("association_rthat",
   db.Model.metadata,
   db.Column("rezept_id",db.ForeignKey("rezeptsql.id")),
@@ -71,7 +59,11 @@ rthat= db.Table("association_rthat",
 )
 """Many to Many Relationship Table bzgl. Rezept und Tags"""
 
-
+zkhat= db.Table("association_zkhat",
+  db.Model.metadata,
+  db.Column("zutat_id",db.ForeignKey("zutatsql.id")),
+  db.Column("kategorie_id", db.ForeignKey("kategorie.id")),
+)
 
 ####################
 #      Klassen     #
@@ -112,7 +104,7 @@ class handlungsschritt(db.Model):
     rezepte             = db.relationship("AssociationRHhat",back_populates="hatid",cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '<handlungsschritt {}; Text: {}>'.format(self.id,self.text)
+        return f'Handlungsschritt {self.id} zu {self.rezepte}; Text: {self.text}>'
 
 class zutat(db.Model):
     """Zutaten Klasse"""
@@ -124,8 +116,8 @@ class zutat(db.Model):
 
     # Relationship
     rezepte             = db.relationship("Association", back_populates="hatzutat",cascade="all, delete-orphan")
-    #TODO: RELATIONSHIOP ANLEGEN WIE BEI REZEPTE
-
+    kategorie           = db.relationship('kategorie', secondary=zkhat, backref = db.backref('bkat'))
+    
     def __repr__(self):
         return 'Zutat: {} in der Einheit: {} und der ID: {}'.format(self.name,self.einheit,self.id)
 
@@ -136,7 +128,7 @@ class tags(db.Model):
     name                = db.Column(db.String)
 
     def __repr__(self):
-        return '{}'.format(self.name)
+        return 'Tag {}'.format(self.name)
 
 class kategorie(db.Model):
     """ Kategorie für Zutat Klasse"""
@@ -144,11 +136,7 @@ class kategorie(db.Model):
     id                  = db.Column(db.Integer,primary_key=True)
     name                = db.Column(db.String)
 
-    #Geht noch nicht
-    #zutaten = db.relationship('zutaten', secondary=zkhat, backref = db.backref('belongs'))
-
-
     def __repr__(self):
-        return '{}'.format(self.name)
+        return 'Kategorie {}'.format(self.name)
 
 

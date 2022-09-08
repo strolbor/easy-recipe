@@ -2,43 +2,151 @@
 
 
 {% block app_content %}
-<form>
+<script>
+    $(document).ready(function () {
+
+        var maxBox = 8; //Wieviel Felder werden max. hinzugefügt
+        var hinzufueger = $("#hinzufueger"); //Welcher Text soll angezeigt werden
+        var mehrBtn = $("#AddZutatInput"); //Welcher Button ist dafür verantwortlich
+
+        var x = hinzufueger.length; //Counter der bereits vorhanden Felder
+        var CounterZutaten = 1; //Counter
+
+        var zutaten = '{{}}';
+
+        $(mehrBtn).click(function (e)  //On-Click Event
+        {
+            if (x <= maxBox) // Methode zum begrenzen
+            {
+                CounterZutaten++;
+                //Mehr Buttons
+                $(hinzufueger).append('<div class="row"> \
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
+                        <!-- TODO: Zutateneinfügen -->\
+                        </select>\
+                    </div> \
+                    <div class="col-md-5"><input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
+                    <div class="col-md-2">\
+                        <a href="#" class="btn btn-danger removeclass">-</a> \
+                    </div></div>');
+                x++; //text box erhöhen
+            }
+            return false;
+        });
+
+        $("body").on("click", ".removeclass", function (e) { //Box entferne Methode
+            if (x > 1) {
+                $(this).parent('div').parent('div').remove(); //Entferne Zutat box
+                x--; //textbox anzahl verringern
+            }
+            return false;
+        })
+        $('#submit').click(function () {
+            $.ajax({
+                url: "/ctl/post",
+                method: "POST",
+                data: $('#add_rezept').serialize(),
+                success: function (data) {
+                    $('#add_rezept')[0].reset();
+                }
+            });
+        });
+    });
+</script>
+
+<!--
+<div class="form-group">
+    <form name="add_rezept" id="add_rezept">
+        <div id="hinzufueger">
+            <div class="row">
+                <div class="col-xs-6">
+                    <input type="text" name="zutat[]" placeholder="Geben Sie bitte eine Zutat an"
+                        class="form-control" />
+                </div>
+                <div class="col-xs-6">
+                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                </div>
+            </div><!-- end of id=row --
+        </div> <!-- end of id=hinzufueger--
+        <br />
+        <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
+    </form>
+</div> -->
+
+
+<style>
+    div {
+        padding-left: 5px;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-bottom: 7px;
+    }
+</style>
+<form name="add_rezept" id="add_rezept">
     {{ form.csrf_token }}
-
-    <div class="col-12">
-        <!-- Rezeptnamen -->
-        <label for="formGroupExampleInput" class="form-label">{{ form.name.label }}</label>
-        {{form.name(class="form-control")}}
-    </div>
-
-    <div class="col-12">
-         <!-- Rezeptbild hochladen -->
-        <label class="form-label">{{ form.bildupload.label }}</label>
-        {{ form.bildupload(class="form-control")}}
-    </div>
-
-    <div class="col-12">
-        <!-- Zutatenverknüpfen -->
-       <label class="form-label">{{ form.bildupload.label }}</label>
-       {{ form.zutaten(class="form-control")}} {{form.menge(class="form-control")}}
-   </div>
-
-   <div class="col-12">
-    <!-- Handlungschrittverknüpfer -->
-   <label class="form-label">{{ form.bildupload.label }}</label>
-        {{ form.bildupload(class="form-control")}}
-    </div>
-
-    <div class="col-12">
-        <!-- Tags verknüpfer -->
-       <label class="form-label">{{ form.bildupload.label }}</label>
-            {{ form.bildupload(class="form-control")}}
+    <div class="row">
+        <!-- Überschrift -->
+        <div class="col-md-12">
+            <h2>Neues Rezept anlegen</h2>
         </div>
+    </div>
+
+    <div class="row ">
+        <!-- Rezeptnamen -->
+        <div>{{ form.rname.label }}</div>
+        <div class="col-md-6">{{form.rname(class="form-control",title="rezeptnamen eingabe")}}</div>
+    </div>
+
+    <div class="row  ">
+        <div><label class="form-label">{{ form.bildupload.label }}</label></div>
+        <div>{{ form.bildupload(class="form-control")}}</div>
+    </div>
+
+    <div class="row">
+        <!-- Zutatenverknüpfer-->
+        <p>Zutaten</p>
+        <div id="hinzufueger">
+            <div class="row">
+                <div class="col-md-5">
+                    <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
+                        <!-- TODO: Optionen einfügen-->
+                        <option value="-1">Keine angabe</option>
+                        <option value="-1">----</option>
+                        {%for entry in zutaten%}
+                        <option value="{{entry.id}}">{{entry.name}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
+                        class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                </div>
+            </div><!-- end of id=row -->
+        </div> <!-- end of id=hinzufueger-->
+    </div>
 
 
-    <div class="col-12">
+
+    <div class="row">
+        <!-- Handlungschrittverknüpfer -->
+        <div>{{ form.handlung.label }}</div>
+        <div>{{ form.handlung(class="form-control")}}</div>
+    </div>
+    <div class="row">
+        <div>{{ form.tags.label }}</div>
+        <div>{{ form.tags(class="form-control")}}</div>
+    </div>
+
+    <div class="row">
         <!-- Submit des Feldes -->
-        {{form.submit(class="btn btn-success") }}
+        <div>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p>
+        </div>
+        <div>{{form.submit(class="btn btn-success") }}</div>
     </div>
 </form>
 {% endblock %}

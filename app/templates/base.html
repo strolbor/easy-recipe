@@ -1,23 +1,35 @@
-<html><head>
-{% block title %}
-    <title>{% if title %} {{title}} {% else %}Easy Recipe {% endif %}</title>
-{% endblock %}
+<html>
+
+<head>
+  {% block title %}
+  <title>{% if title %} {{title}} {% else %}Easy Recipe {% endif %}</title>
+  {% endblock %}
+  <script src="{{url_for('downloadfoto',filename='css/jquery.min.js')}}" crossorigin="anonymous"></script>
   <script src="{{url_for('downloadfoto',filename='css/bootstrap.bundle.min.js')}}" crossorigin="anonymous"></script>
   <link href="{{url_for('downloadfoto',filename='css/bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
+
 </head>
+
 <body>
-{% block navbar %} 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  {% block navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+        aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>Menü
       </button>
 
       <a class="navbar-brand" href="/">Easy-Recipe</a>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('admin')}}">Rezept Eingabe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('admin')}}">Rezepte durchstöbern</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('admin')}}">Adminbereich</a>
@@ -25,20 +37,23 @@
         </ul>
       </div>
     </div>
-  </nav> 
-{% endblock %}
+  </nav>
+  {% endblock %}
 
-{% block content %}
-<div class="container-fluid"><!-- style="padding-left: 325px;padding-right: 325px;"-->
-  {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-               <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-      {% endwith %}
+  {% block content %}
+  <div class="container-fluid">
+    <!-- style="padding-left: 325px;padding-right: 325px;"-->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     {% block app_content %}{% endblock %}
-</div>
-{% endblock %}
-</body></html>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

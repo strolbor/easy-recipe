@@ -1,4952 +1,908 @@
+#!/usr/bin/python
+# -*- coding: ISO8859 -*-
 from app import db
 import sqlalchemy
 from app.rezept import Association,AssociationRHhat,handlungsschritt, rezept, zutat,tags
 
-handob = handlungsschritt(text="1. Apfel schÃ¤len, KerngehÃ¤use entfernen und mit Hilfe einer KÃ¼chenreibe grob raspeln. BlÃ¤tterteig auspacken, mit Alsan/ Margarine bestreichen, Apfelraspel darauf verteilen, mit Zimt und Zucker bestreuen.")
+handlungsschritt.query.delete()
+AssociationRHhat.aiduery.delete()
+db.session.commit()
+
+handob = handlungsschritt(text="Die Kartoffeln und Möhren schälen und in kleine Stücke schneiden. Die Paprikaschoten ebenfalls klein schneiden.  Das Öl in einer Pfanne erhitzen und das Hackfleisch krümelig braten. Mit den Dosentomaten, Tomatenmark und der Brühe ablöschen. Kartoffeln, Möhren und die Paprika hinzufügen. Alles zugedeckt ca. 40 min. bei mittlerer Hitze köcheln lassen. Zum Reduzieren evtl. zusätzlich ca. 10 min. ohne Deckel köcheln lassen. Am Schluss mit den Gewürzen abschmecken und den Schmand unterrühren.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(1)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Den Backofen auf 200 °C Umluft vorheizen.  Den Blätterteig auslegen und mit dem Frischkäse bestreichen. Den Räucherlachs gleichmäßig darauf verteilen. Mit etwas Dill bestreuen und zu einer Schnecke rollen. Mit einem sehr scharfen Messer in gleichmäßige dicke Scheiben (ca. 1 cm) schneiden, dann nebeneinander auf einem mit Backpapier ausgelegten Backblech verteilen und mit dem verquirlten Ei bestreichen.  Im heißen Backofen auf mittlerer Schiene ca. 20 - 25 Minuten backen. Vor dem Servieren abkühlen lassen.  Tipp: Anstatt Lachs, Frischkäse und Dill kann man auch geräucherten Schinken verwenden. Dieser ist jedoch etwas trockener und benötigt nur 15 - 20 Minuten im Backofen.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(2)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Den Blätterteig ausrollen und eine Teighälfte mit gut der Hälfte des Schmands bestreichen. Die Hälfte der Schinkenwürfel und des Käses darauf verteilen. Die Seite des Blätterteiges, die nicht belegt ist, über die andere Seite klappen.  Wiederum die Hälfte des Teiges mit dem restlichen Schmand bestreichen und die Schinkenwürfel und Käseraspel darauf geben. Die unbestrichene Teighälfte darüber klappen. Den Blätterteig in Streifen schneiden. Vorsichtig spiralförmig drehen und auf ein mit Backpapier belegtes Blech legen.  Im heißen Backofen bei 180 °C Ober-/Unterhitze ca. 25 Minuten backen.  Variante: Sehr gut schmecken diese Stangen auch, wenn man statt Schinken geräucherten Lachs verwendet. Dafür braucht man dann ca. 180 g.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(3)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Den Backofen auf 180 °C Heißluft vorheizen.  Den Blätterteig aus der Packung nehmen und in ca. 4 x 4 cm große Quadrate schneiden. Die Quadrate auf ein mit Backpapier belegtes Blech legen. Mit etwas Milch bestreichen. Tomatenscheiben darauflegen, dabei einen kleinen Rand freilassen und pfeffern.  In den vorgeheizten Backofen auf die mittlere Einschubleiste schieben und ca. 15 - 20 Min. backen, bis die Ränder leicht gebräunt sind.  In der Zwischenzeit Knoblauchwürfelchen mit Olivenöl und Basilikum verrühren.  Die fertig gebackenen Quadrate anschließend mit Fleur de Sel bestreuen und mit der Knoblauch-Basilikumpaste bestreichen. Entweder sofort servieren oder auch kalt genießen.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(4)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die TULIP Bacon-Scheiben in etwa 5 cm große Stückchen schneiden. In eine Pfanne legen und 2 Min. bei kräftiger Hitze braten.  Kartoffeln, Zwiebeln und Butter dazugeben und weitere 7 Min. bei mittlerer Hitze braten, bis alles knusprig und goldbraun ist. Mit Salz und Pfeffer abschmecken und das Gericht warmhalten.  Währenddessen das Öl in der Pfanne erhitzen, Eier in die Pfanne schlagen und etwa 6 Min. braten. Anschließend mit Salz würzen.  Das Gericht mit Parmesan und Thymian bestreuen und sofort mit den Spiegeleiern servieren.  Als Beilage passen eingelegte Rote Beete dazu.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(5)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Das Butterschmalz in einer tiefen Pfanne erhitzen. Das Gulasch im Butterschmalz scharf anbraten und mit Salz, Pfeffer und Paprikapulver würzen.  Wenn das Fleisch eine schöne Farbe angenommen hat und das Wasser verdampft ist, die gehackte Zwiebel, die gepresste Knoblauchzehe und die geriebene Karotte sowie den Senf und das Tomatenmark dazugeben und kurz weiterbraten.  Anschließend mit dem Bier ablöschen und einkochen lassen. Mit der Gemüsebrühe auffüllen und mit Deckel ca. 1 Stunde köcheln lassen (bei Verwendung eines Schnellkochtopfes ca. 35 min).  Etwa 5 min. vor Ende der Garzeit die Crème fraîche einrühren und nach Bedarf mit etwas Soßenbinder andicken. Vor dem Servieren nochmal abschmecken.  Als Beilage passen Spätzle, Reis, Kartoffelbrei oder Salzkartoffeln")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(6)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die geschälte Zwiebel würfeln und in einem größeren Topf in Olivenöl leicht anrösten, Faschiertes dazugeben und krümelig braten. Die geschälten Kartoffeln in kleine Würfel schneiden, in den Topf geben und mit Brühe und Dosentomaten aufgießen - die Kartoffeln und später das Gemüse sollten immer leicht bedeckt sein - ansonsten Brühe nachfüllen. Gepressten Knoblauch, viel gemahlenen Pfeffer und Kräuter (z.B. getrockneten Majoran, Thymian, Oregano gemischt) dazugeben und leicht kochen lassen.  In der Zwischenzeit zuerst die Karotten in dünne Scheibchen schneiden und nach ca. 15 Minuten in den Topf geben. Die Paprikaschote in kleine Würfel oder Steifen schneiden und den geputzten Porree (ich verwende gerne den vorgeputzten) in Scheiben schneiden und nach weiteren 10 Minuten dazugeben und noch ca. 10 Minuten köcheln lassen.  Den Eintopf gut mit Kräutersalz abschmecken und mit Petersilie bestreut servieren.  Die Kochzeit richtet sich natürlich ein wenig nach der Größe der Kartoffel- und Gemüsestückchen und wie knackig man es mag.  Tipp: Wer möchte, ersetzt das eine oder andere Gemüse durch Mais, Erbsen oder Brokkoliröschen oder gibt zusätzlich etwas davon dazu und nimmt vom anderen Gemüse dafür weniger.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(7)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die frischen Kartoffeln werden ausgiebig gewaschen und dann wird ausprobiert, auf welcher Seite sie am stabilsten liegen. Jetzt von oben ca. alle drei Millimeter bis fast ganz durch mit einem scharfen und feinen Messer einschneiden. Die Kartoffeln nun auf ein Backblech mit Backpapier legen.  Die Butter wird vorsichtig im Topf bei schwacher Hitze geschmolzen. Sie darf auf keinen Fall braun werden oder verbrennen. In die Butter werden nun der Knoblauch, der Rosmarin, das Meersalz, der Kreuzkümmel und der Cayennepfeffer gründlich untergerührt. Leicht warm (und flüssig) halten und 5 Minuten durchziehen lassen.  Den Backofen auf 230 Grad (möglichst Umluft) vorheizen.  Jetzt wird die Butter mit einem Teelöffel oder Backpinsel über die Kartoffeln gegeben. Nicht alles verwenden, weil die zweite Hälfte nach ca. 25 Minuten Backzeit nochmal über die Kartoffeln gegeben wird. Jetzt kommt das Blech mit den Kartoffeln auf der mittleren Position in den vorgeheizten Backofen. Nach der Hälfte der Garzeit nochmals mit der Buttermarinade übergießen oder bepinseln. Gesamtbackzeit ca. 50 Minuten. Bei größeren Kartoffeln die Backzeit ggf. verlängern.  In der Zwischenzeit wird der Quark mit der Sahne, den Kräutern gemäß Zutatenliste und der Schalotte verrührt und mit Salz und Pfeffer abgeschmeckt.  Jetzt werden die Kartoffeln auf Tellern angerichtet und zur Deko noch mit ein wenig grobem Meersalz überstreut. Noch auf jeden Teller ein Klacks vom Kräuterquark geben - FERTIG.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(8)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="1. Zwiebel abziehen und in kleine Würfel schneiden. Hackfleisch und Zwiebeln in erhitztem Öl ca. 5 Minuten anbraten, mit Senf und Ketchup verrühren, mit Salz und Pfeffer abschmecken und auskühlen lassen.  2. Tomaten waschen und vierteln, Gurken grob hacken. Pizzateig entrollen und in 12 Rechtecke schneiden (ca. 9 x 9 cm). Hackfleisch-Mischung, Cheddar, Tomaten und Gurken mittig auf den Teigstücken verteilen und Teig über der Füllung zusammenfalten. Teigränder gut zusammendrücken, sodass keine Öffnung mehr bleibt und mit der verschlossenen Seite nach unten in gefettete Mulden eines Muffinblechs legen.  3. Muffins mit Milch bestreichen, mit Sesam bestreuen und im vorgeheizten Backofen bei 180 °C (Umluft: 160 °C) ca. 35 Minuten backen. Cheese-Burger-Muffins etwas abkühlen lassen, aus der Form lösen und lauwarm, nach Wunsch mit Burgersauce und Ketchup, servieren.  Pro Stück:  kJ/kcal: 917/220  EW: 10,9 g  F: 12,0 g  KH: 16,8 g  BE: 1,5")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(9)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Öl im Wok erhitzen, Knoblauch und Ingwer kurz darin anbraten. Dann die Fleischstreifen in den Wok geben und kräftig anbraten. Nun alle übrigen Zutaten, bis auf die Lauchzwiebeln dazugeben und ca. 10 Minuten durchgaren. Achtung bei 4 TL Sambal Oelek wird es ganz schön scharf!  Evtl. nochmals mit Zucker, Zitronensaft und Sojasauce abschmecken, nun die Lauchzwiebeln unterrühren.  Als Beilage eignet sich Reis, ein Gemüsecurry und Raita oder Karottensalat mit Ingwer.  In Indien haben wir zu diesem Gericht extra Limettenachtel zum Nachwürzen bekommen.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(10)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Den Ofen auf 200 °C Ober-/Unterhitze (Umluft 180 °C) vorheizen.  Die Zwiebel und den Knoblauch sehr fein schneiden. Die Chilischote entkernen und ebenso fein hacken. Die Kirschtomaten waschen und halbieren. Den Parmesan reiben und den Mozzarella grob würfeln. Die Basilikumblätter abzupfen, waschen und trocken tupfen.  In einem großen Topf Salzwasser zum Kochen bringen und die Nudeln darin laut Packungsangabe al dente garen.  Währenddessen in einer großen Pfanne Olivenöl erhitzen und Zwiebel, Knoblauch und Chilischote darin anschwitzen. Die passierten Tomaten hinzufügen und die Sauce ein paar Minuten leicht köcheln lassen. Dann die Sahne und den geriebenen Parmesan unterrühren und die Sauce mit Salz, Pfeffer und einer ordentlichen Prise Zucker abschmecken.  Wenn die Nudeln soweit sind, diese abgießen und in die Pfanne zur Sauce geben. Die Pfanne von der Hitze nehmen und die halbierten Kirschtomaten und die Hälfte der Mozzarellawürfel unterheben. Die Basilikumblätter in Streifen schneiden und ebenfalls unterheben.  Alles zusammen in eine Auflaufform geben, mit dem restlichen Mozzarella bestreuen und ca. 20 Minuten auf der mittleren Schiene im heißen Backofen gratinieren.  Dazu passt zum Beispiel ein grüner Salat und Knoblauchbaguette.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(11)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Eine flache Gratinform mit Butter einfetten. Den Knoblauch schälen. Entweder fein würfeln und in der Form verteilen oder direkt in die Form pressen. Die Kartoffeln schälen und in feine Scheiben schneiden (ich nehme dafür einen Gurkenhobel, das geht am schnellsten).  Die Hälfte der Kartoffelscheiben in die Form schichten. Mit Kräutersalz und frisch geriebenem Muskat leicht würzen, anschließend die restlichen Kartoffeln darauf schichten.  Die Sahne und die Milch mischen. Mit dem Gemüsebrühepulver, Kräutersalz, Muskat und Pfeffer kräftig würzen. Diese Mischung über die Kartoffeln geben. Butterflöckchen auf dem Gratin verteilen.  Im vorgeheizten Backofen bei 180 °C Ober-/Unterhitze ca. 1 Stunde backen. Heiß servieren.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(12)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Rindfleischwürfel im Butterschmalz 5 Minuten anbraten, dabei umrühren, dann die Zwiebeln und Knoblauchstücke dazugeben, weitere 5 Minuten mitdünsten. Mit Rinderbouillon und Rotwein ablöschen, mit Salz, Pfeffer, Zucker, Paprikapulver, Lorbeerblättern, Tomatenmark und Majoran würzen. Dann bei geschlossenem Deckel ca. 60 Minuten bei kleiner Hitze schmoren.  Die Kartoffel-, Paprika und Karottenstücke zugeben und weitere ca. 20 Minuten köcheln lassen, bis das Gemüse gar ist. Dann Petersilie unterrühren und heiß servieren  Dazu schmeckt Baguette.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(13)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die Zutaten für den Knetteig in eine Schüssel geben, rasch zusammenkneten und zur Seite stellen.  Für die Füllung Margarine, Zucker, Vanillezucker, Puddingpulver und Eier in einer Schüssel verrühren. Dann den Quark und die saure Sahne untermischen. Die süße Sahne steif schlagen und unterheben.  Den Backofen auf 180 °C Ober-/Unterhitze vorheizen.  Den Knetteig in einer gefetteten 26er Springform auslegen, etwa 2 - 3 cm am Rand hochziehen. Nun die Füllung in die Form geben, glatt streichen und im heißen Backofen 1 Stunde backen.  Achtung: Den Kuchen erst nach dem völligen Erkalten aus der Form nehmen, da unmittelbar nach dem Herausnehmen aus dem Backofen die Konsistenz der Quarkmasse noch zu weich ist.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(14)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Nach unzähligen Feldversuchen, reichlich Google-Recherche und Restaurant-Spionage habe ich endlich ein Rezept entwickelt, das absolut authentisch und lecker schmeckt - eben wie in Bella Italia!  Zunächst das Mehl mit dem Salz sieben und es in eine Teigrührmaschine oder einen Brotbackautomaten mit Teigfunktion füllen. Nun die Hefe in dem lauwarmen Wasser auflösen und anschließend zum Mehl-Salz-Gemisch geben (Anmerkung des Chefkoch.de Teams Rezeptbearbeitung: Die angegebene Hefemenge stimmt und es handelt sich um frische Hefe).  Anschließend die Zutaten in 20 (!) Minuten zu einem elastischen, homogenen Teig verkneten.  Anmerkung: Eine elektrische Hilfe ist hier fast schon Pflicht, zur Not tut es auch ein Handrührgerät mit Knethaken. Bitte nicht verzweifelt mit der bloßen Hand kneten, der Teig erreicht so einfach nicht die gewünschte Weichheit und Konsistenz.  Nach dem Kneten den Teig mit einem feuchten Tuch abdecken und zwei Stunden ruhen lassen. Anschließend in vier Stücke zu je 200 g teilen, diese zu Kugeln formen und wieder abgedeckt weitere sechs Stunden gehen lassen.  Was ist nun das Besondere an diesem Teig-Rezept? Das Geheimnis liegt nicht in erlesenen Zutaten wie teurem Pizzamehl oder hochwertigem Olivenöl und auch nicht in überflüssigen Ingredienzen wie Bier, Zucker oder Eiern. Vielmehr erreicht man die geschmeidige Textur durch langes maschinelles Kneten! Die extrem geringe Menge Hefe sorgt zusammen mit der langen Gärung für einen äußerst aromatischen Teig.  Abschließend noch ein paar Tipps für weitere Verarbeitung:  Den Teig so dünn wie möglich ausrollen oder ziehen! Alles unter 4 mm ist ideal.  Für die Tomatensoße einfach eine Dose Schältomaten mit (viel) Knoblauch, Salz, Pfeffer, etwas Zucker, Basilikum und Oregano kalt pürieren, nicht kochen. Anschließend mittig auf die Pizza auftragen und in kreisrunden Bewegungen mit der Kelle über die komplette Pizza verteilen. Nicht zu viel auftragen! Eine gute Pizza sollte man nicht in Tomatensoße ertränken. Wenn einzelne Teigbereiche keine Soße abbekommen, macht das überhaupt nichts. Lieber etwas weniger als etwas mehr.  Den Backofen auf Höchststufe vorheizen! Meiner schafft knapp 260 °C, das Ergebnis war super. Den Teig auf das heiße Backblech legen (mit Backpapier ist das einfacher) und bereits nach 3 - 4 Minuten ist die Pizza fertig und kann genossen werden.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(15)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die Butterkekse zerbröseln, gut mit der flüssigen Butter vermischen und die Mischung auf den Boden einer Backform drücken. Bei 180 °C Ober-/Unterhitze im vorgeheizten Ofen 5 - 10 Minuten vorbacken, dann herausholen.  Den Zucker mit Speisestärke, Frischkäse und Magerquark cremig rühren. Das Ei, die Sahne und den Zitronensaft dazugeben und alles glatt rühren. Nicht mit dem Rührgerät schlagen, sondern langsam cremig rühren, das ist ganz wichtig. Die Creme auf den vorgebackenen Boden streichen. Den Kuchen weitere ca. 45 Minuten backen. Wenn der Rand leicht braun ist, herausnehmen.  Die Zutaten für den Guss miteinander verrühren, den Guss auf den Kuchen streichen und den Kuchen nochmal 5 Minuten backen.  Am besten über Nacht auskühlen lassen.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(16)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die Nudeln in Salzwasser al dente kochen und abkühlen lassen.  Die getrockneten Tomaten in Stücke schneiden, die Pinienkerne in einer trockenen Pfanne ohne Fett anrösten. Rucola und Basilikum waschen und etwas zerrupfen.  Alle Zutaten miteinander mischen und den Salat mindestens 1 Stunde ziehen lassen. Vor dem Servieren nochmal abschmecken.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(17)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Für die Lasagneplatten zuerst die sechs Eier aufschlagen und verquirlen. Ein Backblech mit einem Backpapier auslegen, Eiermasse darauf geben und möglichst gleichmäßig verteilen. Das Blech in den heißen Ofen schieben und die Eier bei 80 bis 100 °C Ober-/Unterhitze stocken lassen. Immer wieder mal rein schauen und gerne die Masse zwischendurch wieder glatt auf dem gesamten Blech verteilen, damit eine gleichmäßige Platte entsteht.  Für die Hackfleischfüllung inzwischen die Zwiebeln schälen und hacken, dann glasig anbraten. Das Hackfleisch hinzugeben. Das Fleisch mit etwas Salz und Pfeffer würzen und braten. Anschließend mit den gehackten oder frischen Tomaten und den passierten Tomaten ablöschen. Jetzt nach Belieben abschmecken und ziehen lassen. Ich nutze gerne Oregano, Basilikum, Thymian, eigentlich alles, was grün ist und vorhanden ist.  Für die Béchamelsauce ein wenig Öl heiß werden lassen und mit der Messerspitze Mehl vermengen. Mit der Sahne und ggf einem Schuss Wasser ablöschen und cremig rühren. Mit Salz, Pfeffer und Muskat würzen. Die Crème fraîche hinzugeben und zur Seite stellen.  Nun die Eiermasse in Scheiben schneiden, die der genutzten Auflaufform entsprechen. Jetzt abwechselnd mit der Hackfleischsauce, Sauce Béchamel und Lasagneplatten in der Auflaufform stapeln. Die letzte Schicht sollte die Bechamel sein, welche dann mit Käse überstreut wird.  Alles dann so lange bei 180 °C Ober-/Unterhitze im heißen Ofen backen, bis der Käse goldbraun ist. Da alle Zutaten bereits gar sind, ist die Backzeit variabel, am besten schmeckt es mir so nach circa 20 Minuten.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(18)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="1. Filet trocken tupfen und in 8 Medaillons schneiden. Mit Senf bestreichen, mit Schinken umwickeln und in eine kleine Auflaufform legen.  2. Champignons abtropfen lassen und in der Auflaufform zwischen den Medaillons verteilen. Mit Salz und Pfeffer würzen und Kräuter überstreuen.  3. Für die Sauce Sahne und Crème fraîche verrühren, mit Paprikapulver, Salz und Pfeffer würzen, über die Medaillons gießen und im vorgeheizten Backofen bei 200 °C (Gas: Stufe 4, Umluft 180 °C) ca. 30 Minuten garen. Spätzle nach Packungsanweisung zubereiten und zu dem Filet servieren.  Pro Portion:  kJ/kcal: 2503/598  EW: 51,6 g  F: 29,3 g  KH: 30,2 g  BE: 2,5")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(19)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Vom Schweinefilet die weiße Haut entfernen. Das Öl mit der Butter erhitzen, nicht zu heiß werden lassen. Das Fleisch mit Salz und Pfeffer würzen und ca. 10 Minuten von allen Seiten braten. Es soll innen noch rosa sein. Dann herausnehmen und auf einem Teller (damit der Fleischsaft aufgefangen wird) erkalten lassen.  Im Bratfett Zwiebeln, Knoblauch und Schinken gut bräunen. Die Champignons putzen und in Scheiben schneiden und mitbraten. Dann mit Brühe ablöschen und Sahne und Crème fraîche oder Schmand und den ausgetretenen Fleischsaft zugeben. Die Soße mit Salz, Pfeffer, Tomatenmark und Senf kräftig abschmecken. Sollte sie zu flüssig sein, etwas Speisestärke in wenig kaltem Wasser anrühren und unter Rühren zur kochenden Soße geben, bis zur gewünschten Konsistenz. Die Soße abkühlen lassen.  Das kalte Fleisch in 1 cm breite Scheiben schneiden und dann in Streifen. Dann in die Soße geben, die Petersilie dazu und durchrühren, kühl stellen.  Am nächsten Tag das Gericht auf kleiner Flamme erhitzen, jedoch nicht mehr kochen. So bleibt das Fleisch rosa. Die Soße nochmals abschmecken.  Dazu schmeckt Baguette, aber auch Spätzle und Salat.  Tipp:  Sollte am Vortag zubereitet werden. Deshalb auch gut geeignet für Feste mit größerer Personenzahl.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(20)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="Die Zwiebeln schälen und zusammen mit dem Schinken würfeln. Mit dem Frischkäse mischen und mit etwas Salz und viel Pfeffer abschmecken. Man kann auch bei Bedarf noch ein wenig Kräuter der Provence dazugeben.  Diese Masse gut auf dem ausgebreiteten Blätterteig verteilen. Nun den Teig vorsichtig zusammenrollen und in ca. 3 cm dicke Scheiben schneiden. Die Scheiben auf ein mit Backpapier belegtes Backblech legen.  Ca. 10 Min bei 180 °C Umluft in den vorgeheizten Backofen schieben - je nach gewünschtem Bräunungsgrad länger oder kürzer.  Bei uns gibt es diese kleinen Köstlichkeiten sonntags heiß oder kalt oft zum Brunch. Die Rollen lassen sich aber auch gut zu jeder Party mitnehmen. Den Belag kann man nach Geschmack auch jederzeit abwandeln.")
+db.session.add(handob)
+db.session.commit()
+rezaus = rezept.query.get(21)
+assoc = AssociationRHhat(position=1)
+assoc.hatid = handob
+with db.session.no_autoflush:
+    rezaus.handlungsschritte.append(assoc)
+db.session.commit()
+
+handob = handlungsschritt(text="1. Apfel schälen, Kerngehäuse entfernen und mit Hilfe einer Küchenreibe grob raspeln. Blätterteig auspacken, mit Alsan/ Margarine bestreichen, Apfelraspel darauf verteilen, mit Zimt und Zucker bestreuen.  2. Hochkant aufwickeln. In 6 gleichgroße Stücke schneiden. Mit einem Kochlöffelstiel (oder ähnlichem) jedes Stück mittig eindrücken, sodass die Enden die typische Franzbrötchen-Form bekommen.  3. Mit dem Backpapier auf ein Backblech geben und im vorgeheizten Backofen bei 200 °C Ober-/Unterhitze für 10 - 15 Minuten goldbraun backen.  Nährwerte pro Stück:  Energie kJ/kcal 1354/324  Eiweiß 2,3 g  Fett 13,3 g  Kohlenhydrate 47,2 g")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="2. Hochkant aufwickeln. In 6 gleichgroÃŸe StÃ¼cke schneiden. Mit einem KochlÃ¶ffelstiel (oder Ã¤hnlichem) jedes StÃ¼ck mittig eindrÃ¼cken, sodass die Enden die typische FranzbrÃ¶tchen-Form bekommen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="3. Mit dem Backpapier auf ein Backblech geben und im vorgeheizten Backofen bei 200 Â°C Ober-/Unterhitze fÃ¼r 10 - 15 Minuten goldbraun backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="NÃ¤hrwerte pro StÃ¼ck:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Energie kJ/kcal 1354/324")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EiweiÃŸ 2,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fett 13,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kohlenhydrate 47,2 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zubereitung:")
+handob = handlungsschritt(text="Zubereitung:  Spargel putzen, den weißen Spargel ganz, bei dem grünen Spargel nur das untere Drittel schälen und den Spargel in ca. 5 cm lange Stücke schneiden. 1,5 Liter Wasser mit 1 TL Salz, 1 Prise Zucker und Margarine aufkochen, Spargel dazugeben und ca. 10 Minuten garen. Grünen Spargel erst nach 5 Minuten Garzeit zufügen. Spargel abgießen und dabei das Spargelwasser auffangen.  Backofen auf 180° C (Gas: Stufe 3, Umluft 160° C). vorheizen.  Mini-Knödel nach Packungsanweisung ca. 8 Minuten garen. Schinken in Streifen schneiden.  Für die Soße Margarine in einem Topf erhitzen, Mehl dazugeben und anschwitzen, Milch und 300 ml Spargelsud angießen, aufkochen und mit Salz, Pfeffer und Muskat abschmecken. Frühlingszwiebeln putzen, waschen und in feine Ringe schneiden. Die Hälfte der Frühlingszwiebeln unter die Soße mischen.  Spargel, Knödel und Schinken in eine Gratinform (24 x 28 cm) geben, Soße darüber gießen, Käse überstreuen und ca. 30-35 Minuten goldbraun backen Restliche Frühlingszwiebeln über das Gratin streuen und servieren.  Pro Portion:  kJ/kcal: 1500/358  EW: 19,9 g  F: 12,8 g  KH: 39,6 g  BE: 3,5")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Spargel putzen, den weiÃŸen Spargel ganz, bei dem grÃ¼nen Spargel nur das untere Drittel schÃ¤len und den Spargel in ca. 5 cm lange StÃ¼cke schneiden. 1,5 Liter Wasser mit 1 TL Salz, 1 Prise Zucker und Margarine aufkochen, Spargel dazugeben und ca. 10 Minuten garen. GrÃ¼nen Spargel erst nach 5 Minuten Garzeit zufÃ¼gen. Spargel abgieÃŸen und dabei das Spargelwasser auffangen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Backofen auf 180Â° C (Gas: Stufe 3, Umluft 160Â° C). vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mini-KnÃ¶del nach Packungsanweisung ca. 8 Minuten garen. Schinken in Streifen schneiden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die SoÃŸe Margarine in einem Topf erhitzen, Mehl dazugeben und anschwitzen, Milch und 300 ml Spargelsud angieÃŸen, aufkochen und mit Salz, Pfeffer und Muskat abschmecken. FrÃ¼hlingszwiebeln putzen, waschen und in feine Ringe schneiden. Die HÃ¤lfte der FrÃ¼hlingszwiebeln unter die SoÃŸe mischen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Spargel, KnÃ¶del und Schinken in eine Gratinform (24 x 28 cm) geben, SoÃŸe darÃ¼ber gieÃŸen, KÃ¤se Ã¼berstreuen und ca. 30-35 Minuten goldbraun backen Restliche FrÃ¼hlingszwiebeln Ã¼ber das Gratin streuen und servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kJ/kcal: 1500/358")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 19,9 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 39,6 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(23)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 200 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Backofen auf 200 °C Ober-/Unterhitze vorheizen.  Ein Backblech mit Backpapier auslegen. Mit nicht zu wenig Olivenöl bestreichen. Die Kartoffeln in dünne Scheiben gefächert auf dem gefetteten Papier auslegen. Zwischen den Reihen etwas Platz lassen.  Geschälten Knoblauch waagerecht halbieren und wie den Rosmarin unter die Kartoffelscheiben legen. Salzen, pfeffern und die Kartoffelscheiben noch mal mit Öl bestreichen.  Auf mittlerer Höhe die Kartoffeln 35 min bei 200°C backen. Sie sollten leicht knusprig und leicht gebräunt sein.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(24)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Ein Backblech mit Backpapier auslegen. Mit nicht zu wenig OlivenÃ¶l bestreichen. Die Kartoffeln in dÃ¼nne Scheiben gefÃ¤chert auf dem gefetteten Papier auslegen. Zwischen den Reihen etwas Platz lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(24)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="GeschÃ¤lten Knoblauch waagerecht halbieren und wie den Rosmarin unter die Kartoffelscheiben legen. Salzen, pfeffern und die Kartoffelscheiben noch mal mit Ã–l bestreichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(24)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Auf mittlerer HÃ¶he die Kartoffeln 35 min bei 200Â°C backen. Sie sollten leicht knusprig und leicht gebrÃ¤unt sein.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(24)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Gnocchi nach Packungsanweisung kochen.")
+handob = handlungsschritt(text="Die Gnocchi nach Packungsanweisung kochen.  Die Paprikaschote putzen und in einer Küchenmaschine pürieren. Die Knoblauchzehe abziehen, pressen und in etwas Olivenöl anbraten. Das Paprikapüree zufügen und kurz mitbraten. Die passierten Tomaten zugeben, dann den Frischkäse unterrühren und aufkochen lassen. Mit Salz, Pfeffer, Oregano und Brühe abschmecken.  Eine Auflaufform einfetten und die Gnocchi darin verteilen, die Sauce darüber geben. Den Mozzarella in Scheiben schneiden, den Parmesan reiben und beides obendrauf verteilen.  Im vorgeheizten Backofen bei 180 °C ca. 15 Minuten überbacken. Sofort servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(25)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Paprikaschote putzen und in einer KÃ¼chenmaschine pÃ¼rieren. Die Knoblauchzehe abziehen, pressen und in etwas OlivenÃ¶l anbraten. Das PaprikapÃ¼ree zufÃ¼gen und kurz mitbraten. Die passierten Tomaten zugeben, dann den FrischkÃ¤se unterrÃ¼hren und aufkochen lassen. Mit Salz, Pfeffer, Oregano und BrÃ¼he abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(25)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine Auflaufform einfetten und die Gnocchi darin verteilen, die Sauce darÃ¼ber geben. Den Mozzarella in Scheiben schneiden, den Parmesan reiben und beides obendrauf verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(25)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Backofen bei 180 Â°C ca. 15 Minuten Ã¼berbacken. Sofort servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(25)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Rezept stammt von einer Chinareise aus der Stadt Chongqing.")
+handob = handlungsschritt(text="Das Rezept stammt von einer Chinareise aus der Stadt Chongqing.  Zunächst den Boden des Wok großzügig mit Öl bedecken und dieses auf höchster Stufe erhitzen. Das Geschnetzelte rundherum mit Mehl bestäuben und im Wok scharf anbraten, dann salzen. Das Fleisch herausnehmen, evtl. etwas Öl nachgeben und die gehackten Erdnüsse leicht anbraten. Die Erdnüsse herausnehmen und die Zwiebeln anbraten. Anschließend den gehackten Knoblauch hinzugeben und ebenfalls anbraten. Die Frühlingszwiebeln und die Chilischoten in Streifen schneiden und hinzugeben. Den Zucker darüber streuen und karamellisieren lassen.  Fleisch und Erdnüsse wieder hinzugeben. Mit Wein ablöschen, aufkochen lassen und den Essig hinzugeben. Abschließend mit Sojasauce, Ingwer und Pfeffer (gut zerkleinern, sehr intensiv!) würzen und abschmecken.  Auf Reis servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(26)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="ZunÃ¤chst den Boden des Wok groÃŸzÃ¼gig mit Ã–l bedecken und dieses auf hÃ¶chster Stufe erhitzen. Das Geschnetzelte rundherum mit Mehl bestÃ¤uben und im Wok scharf anbraten, dann salzen. Das Fleisch herausnehmen, evtl. etwas Ã–l nachgeben und die gehackten ErdnÃ¼sse leicht anbraten. Die ErdnÃ¼sse herausnehmen und die Zwiebeln anbraten. AnschlieÃŸend den gehackten Knoblauch hinzugeben und ebenfalls anbraten. Die FrÃ¼hlingszwiebeln und die Chilischoten in Streifen schneiden und hinzugeben. Den Zucker darÃ¼ber streuen und karamellisieren lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(26)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fleisch und ErdnÃ¼sse wieder hinzugeben. Mit Wein ablÃ¶schen, aufkochen lassen und den Essig hinzugeben. AbschlieÃŸend mit Sojasauce, Ingwer und Pfeffer (gut zerkleinern, sehr intensiv!) wÃ¼rzen und abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(26)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Auf Reis servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(26)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebeln in 0,5 cm groÃŸe WÃ¼rfel schneiden, Karotte und Sellerie wÃ¼rfeln. Alles in 2 EL Butterschmalz krÃ¤ftig anbraten. Tomatenmark zugeben und andÃ¼nsten bis sich eine homogene Masse bildet, das Mark darf ruhig ein bisschen ansetzen. Paprikapulver kurz mitrÃ¶sten (Vorsicht, darf nicht verbrennen!). Mit dem Rotwein und der BrÃ¼he ablÃ¶schen und zum Kochen bringen. Jetzt erst das gewÃ¼rfelte Fleisch dazu geben, wieder aufkochen und bei kleiner Hitze mit den LorbeerblÃ¤ttern ca. 2 Stunden kÃ¶cheln lassen.")
+handob = handlungsschritt(text="Die Zwiebeln in 0,5 cm große Würfel schneiden, Karotte und Sellerie würfeln. Alles in 2 EL Butterschmalz kräftig anbraten. Tomatenmark zugeben und andünsten bis sich eine homogene Masse bildet, das Mark darf ruhig ein bisschen ansetzen. Paprikapulver kurz mitrösten (Vorsicht, darf nicht verbrennen!). Mit dem Rotwein und der Brühe ablöschen und zum Kochen bringen. Jetzt erst das gewürfelte Fleisch dazu geben, wieder aufkochen und bei kleiner Hitze mit den Lorbeerblättern ca. 2 Stunden köcheln lassen.  Durch das Gemüse ist es normalerweise nicht nötig, die Sauce zu binden. Wenn sie allerdings zu flüssig ist, kann man das Gulasch mit 1 EL in kaltem Wasser aufgelöstem Stärkemehl andicken. Dann noch abschmecken mit Salz und Pfeffer. Die Lorbeerblätter fische ich nach Möglichkeit vor dem Servieren raus.  Dies ist ein Grundrezept für Gulasch, man kann es wunderbar abwandeln, indem man z. B. eine halbe Stunde vor Ende der Garzeit noch Sahne, Kartoffeln und/oder Paprikaschoten zugibt. Ich gebe auch immer noch Knoblauch dazu, den mochte aber meine Oma nicht.  Dazu schmecken Knödel jeglicher Art, Kartoffeln oder Nudeln.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(27)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Durch das GemÃ¼se ist es normalerweise nicht nÃ¶tig, die Sauce zu binden. Wenn sie allerdings zu flÃ¼ssig ist, kann man das Gulasch mit 1 EL in kaltem Wasser aufgelÃ¶stem StÃ¤rkemehl andicken. Dann noch abschmecken mit Salz und Pfeffer. Die LorbeerblÃ¤tter fische ich nach MÃ¶glichkeit vor dem Servieren raus.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(27)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dies ist ein Grundrezept fÃ¼r Gulasch, man kann es wunderbar abwandeln, indem man z. B. eine halbe Stunde vor Ende der Garzeit noch Sahne, Kartoffeln und/oder Paprikaschoten zugibt. Ich gebe auch immer noch Knoblauch dazu, den mochte aber meine Oma nicht.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(27)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu schmecken KnÃ¶del jeglicher Art, Kartoffeln oder Nudeln.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(27)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Hackfleisch mit Salz und Pfeffer wÃ¼rzen. Evtl. noch KrÃ¤uter wie Oregano, Thymian und/oder Basilikum und nach Geschmack Knoblauch dazugeben. Ca. 12 - 15 kleine BÃ¤llchen aus der Masse formen und in eine Auflaufform legen.")
+handob = handlungsschritt(text="Das Hackfleisch mit Salz und Pfeffer würzen. Evtl. noch Kräuter wie Oregano, Thymian und/oder Basilikum und nach Geschmack Knoblauch dazugeben. Ca. 12 - 15 kleine Bällchen aus der Masse formen und in eine Auflaufform legen.  Für die Tomatensoße die stückigen Tomaten mit der Sahne, der Kräutermischung, Tomatenmark und Zucker verrühren, dann mit Salz und Pfeffer abschmecken. Alles über die Hackbällchen geben. Den Mozzarella in Scheiben schneiden und darüber verteilen.  Im heißen Backofen bei 175 °C Umluft ca. 30 - 40 min. garen. Aufpassen, dass der Käse nicht zu dunkel wird.  Dazu passt Reis.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(28)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r die TomatensoÃŸe die stÃ¼ckigen Tomaten mit der Sahne, der KrÃ¤utermischung, Tomatenmark und Zucker verrÃ¼hren, dann mit Salz und Pfeffer abschmecken. Alles Ã¼ber die HackbÃ¤llchen geben. Den Mozzarella in Scheiben schneiden und darÃ¼ber verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(28)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im heiÃŸen Backofen bei 175 Â°C Umluft ca. 30 - 40 min. garen. Aufpassen, dass der KÃ¤se nicht zu dunkel wird.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(28)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt Reis.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(28)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Backofen auf 180Â°C vorheizen.")
+handob = handlungsschritt(text="Backofen auf 180°C vorheizen.  Paprikaschoten halbieren, putzen, waschen und in Stücke schneiden. Zwiebeln abziehen und in feine Ringe schneiden. Sauerkraut abtropfen lassen und gut ausdrücken.  Hackfleisch in erhitztem Öl von allen Seiten anbraten. Paprika, Zwiebeln und Kartoffelnudeln hinzugeben, andünsten und mit Sauerkraut in eine Auflaufform geben. Schmand mit Milch verrühren, mit Salz und Pfeffer abschmecken, über die Zutaten gießen, mit Käse bestreuen und im vorgeheizten Backofen ca. 20-30 Min. backen (Gas: Stufe 3, Umluft: 160°C).  Pro Portion:  kj/kcal: 3232/774  EW: 39,3 g  F: 47,0 g  KH: 45,0 g  BE: 3,5")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Paprikaschoten halbieren, putzen, waschen und in StÃ¼cke schneiden. Zwiebeln abziehen und in feine Ringe schneiden. Sauerkraut abtropfen lassen und gut ausdrÃ¼cken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Hackfleisch in erhitztem Ã–l von allen Seiten anbraten. Paprika, Zwiebeln und Kartoffelnudeln hinzugeben, andÃ¼nsten und mit Sauerkraut in eine Auflaufform geben. Schmand mit Milch verrÃ¼hren, mit Salz und Pfeffer abschmecken, Ã¼ber die Zutaten gieÃŸen, mit KÃ¤se bestreuen und im vorgeheizten Backofen ca. 20-30 Min. backen (Gas: Stufe 3, Umluft: 160Â°C).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kj/kcal: 3232/774")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 39,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 45,0 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(29)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Reis nach Packungsanleitung kochen.")
+handob = handlungsschritt(text="Den Reis nach Packungsanleitung kochen.  Das Fleisch häuten, waschen und in spielwürfelgroße Stückchen schneiden. Mit etwas Öl in der Pfanne anbraten. Wenn es leicht Farbe bekommt, den Honig dazu geben. Frühlingszwiebeln und Knoblauch dazu, kurz mit anschwitzen. Die Ananas abtropfen lassen und den Saft auffangen, dann die Ananasstücke mit in die Pfanne geben und auch kurz mit anschwitzen. Den Curry dazu geben und kurz alles durchrösten.  Mit Sahne ablöschen. Den Schmelzkäse in Stückchen dazu geben und schmelzen lassen. Alles aufkochen lassen, mit Salz, Pfeffer, Curry, Instantbrühe, etwas gemahlenem Chili und dem Ananassaft abschmecken und dann auf dem Reis servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(30)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Das Fleisch hÃ¤uten, waschen und in spielwÃ¼rfelgroÃŸe StÃ¼ckchen schneiden. Mit etwas Ã–l in der Pfanne anbraten. Wenn es leicht Farbe bekommt, den Honig dazu geben. FrÃ¼hlingszwiebeln und Knoblauch dazu, kurz mit anschwitzen. Die Ananas abtropfen lassen und den Saft auffangen, dann die AnanasstÃ¼cke mit in die Pfanne geben und auch kurz mit anschwitzen. Den Curry dazu geben und kurz alles durchrÃ¶sten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(30)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mit Sahne ablÃ¶schen. Den SchmelzkÃ¤se in StÃ¼ckchen dazu geben und schmelzen lassen. Alles aufkochen lassen, mit Salz, Pfeffer, Curry, InstantbrÃ¼he, etwas gemahlenem Chili und dem Ananassaft abschmecken und dann auf dem Reis servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(30)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die HÃ¤hnchenbrust in StÃ¼cke schneiden. Aus 1 TL Paprikapulver, 1 EL Limonen- bzw. Zitronensaft, 1 TL Salz, 1 Becher Joghurt, 1 TL Cayennepfeffer, 1 EL Garam Masala Pulver, 1 StÃ¼ck Ingwer und 1 Knoblauchzehe eine Marinade herstellen. Das Fleisch mit der Marinade mischen.")
+handob = handlungsschritt(text="Die Hähnchenbrust in Stücke schneiden. Aus 1 TL Paprikapulver, 1 EL Limonen- bzw. Zitronensaft, 1 TL Salz, 1 Becher Joghurt, 1 TL Cayennepfeffer, 1 EL Garam Masala Pulver, 1 Stück Ingwer und 1 Knoblauchzehe eine Marinade herstellen. Das Fleisch mit der Marinade mischen.  Mindestens eine Stunde einziehen lassen. Besser ist es, das Fleisch bereits am Vortag zu marinieren und über Nacht in den Kühlschrank zu stellen.  Den Ofen auf 200 °C Ober-/Unterhitze vorheizen dann das Fleisch in einer Auflaufform für 25 Minuten garen.  Die Zwiebel klein hacken und in 2 EL Butter glasig anschwitzen. Die passierten Tomaten, den Zimt, 1 TL Salz, 2 TL Cayennepfeffer, 1 Stück Ingwer und 1 Knoblauchzehe hinzugeben. Alles 20 Minuten mit Deckel und bei niedriger Temperatur köcheln lassen. Gelegentlich umrühren. Nun die restlichen 2 EL Butter, den Honig und die Sahne hinzufügen, weitere 3 Minuten köcheln. Das Fleisch aus der Marinade nehmen, in die Soße geben, kurz umrühren und 2 Minuten mitköcheln lassen.  Dazu passt Reis oder Naan.  Wer gerne Koriandergrün mag, der kann ganz am Ende noch ein paar frisch gehackte Blätter hinzufügen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Mindestens eine Stunde einziehen lassen. Besser ist es, das Fleisch bereits am Vortag zu marinieren und Ã¼ber Nacht in den KÃ¼hlschrank zu stellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Ofen auf 200 Â°C Ober-/Unterhitze vorheizen dann das Fleisch in einer Auflaufform fÃ¼r 25 Minuten garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebel klein hacken und in 2 EL Butter glasig anschwitzen. Die passierten Tomaten, den Zimt, 1 TL Salz, 2 TL Cayennepfeffer, 1 StÃ¼ck Ingwer und 1 Knoblauchzehe hinzugeben. Alles 20 Minuten mit Deckel und bei niedriger Temperatur kÃ¶cheln lassen. Gelegentlich umrÃ¼hren. Nun die restlichen 2 EL Butter, den Honig und die Sahne hinzufÃ¼gen, weitere 3 Minuten kÃ¶cheln. Das Fleisch aus der Marinade nehmen, in die SoÃŸe geben, kurz umrÃ¼hren und 2 Minuten mitkÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt Reis oder Naan.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wer gerne KoriandergrÃ¼n mag, der kann ganz am Ende noch ein paar frisch gehackte BlÃ¤tter hinzufÃ¼gen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(31)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das HÃ¼hnerfleisch in mundgerechte WÃ¼rfel schneiden, die Zwiebel klein hacken, die Knoblauchzehen fein hacken, die Kardamomkapseln zerdrÃ¼cken und mit den Nelken im MÃ¶rser klein mahlen.")
+handob = handlungsschritt(text="Das Hühnerfleisch in mundgerechte Würfel schneiden, die Zwiebel klein hacken, die Knoblauchzehen fein hacken, die Kardamomkapseln zerdrücken und mit den Nelken im Mörser klein mahlen.  Das Öl in einem mittelgroßen Topf erhitzen, Zwiebeln und das Nelken-Kardamom-Gemisch darin andünsten und glasig werden lassen. Jetzt Hühnerfleisch, Knoblauch und das Ingwerpüree dazugeben und weitere 4 Minuten unter Rühren durchbraten. Die restlichen Gewürze dazugeben, einige Minuten weiterrühren und dabei das Ganze sehr gut durchmischen und durchkochen lassen. Tomatenpüree, Mandelmehl, Brühe und Sahne nacheinander einrühren, aufkochen und bei kleiner Flamme dann 15 - 20 Minuten köcheln lassen, bis eine dick-cremige Konsistenz erreicht ist.  Dazu passen Reis oder Naan-Brot.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(32)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Das Ã–l in einem mittelgroÃŸen Topf erhitzen, Zwiebeln und das Nelken-Kardamom-Gemisch darin andÃ¼nsten und glasig werden lassen. Jetzt HÃ¼hnerfleisch, Knoblauch und das IngwerpÃ¼ree dazugeben und weitere 4 Minuten unter RÃ¼hren durchbraten. Die restlichen GewÃ¼rze dazugeben, einige Minuten weiterrÃ¼hren und dabei das Ganze sehr gut durchmischen und durchkochen lassen. TomatenpÃ¼ree, Mandelmehl, BrÃ¼he und Sahne nacheinander einrÃ¼hren, aufkochen und bei kleiner Flamme dann 15 - 20 Minuten kÃ¶cheln lassen, bis eine dick-cremige Konsistenz erreicht ist.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(32)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passen Reis oder Naan-Brot.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(32)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Nudeln al dente kochen und erkalten lassen. Cocktailtomaten, getrocknete Tomaten und Oliven zerkleinern und mit den gekochten und erkalteten Nudeln mischen.")
+handob = handlungsschritt(text="Die Nudeln al dente kochen und erkalten lassen. Cocktailtomaten, getrocknete Tomaten und Oliven zerkleinern und mit den gekochten und erkalteten Nudeln mischen.  Aus den Soßenzutaten eine Vinaigrette nach eigenem Geschmack herstellen und mit dem Salat vermengen. Dabei auf die Intensität des Öls aus dem Glas getrocknete Tomaten achten. Den Parmesan (am besten vom Stück grob gehobelt) ebenfalls unter den Salat mengen.  Am besten 2 - 3 Stunden im Kühlschrank ziehen lassen. Nun evtl. nochmals nachwürzen und wenn nötig, das Verhältnis aus Öl und Balsamico weiter verfeinern.  Den Rucola waschen, grob zerkleinern und erst vor dem Servieren mit dem Salat mischen. Zuletzt die Pinienkerne in der Pfanne kurz anrösten und auf den bereits auf Tellern angerichteten Salat geben. Am besten mit frischem Ciabatta und einem leckeren Rotwein servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(33)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Aus den SoÃŸenzutaten eine Vinaigrette nach eigenem Geschmack herstellen und mit dem Salat vermengen. Dabei auf die IntensitÃ¤t des Ã–ls aus dem Glas getrocknete Tomaten achten. Den Parmesan (am besten vom StÃ¼ck grob gehobelt) ebenfalls unter den Salat mengen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(33)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Am besten 2 - 3 Stunden im KÃ¼hlschrank ziehen lassen. Nun evtl. nochmals nachwÃ¼rzen und wenn nÃ¶tig, das VerhÃ¤ltnis aus Ã–l und Balsamico weiter verfeinern.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(33)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Rucola waschen, grob zerkleinern und erst vor dem Servieren mit dem Salat mischen. Zuletzt die Pinienkerne in der Pfanne kurz anrÃ¶sten und auf den bereits auf Tellern angerichteten Salat geben. Am besten mit frischem Ciabatta und einem leckeren Rotwein servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(33)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im lauwarmen Wasser und dem OlivenÃ¶l die Hefe mit dem Salz und Zucker auflÃ¶sen. Dann das Mehl hinzufÃ¼gen und einen glatten Teig kneten. Eine halbe Stunde an einem warmen Ort gehen lassen, zusammenkneten und abgedeckt im KÃ¼hlschrank 2 Tage ruhen lassen.")
+handob = handlungsschritt(text="Im lauwarmen Wasser und dem Olivenöl die Hefe mit dem Salz und Zucker auflösen. Dann das Mehl hinzufügen und einen glatten Teig kneten. Eine halbe Stunde an einem warmen Ort gehen lassen, zusammenkneten und abgedeckt im Kühlschrank 2 Tage ruhen lassen.  Nun kann man vom Teig eine herrlich frische Pizza herstellen.  Der Teig reicht für 6 runde Pizzen.  Anmerkungen: Belegen kann man diese nach Belieben, natürlich sollten die Tomatensoße und der Käse nicht fehlen. Ich habe sie schon auf einem Blech sowie auf verschiedenen runden Pizzaformen gebacken. Sie wird immer supertoll und schmeckt original wie von meinem Lieblingsitaliener. Wenn man die Menge entsprechend reduzieren möchte, ist das auch kein Problem. Die Menge der Hefe habe ich jedoch immer bei 40 g gelassen.  Am besten gelingt die Pizza, wenn man den Ofen sehr gut auf der höchstmöglichen Temperatur vorheizt!")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(34)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Nun kann man vom Teig eine herrlich frische Pizza herstellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(34)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Der Teig reicht fÃ¼r 6 runde Pizzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(34)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Anmerkungen: Belegen kann man diese nach Belieben, natÃ¼rlich sollten die TomatensoÃŸe und der KÃ¤se nicht fehlen. Ich habe sie schon auf einem Blech sowie auf verschiedenen runden Pizzaformen gebacken. Sie wird immer supertoll und schmeckt original wie von meinem Lieblingsitaliener. Wenn man die Menge entsprechend reduzieren mÃ¶chte, ist das auch kein Problem. Die Menge der Hefe habe ich jedoch immer bei 40 g gelassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(34)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Am besten gelingt die Pizza, wenn man den Ofen sehr gut auf der hÃ¶chstmÃ¶glichen Temperatur vorheizt!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(34)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eier, Zucker, Ã–l und Zimt mit dem Mixer verrÃ¼hren. Die Karotten und Mandeln hinzugeben. Mehl und Backpulver mischen, ebenfalls unterrÃ¼hren. Den Teig in eine gefettete 26er Springform fÃ¼llen, bei 180 Â°C Ober-/Unterhitze 40 - 50 Minuten backen. Man sollte eine StÃ¤bchenprobe machen und die Erfahrungswerte mit dem eigenen Backofen berÃ¼cksichtigen.")
+handob = handlungsschritt(text="Eier, Zucker, Öl und Zimt mit dem Mixer verrühren. Die Karotten und Mandeln hinzugeben. Mehl und Backpulver mischen, ebenfalls unterrühren. Den Teig in eine gefettete 26er Springform füllen, bei 180 °C Ober-/Unterhitze 40 - 50 Minuten backen. Man sollte eine Stäbchenprobe machen und die Erfahrungswerte mit dem eigenen Backofen berücksichtigen.  Für das Frosting Frischkäse und Zitronensaft mit dem Mixer auf niedriger Stufe glatt rühren. Puderzucker und Vanillezucker einrieseln lassen.  Nach dem Backen den Kuchen abkühlen lassen. Das Frosting mit der Streichpalette rundherum auftragen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(35)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r das Frosting FrischkÃ¤se und Zitronensaft mit dem Mixer auf niedriger Stufe glatt rÃ¼hren. Puderzucker und Vanillezucker einrieseln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(35)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach dem Backen den Kuchen abkÃ¼hlen lassen. Das Frosting mit der Streichpalette rundherum auftragen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(35)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln ungepellt und gewaschen ca. 15 min kochen. Sie sollen gar werden, aber nicht zu weich.")
+handob = handlungsschritt(text="Die Kartoffeln ungepellt und gewaschen ca. 15 min kochen. Sie sollen gar werden, aber nicht zu weich.  In der Zwischenzeit die Frühlingszwiebeln und den Schnittlauch waschen und in kleine Stücke schneiden. Die Frühlingszwiebeln zusammen mit dem Speck im Sonnenblumenöl ca. 5 min braten und mit Pfeffer würzen.  Den Backofen auf ca. 200 °C Ober/Unterhitze vorheizen. Das Speck-Frühlingszwiebel-Gemisch in einen tiefen Teller geben und die Crème fraîche und die Hälfte des Goudas hinzugeben. Mit etwas Salz und den Kräutern der Provence würzen und gut mischen.  Die fertigen Kartoffeln abgießen, in der Mitte längs teilen und etwas abkühlen lassen. Mit einem Teelöffel mittelgroße Mulden aushöhlen und die Füllung auf die Hälften verteilen. (Die Füllung darf gerne über die Mulden drüber gehen.)  Die Kartoffelhälften auf ein Backblech auf Backfolie legen, sodass sie nicht umfallen. Den restlichen Gouda darauf verteilen. Auf der mittleren Schiene in 10 bis 15 min goldbraun überbacken.  Die Kartoffeln aus dem Ofen nehmen und mit Schnittlauch bestreut servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In der Zwischenzeit die FrÃ¼hlingszwiebeln und den Schnittlauch waschen und in kleine StÃ¼cke schneiden. Die FrÃ¼hlingszwiebeln zusammen mit dem Speck im SonnenblumenÃ¶l ca. 5 min braten und mit Pfeffer wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf ca. 200 Â°C Ober/Unterhitze vorheizen. Das Speck-FrÃ¼hlingszwiebel-Gemisch in einen tiefen Teller geben und die CrÃ¨me fraÃ®che und die HÃ¤lfte des Goudas hinzugeben. Mit etwas Salz und den KrÃ¤utern der Provence wÃ¼rzen und gut mischen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die fertigen Kartoffeln abgieÃŸen, in der Mitte lÃ¤ngs teilen und etwas abkÃ¼hlen lassen. Mit einem TeelÃ¶ffel mittelgroÃŸe Mulden aushÃ¶hlen und die FÃ¼llung auf die HÃ¤lften verteilen. (Die FÃ¼llung darf gerne Ã¼ber die Mulden drÃ¼ber gehen.)")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die KartoffelhÃ¤lften auf ein Backblech auf Backfolie legen, sodass sie nicht umfallen. Den restlichen Gouda darauf verteilen. Auf der mittleren Schiene in 10 bis 15 min goldbraun Ã¼berbacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln aus dem Ofen nehmen und mit Schnittlauch bestreut servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(36)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Hackfleisch mit Salz, Pfeffer, Tomatenmark, Ketchup, Oregano und einer halben klein gehackten Zwiebel vermengen. Die Hackfleischmasse dann in einer groÃŸen Pfanne mit etwas OlivenÃ¶l krÃ¼melig braten und abkÃ¼hlen lassen.")
+handob = handlungsschritt(text="Das Hackfleisch mit Salz, Pfeffer, Tomatenmark, Ketchup, Oregano und einer halben klein gehackten Zwiebel vermengen. Die Hackfleischmasse dann in einer großen Pfanne mit etwas Olivenöl krümelig braten und abkühlen lassen.  Die Kritharaki (gibt es in jedem gut sortierten Supermarkt dort, wo auch Couscous und Bulgur zu finden sind) in Salzwasser ca. 14 Minuten garen und abgießen.  Die Paprikaschoten sehr klein würfeln (Reiskorngröße), die restliche halbe Zwiebel ebenfalls und in drei Beuteln Salatfix Gartenkräuter mit etwas Öl ziehen lassen.  Es müssen keine Fertigprodukte sein. Ein selbst gemachtes Kräuterdressing auf Essigbasis tut es auch.  Die abgegossenen Nudeln mit den Hackfleischbröseln vermengen. Dann die marinierten Paprikawürfel dazugeben. Alles vermengen und gut durchziehen lassen.  Der Salat schmeckt superlecker, frisch und ist schnell zuzubereiten. Auch rein optisch ein Hingucker, aufgrund der Reisnudeln. Wir essen den Salat - trotz des Fleischanteils - auch gern als Beilage zum Grillen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Kritharaki (gibt es in jedem gut sortierten Supermarkt dort, wo auch Couscous und Bulgur zu finden sind) in Salzwasser ca. 14 Minuten garen und abgieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Paprikaschoten sehr klein wÃ¼rfeln (ReiskorngrÃ¶ÃŸe), die restliche halbe Zwiebel ebenfalls und in drei Beuteln Salatfix GartenkrÃ¤uter mit etwas Ã–l ziehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Es mÃ¼ssen keine Fertigprodukte sein. Ein selbst gemachtes KrÃ¤uterdressing auf Essigbasis tut es auch.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die abgegossenen Nudeln mit den HackfleischbrÃ¶seln vermengen. Dann die marinierten PaprikawÃ¼rfel dazugeben. Alles vermengen und gut durchziehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Der Salat schmeckt superlecker, frisch und ist schnell zuzubereiten. Auch rein optisch ein Hingucker, aufgrund der Reisnudeln. Wir essen den Salat - trotz des Fleischanteils - auch gern als Beilage zum Grillen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(37)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Ofen auf 175 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Ofen auf 175 °C Ober-/Unterhitze vorheizen.  Die Baguettes in den vorgeheizten Ofen legen und ca. 10 Minuten backen.  Derweil Öl in einen großen Topf geben. Das Hackfleisch darin von allen Seiten gut anbraten und mit Salz und Pfeffer würzen. Den Lauch putzen, in kleine Ringe schneiden und zum Hackfleisch geben. Ca. 5 Minuten mit anbraten. Das Wasser zugießen, Brühwürfel hineingeben und alles ca. 10 Minuten auf kleiner Flamme köcheln lassen. Den Schmelzkäse einrühren und schmelzen lassen. Crème fraîche untermengen und noch einmal kurz aufkochen lassen. Die Suppe mit Salz, Pfeffer, Muskat, Knoblauch- und Zwiebelpulver kräftig abschmecken.  Die Baguettes in Scheiben schneiden und zu der Suppe reichen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(38)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Baguettes in den vorgeheizten Ofen legen und ca. 10 Minuten backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(38)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Derweil Ã–l in einen groÃŸen Topf geben. Das Hackfleisch darin von allen Seiten gut anbraten und mit Salz und Pfeffer wÃ¼rzen. Den Lauch putzen, in kleine Ringe schneiden und zum Hackfleisch geben. Ca. 5 Minuten mit anbraten. Das Wasser zugieÃŸen, BrÃ¼hwÃ¼rfel hineingeben und alles ca. 10 Minuten auf kleiner Flamme kÃ¶cheln lassen. Den SchmelzkÃ¤se einrÃ¼hren und schmelzen lassen. CrÃ¨me fraÃ®che untermengen und noch einmal kurz aufkochen lassen. Die Suppe mit Salz, Pfeffer, Muskat, Knoblauch- und Zwiebelpulver krÃ¤ftig abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(38)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Baguettes in Scheiben schneiden und zu der Suppe reichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(38)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KÃ¼rbis, MÃ¶hren, Ingwer und Zwiebel schÃ¤len und wÃ¼rfeln, in der Butter andÃ¼nsten. Mit der BrÃ¼he aufgieÃŸen und in etwa 15 - 20 Minuten weich kochen. Dann sehr fein pÃ¼rieren, eventuell durch ein Sieb streichen. Die Kokosmilch unterrÃ¼hren, mit Salz, Pfeffer, Sojasauce und Zitronensaft abschmecken und noch mal erwÃ¤rmen. Mit KorianderblÃ¤ttchen garniert servieren.")
+handob = handlungsschritt(text="Kürbis, Möhren, Ingwer und Zwiebel schälen und würfeln, in der Butter andünsten. Mit der Brühe aufgießen und in etwa 15 - 20 Minuten weich kochen. Dann sehr fein pürieren, eventuell durch ein Sieb streichen. Die Kokosmilch unterrühren, mit Salz, Pfeffer, Sojasauce und Zitronensaft abschmecken und noch mal erwärmen. Mit Korianderblättchen garniert servieren.  Eine schnelle, leicht exotische Suppe, schön im Menü. Ich benutze für diese Suppe immer einen Hokkaido, den muss man nicht schälen. In Thailand isst man Kürbissuppe mit kleinen Garnelen als Einlage.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(39)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Eine schnelle, leicht exotische Suppe, schÃ¶n im MenÃ¼. Ich benutze fÃ¼r diese Suppe immer einen Hokkaido, den muss man nicht schÃ¤len. In Thailand isst man KÃ¼rbissuppe mit kleinen Garnelen als Einlage.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(39)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="RagÃº Bolognese:")
+handob = handlungsschritt(text="Ragú Bolognese:  In einem Topf das Olivenöl erhitzen, das Hackfleisch darin rundherum anbraten und die gehackten Zwiebeln und die gehackte Petersilie dazugeben. Knoblauch in feinen Scheiben und Tomatenmark dazu rühren und mitbraten. Mit den Dosentomaten aufgießen, salzen und pfeffern. Rotwein nach Belieben beifügen. Das Ragú mindestens eine halbe Stunde lang bei geöffnetem Topf einkochen lassen.  Béchamelsauce:  Butter in einem kleinen Topf schmelzen und das Mehl mit dem Schneebesen unterrühren und hellgelb anschwitzen. Die Milch dazugießen und die Sauce glatt rühren. Wer zu langsam gerührt hat und Klümpchen in der Sauce findet, kann die Sauce durch ein feines Haarsieb passieren und dann weiterkochen lassen. Die Sauce sollte fast eine halbe Stunde lang auf kleiner Flamme köcheln, damit sie den Mehlgeschmack verliert. Mit Salz, Pfeffer und Zitronensaft sowie etwas Muskatnuss abschmecken.  Zubereitung der Lasagne:  In einer gebutterten, feuerfesten Form etwas Ragú Bolognese verteilen, eine Schicht Lasagneplatten darauf legen, die Nudelschicht wieder mit Ragú und dann mit einer Schicht Béchamel bedecken.  Anschließend wieder eine Schicht Nudeln, Ragú und Béchamel. So Schicht für Schicht die Form füllen.  Die letzte Schicht sollte die Béchamelsauce bilden. Dick mit geriebenem Käse bestreuen und Butterflöckchen darauf setzen.  Die Lasagne im heißen Backofen bei 180 °C Umluft ca. 30 - 40 Minuten backen, bis die Kruste goldbraun ist.  Tipp:  Die Lasagne kann man auch gut einen Tag vorher vorbereiten und im Kühlschrank ziehen lassen.  Als Vorspeise empfehle ich Honigmelone mit Parmaschinken und als Nachspeise einen Beerenmix an Quark-Joghurt-Sahne-Creme mit brauner Zuckerkruste.  Pro Portion 1122 Kcal")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In einem Topf das OlivenÃ¶l erhitzen, das Hackfleisch darin rundherum anbraten und die gehackten Zwiebeln und die gehackte Petersilie dazugeben. Knoblauch in feinen Scheiben und Tomatenmark dazu rÃ¼hren und mitbraten. Mit den Dosentomaten aufgieÃŸen, salzen und pfeffern. Rotwein nach Belieben beifÃ¼gen. Das RagÃº mindestens eine halbe Stunde lang bei geÃ¶ffnetem Topf einkochen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="BÃ©chamelsauce:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Butter in einem kleinen Topf schmelzen und das Mehl mit dem Schneebesen unterrÃ¼hren und hellgelb anschwitzen. Die Milch dazugieÃŸen und die Sauce glatt rÃ¼hren. Wer zu langsam gerÃ¼hrt hat und KlÃ¼mpchen in der Sauce findet, kann die Sauce durch ein feines Haarsieb passieren und dann weiterkochen lassen. Die Sauce sollte fast eine halbe Stunde lang auf kleiner Flamme kÃ¶cheln, damit sie den Mehlgeschmack verliert. Mit Salz, Pfeffer und Zitronensaft sowie etwas Muskatnuss abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zubereitung der Lasagne:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einer gebutterten, feuerfesten Form etwas RagÃº Bolognese verteilen, eine Schicht Lasagneplatten darauf legen, die Nudelschicht wieder mit RagÃº und dann mit einer Schicht BÃ©chamel bedecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AnschlieÃŸend wieder eine Schicht Nudeln, RagÃº und BÃ©chamel. So Schicht fÃ¼r Schicht die Form fÃ¼llen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die letzte Schicht sollte die BÃ©chamelsauce bilden. Dick mit geriebenem KÃ¤se bestreuen und ButterflÃ¶ckchen darauf setzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Lasagne im heiÃŸen Backofen bei 180 Â°C Umluft ca. 30 - 40 Minuten backen, bis die Kruste goldbraun ist.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Lasagne kann man auch gut einen Tag vorher vorbereiten und im KÃ¼hlschrank ziehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Als Vorspeise empfehle ich Honigmelone mit Parmaschinken und als Nachspeise einen Beerenmix an Quark-Joghurt-Sahne-Creme mit brauner Zuckerkruste.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="11")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion 1122 Kcal")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(40)
-assoc = AssociationRHhat(position="12")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Hackfleisch in einem groÃŸen Topf anbraten. Zwiebel und Knoblauch klein hacken und dazugeben. Karotten schÃ¤len, in kleine Scheiben schneiden und zum Hackfleisch geben. Alles 5 Minuten unter gelegentlichem RÃ¼hren weiter braten. Tomatenmark hinzugeben und gut vermischen. Dann mit der BrÃ¼he ablÃ¶schen, aufkochen und bei geringer Hitze 40 Minuten zugedeckt kÃ¶cheln lassen.")
+handob = handlungsschritt(text="Hackfleisch in einem großen Topf anbraten. Zwiebel und Knoblauch klein hacken und dazugeben. Karotten schälen, in kleine Scheiben schneiden und zum Hackfleisch geben. Alles 5 Minuten unter gelegentlichem Rühren weiter braten. Tomatenmark hinzugeben und gut vermischen. Dann mit der Brühe ablöschen, aufkochen und bei geringer Hitze 40 Minuten zugedeckt köcheln lassen.  Die Paprika in kleine Sticks schneiden und ca. 10 Minuten vor Ende der Kochzeit hinzufügen. Zum Schluss noch mit Salz und Pfeffer abschmecken.  Anrichten und auf jeden Teller einen Klecks Crème fraîche geben.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(41)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Paprika in kleine Sticks schneiden und ca. 10 Minuten vor Ende der Kochzeit hinzufÃ¼gen. Zum Schluss noch mit Salz und Pfeffer abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(41)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Anrichten und auf jeden Teller einen Klecks CrÃ¨me fraÃ®che geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(41)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="GeflÃ¼gelfleisch, Champignons und Tomaten klein schneiden.")
+handob = handlungsschritt(text="Geflügelfleisch, Champignons und Tomaten klein schneiden.  Das Fleisch in etwas Öl anbraten und mit ein wenig Chiliflocken sowie Salz und Pfeffer würzen. Danach die Zwiebeln und Champignons dazugeben und 3 - 4 Minuten braten. Zum Schluss die restlichen Zutaten zugeben und umrühren. Weitere 5 Minuten leicht köcheln lassen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(42)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Das Fleisch in etwas Ã–l anbraten und mit ein wenig Chiliflocken sowie Salz und Pfeffer wÃ¼rzen. Danach die Zwiebeln und Champignons dazugeben und 3 - 4 Minuten braten. Zum Schluss die restlichen Zutaten zugeben und umrÃ¼hren. Weitere 5 Minuten leicht kÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(42)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 170 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Backofen auf 170 °C Ober-/Unterhitze vorheizen.  Für den Boden Quark, Eier und 120 g Käse in einer Schüssel miteinander verrühren und würzen. Die Masse auf das mit Backpapier ausgelegte Backblech kippen und glatt streichen. 15 Minuten im heißen Ofen backen.  Das Backblech herausnehmen und den Boden beliebig belegen mit z. B. Tomatensauce, Salami, Schinken, Zucchini, Champignons oder Mais. Mit 60 g Käse bestreuen und erneut in den Ofen schieben, bis der Käse eine schöne Farbe hat.  Abkühlen lassen, mit Rucola bestreuen und vorsichtig einrollen.  Eingerollt in Alufolie mehrere Tage im Kühlschrank haltbar.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(43)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r den Boden Quark, Eier und 120 g KÃ¤se in einer SchÃ¼ssel miteinander verrÃ¼hren und wÃ¼rzen. Die Masse auf das mit Backpapier ausgelegte Backblech kippen und glatt streichen. 15 Minuten im heiÃŸen Ofen backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(43)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Backblech herausnehmen und den Boden beliebig belegen mit z. B. Tomatensauce, Salami, Schinken, Zucchini, Champignons oder Mais. Mit 60 g KÃ¤se bestreuen und erneut in den Ofen schieben, bis der KÃ¤se eine schÃ¶ne Farbe hat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(43)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AbkÃ¼hlen lassen, mit Rucola bestreuen und vorsichtig einrollen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(43)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eingerollt in Alufolie mehrere Tage im KÃ¼hlschrank haltbar.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(43)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 170 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Backofen auf 170 °C Ober-/Unterhitze vorheizen.  Für den Boden Quark, Eier und 80 g vom Käse in einer Schüssel miteinander verrühren. Die Masse auf das mit Backpapier ausgelegte Backblech kippen und glatt streichen. 15 Minuten im Ofen backen.  Das Backblech herausnehmen, den Kuchenboden mit Crème fraîche bestreichen und mit Speckwürfeln, Lauchzwiebeln und dem restlichen Käse bestreuen. Weitere 15 - 20 Minuten backen, bis der Käse eine schöne Farbe hat.  Kann als Flammkuchen oder als Rolle gegessen werden.  Der Flammkuchen hat ca. 6 g Kohlenhydrate.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(44)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r den Boden Quark, Eier und 80 g vom KÃ¤se in einer SchÃ¼ssel miteinander verrÃ¼hren. Die Masse auf das mit Backpapier ausgelegte Backblech kippen und glatt streichen. 15 Minuten im Ofen backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(44)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Backblech herausnehmen, den Kuchenboden mit CrÃ¨me fraÃ®che bestreichen und mit SpeckwÃ¼rfeln, Lauchzwiebeln und dem restlichen KÃ¤se bestreuen. Weitere 15 - 20 Minuten backen, bis der KÃ¤se eine schÃ¶ne Farbe hat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(44)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kann als Flammkuchen oder als Rolle gegessen werden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(44)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Der Flammkuchen hat ca. 6 g Kohlenhydrate.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(44)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Magerquark, ReibekÃ¤se und Eier zu einer dickflÃ¼ssigen Masse verrÃ¼hren und auf einem mit Backpapier ausgelegten Backblech verteilen. Bei 180 Â°C Ober-/Unterhitze im heiÃŸen Backofen ca. 20 Minuten backen. Den Teig auskÃ¼hlen lassen.")
+handob = handlungsschritt(text="Magerquark, Reibekäse und Eier zu einer dickflüssigen Masse verrühren und auf einem mit Backpapier ausgelegten Backblech verteilen. Bei 180 °C Ober-/Unterhitze im heißen Backofen ca. 20 Minuten backen. Den Teig auskühlen lassen.  Die Zutaten für die Sauce verrühren.  Das Hackfleisch in einer Pfanne mit Salz und Pfeffer krümelig anbraten. Die Gurken in Scheiben schneiden und zum Hackfleisch geben. 2/3 der Sauce auf dem gebackenen Teig verteilen. Das noch warme Hackfleisch darüber verteilen und den Toastkäse über dem Hackfleisch schmelzen lassen.  Anschließend Salat und evtl. Tomaten darauf legen und die restliche Sauce darauf verteilen. Den Teig mithilfe des Backpapiers einrollen, so dass die Big Mac Rolle aussieht wie eine Biskuitrolle.  Wichtig ist, nicht zu viel auf dem Teig zu verteilen, da die Rolle sonst zu dick wird und die Füllung an beiden Enden hervorquillt.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(45)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Zutaten fÃ¼r die Sauce verrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(45)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Hackfleisch in einer Pfanne mit Salz und Pfeffer krÃ¼melig anbraten. Die Gurken in Scheiben schneiden und zum Hackfleisch geben. 2/3 der Sauce auf dem gebackenen Teig verteilen. Das noch warme Hackfleisch darÃ¼ber verteilen und den ToastkÃ¤se Ã¼ber dem Hackfleisch schmelzen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(45)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AnschlieÃŸend Salat und evtl. Tomaten darauf legen und die restliche Sauce darauf verteilen. Den Teig mithilfe des Backpapiers einrollen, so dass die Big Mac Rolle aussieht wie eine Biskuitrolle.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(45)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wichtig ist, nicht zu viel auf dem Teig zu verteilen, da die Rolle sonst zu dick wird und die FÃ¼llung an beiden Enden hervorquillt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(45)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Lachsfilet, falls TK, etwas antauen lassen. Waschen und trocken tupfen. Mit Salz und Pfeffer, nach Wunsch auch mit KrÃ¤utern, wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="SchafskÃ¤se in WÃ¼rfel schneiden. Die Zucchini und Pilze in dÃ¼nne Scheiben, die Paprika in Streifen schneiden. Tomaten halbieren oder vierteln. Knoblauch fein hacken. Das GemÃ¼se mit Knoblauch, Salz und Pfeffer sowie ein paar Spritzern ChiliÃ¶l in einer SchÃ¼ssel vermengen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Auf einem Backblech aus Alufolie* eine SchÃ¼ssel formen, d.h. die RÃ¤nder an 4 Seiten hochschlagen. Ich empfehle 2 Schichten Alufolie zu nehmen, dann kann nichts auslaufen. AnschlieÃŸend das GemÃ¼se darauf verteilen. Dann den Lachs darauf legen, mit ein bisschen Chili-Ã–l betrÃ¤ufeln und den SchafskÃ¤se groÃŸzÃ¼gig darÃ¼ber krÃ¼meln.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Bei 180 Â°C Ober-/Unterhitze ca. 30 - 35 Minuten im heiÃŸen Ofen garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="*Anmerkung der Chefkoch.de Rezeptbearbeitung:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wie auf vielen Bildern zu sehen ist, kann man auch eine Auflaufform verwenden. Das Gericht gelingt darin genau so gut.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(47)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="HÃ¤hnchenbrust sÃ¤ubern und in mundgerechte StÃ¼cke schneiden. In einer Pfanne mit etwas Pflanzenfett anbraten, bis das Fleisch schÃ¶n knusprig ist. Mit etwas Salz, Pfeffer und Curry wÃ¼rzen.")
+handob = handlungsschritt(text="Hähnchenbrust säubern und in mundgerechte Stücke schneiden. In einer Pfanne mit etwas Pflanzenfett anbraten, bis das Fleisch schön knusprig ist. Mit etwas Salz, Pfeffer und Curry würzen.  In der Zwischenzeit Zucchini, Gurke und Tomaten klein schneiden. Hähnchen beiseitelegen und warm halten.  In der gleichen Pfanne Zwiebeln und Knoblauch anbraten. Zucchini dazugeben und dünsten, bis diese weich aber noch bissfest sind. Gurke und Tomaten dazugeben und ca. 4 Minuten dünsten. Evtl. einen Schuss Wasser dazugeben.  Frischkäse und Milch einrühren. Hähnchenfleisch in die Pfanne geben und mit geschlossenem Deckel bei schwacher Hitze ca. 5 - 10 Minuten köcheln lassen, bis die Sauce cremig wird. Mit Paprika abschmecken.  Tipp: Man kann auch eine rote Paprikaschote zusammen mit der Zucchini dazugeben.  Dazu passt sehr gut mein Erdbeer-Avocado-Salat: http://www.chefkoch.de/rezepte/2762181428080627/Erdbeer-Avocado-Salat.html")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In der Zwischenzeit Zucchini, Gurke und Tomaten klein schneiden. HÃ¤hnchen beiseitelegen und warm halten.")
+handob = handlungsschritt(text="Das Lachsfilet, falls TK, etwas antauen lassen. Waschen und trocken tupfen. Mit Salz und Pfeffer, nach Wunsch auch mit Kräutern, würzen.  Schafskäse in Würfel schneiden. Die Zucchini und Pilze in dünne Scheiben, die Paprika in Streifen schneiden. Tomaten halbieren oder vierteln. Knoblauch fein hacken. Das Gemüse mit Knoblauch, Salz und Pfeffer sowie ein paar Spritzern Chiliöl in einer Schüssel vermengen.  Auf einem Backblech aus Alufolie* eine Schüssel formen, d.h. die Ränder an 4 Seiten hochschlagen. Ich empfehle 2 Schichten Alufolie zu nehmen, dann kann nichts auslaufen. Anschließend das Gemüse darauf verteilen. Dann den Lachs darauf legen, mit ein bisschen Chili-Öl beträufeln und den Schafskäse großzügig darüber krümeln.  Bei 180 °C Ober-/Unterhitze ca. 30 - 35 Minuten im heißen Ofen garen.  *Anmerkung der Chefkoch.de Rezeptbearbeitung:  Wie auf vielen Bildern zu sehen ist, kann man auch eine Auflaufform verwenden. Das Gericht gelingt darin genau so gut.")
 db.session.add(handob)
 db.session.commit()
-rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="2")
+rezaus = rezept.query.get(47)
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In der gleichen Pfanne Zwiebeln und Knoblauch anbraten. Zucchini dazugeben und dÃ¼nsten, bis diese weich aber noch bissfest sind. Gurke und Tomaten dazugeben und ca. 4 Minuten dÃ¼nsten. Evtl. einen Schuss Wasser dazugeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FrischkÃ¤se und Milch einrÃ¼hren. HÃ¤hnchenfleisch in die Pfanne geben und mit geschlossenem Deckel bei schwacher Hitze ca. 5 - 10 Minuten kÃ¶cheln lassen, bis die Sauce cremig wird. Mit Paprika abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Man kann auch eine rote Paprikaschote zusammen mit der Zucchini dazugeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt sehr gut mein Erdbeer-Avocado-Salat: http://www.chefkoch.de/rezepte/2762181428080627/Erdbeer-Avocado-Salat.html")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(46)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Cashewkerne mit dem Currypulver in einer Pfanne bei schwacher Hitze 3 Minuten trocken rÃ¶sten. Den Ingwer schÃ¤len und reiben, den Knoblauch in kleine StÃ¼cke schneiden.")
+handob = handlungsschritt(text="Die Cashewkerne mit dem Currypulver in einer Pfanne bei schwacher Hitze 3 Minuten trocken rösten. Den Ingwer schälen und reiben, den Knoblauch in kleine Stücke schneiden.  Die Cashewkerne zusammen mit Ingwer, Knoblauch, Essig, Tomatenmark und Joghurt in einer Küchenmaschine oder im Mixer pürieren. Die so entstandene Paste mit dem Fleisch in einer Schüssel vermischen und alles 24 Stunden im Kühlschrank durchziehen lassen.  In einer großen Pfanne oder einem großen Topf die Butter zerlassen. Zwiebel, Zimt, Salz und Kardamom bei mittlerer Hitze ca. 5 Minuten andünsten, bis die Zwiebel weich ist. Das Fleisch mit der Marinade dazugeben und 10 Minuten kochen lassen. Die Chiliflocken, gehackte Tomaten aus der Dose und die Gemüsebrühe dazugeben und aufkochen lassen. Die Hitze reduzieren und ohne Deckel 40 - 45 Minuten köcheln lassen. Kurz vor dem Servieren die Sahne unterrühren und das Gericht mit dem gehackten Koriander bestreuen.  Dazu passt wunderbar Basmatireis oder Naanbrot.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(48)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Cashewkerne zusammen mit Ingwer, Knoblauch, Essig, Tomatenmark und Joghurt in einer KÃ¼chenmaschine oder im Mixer pÃ¼rieren. Die so entstandene Paste mit dem Fleisch in einer SchÃ¼ssel vermischen und alles 24 Stunden im KÃ¼hlschrank durchziehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(48)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einer groÃŸen Pfanne oder einem groÃŸen Topf die Butter zerlassen. Zwiebel, Zimt, Salz und Kardamom bei mittlerer Hitze ca. 5 Minuten andÃ¼nsten, bis die Zwiebel weich ist. Das Fleisch mit der Marinade dazugeben und 10 Minuten kochen lassen. Die Chiliflocken, gehackte Tomaten aus der Dose und die GemÃ¼sebrÃ¼he dazugeben und aufkochen lassen. Die Hitze reduzieren und ohne Deckel 40 - 45 Minuten kÃ¶cheln lassen. Kurz vor dem Servieren die Sahne unterrÃ¼hren und das Gericht mit dem gehackten Koriander bestreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(48)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt wunderbar Basmatireis oder Naanbrot.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(48)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Teigzutaten verkneten und einen geschmeidigen, nicht mehr klebenden Teig herstellen. Zwei Muffinbackformen mit je 12 Muffinmulden fetten und den Teig in den Mulden verteilen, dabei jeweils auch einen kleinen Rand andrÃ¼cken.")
+handob = handlungsschritt(text="Die Teigzutaten verkneten und einen geschmeidigen, nicht mehr klebenden Teig herstellen. Zwei Muffinbackformen mit je 12 Muffinmulden fetten und den Teig in den Mulden verteilen, dabei jeweils auch einen kleinen Rand andrücken.  Paprika und Lauch putzen und waschen, Zwiebel schälen, alles fein hacken und in einer Pfanne mit etwas Öl ca. 5 Minuten andünsten. Die Hälfte des Gemüses in eine Schüssel füllen und abkühlen lassen.  Getrocknete Tomaten abtropfen lassen, in kleine Stücke schneiden. Schinken würfeln. Die Tomaten zur einen, den Schinken zur anderen Gemüsehälfte geben. So erhält man nachher 12 Miniquiches für Schinkenliebhaber und 12 für Vegetarier.  Die Gusszutaten miteinander verquirlen und jeweils wieder halb und halb mit dem Gemüse mischen.  Dieses dann auf den Teig in den Muffinmulden geben.  Im vorgeheizten Backofen bei 180 °C Ober-/Unterhitze ca. 20 - 25 Minuten backen.  Diese Mini-Quiches passen super zu einem kalten Bufett oder als Fingerfood auf einer Party.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Paprika und Lauch putzen und waschen, Zwiebel schÃ¤len, alles fein hacken und in einer Pfanne mit etwas Ã–l ca. 5 Minuten andÃ¼nsten. Die HÃ¤lfte des GemÃ¼ses in eine SchÃ¼ssel fÃ¼llen und abkÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Getrocknete Tomaten abtropfen lassen, in kleine StÃ¼cke schneiden. Schinken wÃ¼rfeln. Die Tomaten zur einen, den Schinken zur anderen GemÃ¼sehÃ¤lfte geben. So erhÃ¤lt man nachher 12 Miniquiches fÃ¼r Schinkenliebhaber und 12 fÃ¼r Vegetarier.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Gusszutaten miteinander verquirlen und jeweils wieder halb und halb mit dem GemÃ¼se mischen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dieses dann auf den Teig in den Muffinmulden geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Backofen bei 180 Â°C Ober-/Unterhitze ca. 20 - 25 Minuten backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Diese Mini-Quiches passen super zu einem kalten Bufett oder als Fingerfood auf einer Party.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(49)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fleisch waschen und trocken tupfen. Mit Salz und Pfeffer wÃ¼rzen. Ã–l in einer Pfanne erhitzen. Filets darin von allen Seiten ca. 5 Min. krÃ¤ftig anbraten.")
+handob = handlungsschritt(text="Fleisch waschen und trocken tupfen. Mit Salz und Pfeffer würzen. Öl in einer Pfanne erhitzen. Filets darin von allen Seiten ca. 5 Min. kräftig anbraten.  Tomaten waschen und halbieren. Basilikumblätter abzupfen, waschen und fein hacken.  Sahne in einem Topf aufkochen lassen. Schmelzkäse hineinrühren und schmelzen lassen. Mit Salz und Pfeffer würzen. 2/3 vom Basilikum unterrühren.  Fleisch und Tomaten in eine gefettete Auflaufform geben. Sauce darüber gießen. Mozzarella in kleine Stückchen schneiden und auf dem Fleisch verteilen. Wer mag, kann noch geriebenen Parmesan und 1 EL Kräuterbutter in kleine Flöckchen darauf verteilen.  Im vorgeheizten Ofen bei 200 °C Ober-/Unterhitze bzw. 175 °C Umluft ca. 30 Min. backen. Herausnehmen und mit restlichem Basilikum bestreuen.  Dazu schmecken Kroketten oder Reis.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Tomaten waschen und halbieren. BasilikumblÃ¤tter abzupfen, waschen und fein hacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sahne in einem Topf aufkochen lassen. SchmelzkÃ¤se hineinrÃ¼hren und schmelzen lassen. Mit Salz und Pfeffer wÃ¼rzen. 2/3 vom Basilikum unterrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fleisch und Tomaten in eine gefettete Auflaufform geben. Sauce darÃ¼ber gieÃŸen. Mozzarella in kleine StÃ¼ckchen schneiden und auf dem Fleisch verteilen. Wer mag, kann noch geriebenen Parmesan und 1 EL KrÃ¤uterbutter in kleine FlÃ¶ckchen darauf verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Ofen bei 200 Â°C Ober-/Unterhitze bzw. 175 Â°C Umluft ca. 30 Min. backen. Herausnehmen und mit restlichem Basilikum bestreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu schmecken Kroketten oder Reis.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(50)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine flache Platte (oder einen groÃŸen Teller) in den Backofen stellen und diesen mit 80 Â°C ca. eine halbe Stunde vorheizen. Temperatur wenn mÃ¶glich mit Backofenthermometer kontrollieren.")
+handob = handlungsschritt(text="Eine flache Platte (oder einen großen Teller) in den Backofen stellen und diesen mit 80 °C ca. eine halbe Stunde vorheizen. Temperatur wenn möglich mit Backofenthermometer kontrollieren.  Schweinefilet 1 Stunde vor dem Anbraten aus dem Kühlschrank nehmen, damit das Fleisch auch im Kern Zimmertemperatur annimmt. Falls der Metzger es nicht schon vorher getan hat, das Fleisch parieren (d.h. von Sehnen, Häutchen, Fett etc. befreien). Hat man ein ganzes Schweinefilet, dann schlägt man die Spitze soweit um, dass in etwa ein gleichmäßig dickes Fleischstück entsteht.  Filet salzen (nur wenig wegen des Speckmantels!) und pfeffern.  Baconscheiben überlappt auslegen, in einer Breite, die der Länge des Filetstücks entspricht. Beide Enden des Filets je nach Dicke mit ein bis zwei (evtl. halbierten) Baconscheiben abdecken, das Filet auf die ausgelegten Scheiben legen und einrollen. Die Speckhülle entweder mit Küchengarn oder (von mir aus Handhabungsgründen bevorzugt) mit Rouladennadeln fixieren.  In einem großen Schmortopf Öl bzw. Butterschmalz erhitzen und das Filet in ca. 6 Minuten von allen Seiten braun/kross anbraten. Auch die beiden Kopfseiten sollten dabei angebraten werden, dabei das Filet mit Hilfe von einer Küchenzange oder gefaltetem Küchenpapier senkrecht halten. Anschließend das Fleisch mit einem Bratenthermometer versehen für ca. 2 Stunden in den vorgeheizten Backofen auf die Platte/den Teller legen und auf die gewünschte Kerntemperatur bringen (ca. 60 °C für einen rosa Kern).  Den Bratensatz im Schmortopf entfetten und mit etwas Weißwein oder Brühe lösen, dann für den späteren Gebrauch beiseitestellen.  Eine halbe Stunde vor Garende des Fleisches die Zwiebeln schälen und würfeln, Knoblauchzehen schälen und in kleine Scheiben/Würfel schneiden sowie die Pilze säubern und je nach Größe in 2, 4 oder 6 Teile schneiden.  In einer großen Pfanne die Butter zerlassen, den Schinkenspeck/Bacon anbraten, Zwiebeln und Knoblauch anschwitzen. Die Champignons und das Tomatenmark hinzufügen, etwas pfeffern und salzen und so lange braten, bis kaum noch Flüssigkeit übrig geblieben ist. Währenddessen Sahne, Crème fraîche, Brühe und Wein im Schmortopf mit dem gelösten Bratensatz zusammen erhitzen. Gleichzeitig kann man auch schon das Wasser für die Spätzle aufsetzen.  Die gebratenen Champignons in den Schmortopf geben und ca. 5 Minuten leicht köcheln lassen, dabei nach Belieben klein gehackte Kräuter hinzufügen. Anschließend mit Worcestersoße, Salz und Pfeffer abschmecken. Wem das Champignongemüse zu flüssig ist, kann gegebenenfalls noch mit Mehl/Mondamin andicken.  Die Spätzle nach Anweisung im Salzwasser mit 2 EL Öl bissfest kochen, abgießen und - wenn sie nicht direkt auf die vorgewärmten Teller verteilt werden - kurz in etwas zerlassener Butter schwenken.  Das Fleisch aufschneiden (scharfes oder Elektromesser lässt den krossen Schinkenspeck heil an den Fleischscheiben) und mit Champignongemüse und Spätzle servieren.  Für Interessierte noch einige Tipps:  Es empfiehlt sich, die Essteller von vornherein mit der Fleischplatte mit vorzuwärmen. Sie sind dann zwar relativ heiß (80 °C), das ist aber auch günstig, da beim NT-Garen das Fleisch naturgemäß nicht sehr heiß auf den Teller kommt und dann noch schneller auskühlen würde. Zwischendurch sollte man sie nicht in den Ofen zum Fleisch stellen, da das den NT-Garvorgang zu stark unterbricht.  Beim Anbraten der Filet-Enden hat sich bei mir das Halten des Filets mit Küchenpapier in der Hand durchgesetzt. Dazu faltet man ein Blatt Küchenpapier zweimal und achtet nur darauf, dass man sich nicht am heißen Fett verbrennt bzw. das Papier das heiße Fett aufsaugt. Man kann dann das Filet bequem ca. 30 sec. senkrecht halten, fürs Anbraten des Endes. Das Problem bei der Küchenzange ist, dass man damit die Baconhülle doch viel leichter verschiebt oder sogar zerstört.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Schweinefilet 1 Stunde vor dem Anbraten aus dem KÃ¼hlschrank nehmen, damit das Fleisch auch im Kern Zimmertemperatur annimmt. Falls der Metzger es nicht schon vorher getan hat, das Fleisch parieren (d.h. von Sehnen, HÃ¤utchen, Fett etc. befreien). Hat man ein ganzes Schweinefilet, dann schlÃ¤gt man die Spitze soweit um, dass in etwa ein gleichmÃ¤ÃŸig dickes FleischstÃ¼ck entsteht.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Filet salzen (nur wenig wegen des Speckmantels!) und pfeffern.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Baconscheiben Ã¼berlappt auslegen, in einer Breite, die der LÃ¤nge des FiletstÃ¼cks entspricht. Beide Enden des Filets je nach Dicke mit ein bis zwei (evtl. halbierten) Baconscheiben abdecken, das Filet auf die ausgelegten Scheiben legen und einrollen. Die SpeckhÃ¼lle entweder mit KÃ¼chengarn oder (von mir aus HandhabungsgrÃ¼nden bevorzugt) mit Rouladennadeln fixieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einem groÃŸen Schmortopf Ã–l bzw. Butterschmalz erhitzen und das Filet in ca. 6 Minuten von allen Seiten braun/kross anbraten. Auch die beiden Kopfseiten sollten dabei angebraten werden, dabei das Filet mit Hilfe von einer KÃ¼chenzange oder gefaltetem KÃ¼chenpapier senkrecht halten. AnschlieÃŸend das Fleisch mit einem Bratenthermometer versehen fÃ¼r ca. 2 Stunden in den vorgeheizten Backofen auf die Platte/den Teller legen und auf die gewÃ¼nschte Kerntemperatur bringen (ca. 60 Â°C fÃ¼r einen rosa Kern).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Bratensatz im Schmortopf entfetten und mit etwas WeiÃŸwein oder BrÃ¼he lÃ¶sen, dann fÃ¼r den spÃ¤teren Gebrauch beiseitestellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine halbe Stunde vor Garende des Fleisches die Zwiebeln schÃ¤len und wÃ¼rfeln, Knoblauchzehen schÃ¤len und in kleine Scheiben/WÃ¼rfel schneiden sowie die Pilze sÃ¤ubern und je nach GrÃ¶ÃŸe in 2, 4 oder 6 Teile schneiden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einer groÃŸen Pfanne die Butter zerlassen, den Schinkenspeck/Bacon anbraten, Zwiebeln und Knoblauch anschwitzen. Die Champignons und das Tomatenmark hinzufÃ¼gen, etwas pfeffern und salzen und so lange braten, bis kaum noch FlÃ¼ssigkeit Ã¼brig geblieben ist. WÃ¤hrenddessen Sahne, CrÃ¨me fraÃ®che, BrÃ¼he und Wein im Schmortopf mit dem gelÃ¶sten Bratensatz zusammen erhitzen. Gleichzeitig kann man auch schon das Wasser fÃ¼r die SpÃ¤tzle aufsetzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die gebratenen Champignons in den Schmortopf geben und ca. 5 Minuten leicht kÃ¶cheln lassen, dabei nach Belieben klein gehackte KrÃ¤uter hinzufÃ¼gen. AnschlieÃŸend mit WorcestersoÃŸe, Salz und Pfeffer abschmecken. Wem das ChampignongemÃ¼se zu flÃ¼ssig ist, kann gegebenenfalls noch mit Mehl/Mondamin andicken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die SpÃ¤tzle nach Anweisung im Salzwasser mit 2 EL Ã–l bissfest kochen, abgieÃŸen und - wenn sie nicht direkt auf die vorgewÃ¤rmten Teller verteilt werden - kurz in etwas zerlassener Butter schwenken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Fleisch aufschneiden (scharfes oder Elektromesser lÃ¤sst den krossen Schinkenspeck heil an den Fleischscheiben) und mit ChampignongemÃ¼se und SpÃ¤tzle servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="11")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r Interessierte noch einige Tipps:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="12")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Es empfiehlt sich, die Essteller von vornherein mit der Fleischplatte mit vorzuwÃ¤rmen. Sie sind dann zwar relativ heiÃŸ (80 Â°C), das ist aber auch gÃ¼nstig, da beim NT-Garen das Fleisch naturgemÃ¤ÃŸ nicht sehr heiÃŸ auf den Teller kommt und dann noch schneller auskÃ¼hlen wÃ¼rde. Zwischendurch sollte man sie nicht in den Ofen zum Fleisch stellen, da das den NT-Garvorgang zu stark unterbricht.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="13")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Beim Anbraten der Filet-Enden hat sich bei mir das Halten des Filets mit KÃ¼chenpapier in der Hand durchgesetzt. Dazu faltet man ein Blatt KÃ¼chenpapier zweimal und achtet nur darauf, dass man sich nicht am heiÃŸen Fett verbrennt bzw. das Papier das heiÃŸe Fett aufsaugt. Man kann dann das Filet bequem ca. 30 sec. senkrecht halten, fÃ¼rs Anbraten des Endes. Das Problem bei der KÃ¼chenzange ist, dass man damit die BaconhÃ¼lle doch viel leichter verschiebt oder sogar zerstÃ¶rt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(51)
-assoc = AssociationRHhat(position="14")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Nudeln kochen und mit kaltem Wasser abschrecken. Die Pinienkerne in einer Pfanne bei mittlerer Hitze ohne Fett leicht anbrÃ¤unen. Rucola gut waschen, trocken schleudern und etwas kleiner schneiden. Die getrockneten Tomaten gut abtropfen lassen und wie den Mozzarella und den Parmaschinken klein schneiden. Alles in eine groÃŸe SchÃ¼ssel geben, salzen und pfeffern.")
+handob = handlungsschritt(text="Die Nudeln kochen und mit kaltem Wasser abschrecken. Die Pinienkerne in einer Pfanne bei mittlerer Hitze ohne Fett leicht anbräunen. Rucola gut waschen, trocken schleudern und etwas kleiner schneiden. Die getrockneten Tomaten gut abtropfen lassen und wie den Mozzarella und den Parmaschinken klein schneiden. Alles in eine große Schüssel geben, salzen und pfeffern.  Öl, Essig, klein gehackte oder gepresste Knoblauchzehe, Pesto, Senf und Honig miteinander vermischen und kurz vor dem Essen über den Salat geben. Alles noch einmal gut durchmischen und mit dem geriebenen Parmesan garnieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(52)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Ã–l, Essig, klein gehackte oder gepresste Knoblauchzehe, Pesto, Senf und Honig miteinander vermischen und kurz vor dem Essen Ã¼ber den Salat geben. Alles noch einmal gut durchmischen und mit dem geriebenen Parmesan garnieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(52)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Nudeln im Salzwasser al dente kochen, abkÃ¼hlen lassen. In der Pfanne die gehackte Zwiebel mit dem Knoblauch anschwitzen, das Fleisch hinzu fÃ¼gen und gut anbraten. Die klein gewÃ¼rfelten Tomaten zufÃ¼gen und mit Tomatenmark, den GewÃ¼rzen, schÃ¶n pikant abschmecken.")
+handob = handlungsschritt(text="Die Nudeln im Salzwasser al dente kochen, abkühlen lassen. In der Pfanne die gehackte Zwiebel mit dem Knoblauch anschwitzen, das Fleisch hinzu fügen und gut anbraten. Die klein gewürfelten Tomaten zufügen und mit Tomatenmark, den Gewürzen, schön pikant abschmecken.  Nacheinander Nudeln, Joghurt sowie die Hackfleischmischung in die Schüssel füllen und alles gut vermengen. Zum Schluss mit der klein gehackten Petersilie bestreuen, aber erst kurz vor dem Anrichten untermengen.  Den Salat im Kühlschrank gut durchkühlen lassen. 1 Stunde vor dem Verzehr heraus nehmen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(53)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Nacheinander Nudeln, Joghurt sowie die Hackfleischmischung in die SchÃ¼ssel fÃ¼llen und alles gut vermengen. Zum Schluss mit der klein gehackten Petersilie bestreuen, aber erst kurz vor dem Anrichten untermengen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(53)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Salat im KÃ¼hlschrank gut durchkÃ¼hlen lassen. 1 Stunde vor dem Verzehr heraus nehmen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(53)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Nudeln nach Packungsanweisung bissfest kochen.")
+handob = handlungsschritt(text="Die Nudeln nach Packungsanweisung bissfest kochen.  In der Zwischenzeit die Tomaten klein schneiden und den Schafskäse würfeln. Den Knoblauch abziehen, durchpressen oder winzig klein schneiden. Die Pinienkerne vorsichtig in einer Pfanne ohne Fett anrösten (Vorsicht - sie werden schnell schwarz!). Die Basilikumblätter klein reißen oder schneiden.  Die gekochten Nudeln abgießen und nun alles zusammen in eine Schüssel geben. Nun das Olivenöl (die Menge ist geschätzt) darüber geben und mit Salz und Pfeffer abschmecken.  Tipp: Bei uns wird die erste Portion immer noch warm gegessen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(54)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In der Zwischenzeit die Tomaten klein schneiden und den SchafskÃ¤se wÃ¼rfeln. Den Knoblauch abziehen, durchpressen oder winzig klein schneiden. Die Pinienkerne vorsichtig in einer Pfanne ohne Fett anrÃ¶sten (Vorsicht - sie werden schnell schwarz!). Die BasilikumblÃ¤tter klein reiÃŸen oder schneiden.")
+handob = handlungsschritt(text="Brötchen in Wasser einweichen.  Die Zwiebel schälen und in feine Würfel schneiden. Wer möchte, kann die Zwiebel auch kurz in Butter glasig dünsten (ich bevorzuge die rohen Zwiebeln).  Das Ei, die Zwiebeln und die Gewürze zur Hackmasse geben und sehr gut vermengen, entweder mit einem großen Löffel oder mit den Händen. Nicht mit dem Mixer arbeiten, dabei werden die Frikadellen oft zäh!  Die Brötchenmasse sehr gut ausdrücken, entweder mit den Händen, oder auch zwischen zwei Brettchen, zur Hackmasse geben und wieder gut vermengen. Bis hierhin sollten diese Arbeitsschritte wenigstens 10 - 15 Minuten dauern, denn je ordentlicher vermengt und geknetet wird, umso besser und lockerer das Ergebnis!  Wer die rohe Masse abschmecken kann, sollte das jetzt tun, oder eine Probe braten. Jetzt gleichmäßige, nicht zu kleine Bällchen/Klöße/Klopse formen und auf einer bemehlten Arbeitsfläche flachdrücken und glätten. Wer möchte, kann sie in Mehl oder Semmelbrösel wenden. Oma und ich braten sie ohne alles.  Eine schwere Pfanne mit guter Margarine stark erhitzen und die Frikadellen einlegen, kurz auf beiden Seiten scharf anbraten und dann ca. 15 - 20 Minuten (1 - 2-mal vorsichtig wenden) auf mittlerer/schwacher Hitze fertig braten. Nicht zu viele Frikadellen auf einmal in einer Pfanne braten, eher eine zweite benutzen oder nacheinander braten.  Dazu passt z. B. Kartoffelsalat.")
 db.session.add(handob)
 db.session.commit()
-rezaus = rezept.query.get(54)
-assoc = AssociationRHhat(position="2")
+rezaus = rezept.query.get(55)
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die gekochten Nudeln abgieÃŸen und nun alles zusammen in eine SchÃ¼ssel geben. Nun das OlivenÃ¶l (die Menge ist geschÃ¤tzt) darÃ¼ber geben und mit Salz und Pfeffer abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(54)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Bei uns wird die erste Portion immer noch warm gegessen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(54)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebeln wÃ¼rfeln und mit dem Hackfleisch in OlivenÃ¶l anbraten. Die Paprikaschoten ebenfalls wÃ¼rfeln und mit den Champignons sowie dem Mais zum Hackfleisch geben. Alles kurz anbraten, anschlieÃŸend mit der GemÃ¼sebrÃ¼he ablÃ¶schen. Die Sahne, die Tomatensauce und den SahneschmelzkÃ¤se hinzugeben und ca. 10 Minuten kÃ¶cheln lassen. Zum Schluss mit Salz, Pfeffer und Oregano abschmecken.")
+handob = handlungsschritt(text="Die Zwiebeln würfeln und mit dem Hackfleisch in Olivenöl anbraten. Die Paprikaschoten ebenfalls würfeln und mit den Champignons sowie dem Mais zum Hackfleisch geben. Alles kurz anbraten, anschließend mit der Gemüsebrühe ablöschen. Die Sahne, die Tomatensauce und den Sahneschmelzkäse hinzugeben und ca. 10 Minuten köcheln lassen. Zum Schluss mit Salz, Pfeffer und Oregano abschmecken.  Beim Servieren nach Belieben etwas geriebenen Parmesan auf die Suppe streuen.  Dazu passt am besten Baguette.  Tipp: Schmeckt auch als Nudelsauce gut, dann weniger Gemüsebrühe verwenden.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(56)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Beim Servieren nach Belieben etwas geriebenen Parmesan auf die Suppe streuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(56)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt am besten Baguette.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(56)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Schmeckt auch als Nudelsauce gut, dann weniger GemÃ¼sebrÃ¼he verwenden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(56)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="BrÃ¶tchen in Wasser einweichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebel schÃ¤len und in feine WÃ¼rfel schneiden. Wer mÃ¶chte, kann die Zwiebel auch kurz in Butter glasig dÃ¼nsten (ich bevorzuge die rohen Zwiebeln).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Ei, die Zwiebeln und die GewÃ¼rze zur Hackmasse geben und sehr gut vermengen, entweder mit einem groÃŸen LÃ¶ffel oder mit den HÃ¤nden. Nicht mit dem Mixer arbeiten, dabei werden die Frikadellen oft zÃ¤h!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die BrÃ¶tchenmasse sehr gut ausdrÃ¼cken, entweder mit den HÃ¤nden, oder auch zwischen zwei Brettchen, zur Hackmasse geben und wieder gut vermengen. Bis hierhin sollten diese Arbeitsschritte wenigstens 10 - 15 Minuten dauern, denn je ordentlicher vermengt und geknetet wird, umso besser und lockerer das Ergebnis!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wer die rohe Masse abschmecken kann, sollte das jetzt tun, oder eine Probe braten. Jetzt gleichmÃ¤ÃŸige, nicht zu kleine BÃ¤llchen/KlÃ¶ÃŸe/Klopse formen und auf einer bemehlten ArbeitsflÃ¤che flachdrÃ¼cken und glÃ¤tten. Wer mÃ¶chte, kann sie in Mehl oder SemmelbrÃ¶sel wenden. Oma und ich braten sie ohne alles.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine schwere Pfanne mit guter Margarine stark erhitzen und die Frikadellen einlegen, kurz auf beiden Seiten scharf anbraten und dann ca. 15 - 20 Minuten (1 - 2-mal vorsichtig wenden) auf mittlerer/schwacher Hitze fertig braten. Nicht zu viele Frikadellen auf einmal in einer Pfanne braten, eher eine zweite benutzen oder nacheinander braten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt z. B. Kartoffelsalat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(55)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Reis in der GemÃ¼sebrÃ¼he garen (eine Tasse mit ca. 200 - 250 ml Inhalt als MaÃŸ nehmen).")
+handob = handlungsschritt(text="Den Reis in der Gemüsebrühe garen (eine Tasse mit ca. 200 - 250 ml Inhalt als Maß nehmen).  Die Chilischote längs halbieren, von den Kernen befreien und hacken. Die Paprikaschoten putzen und würfeln. Die Zwiebeln fein würfeln und in einer Pfanne in etwas Öl glasig dünsten. Den gepressten Knoblauch, die Chilischote und das Tomatenmark hinzugeben und kurz mit anschwitzen. Die Paprikawürfel in die Pfanne geben und ein paar Minuten lang anbraten, dabei ab und zu die Pfanne schwenken. Mit Paprikapulver, Salz und Pfeffer würzen. Den Reis hinzugeben, untermengen und heiß werden lassen. Die Kräuter hacken und zuletzt untermischen. Nochmals abschmecken.  Joghurt und gepressten Knoblauch verrühren, mit Salz und Pfeffer abschmecken. Den Reis mit einem Klecks von der Joghurtsauce servieren.  Von der Menge werden ca. 3 - 4 Personen satt. Der Reis kann auch als Beilage gegessen werden.  Die Kräutermenge kann nach Belieben erhöht werden.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(57)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Chilischote lÃ¤ngs halbieren, von den Kernen befreien und hacken. Die Paprikaschoten putzen und wÃ¼rfeln. Die Zwiebeln fein wÃ¼rfeln und in einer Pfanne in etwas Ã–l glasig dÃ¼nsten. Den gepressten Knoblauch, die Chilischote und das Tomatenmark hinzugeben und kurz mit anschwitzen. Die PaprikawÃ¼rfel in die Pfanne geben und ein paar Minuten lang anbraten, dabei ab und zu die Pfanne schwenken. Mit Paprikapulver, Salz und Pfeffer wÃ¼rzen. Den Reis hinzugeben, untermengen und heiÃŸ werden lassen. Die KrÃ¤uter hacken und zuletzt untermischen. Nochmals abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(57)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Joghurt und gepressten Knoblauch verrÃ¼hren, mit Salz und Pfeffer abschmecken. Den Reis mit einem Klecks von der Joghurtsauce servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(57)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Von der Menge werden ca. 3 - 4 Personen satt. Der Reis kann auch als Beilage gegessen werden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(57)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die KrÃ¤utermenge kann nach Belieben erhÃ¶ht werden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(57)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die HÃ¤hnchenfilets waschen und mit KÃ¼chenkrepp trocken tupfen. Mit Salz und Paprikapulver wÃ¼rzen und in einer Auflaufform dicht aneinanderlegen. Die Paprikaschoten waschen, entkernen, in schmale Streifen schneiden und auf den Filets verteilen.")
+handob = handlungsschritt(text="Die Hähnchenfilets waschen und mit Küchenkrepp trocken tupfen. Mit Salz und Paprikapulver würzen und in einer Auflaufform dicht aneinanderlegen. Die Paprikaschoten waschen, entkernen, in schmale Streifen schneiden und auf den Filets verteilen.  Die Zwiebel in halbe Ringe schneiden und in einer Pfanne in etwas Öl andünsten. Die Chilischote hineinzupfen, den Knoblauch pressen und hinzugeben. Paprikapulver und Tomatenmark hinzufügen, mit der Brühe ablöschen und kurz aufkochen lassen. Anschließend Sahne und Schmand unter die Soße rühren und mit Salz abschmecken. Die Soße in die Auflaufform gießen, Fleisch und Paprikastreifen sollten ganz bedeckt sein. Den geriebenen Käse gleichmäßig darauf verteilen.  Im vorgeheizten Backofen bei 180 °C Ober-/Unterhitze ca. 1/2 Std. garen.  Beilagen: Bandnudeln oder Reis und Eisbergsalat mit Mandarinen und süß-saurer Vinaigrette.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(58)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Zwiebel in halbe Ringe schneiden und in einer Pfanne in etwas Ã–l andÃ¼nsten. Die Chilischote hineinzupfen, den Knoblauch pressen und hinzugeben. Paprikapulver und Tomatenmark hinzufÃ¼gen, mit der BrÃ¼he ablÃ¶schen und kurz aufkochen lassen. AnschlieÃŸend Sahne und Schmand unter die SoÃŸe rÃ¼hren und mit Salz abschmecken. Die SoÃŸe in die Auflaufform gieÃŸen, Fleisch und Paprikastreifen sollten ganz bedeckt sein. Den geriebenen KÃ¤se gleichmÃ¤ÃŸig darauf verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(58)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Backofen bei 180 Â°C Ober-/Unterhitze ca. 1/2 Std. garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(58)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Beilagen: Bandnudeln oder Reis und Eisbergsalat mit Mandarinen und sÃ¼ÃŸ-saurer Vinaigrette.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(58)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln in Spalten schneiden und in einer SchÃ¼ssel mit Parmesan und OlivenÃ¶l vermischen. Die GewÃ¼rze in einer separaten SchÃ¼ssel vermengen und dann zu den Kartoffeln geben. Noch einmal krÃ¤ftig durchmischen, die Kartoffelecken dann auf einem mit Backpapier ausgelegten Backblech verteilen und bei 200 Â°C Ober-/Unterhitze fÃ¼r ca. 40 Minuten backen.")
+handob = handlungsschritt(text="Die Kartoffeln in Spalten schneiden und in einer Schüssel mit Parmesan und Olivenöl vermischen. Die Gewürze in einer separaten Schüssel vermengen und dann zu den Kartoffeln geben. Noch einmal kräftig durchmischen, die Kartoffelecken dann auf einem mit Backpapier ausgelegten Backblech verteilen und bei 200 °C Ober-/Unterhitze für ca. 40 Minuten backen.  Hinweis: Heißhunger auf eine deftige Beilage oder einfach nur Appetit auf einen leckeren Snack? Diese Kartoffelecken sind genau das richtige für alle, die es gerne deftig mögen und etwas Neues ausprobieren wollen. Dazu schmeckt Sour Cream mit ein paar frischen Kräutern wirklich köstlich, alternativ könnt ihr die Wedges natürlich auch als Beilage zu einem leckeren Steak oder gebratenem Fisch servieren. Eurer Kreativität sind keine Grenzen gesetzt.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(59)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Hinweis: HeiÃŸhunger auf eine deftige Beilage oder einfach nur Appetit auf einen leckeren Snack? Diese Kartoffelecken sind genau das richtige fÃ¼r alle, die es gerne deftig mÃ¶gen und etwas Neues ausprobieren wollen. Dazu schmeckt Sour Cream mit ein paar frischen KrÃ¤utern wirklich kÃ¶stlich, alternativ kÃ¶nnt ihr die Wedges natÃ¼rlich auch als Beilage zu einem leckeren Steak oder gebratenem Fisch servieren. Eurer KreativitÃ¤t sind keine Grenzen gesetzt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(59)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Vorbereitende Schritte:")
+handob = handlungsschritt(text="Vorbereitende Schritte:  Die Butter würfeln und bei Raumtemperatur weich werden lassen.  Grünes und rotes Pesto separat durch ein Sieb streichen und so etwas Öl entfernen.  Mozzarella in Stücke reißen.  Sonnengetrocknete Tomaten abtropfen lassen und fein hacken.  Die Oliven abtropfen lassen und grob hacken.  Erste Arbeitsschritte:  Zwei große Backbleche mit Backpapier auslegen.  Die größere Rührschüssel einsetzen.  Den Spiral-Knethaken anbringen.  Schritt 1:  Die erste Zutat der Zutatenliste 1 (Milch) in einem kleinen Topf bei mittlerer Hitze erwärmen.  Vom Herd nehmen und in eine Karaffe gießen.  Die nächsten vier Zutaten der Zutatenliste 1 (Mehl, Hefe, Zucker, Salz) in die Rührschüssel geben. Den Spritzschutz anbringen.  20 Sekunden bei Geschwindigkeitsstufe 1 gut verrühren.  Während die Küchenmaschine langsam rührt, bei Geschwindigkeitsstufe 1 die warme Milch langsam dazugießen.  Die nächsten zwei Zutaten der Zutatenliste 1 (Ei, Eigelb) hineingeben.  2 Minuten bei Geschwindigkeitsstufe 1 rühren.  Nach und nach bei Geschwindigkeitsstufe 1 die letzte Zutat der Zutatenliste 1 (Butter) in die Rührschüssel geben.  6 bis 8 Minuten bei Geschwindigkeitsstufe 1 zu einem glatten und homogenen Teig rühren.  Die Rührschüssel aus der Küchenmaschine herausnehmen, mit Klarsichtfolie abdecken und an einem warmen Ort 1 Stunde gehen lassen.  Schritt 2:  Den Teig auf eine leicht bemehlte Arbeitsfläche legen und flach drücken. Den Teig in 12 Portionen (je ca. 76 Gramm) teilen. Jedes Teigstück zu einem festen Teigball formen.  Für die Pesto-Babki:  Sechs Teigbälle zu einem Rechteck (ca. 12 x 7 cm) ausrollen.  Die Zutaten der Zutatenliste 2 (Pesto, Mozzarella, schwarzer Pfeffer) über die Teigstücke geben. Dabei rundum einen Rand von ca. 0,5 cm lassen. Die Teigstücke vom langen Ende her zu einer Schlange fest aufrollen. Alle Nähte und Enden zusammendrücken. Mit einem scharfen Messer die Teigschlangen der Länge nach halbieren. Die beiden halbierten Teigschlangen mit der gefüllten Seite nach oben zu einem Zopf flechten.  Den Hefezopf langziehen (25 cm). Beide Enden zusammenführen, sodass sie sich überlappen und in der Mitte ein Loch entsteht. Ein Teigende in das Loch geben und mit dem anderen Ende zusammendrücken. Auf ein Backblech legen. Mit Klarsichtfolie locker abdecken und 1 Stunde gehen lassen, bis sich das Volumen verdoppelt hat.  Schritt 3:  Die kleinere Rührschüssel einsetzen und den K-Haken anbringen.  Die Zutaten der Zutatenliste 3 (Pesto, Peperoni, sonnengetrocknete Tomaten, Oliven, Mozzarella, Oregano, schwarzen Pfeffer) in die Rührschüssel geben. Geschwindigkeitsstufe 1 einstellen, 20 Sekunden rühren und in dieser Zeit auf Geschwindigkeitsstufe 3 erhöhen, um die Zutaten zu einer Paste zu rühren.  Für die Pizza-Babki:  Die letzten sechs Teigbälle zu einem Rechteck (ca. 12 x 7 cm) ausrollen.  Die Paste gleichmäßig über die Teigstücke verteilen. Dabei rundum einen Rand von ca. 0,5 cm lassen. Die Teigstücke vom langen Ende her zu einer Schlange fest aufrollen. Alle Nähte und Enden zusammendrücken. Mit einem scharfen Messer die Teigschlangen der Länge nach halbieren. Die beiden halbierten Teigschlangen mit der gefüllten Seite nach oben zu einem Zopf flechten.  Den Hefezopf langziehen (25 cm). Beide Enden zusammenführen, sodass sie sich überlappen und in der Mitte ein Loch entsteht. Ein Teigende in das Loch geben und mit dem anderen Ende zusammendrücken. Auf ein Backblech legen. Mit Klarsichtfolie locker abdecken und 1 Stunde gehen lassen, bis sich das Volumen verdoppelt hat.  Schritt 4:  Den Backofen auf 190 °C Ober-/Unterhitze vorheizen.  Die Klarsichtfolie entfernen. Babki mit verquirltem Ei (Eistreiche) bestreichen.  Im Backofen 12 bis 15 Minuten goldbraun backen.  Warm servieren.  Die herzhaften Babki schmecken nicht nur köstlich, sondern sind auch ein echter Hingucker auf dem Esstisch.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Butter wÃ¼rfeln und bei Raumtemperatur weich werden lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="GrÃ¼nes und rotes Pesto separat durch ein Sieb streichen und so etwas Ã–l entfernen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mozzarella in StÃ¼cke reiÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sonnengetrocknete Tomaten abtropfen lassen und fein hacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Oliven abtropfen lassen und grob hacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Erste Arbeitsschritte:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zwei groÃŸe Backbleche mit Backpapier auslegen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die grÃ¶ÃŸere RÃ¼hrschÃ¼ssel einsetzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Spiral-Knethaken anbringen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Schritt 1:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="11")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die erste Zutat der Zutatenliste 1 (Milch) in einem kleinen Topf bei mittlerer Hitze erwÃ¤rmen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="12")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Vom Herd nehmen und in eine Karaffe gieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="13")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die nÃ¤chsten vier Zutaten der Zutatenliste 1 (Mehl, Hefe, Zucker, Salz) in die RÃ¼hrschÃ¼ssel geben. Den Spritzschutz anbringen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="14")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="20 Sekunden bei Geschwindigkeitsstufe 1 gut verrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="15")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="WÃ¤hrend die KÃ¼chenmaschine langsam rÃ¼hrt, bei Geschwindigkeitsstufe 1 die warme Milch langsam dazugieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="16")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die nÃ¤chsten zwei Zutaten der Zutatenliste 1 (Ei, Eigelb) hineingeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="17")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="2 Minuten bei Geschwindigkeitsstufe 1 rÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="18")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach und nach bei Geschwindigkeitsstufe 1 die letzte Zutat der Zutatenliste 1 (Butter) in die RÃ¼hrschÃ¼ssel geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="19")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="6 bis 8 Minuten bei Geschwindigkeitsstufe 1 zu einem glatten und homogenen Teig rÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="20")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die RÃ¼hrschÃ¼ssel aus der KÃ¼chenmaschine herausnehmen, mit Klarsichtfolie abdecken und an einem warmen Ort 1 Stunde gehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="21")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Schritt 2:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="22")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Teig auf eine leicht bemehlte ArbeitsflÃ¤che legen und flach drÃ¼cken. Den Teig in 12 Portionen (je ca. 76 Gramm) teilen. Jedes TeigstÃ¼ck zu einem festen Teigball formen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="23")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die Pesto-Babki:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="24")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sechs TeigbÃ¤lle zu einem Rechteck (ca. 12 x 7 cm) ausrollen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="25")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zutaten der Zutatenliste 2 (Pesto, Mozzarella, schwarzer Pfeffer) Ã¼ber die TeigstÃ¼cke geben. Dabei rundum einen Rand von ca. 0,5 cm lassen. Die TeigstÃ¼cke vom langen Ende her zu einer Schlange fest aufrollen. Alle NÃ¤hte und Enden zusammendrÃ¼cken. Mit einem scharfen Messer die Teigschlangen der LÃ¤nge nach halbieren. Die beiden halbierten Teigschlangen mit der gefÃ¼llten Seite nach oben zu einem Zopf flechten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="26")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Hefezopf langziehen (25 cm). Beide Enden zusammenfÃ¼hren, sodass sie sich Ã¼berlappen und in der Mitte ein Loch entsteht. Ein Teigende in das Loch geben und mit dem anderen Ende zusammendrÃ¼cken. Auf ein Backblech legen. Mit Klarsichtfolie locker abdecken und 1 Stunde gehen lassen, bis sich das Volumen verdoppelt hat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="27")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Schritt 3:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="28")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die kleinere RÃ¼hrschÃ¼ssel einsetzen und den K-Haken anbringen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="29")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zutaten der Zutatenliste 3 (Pesto, Peperoni, sonnengetrocknete Tomaten, Oliven, Mozzarella, Oregano, schwarzen Pfeffer) in die RÃ¼hrschÃ¼ssel geben. Geschwindigkeitsstufe 1 einstellen, 20 Sekunden rÃ¼hren und in dieser Zeit auf Geschwindigkeitsstufe 3 erhÃ¶hen, um die Zutaten zu einer Paste zu rÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="30")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die Pizza-Babki:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="31")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die letzten sechs TeigbÃ¤lle zu einem Rechteck (ca. 12 x 7 cm) ausrollen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="32")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Paste gleichmÃ¤ÃŸig Ã¼ber die TeigstÃ¼cke verteilen. Dabei rundum einen Rand von ca. 0,5 cm lassen. Die TeigstÃ¼cke vom langen Ende her zu einer Schlange fest aufrollen. Alle NÃ¤hte und Enden zusammendrÃ¼cken. Mit einem scharfen Messer die Teigschlangen der LÃ¤nge nach halbieren. Die beiden halbierten Teigschlangen mit der gefÃ¼llten Seite nach oben zu einem Zopf flechten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="33")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Hefezopf langziehen (25 cm). Beide Enden zusammenfÃ¼hren, sodass sie sich Ã¼berlappen und in der Mitte ein Loch entsteht. Ein Teigende in das Loch geben und mit dem anderen Ende zusammendrÃ¼cken. Auf ein Backblech legen. Mit Klarsichtfolie locker abdecken und 1 Stunde gehen lassen, bis sich das Volumen verdoppelt hat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="34")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Schritt 4:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="35")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 190 Â°C Ober-/Unterhitze vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="36")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Klarsichtfolie entfernen. Babki mit verquirltem Ei (Eistreiche) bestreichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="37")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im Backofen 12 bis 15 Minuten goldbraun backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="38")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Warm servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="39")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die herzhaften Babki schmecken nicht nur kÃ¶stlich, sondern sind auch ein echter Hingucker auf dem Esstisch.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(60)
-assoc = AssociationRHhat(position="40")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Ofen auf 170 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Ofen auf 170 °C Ober-/Unterhitze vorheizen.  Die TULIP Bacon-Scheiben auf ein mit Backpapier ausgelegtes Backblech legen.  Die Barbecuesauce mit braunem Zucker und Paprikapulver mischen. Die TULIP Bacon-Scheiben mit der Mischung gleichmäßig glasieren und im Ofen etwa 25 Min. auf der mittleren Einschubleiste kross backen. Anschließend auf Küchenpapier geben und 3 Min. ruhen lassen.  Mehl, Milch, Zucker, Eier, Butter und Salz zu einem glatten und dicken Pfannkuchenteig verrühren.  Die Pfannkuchen in einer heißen beschichteten Pfanne (Größe nach Belieben) bei mittlerer Hitze von beiden Seiten goldbraun backen.  Serviervorschlag: Pfannkuchen mit Frischkäse, Ahornsirup und den knusprigen, glasierten Baconstreifen servieren. Nach Belieben mit frischen Johannisbeeren dekorieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die TULIP Bacon-Scheiben auf ein mit Backpapier ausgelegtes Backblech legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Barbecuesauce mit braunem Zucker und Paprikapulver mischen. Die TULIP Bacon-Scheiben mit der Mischung gleichmÃ¤ÃŸig glasieren und im Ofen etwa 25 Min. auf der mittleren Einschubleiste kross backen. AnschlieÃŸend auf KÃ¼chenpapier geben und 3 Min. ruhen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mehl, Milch, Zucker, Eier, Butter und Salz zu einem glatten und dicken Pfannkuchenteig verrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Pfannkuchen in einer heiÃŸen beschichteten Pfanne (GrÃ¶ÃŸe nach Belieben) bei mittlerer Hitze von beiden Seiten goldbraun backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Serviervorschlag: Pfannkuchen mit FrischkÃ¤se, Ahornsirup und den knusprigen, glasierten Baconstreifen servieren. Nach Belieben mit frischen Johannisbeeren dekorieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(61)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das HÃ¼hnerfleisch in kleine StÃ¼cke schneiden und im Topf kurz anbraten. Die FrÃ¼hlingszwiebeln in Ringe schneiden und den Ingwer in kleine StÃ¼cke. Beides zufÃ¼gen und kurz mitbraten.")
+handob = handlungsschritt(text="Das Hühnerfleisch in kleine Stücke schneiden und im Topf kurz anbraten. Die Frühlingszwiebeln in Ringe schneiden und den Ingwer in kleine Stücke. Beides zufügen und kurz mitbraten.  Mit der Hühnerbrühe ablöschen. Kokosmilch, Sojasauce und Currypaste hinzufügen. Das Zitronengras längs kreuzweise einschneiden, sodass es noch am Stück bleibt, dann kann man es später einfacher wieder entnehmen, und in die Suppe geben.  5 Minuten kochen, das restliche Gemüse und die Gewürze hinzufügen. Die Nudeln nach Packungsangabe kochen und hinzufügen.  Wer mag, kann noch ein wenig frischen Koriander aufheben und am Schluss über die Suppe streuen. Ich habe ab und zu noch getrocknete Chilifäden zum Garnieren verwendet.  Anmerkung der Redaktion:  Viki röstet die Currypaste bereits zusammen mit Ingwer, Chili und etwas Speiseöl an, dadurch wird der Geschmack intensiver. Anstatt Frühlingszwiebeln könnt ihr auch Schalotten oder Zwiebeln verwenden. Sie gibt die Paprikastreifen etwas früher, als die Pilze und die Nudeln in die Suppe, damit sie schön gar werden und so besser zu verdauen sind. Viki gibt zum Verfeinern noch zwei Prisen Zucker in die Suppe. Zum Anrichten drapiert Viki zunächst ein paar Nudeln und etwas Gemüse in einen tiefen Teller, bevor sie ihn mit Suppe aufgießt. Zum Schluss garniert sie die Suppe mit frischem Koriander und etwas Minze.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Mit der HÃ¼hnerbrÃ¼he ablÃ¶schen. Kokosmilch, Sojasauce und Currypaste hinzufÃ¼gen. Das Zitronengras lÃ¤ngs kreuzweise einschneiden, sodass es noch am StÃ¼ck bleibt, dann kann man es spÃ¤ter einfacher wieder entnehmen, und in die Suppe geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="5 Minuten kochen, das restliche GemÃ¼se und die GewÃ¼rze hinzufÃ¼gen. Die Nudeln nach Packungsangabe kochen und hinzufÃ¼gen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wer mag, kann noch ein wenig frischen Koriander aufheben und am Schluss Ã¼ber die Suppe streuen. Ich habe ab und zu noch getrocknete ChilifÃ¤den zum Garnieren verwendet.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Anmerkung der Redaktion:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Viki rÃ¶stet die Currypaste bereits zusammen mit Ingwer, Chili und etwas SpeiseÃ¶l an, dadurch wird der Geschmack intensiver. Anstatt FrÃ¼hlingszwiebeln kÃ¶nnt ihr auch Schalotten oder Zwiebeln verwenden. Sie gibt die Paprikastreifen etwas frÃ¼her, als die Pilze und die Nudeln in die Suppe, damit sie schÃ¶n gar werden und so besser zu verdauen sind. Viki gibt zum Verfeinern noch zwei Prisen Zucker in die Suppe. Zum Anrichten drapiert Viki zunÃ¤chst ein paar Nudeln und etwas GemÃ¼se in einen tiefen Teller, bevor sie ihn mit Suppe aufgieÃŸt. Zum Schluss garniert sie die Suppe mit frischem Koriander und etwas Minze.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(62)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mehl, Quark, Backpulver, Milch, Ã–l, Salz und Zucker gut verkneten. Die Ã¼brigen Zutaten zum Teig geben. Noch mal durchkneten und kleine BÃ¤llchen formen. Auf ein Backblech mit Backpapier legen.")
+handob = handlungsschritt(text="Mehl, Quark, Backpulver, Milch, Öl, Salz und Zucker gut verkneten. Die übrigen Zutaten zum Teig geben. Noch mal durchkneten und kleine Bällchen formen. Auf ein Backblech mit Backpapier legen.  Für 30 - 40 Min. bei 180 °C Ober-/Unterhitze in den heißen Ofen geben.  Tipp: Für Feiern mache ich mindestens die doppelte Menge, kamen dort immer sehr gut an. Die Geschmackszutaten (Röstzwiebeln, Schinken, Käse) sind variabel, auf den Käse würde ich aber nicht verzichten!  Beim Backen muss man hin und wieder gucken, sie werden je nach Herd von unten auch sehr schnell dunkel, aber zu hell sollten sie auch nicht sein. Vorsicht, wenn sie noch warm sind, werden sie gerne stibitzt.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(63)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r 30 - 40 Min. bei 180 Â°C Ober-/Unterhitze in den heiÃŸen Ofen geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(63)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: FÃ¼r Feiern mache ich mindestens die doppelte Menge, kamen dort immer sehr gut an. Die Geschmackszutaten (RÃ¶stzwiebeln, Schinken, KÃ¤se) sind variabel, auf den KÃ¤se wÃ¼rde ich aber nicht verzichten!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(63)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Beim Backen muss man hin und wieder gucken, sie werden je nach Herd von unten auch sehr schnell dunkel, aber zu hell sollten sie auch nicht sein. Vorsicht, wenn sie noch warm sind, werden sie gerne stibitzt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(63)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Der Teig reicht fÃ¼r 3 oder 4 runde Pizzen oder ein Blech.")
+handob = handlungsschritt(text="Der Teig reicht für 3 oder 4 runde Pizzen oder ein Blech.  Alle Zutaten in eine Schüssel geben und mindestens 5 Min. gut durchkneten. Den Teig ca. 30 Min. gehen lassen. Anschließend in 3 - 4 Portionen teilen, die jeweils zu Kugeln geformt werden.  Nun kann es losgehen mit dem Auswellen und Belegen.  Der Teig ist für jegliche Weiterverarbeitung geeignet - ob im Backofen (220°C, ca. 15 - 20 Min.), auf einem Pizzastein (250°C, ca. 10 - 15 Min.) oder in einer Elektropfanne (Stufe 3, erste Seite 3 Min., dann wenden, belegen und noch einmal 3 Min. von der anderen Seite). Sofort servieren.  Ich habe das Rezept von einer italienischen Freundin.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(64)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Alle Zutaten in eine SchÃ¼ssel geben und mindestens 5 Min. gut durchkneten. Den Teig ca. 30 Min. gehen lassen. AnschlieÃŸend in 3 - 4 Portionen teilen, die jeweils zu Kugeln geformt werden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(64)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nun kann es losgehen mit dem Auswellen und Belegen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(64)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Der Teig ist fÃ¼r jegliche Weiterverarbeitung geeignet - ob im Backofen (220Â°C, ca. 15 - 20 Min.), auf einem Pizzastein (250Â°C, ca. 10 - 15 Min.) oder in einer Elektropfanne (Stufe 3, erste Seite 3 Min., dann wenden, belegen und noch einmal 3 Min. von der anderen Seite). Sofort servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(64)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Ich habe das Rezept von einer italienischen Freundin.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(64)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die Sauce das OlivenÃ¶l in einem Topf erhitzen. Das Hackfleisch hineingeben und unter RÃ¼hren so lange braten, bis es braun und krÃ¼melig ist. 1 EL Tomatenmark unterrÃ¼hren und kurz anrÃ¶sten. Mit der GemÃ¼sebrÃ¼he ablÃ¶schen, die Sahne hinzufÃ¼gen und aufkochen lassen. Das restliche Tomatenmark unterrÃ¼hren und die Sauce mindestens 30 Minuten kÃ¶cheln lassen. Danach die Butter darin zerlassen und die Sauce mit Salz, Cayennepfeffer und Parmesan abschmecken.")
+handob = handlungsschritt(text="Für die Sauce das Olivenöl in einem Topf erhitzen. Das Hackfleisch hineingeben und unter Rühren so lange braten, bis es braun und krümelig ist. 1 EL Tomatenmark unterrühren und kurz anrösten. Mit der Gemüsebrühe ablöschen, die Sahne hinzufügen und aufkochen lassen. Das restliche Tomatenmark unterrühren und die Sauce mindestens 30 Minuten köcheln lassen. Danach die Butter darin zerlassen und die Sauce mit Salz, Cayennepfeffer und Parmesan abschmecken.  Die Rigatoni nach Packungsanweisung in reichlich Salzwasser sehr bissfest kochen, dabei gelegentlich umrühren. In ein Sieb abgießen und abtropfen lassen, dann wieder in den Topf geben.  Den Schinken in 1/2 bis 1 cm breite Streifen schneiden. Die Sauce zu den Rigatoni geben und alles erhitzen. Die Schinkenstreifen unterrühren und nur kurz darin erwärmen.  Den Backofen auf 180 °C vorheizen. Die Nudelmischung in eine große Auflaufform geben oder auf vier kleine ofenfeste Formen gleichmäßig verteilen. Den geriebenen Edamer darüber streuen. Auf der mittleren Schiene überbacken, bis der Käse goldgelb ist.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(65)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Rigatoni nach Packungsanweisung in reichlich Salzwasser sehr bissfest kochen, dabei gelegentlich umrÃ¼hren. In ein Sieb abgieÃŸen und abtropfen lassen, dann wieder in den Topf geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(65)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Schinken in 1/2 bis 1 cm breite Streifen schneiden. Die Sauce zu den Rigatoni geben und alles erhitzen. Die Schinkenstreifen unterrÃ¼hren und nur kurz darin erwÃ¤rmen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(65)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 180 Â°C vorheizen. Die Nudelmischung in eine groÃŸe Auflaufform geben oder auf vier kleine ofenfeste Formen gleichmÃ¤ÃŸig verteilen. Den geriebenen Edamer darÃ¼ber streuen. Auf der mittleren Schiene Ã¼berbacken, bis der KÃ¤se goldgelb ist.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(65)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Rinderrouladen aufrollen, waschen und mit KÃ¼chenkrepp trockentupfen. Zwiebeln in Halbmonde, Gurken in LÃ¤ngsstreifen schneiden. Schere und KÃ¼chengarn bereitstellen.")
+handob = handlungsschritt(text="Die Rinderrouladen aufrollen, waschen und mit Küchenkrepp trockentupfen. Zwiebeln in Halbmonde, Gurken in Längsstreifen schneiden. Schere und Küchengarn bereitstellen.  Die ausgebreiteten Rouladen dünn mit Senf bestreichen, salzen und pfeffern. Auf jede Roulade mittig in der Länge ca. 1/2 Zwiebel und 1 1/2 Scheiben Frühstücksspeck sowie 1/2 (evtl. mehr) Gurke verteilen. Nun von beiden Längsseiten etwas einschlagen, dann aufrollen und mit dem Küchengarn wie ein Postpaket verschnüren.  In einer Pfanne das Butterschmalz heiß werden lassen und die Rouladen dann rundherum darin anbraten. Herausnehmen und in einen Schmortopf umfüllen.  Den Sellerie, die restliche Zwiebel, Lauch und die Möhren kleinschneiden und in der Pfanne anbraten. Sobald sie halbwegs blond sind, kurz rühren. Eine sehr dünne Schicht vom Rotwein angießen, nicht mehr rühren und die Flüssigkeit verdampfen lassen. Sobald das Gemüse dann wieder trockenbrät, wieder eine Schicht Wein angießen, kurz rühren und weiter verdampfen lassen. Dies wiederholen, bis die 1/2 Flasche Wein aufgebraucht ist. Auf diese Art wird das Röstgemüse sehr braun (gut für den Geschmack und die Farbe der Soße), aber nicht trocken. Am Schluss mit dem Rinderfond, etwas Salz und Pfeffer und einem guten Schuss Gurkensud auffüllen und dann in den Schmortopf zu den Rouladen geben. Den Topf entweder auf kleiner Flamme oder bei ca. 160 °C Ober-/Unterhitze im heißen Backofen für 1 1/2 Stunden schmoren lassen. Ab und zu evtl. etwas Flüssigkeit zugießen.  Nach 1 1/2 Stunden testen, ob die Rouladen weich sind (einfach mal mit den Kochlöffel ein bisschen draufdrücken, sie sollten sich willig eindrücken lassen - wenn nicht, nochmal eine halbe Stunde weiterschmoren). Dann vorsichtig aus dem Topf heben, warmstellen.  Die Soße durch ein Sieb geben, aufkochen. Ca. 1 EL Senf mit etwas Wasser und der Speisestärke gut verrühren, in die kochende Soße nach und nach unter Rühren eingießen, bis die gewünschte Konsistenz erreicht ist. Die Soße evtl. nochmal mit Salz, Pfeffer, Rotwein, Gurkensud abschmecken.  Pro Portion 830 Kcal")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die ausgebreiteten Rouladen dÃ¼nn mit Senf bestreichen, salzen und pfeffern. Auf jede Roulade mittig in der LÃ¤nge ca. 1/2 Zwiebel und 1 1/2 Scheiben FrÃ¼hstÃ¼cksspeck sowie 1/2 (evtl. mehr) Gurke verteilen. Nun von beiden LÃ¤ngsseiten etwas einschlagen, dann aufrollen und mit dem KÃ¼chengarn wie ein Postpaket verschnÃ¼ren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einer Pfanne das Butterschmalz heiÃŸ werden lassen und die Rouladen dann rundherum darin anbraten. Herausnehmen und in einen Schmortopf umfÃ¼llen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Sellerie, die restliche Zwiebel, Lauch und die MÃ¶hren kleinschneiden und in der Pfanne anbraten. Sobald sie halbwegs blond sind, kurz rÃ¼hren. Eine sehr dÃ¼nne Schicht vom Rotwein angieÃŸen, nicht mehr rÃ¼hren und die FlÃ¼ssigkeit verdampfen lassen. Sobald das GemÃ¼se dann wieder trockenbrÃ¤t, wieder eine Schicht Wein angieÃŸen, kurz rÃ¼hren und weiter verdampfen lassen. Dies wiederholen, bis die 1/2 Flasche Wein aufgebraucht ist. Auf diese Art wird das RÃ¶stgemÃ¼se sehr braun (gut fÃ¼r den Geschmack und die Farbe der SoÃŸe), aber nicht trocken. Am Schluss mit dem Rinderfond, etwas Salz und Pfeffer und einem guten Schuss Gurkensud auffÃ¼llen und dann in den Schmortopf zu den Rouladen geben. Den Topf entweder auf kleiner Flamme oder bei ca. 160 Â°C Ober-/Unterhitze im heiÃŸen Backofen fÃ¼r 1 1/2 Stunden schmoren lassen. Ab und zu evtl. etwas FlÃ¼ssigkeit zugieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach 1 1/2 Stunden testen, ob die Rouladen weich sind (einfach mal mit den KochlÃ¶ffel ein bisschen draufdrÃ¼cken, sie sollten sich willig eindrÃ¼cken lassen - wenn nicht, nochmal eine halbe Stunde weiterschmoren). Dann vorsichtig aus dem Topf heben, warmstellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die SoÃŸe durch ein Sieb geben, aufkochen. Ca. 1 EL Senf mit etwas Wasser und der SpeisestÃ¤rke gut verrÃ¼hren, in die kochende SoÃŸe nach und nach unter RÃ¼hren eingieÃŸen, bis die gewÃ¼nschte Konsistenz erreicht ist. Die SoÃŸe evtl. nochmal mit Salz, Pfeffer, Rotwein, Gurkensud abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion 830 Kcal")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(66)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebeln schÃ¤len und in feine WÃ¼rfel schneiden. Im SonnenblumenÃ¶l glasig anschwitzen. Rote Linsen, Tomaten mit Saft und Kokosmilch hinzufÃ¼gen und gut umrÃ¼hren. Mit der GemÃ¼sebrÃ¼he aufgieÃŸen und die Suppe ca. 20 Minuten kÃ¶cheln.")
+handob = handlungsschritt(text="Die Zwiebeln schälen und in feine Würfel schneiden. Im Sonnenblumenöl glasig anschwitzen. Rote Linsen, Tomaten mit Saft und Kokosmilch hinzufügen und gut umrühren. Mit der Gemüsebrühe aufgießen und die Suppe ca. 20 Minuten köcheln.  Zum Schluss mit Salz, Chili- und Kurkumapulver abschmecken.  Die Suppe schmeckt am nächsten Tag doppelt so gut. Dazu passen Garnelenspieße und Baguette.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(67)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Zum Schluss mit Salz, Chili- und Kurkumapulver abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(67)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Suppe schmeckt am nÃ¤chsten Tag doppelt so gut. Dazu passen GarnelenspieÃŸe und Baguette.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(67)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Mehl mit Kakao und Backpulver in einer RÃ¼hrschÃ¼ssel mischen. Die Ã¼brigen Zutaten fÃ¼r den Teig hinzufÃ¼gen und alles mit einem Mixer zu einem Teig verarbeiten. AnschlieÃŸend zu einer Kugel formen und den Teig in Frischhaltefolie gewickelt mindestens 30 Minuten kaltstellen.")
+handob = handlungsschritt(text="Das Mehl mit Kakao und Backpulver in einer Rührschüssel mischen. Die übrigen Zutaten für den Teig hinzufügen und alles mit einem Mixer zu einem Teig verarbeiten. Anschließend zu einer Kugel formen und den Teig in Frischhaltefolie gewickelt mindestens 30 Minuten kaltstellen.  Inzwischen für die Füllung die Butter in einem Topf zerlassen und abkühlen lassen. Den Boden der Springform fetten. Die Hälfte des Teiges mit einem Nudelholz ausrollen (wer lieber einen etwas dickeren Boden mag, kann auch 2/3 des Teiges verwenden) und eine 26er Springform damit auskleiden. Dabei sollte ein ca. 2 cm hoher Rand entstehen.  Den Quark mit Zucker, Vanillezucker, dem Mark einer Vanilleschote, den Eiern, dem Puddingpulver und der zerlassenen Butter mit einem Schneebesen zu einer gebundenen Masse verrühren, in die Form geben und glatt streichen. Den restlichen Teig in kleine Stücke zupfen und auf der Füllung verteilen.  Die Form auf dem Rost im unteren Drittel in den vorgeheizten Backofen schieben und bei 180°C Ober-/Unterhitze ca. 60 Minuten backen. Nach dem Backen den Kuchen in der Form auf einem Kuchenrost erkalten lassen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(68)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Inzwischen fÃ¼r die FÃ¼llung die Butter in einem Topf zerlassen und abkÃ¼hlen lassen. Den Boden der Springform fetten. Die HÃ¤lfte des Teiges mit einem Nudelholz ausrollen (wer lieber einen etwas dickeren Boden mag, kann auch 2/3 des Teiges verwenden) und eine 26er Springform damit auskleiden. Dabei sollte ein ca. 2 cm hoher Rand entstehen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(68)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Quark mit Zucker, Vanillezucker, dem Mark einer Vanilleschote, den Eiern, dem Puddingpulver und der zerlassenen Butter mit einem Schneebesen zu einer gebundenen Masse verrÃ¼hren, in die Form geben und glatt streichen. Den restlichen Teig in kleine StÃ¼cke zupfen und auf der FÃ¼llung verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(68)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Form auf dem Rost im unteren Drittel in den vorgeheizten Backofen schieben und bei 180Â°C Ober-/Unterhitze ca. 60 Minuten backen. Nach dem Backen den Kuchen in der Form auf einem Kuchenrost erkalten lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(68)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die gehackte Zwiebel in einer Pfanne mit etwas Ã–l anschwitzen. Das Hackfleisch zugeben und krÃ¼melig braten. Mit Salz, Pfeffer, Currypulver, Chilipulver und Knoblauch wÃ¼rzig abschmecken. Das Tomatenmark zugeben und kurz mitrÃ¶sten. Die GemÃ¼sebrÃ¼he angieÃŸen und den wÃ¼rfelig geschnittenen KÃ¼rbis ebenfalls zugeben. Zugedeckt ca. 5 Minuten dÃ¼nsten.")
+handob = handlungsschritt(text="Die gehackte Zwiebel in einer Pfanne mit etwas Öl anschwitzen. Das Hackfleisch zugeben und krümelig braten. Mit Salz, Pfeffer, Currypulver, Chilipulver und Knoblauch würzig abschmecken. Das Tomatenmark zugeben und kurz mitrösten. Die Gemüsebrühe angießen und den würfelig geschnittenen Kürbis ebenfalls zugeben. Zugedeckt ca. 5 Minuten dünsten.  Danach Crème fraîche, Basilikum und die Gnocchi zugeben und alles gut miteinander vermischen. In eine Auflaufform füllen. Den Mozzarella in Scheiben schneiden und darüber verteilen.  Im vorgeheiztem Backrohr bei 200 °C Ober-/Unterhitze ca. 15 Minuten überbacken.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(69)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Danach CrÃ¨me fraÃ®che, Basilikum und die Gnocchi zugeben und alles gut miteinander vermischen. In eine Auflaufform fÃ¼llen. Den Mozzarella in Scheiben schneiden und darÃ¼ber verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(69)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheiztem Backrohr bei 200 Â°C Ober-/Unterhitze ca. 15 Minuten Ã¼berbacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(69)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Backofen auf 250 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Backofen auf 250 °C Ober-/Unterhitze vorheizen.  Knetteig bereiten, ganz dünn ausrollen. Schmand und Crème double mischen, würzen und auf dem Teig verstreichen.  Zwiebeln mit ganz wenig Wasser 1 Minute bei 600 Watt in der Mikrowelle dünsten (durch die hohen Temperaturen beim Backen kann es leicht passieren, dass die Zwiebeln verbrennen - das wird durch diesen Trick vermieden). Zusammen mit dem Speck auf dem Belag verteilen.  Nun 20 Minuten im heißen Ofen auf der unteren Einschubleiste backen. Mit Schnittlauchröllchen bestreut servieren.  Tipp: Wer Kalorien sparen möchte, ersetzt Crème double durch 20%igen Quark.  Reicht für 2 - 3 Personen, je nach Hunger.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Knetteig bereiten, ganz dÃ¼nn ausrollen. Schmand und CrÃ¨me double mischen, wÃ¼rzen und auf dem Teig verstreichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zwiebeln mit ganz wenig Wasser 1 Minute bei 600 Watt in der Mikrowelle dÃ¼nsten (durch die hohen Temperaturen beim Backen kann es leicht passieren, dass die Zwiebeln verbrennen - das wird durch diesen Trick vermieden). Zusammen mit dem Speck auf dem Belag verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nun 20 Minuten im heiÃŸen Ofen auf der unteren Einschubleiste backen. Mit SchnittlauchrÃ¶llchen bestreut servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Wer Kalorien sparen mÃ¶chte, ersetzt CrÃ¨me double durch 20%igen Quark.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Reicht fÃ¼r 2 - 3 Personen, je nach Hunger.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(70)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Fleisch mit je 1 EL Ã–l, Sojasauce und Ingwer gut vermischen und ca. 30 Minuten marinieren. In der Zwischenzeit das GemÃ¼se putzen und schneiden. Das Fleisch in einer beschichteten Pfanne rasch braten und dann zur Seite stellen.")
+handob = handlungsschritt(text="Das Fleisch mit je 1 EL Öl, Sojasauce und Ingwer gut vermischen und ca. 30 Minuten marinieren. In der Zwischenzeit das Gemüse putzen und schneiden. Das Fleisch in einer beschichteten Pfanne rasch braten und dann zur Seite stellen.  Im Wok oder einer großen Pfanne mit hohem Rand die Currypaste in 1 EL Öl anrösten. Die Erdnussbutter unterrühren und schmelzen lassen. Mit Kokosmilch ablöschen, das Gemüse zugeben und alles ca. 15 Minuten köcheln lassen.  In der Zwischenzeit den Reis zubereiten und ausdämpfen lassen.  Kurz vor Ende der Garzeit (das Gemüse soll noch Biss haben) das Fleisch dazugeben und kurz wieder erhitzen. Das Curry mit Palmzucker, Fischsauce (notfalls etwas Salz nehmen) und Zitronengraspaste (soll nicht mitkochen) abschmecken. Nach Belieben Thai-Basilikum darüberstreuen und mit dem Reis servieren.  Die Zusammenstellung des Gemüses kann man ganz nach Geschmack und Verfügbarkeit variieren/ergänzen, z. B. fein geschnittene Wasserkastanien für noch mehr Biss, ein paar kleine Brokkoliröschen oder einige Zuckerschoten (diagonal geteilt, kurz blanchiert oder angebraten) als zusätzlichen Farbtupfer. Es sollten (geputzt und geschnitten gemessen) insgesamt ca. 4 - 5 Handvoll Gemüse sein.  Zitronengraspaste ist geriebenes, in etwas Pflanzenöl eingelegtes Zitronengras. Das angebrochene Glas am besten im Tiefkühlfach aufbewahren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Im Wok oder einer groÃŸen Pfanne mit hohem Rand die Currypaste in 1 EL Ã–l anrÃ¶sten. Die Erdnussbutter unterrÃ¼hren und schmelzen lassen. Mit Kokosmilch ablÃ¶schen, das GemÃ¼se zugeben und alles ca. 15 Minuten kÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit den Reis zubereiten und ausdÃ¤mpfen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kurz vor Ende der Garzeit (das GemÃ¼se soll noch Biss haben) das Fleisch dazugeben und kurz wieder erhitzen. Das Curry mit Palmzucker, Fischsauce (notfalls etwas Salz nehmen) und Zitronengraspaste (soll nicht mitkochen) abschmecken. Nach Belieben Thai-Basilikum darÃ¼berstreuen und mit dem Reis servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zusammenstellung des GemÃ¼ses kann man ganz nach Geschmack und VerfÃ¼gbarkeit variieren/ergÃ¤nzen, z. B. fein geschnittene Wasserkastanien fÃ¼r noch mehr Biss, ein paar kleine BrokkolirÃ¶schen oder einige Zuckerschoten (diagonal geteilt, kurz blanchiert oder angebraten) als zusÃ¤tzlichen Farbtupfer. Es sollten (geputzt und geschnitten gemessen) insgesamt ca. 4 - 5 Handvoll GemÃ¼se sein.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zitronengraspaste ist geriebenes, in etwas PflanzenÃ¶l eingelegtes Zitronengras. Das angebrochene Glas am besten im TiefkÃ¼hlfach aufbewahren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(71)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zubereitung:")
+handob = handlungsschritt(text="Zubereitung:  Backofen auf 180°C vorheizen. Zwiebel abziehen und in Würfel schneiden. Lauch putzen, waschen und in halbe Ringe schneiden. Zucchini und Tomaten waschen, halbieren und Zucchini zusätzlich in Scheiben schneiden.  Öl in einer Pfanne erhitzen und Zwiebelwürfel darin anbraten. Hackfleisch dazugeben und kräftig anbraten. Lauch und Zucchini hinzufügen und mitdünsten. Passierte Tomaten angießen, Kirschtomaten unterheben, mit Salz und Cayennepfeffer abschmecken.  Kartoffelnudeln in Portionsauflaufformen geben und mit der Sauce übergießen.  Aufläufe mit Käse bestreuen und im vorgeheizten Backofen 15-20 Minuten backen (Gas: Stufe 3, Umluft 160°C).  Zubereitungszeit: 30 Minuten  Backzeit: 15-20 Minuten  Pro Portion (bei 3 Portionen):  kJ/kcal: 3647/871  EW: 46,5 g  F: 47,0 g  KH: 66,0 g  BE: 5,0")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Backofen auf 180Â°C vorheizen. Zwiebel abziehen und in WÃ¼rfel schneiden. Lauch putzen, waschen und in halbe Ringe schneiden. Zucchini und Tomaten waschen, halbieren und Zucchini zusÃ¤tzlich in Scheiben schneiden.")
+handob = handlungsschritt(text="1. Wirsing putzen, waschen und in Streifen, Kasseler in Würfel schneiden. Zwiebeln abziehen und in Ringe schneiden. Öl erhitzen, Zwiebeln dazugeben, goldbraun braten und herausnehmen. Wirsing in das verbliebene Bratfett geben und andünsten. Brühe angießen, Kasseler und gebratene Zwiebeln dazugeben und abgedeckt ca. 20 Min. garen.  2. Schupfnudeln und Schmand untermischen und alles mit Senf, Liebstöckel, Salz, Pfeffer und Kümmel abschmecken.  3. Mischung in eine Gratinform (20 x 30 cm) geben, Käse überstreuen und im vorgeheizten Backofen bei 200 °C (Gas: Stufe 4, Umluft 180 °C) ca. 25-30 Min. goldbraun überbacken. Schnittlauch überstreuen und servieren.  Pro Portion (bei 6 Portionen):  kJ/kcal: 2.322/555  EW: 24,3 g  F: 24,5 g  KH: 59,2 g  BE: 4,5")
 db.session.add(handob)
 db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="2")
+rezaus = rezept.query.get(73)
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Ã–l in einer Pfanne erhitzen und ZwiebelwÃ¼rfel darin anbraten. Hackfleisch dazugeben und krÃ¤ftig anbraten. Lauch und Zucchini hinzufÃ¼gen und mitdÃ¼nsten. Passierte Tomaten angieÃŸen, Kirschtomaten unterheben, mit Salz und Cayennepfeffer abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kartoffelnudeln in Portionsauflaufformen geben und mit der Sauce Ã¼bergieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AuflÃ¤ufe mit KÃ¤se bestreuen und im vorgeheizten Backofen 15-20 Minuten backen (Gas: Stufe 3, Umluft 160Â°C).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zubereitungszeit: 30 Minuten")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Backzeit: 15-20 Minuten")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion (bei 3 Portionen):")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kJ/kcal: 3647/871")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 46,5 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 66,0 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(72)
-assoc = AssociationRHhat(position="11")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Vom Wirsing die groben Ã¤uÃŸeren BlÃ¤tter lÃ¶sen, den Wirsing vierteln und den Strunk herausschneiden. Den Wirsing abspÃ¼len und abtropfen lassen, dann in Streifen schneiden.")
+handob = handlungsschritt(text="Vom Wirsing die groben äußeren Blätter lösen, den Wirsing vierteln und den Strunk herausschneiden. Den Wirsing abspülen und abtropfen lassen, dann in Streifen schneiden.  Die Zwiebel abziehen, halbieren und in feine Streifen schneiden. Etwas Öl in einem großen Topf erhitzen und die Zwiebelstreifen darin unter gelegentlichem Rühren anschwitzen. Die Wirsingstreifen zufügen, salzen und mit geschlossenem Deckel dünsten. Die Gemüsebrühe zugießen und ca. 10 – 15 Minuten bissfest schmoren.  Währenddessen das Kasseler in kleine Würfel schneiden, zusammen mit den Schupfnudeln unter den Wirsing mischen. Die Hitze reduzieren, die saure Sahne unterheben, alles mit Senf, Salz, Pfeffer und Kümmel abschmecken. Die Schupfnudel-Wirsing-Mischung in eine Auflaufform (ca. 20 x 30 cm) füllen, mit dem geriebenen Käse und den Schnittlauchröllchen bestreuen.  Im vorgeheizten Backofen bei 200 °C Ober-/Unterhitze ca. 25 Minuten goldbraun überbacken.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(74)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Zwiebel abziehen, halbieren und in feine Streifen schneiden. Etwas Ã–l in einem groÃŸen Topf erhitzen und die Zwiebelstreifen darin unter gelegentlichem RÃ¼hren anschwitzen. Die Wirsingstreifen zufÃ¼gen, salzen und mit geschlossenem Deckel dÃ¼nsten. Die GemÃ¼sebrÃ¼he zugieÃŸen und ca. 10 Â– 15 Minuten bissfest schmoren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(74)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="WÃ¤hrenddessen das Kasseler in kleine WÃ¼rfel schneiden, zusammen mit den Schupfnudeln unter den Wirsing mischen. Die Hitze reduzieren, die saure Sahne unterheben, alles mit Senf, Salz, Pfeffer und KÃ¼mmel abschmecken. Die Schupfnudel-Wirsing-Mischung in eine Auflaufform (ca. 20 x 30 cm) fÃ¼llen, mit dem geriebenen KÃ¤se und den SchnittlauchrÃ¶llchen bestreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(74)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Backofen bei 200 Â°C Ober-/Unterhitze ca. 25 Minuten goldbraun Ã¼berbacken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(74)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="1. Wirsing putzen, waschen und in Streifen, Kasseler in WÃ¼rfel schneiden. Zwiebeln abziehen und in Ringe schneiden. Ã–l erhitzen, Zwiebeln dazugeben, goldbraun braten und herausnehmen. Wirsing in das verbliebene Bratfett geben und andÃ¼nsten. BrÃ¼he angieÃŸen, Kasseler und gebratene Zwiebeln dazugeben und abgedeckt ca. 20 Min. garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="2. Schupfnudeln und Schmand untermischen und alles mit Senf, LiebstÃ¶ckel, Salz, Pfeffer und KÃ¼mmel abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="3. Mischung in eine Gratinform (20 x 30 cm) geben, KÃ¤se Ã¼berstreuen und im vorgeheizten Backofen bei 200 Â°C (Gas: Stufe 4, Umluft 180 Â°C) ca. 25-30 Min. goldbraun Ã¼berbacken. Schnittlauch Ã¼berstreuen und servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion (bei 6 Portionen):")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kJ/kcal: 2.322/555")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 24,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 59,2 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(73)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sauerrahm und CrÃ¨me fraÃ®che mit der BrÃ¼he verrÃ¼hren und diese Mischung in eine groÃŸe Auflaufform fÃ¼llen.")
+handob = handlungsschritt(text="Sauerrahm und Crème fraîche mit der Brühe verrühren und diese Mischung in eine große Auflaufform füllen.  Die Kartoffeln gut waschen und mehrfach einschneiden, aber nicht ganz durchschneiden - sie sollen an der Unterseite noch zusammenhängen. Die Abstände zwischen den Schnitten sollten so ähnlich sein wie bei einem Eierschneider.  Die Kartoffeln mit der geschnittenen Seite nach oben in die Form setzen. Aber nur nebeneinander - nicht übereinander - stapeln, sodass sie etwa zur Hälfte in der Soße sitzen.  Im heißen Backofen bei 200 °C Ober-/Unterhitze ca. 45 - 60 Minuten backen, bis die Kartoffeln fast gar sind.  In der Zwischenzeit die Butter zerlassen. Katenschinken und Rosmarin hinzufügen sowie die Toastbrotwürfel dazumischen. Diese Mischung auf den Kartoffeln verteilen und noch einmal so lange backen, bis die Brotwürfel schön braun sind und die Kartoffeln gar.  Dazu Blattsalat servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Kartoffeln gut waschen und mehrfach einschneiden, aber nicht ganz durchschneiden - sie sollen an der Unterseite noch zusammenhÃ¤ngen. Die AbstÃ¤nde zwischen den Schnitten sollten so Ã¤hnlich sein wie bei einem Eierschneider.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln mit der geschnittenen Seite nach oben in die Form setzen. Aber nur nebeneinander - nicht Ã¼bereinander - stapeln, sodass sie etwa zur HÃ¤lfte in der SoÃŸe sitzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im heiÃŸen Backofen bei 200 Â°C Ober-/Unterhitze ca. 45 - 60 Minuten backen, bis die Kartoffeln fast gar sind.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit die Butter zerlassen. Katenschinken und Rosmarin hinzufÃ¼gen sowie die ToastbrotwÃ¼rfel dazumischen. Diese Mischung auf den Kartoffeln verteilen und noch einmal so lange backen, bis die BrotwÃ¼rfel schÃ¶n braun sind und die Kartoffeln gar.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu Blattsalat servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(75)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln waschen, schÃ¤len und in WÃ¼rfel schneiden. Den Lauch waschen und in Ringe schneiden. Beides in zerlassener Butter leicht anbraten. Die GemÃ¼sebrÃ¼he dazugeben und alles 15 Min. kochen. Evtl. mit dem PÃ¼rierstab ganz leicht pÃ¼rieren (nur ein paar Impulse). Den Lachs in mundgerechte WÃ¼rfel schneiden und zu der Suppe geben. Alles noch einmal 5 Min. ziehen lassen. Die Suppe mit Sahne verfeinern und mit Dill bestreuen. HeiÃŸ servieren.")
+handob = handlungsschritt(text="Die Kartoffeln waschen, schälen und in Würfel schneiden. Den Lauch waschen und in Ringe schneiden. Beides in zerlassener Butter leicht anbraten. Die Gemüsebrühe dazugeben und alles 15 Min. kochen. Evtl. mit dem Pürierstab ganz leicht pürieren (nur ein paar Impulse). Den Lachs in mundgerechte Würfel schneiden und zu der Suppe geben. Alles noch einmal 5 Min. ziehen lassen. Die Suppe mit Sahne verfeinern und mit Dill bestreuen. Heiß servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(76)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="De Tomaten, die WalnÃ¼sse, eine Knoblauchzehe und einen guten Schuss OlivenÃ¶l in einen Mixer geben und daraus ein Pesto herstellen. Mit Salz und Pfeffer wÃ¼rzen.")
+handob = handlungsschritt(text="De Tomaten, die Walnüsse, eine Knoblauchzehe und einen guten Schuss Olivenöl in einen Mixer geben und daraus ein Pesto herstellen. Mit Salz und Pfeffer würzen.  Zwiebel und Knoblauch würfeln, in etwas Olivenöl in einer Pfanne glasig dünsten und mit ein wenig Gemüsebrühe ablöschen. Dann Spinat dazugeben und einige Minuten mitdünsten, bis er zusammenfällt. Mit Salz und Pfeffer würzen.  Den Blätterteig auf einem Backblech ausbreiten und großzügig mit dem Tomatenpesto bestreichen. Danach den Spinat darauf verteilen und von der langen Seite her zu einem Strudel rollen. Wichtig: Mit dem Schluss nach unten auf das Backblech legen, damit er schön zu bleibt.  Mit etwas Wasser bestreichen und bei 200 °C Ober-/Unterhitze backen, bis der Blätterteig goldbraun ist. Das dauert ca. 20 Minuten.  Optional bietet sich natürlich ein Knoblauchdip oder auch eine Tomatensoße dazu an; uns hat es aber auch ohne sehr gut geschmeckt.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(77)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Zwiebel und Knoblauch wÃ¼rfeln, in etwas OlivenÃ¶l in einer Pfanne glasig dÃ¼nsten und mit ein wenig GemÃ¼sebrÃ¼he ablÃ¶schen. Dann Spinat dazugeben und einige Minuten mitdÃ¼nsten, bis er zusammenfÃ¤llt. Mit Salz und Pfeffer wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(77)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den BlÃ¤tterteig auf einem Backblech ausbreiten und groÃŸzÃ¼gig mit dem Tomatenpesto bestreichen. Danach den Spinat darauf verteilen und von der langen Seite her zu einem Strudel rollen. Wichtig: Mit dem Schluss nach unten auf das Backblech legen, damit er schÃ¶n zu bleibt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(77)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mit etwas Wasser bestreichen und bei 200 Â°C Ober-/Unterhitze backen, bis der BlÃ¤tterteig goldbraun ist. Das dauert ca. 20 Minuten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(77)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Optional bietet sich natÃ¼rlich ein Knoblauchdip oder auch eine TomatensoÃŸe dazu an; uns hat es aber auch ohne sehr gut geschmeckt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(77)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r den Reis 1 Teil Reis mit 2 Teilen kaltem Salzwasser in einem Topf mit Deckel aufkochen. Dann die Hitze reduzieren, sodass es gerade eben kÃ¶chelt. Abgedeckt quellen lassen, bis alles Wasser verkocht ist. Das dauert ca. 15 - 20 Minuten.")
+handob = handlungsschritt(text="Für den Reis 1 Teil Reis mit 2 Teilen kaltem Salzwasser in einem Topf mit Deckel aufkochen. Dann die Hitze reduzieren, sodass es gerade eben köchelt. Abgedeckt quellen lassen, bis alles Wasser verkocht ist. Das dauert ca. 15 - 20 Minuten.  1 EL Erdnussöl in eine heiße Pfanne geben. Die Hühnerbrust scharf darin anbraten und aus der Pfanne nehmen. Wieder 1 EL Erdnussöl in dieselbe heiße Pfanne geben, die Currypaste kurz darin anschwitzen und mit der Kokosmilch aufgießen.  Tipp: Es gibt 3 verschiedene Currypasten. Grüne (am schärfsten), rote (mittelscharf) und gelbe (am mildesten). Ich nehme auf jeden Fall einen sauberen Teelöffel, um die Paste aus dem Glas zu nehmen und stelle das geöffnete Glas in den Kühlschrank. So hält es sich mehrere Monate.  Die Erdnussbutter dazugeben, den Knoblauch dazupressen, die gekörnte Gemüsebrühe und die Zuckerschoten dazugeben. Wer keine Zuckerschoten bekommt, kann auch grüne Bohnen nehmen. Zuckerschoten schmecken aber besser.  Die Karotte schälen, je nach Dicke längs halbieren, in Scheiben schneiden und ebenfalls dazugeben. Alles mehrere Minuten köcheln lassen, sodass die Zuckerschoten und die Karotte noch bissfest sind.  Danach die Bambussprossen und das Fleisch wieder dazugeben und noch ein paar Minuten köcheln lassen. Die Speisestärke in kaltem Wasser anrühren und in die köchelnde Soße geben, um sie etwas anzudicken. Zum Schluss die Zitronengraspaste unterrühren und mit Salz würzen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="1 EL ErdnussÃ¶l in eine heiÃŸe Pfanne geben. Die HÃ¼hnerbrust scharf darin anbraten und aus der Pfanne nehmen. Wieder 1 EL ErdnussÃ¶l in dieselbe heiÃŸe Pfanne geben, die Currypaste kurz darin anschwitzen und mit der Kokosmilch aufgieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Es gibt 3 verschiedene Currypasten. GrÃ¼ne (am schÃ¤rfsten), rote (mittelscharf) und gelbe (am mildesten). Ich nehme auf jeden Fall einen sauberen TeelÃ¶ffel, um die Paste aus dem Glas zu nehmen und stelle das geÃ¶ffnete Glas in den KÃ¼hlschrank. So hÃ¤lt es sich mehrere Monate.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Erdnussbutter dazugeben, den Knoblauch dazupressen, die gekÃ¶rnte GemÃ¼sebrÃ¼he und die Zuckerschoten dazugeben. Wer keine Zuckerschoten bekommt, kann auch grÃ¼ne Bohnen nehmen. Zuckerschoten schmecken aber besser.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Karotte schÃ¤len, je nach Dicke lÃ¤ngs halbieren, in Scheiben schneiden und ebenfalls dazugeben. Alles mehrere Minuten kÃ¶cheln lassen, sodass die Zuckerschoten und die Karotte noch bissfest sind.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Danach die Bambussprossen und das Fleisch wieder dazugeben und noch ein paar Minuten kÃ¶cheln lassen. Die SpeisestÃ¤rke in kaltem Wasser anrÃ¼hren und in die kÃ¶chelnde SoÃŸe geben, um sie etwas anzudicken. Zum Schluss die Zitronengraspaste unterrÃ¼hren und mit Salz wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(78)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dieses Grundrezept kann je nach Lust und Laune durch Variieren des Fleisches (z. B. HÃ¼hnerbrust, Putenbrust, Rinderlende oder Schweinefilet) oder mit Fischfilet oder Garnelen und mit verschiedenem GemÃ¼se (z. B. Bambussprossen in Streifen, Sojabohnenkeimlinge, Karotten, Babymais, Zuckerschoten, Thai-Auberginen, Pak Choi o. a.) zu immer neuem Genuss-Erlebnis fÃ¼hren. Lassen Sie Ihrer KreativitÃ¤t freien Lauf! Es eignet sich auch fÃ¼r Vegetarier, da man es auch ausschlieÃŸlich mit vielem verschiedenem GemÃ¼se zubereiten kann.")
+handob = handlungsschritt(text="Dieses Grundrezept kann je nach Lust und Laune durch Variieren des Fleisches (z. B. Hühnerbrust, Putenbrust, Rinderlende oder Schweinefilet) oder mit Fischfilet oder Garnelen und mit verschiedenem Gemüse (z. B. Bambussprossen in Streifen, Sojabohnenkeimlinge, Karotten, Babymais, Zuckerschoten, Thai-Auberginen, Pak Choi o. a.) zu immer neuem Genuss-Erlebnis führen. Lassen Sie Ihrer Kreativität freien Lauf! Es eignet sich auch für Vegetarier, da man es auch ausschließlich mit vielem verschiedenem Gemüse zubereiten kann.  Das Gericht muss nicht im Wok zubereitet werden, es geht genauso gut in einem breiten Topf, da es Suppencharakter hat.  Die Currypaste im heißen Öl sautieren, kurz mit etwas Wasser ablöschen, nach und nach die Kokosmilch dazugeben und immer erst gut verrühren, bevor man mehr dazugibt (bringt eine sehr schöne rote Farbe). Das vorgesehene Fleisch (Fisch oder Garnelen) in mundgerechte Stücke schneiden, dazugeben und ca. 5 Minuten köcheln lassen, bis es gar ist. Garnelen brauchen nur sehr kurze Zeit!  Das in Streifen geschnittene Gemüse der Wahl (egal welches und wie viele Sorten) dazugeben und alles wieder zum Kochen bringen. Alles sollte bissfest bleiben und die Farbe behalten (Pak Choi oder Chinakohl erst kurz vor Ende dazugeben).  Mit der Fischsauce, der hellen Sojasauce und dem Palmzucker abschmecken. Thai-Basilikum-Blätter und Peperoni dazufügen, eine Minute weiterkochen. Nach Belieben und Schärfe-Empfinden die kleingeschnittenen Chili-Röllchen einstreuen.  Das Gericht heiß mit Reis (Basmati, Jasminreis oder thailändischer Duftreis) servieren, als Variation kann man auch roten Reis aus dem Asialaden probieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Das Gericht muss nicht im Wok zubereitet werden, es geht genauso gut in einem breiten Topf, da es Suppencharakter hat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Currypaste im heiÃŸen Ã–l sautieren, kurz mit etwas Wasser ablÃ¶schen, nach und nach die Kokosmilch dazugeben und immer erst gut verrÃ¼hren, bevor man mehr dazugibt (bringt eine sehr schÃ¶ne rote Farbe). Das vorgesehene Fleisch (Fisch oder Garnelen) in mundgerechte StÃ¼cke schneiden, dazugeben und ca. 5 Minuten kÃ¶cheln lassen, bis es gar ist. Garnelen brauchen nur sehr kurze Zeit!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das in Streifen geschnittene GemÃ¼se der Wahl (egal welches und wie viele Sorten) dazugeben und alles wieder zum Kochen bringen. Alles sollte bissfest bleiben und die Farbe behalten (Pak Choi oder Chinakohl erst kurz vor Ende dazugeben).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Mit der Fischsauce, der hellen Sojasauce und dem Palmzucker abschmecken. Thai-Basilikum-BlÃ¤tter und Peperoni dazufÃ¼gen, eine Minute weiterkochen. Nach Belieben und SchÃ¤rfe-Empfinden die kleingeschnittenen Chili-RÃ¶llchen einstreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Gericht heiÃŸ mit Reis (Basmati, Jasminreis oder thailÃ¤ndischer Duftreis) servieren, als Variation kann man auch roten Reis aus dem Asialaden probieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(79)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Tortellini nach Packungsanweisung kochen.")
+handob = handlungsschritt(text="Die Tortellini nach Packungsanweisung kochen.  Den gekochten Schinken in einer tiefen Pfanne in Butter kurz anbraten, dann 400 ml von der Sahne hineingeben und auf kleiner Stufe köcheln lassen. Wenn die Tortellini gar sind, in die Pfanne zur Schinkensahne geben und weiter köcheln lassen.  In der Zwischenzeit in einer kleinen Schüssel das Eigelb mit Parmesan, Muskatnuss, Salz und den restlichen 200 ml Sahne verrühren. Dies dann in die Pfanne zu den Tortellini geben und so lange köcheln lassen, bis die Soße dickflüssig wird. Sofort servieren.  Sehr gehaltvoll, aber der Geschmack ist fantastisch. Ab und zu kann man sich's mal gönnen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(80)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Den gekochten Schinken in einer tiefen Pfanne in Butter kurz anbraten, dann 400 ml von der Sahne hineingeben und auf kleiner Stufe kÃ¶cheln lassen. Wenn die Tortellini gar sind, in die Pfanne zur Schinkensahne geben und weiter kÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(80)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit in einer kleinen SchÃ¼ssel das Eigelb mit Parmesan, Muskatnuss, Salz und den restlichen 200 ml Sahne verrÃ¼hren. Dies dann in die Pfanne zu den Tortellini geben und so lange kÃ¶cheln lassen, bis die SoÃŸe dickflÃ¼ssig wird. Sofort servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(80)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sehr gehaltvoll, aber der Geschmack ist fantastisch. Ab und zu kann man sich's mal gÃ¶nnen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(80)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die ersten sechs Zutaten fÃ¼r die Marinade mischen und die gewaschenen und getrockneten HÃ¤hnchenfilets hineinlegen. Mindestens 1 Std. darin marinieren (geht auch Ã¼ber Nacht).")
+handob = handlungsschritt(text="Die ersten sechs Zutaten für die Marinade mischen und die gewaschenen und getrockneten Hähnchenfilets hineinlegen. Mindestens 1 Std. darin marinieren (geht auch über Nacht).  Kartoffeln schälen, größere Knollen halbieren und in Olivenöl ca. 10 Min. von allen Seiten braun braten.  Die gebratenen Kartoffeln in eine mit Olivenöl ausgestrichene Auflaufform geben.  Knoblauch schälen und klein hacken. Die Zwiebel schälen, halbieren und die Hälften in Ringe schneiden. 1 Zweig Thymian und 1 Zweig Rosmarin waschen und hacken. Zwiebeln, Knoblauch und gehackte Kräuter im Bratfett andünsten, dann über die Kartoffeln geben.  Das Fleisch mit der Marinade auf die Kartoffeln geben und alles im Backofen bei 200 Grad ca. 15 Min. braten. Dann heiße Hühnerbrühe angießen, die Tomaten und zwei Rosmarinzweige im Auflauf verteilen und weitere 30 Min. im Ofen garen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(81)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Kartoffeln schÃ¤len, grÃ¶ÃŸere Knollen halbieren und in OlivenÃ¶l ca. 10 Min. von allen Seiten braun braten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(81)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die gebratenen Kartoffeln in eine mit OlivenÃ¶l ausgestrichene Auflaufform geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(81)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Knoblauch schÃ¤len und klein hacken. Die Zwiebel schÃ¤len, halbieren und die HÃ¤lften in Ringe schneiden. 1 Zweig Thymian und 1 Zweig Rosmarin waschen und hacken. Zwiebeln, Knoblauch und gehackte KrÃ¤uter im Bratfett andÃ¼nsten, dann Ã¼ber die Kartoffeln geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(81)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Fleisch mit der Marinade auf die Kartoffeln geben und alles im Backofen bei 200 Grad ca. 15 Min. braten. Dann heiÃŸe HÃ¼hnerbrÃ¼he angieÃŸen, die Tomaten und zwei Rosmarinzweige im Auflauf verteilen und weitere 30 Min. im Ofen garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(81)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Aus dem Mehl, Zucker, Butter, Ei und Backpulver einen Knetteig herstellen. Den Boden einer 26 cm Springform mit Backpapier auslegen, den Rand einfetten. Den Teig ausrollen und die RÃ¤nder von Hand recht hoch drÃ¼cken.")
+handob = handlungsschritt(text="Aus dem Mehl, Zucker, Butter, Ei und Backpulver einen Knetteig herstellen. Den Boden einer 26 cm Springform mit Backpapier auslegen, den Rand einfetten. Den Teig ausrollen und die Ränder von Hand recht hoch drücken.  Den Backofen am besten jetzt auf 175°C Ober-/Unterhitze vorheizen.  Den Quark kurz geschmeidig rühren, dann nach und nach alle Zutaten zugeben und gut verrühren. Die sehr flüssige Masse in die Springform füllen und den Kuchen 70 Minuten backen.  In der Zwischenzeit das Eiweiß mit dem Puderzucker steif schlagen. Nach 70 Minuten den Kuchen heraus holen und den Eischnee ca. 1 cm dick auf den Belag streichen. Es wird wohl nicht alles davon benötigt! Nochmals 10 Minuten bei gleicher Hitze backen.  Dann den Kuchen etwas abkühlen lassen und den Rand der Springform vorsichtig mit einem Messer lösen. Den Kuchen auf dem Boden der Springform mehrere Stunden abkühlen lassen. Wenn alles funktioniert hat, dann sollten beim Abkühlen auf dem Eiweißguss die Tränen entstehen. Schmecken tut der Kuchen aber auch ohne!")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(82)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Den Backofen am besten jetzt auf 175Â°C Ober-/Unterhitze vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(82)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Quark kurz geschmeidig rÃ¼hren, dann nach und nach alle Zutaten zugeben und gut verrÃ¼hren. Die sehr flÃ¼ssige Masse in die Springform fÃ¼llen und den Kuchen 70 Minuten backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(82)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit das EiweiÃŸ mit dem Puderzucker steif schlagen. Nach 70 Minuten den Kuchen heraus holen und den Eischnee ca. 1 cm dick auf den Belag streichen. Es wird wohl nicht alles davon benÃ¶tigt! Nochmals 10 Minuten bei gleicher Hitze backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(82)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dann den Kuchen etwas abkÃ¼hlen lassen und den Rand der Springform vorsichtig mit einem Messer lÃ¶sen. Den Kuchen auf dem Boden der Springform mehrere Stunden abkÃ¼hlen lassen. Wenn alles funktioniert hat, dann sollten beim AbkÃ¼hlen auf dem EiweiÃŸguss die TrÃ¤nen entstehen. Schmecken tut der Kuchen aber auch ohne!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(82)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die SchafskÃ¤sewÃ¼rfel in ein Sieb gieÃŸen und das Ã–l dabei auffangen. Die Champignons in Scheiben schneiden. Die Paprikaschoten putzen und in Streifen schneiden. Den Knoblauch fein hacken.")
+handob = handlungsschritt(text="Die Schafskäsewürfel in ein Sieb gießen und das Öl dabei auffangen. Die Champignons in Scheiben schneiden. Die Paprikaschoten putzen und in Streifen schneiden. Den Knoblauch fein hacken.  In ca. 3 EL von dem aufgefangenen Öl das Hackfleisch braun und krümelig braten. Die Hälfte der Champignons dazugeben und mit anbraten. Nun auch die Paprikastreifen und den Knoblauch dazugeben und anbraten.  Nach ca. 5 Minuten die Crème fraîche und den Oregano einrühren und mit Salz und Pfeffer würzig abschmecken. Alles in eine feuerfeste Form geben und die restlichen Champignons darauf verteilen. Zuletzt die abgetropften Schafskäsewürfel sowie den zerbröckelten Schafskäse darauf streuen.  Den Auflauf ca. 20 - 30 Minuten im heißen Backofen bei 180 °C Umluft backen.  Dazu passt Tzatziki, Fladenbrot und/oder Reis.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(83)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="In ca. 3 EL von dem aufgefangenen Ã–l das Hackfleisch braun und krÃ¼melig braten. Die HÃ¤lfte der Champignons dazugeben und mit anbraten. Nun auch die Paprikastreifen und den Knoblauch dazugeben und anbraten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(83)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach ca. 5 Minuten die CrÃ¨me fraÃ®che und den Oregano einrÃ¼hren und mit Salz und Pfeffer wÃ¼rzig abschmecken. Alles in eine feuerfeste Form geben und die restlichen Champignons darauf verteilen. Zuletzt die abgetropften SchafskÃ¤sewÃ¼rfel sowie den zerbrÃ¶ckelten SchafskÃ¤se darauf streuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(83)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Auflauf ca. 20 - 30 Minuten im heiÃŸen Backofen bei 180 Â°C Umluft backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(83)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt Tzatziki, Fladenbrot und/oder Reis.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(83)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 200 Â°C Ober-/Unterhitze vorheizen.")
+handob = handlungsschritt(text="Den Backofen auf 200 °C Ober-/Unterhitze vorheizen.  Für die Füllung 1 EL Sesamöl in einer ausreichend großen Pfanne erhitzen. Gemüse in mundgerechte Stücke schneiden, Sprossen abtropfen lassen. Das vegane „Hack“ in der Pfanne krümelig braten. Das Gemüse hinzugeben und alles vermengen. 3 Minuten bei hoher Hitze andünsten und mit Chili Flocken, Salz und Pfeffer würzen.  Die Strudelteigblätter hochkant legen. Auf den unteren Teil mittig etwa 3 EL der Füllung geben. Seiten einklappen und das gesamte Strudelteigblatt vorsichtig einrollen. Auf ein mit Backpapier ausgelegtes Backblech legen. Mit den übrigen Blättern gleich verfahren. Die fertigen Frühlingsrollen mit dem restlichen Sesamöl einpinseln. Wer mag kann etwas Sesam drüberstreuen.  Die Frühlingsrollen im vorgeheizten Backofen 25 - 30 Minuten auf der mittleren einschubleiste goldbraun backen.  Pro Stück  Energie kJ/kcal 1059/253  Eiweiß 12,1 g  Fett 7,6 g  Kohlenhydrate 32 g")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="FÃ¼r die FÃ¼llung 1 EL SesamÃ¶l in einer ausreichend groÃŸen Pfanne erhitzen. GemÃ¼se in mundgerechte StÃ¼cke schneiden, Sprossen abtropfen lassen. Das vegane Â„HackÂ“ in der Pfanne krÃ¼melig braten. Das GemÃ¼se hinzugeben und alles vermengen. 3 Minuten bei hoher Hitze andÃ¼nsten und mit Chili Flocken, Salz und Pfeffer wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die StrudelteigblÃ¤tter hochkant legen. Auf den unteren Teil mittig etwa 3 EL der FÃ¼llung geben. Seiten einklappen und das gesamte Strudelteigblatt vorsichtig einrollen. Auf ein mit Backpapier ausgelegtes Backblech legen. Mit den Ã¼brigen BlÃ¤ttern gleich verfahren. Die fertigen FrÃ¼hlingsrollen mit dem restlichen SesamÃ¶l einpinseln. Wer mag kann etwas Sesam drÃ¼berstreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die FrÃ¼hlingsrollen im vorgeheizten Backofen 25 - 30 Minuten auf der mittleren einschubleiste goldbraun backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Energie kJ/kcal 1059/253")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EiweiÃŸ 12,1 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fett 7,6 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kohlenhydrate 32 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die BrÃ¼he aufkochen lassen, den Reis hineingeben und 15 min kochen. Er sollte dann noch etwas al dente sein. Den Reis abgieÃŸen und abkÃ¼hlen lassen.")
+handob = handlungsschritt(text="Die Brühe aufkochen lassen, den Reis hineingeben und 15 min kochen. Er sollte dann noch etwas al dente sein. Den Reis abgießen und abkühlen lassen.  Tipp: Man kann natürlich auch einen Rest vom Vortag nehmen. Dann aber später mit dem Salz nicht sparen. Der Reis sollte schon schön würzig sein.  Den Käse raspeln, die Möhren putzen und raspeln (ob man Käse und Möhren fein oder grob raspelt, bleibt dem eigenen Gusto überlassen). Die Zwiebeln fein würfeln.  Reis, Käse, Möhren, Zwiebeln und Eier miteinander verrühren. Pfeffer (ruhig reichlich), Salz und Kräuter einrühren. Nun Semmelbrösel einrühren, bis die Masse etwas Konsistenz hat. Dann ca. 15 min quellen lassen. Prüfen, ob die Masse unter Druck in den Händen zu einer Frikadelle geformt werden kann. Wenn ja, anschließend noch leicht in Semmelbröseln wälzen.  In reichlich Butterschmalz bei geringer Hitze vorsichtig von beiden Seiten goldbraun braten. Nach dem Braten auf Küchenkrepp das Fett abtropfen lassen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(85)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Tipp: Man kann natÃ¼rlich auch einen Rest vom Vortag nehmen. Dann aber spÃ¤ter mit dem Salz nicht sparen. Der Reis sollte schon schÃ¶n wÃ¼rzig sein.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(85)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den KÃ¤se raspeln, die MÃ¶hren putzen und raspeln (ob man KÃ¤se und MÃ¶hren fein oder grob raspelt, bleibt dem eigenen Gusto Ã¼berlassen). Die Zwiebeln fein wÃ¼rfeln.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(85)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Reis, KÃ¤se, MÃ¶hren, Zwiebeln und Eier miteinander verrÃ¼hren. Pfeffer (ruhig reichlich), Salz und KrÃ¤uter einrÃ¼hren. Nun SemmelbrÃ¶sel einrÃ¼hren, bis die Masse etwas Konsistenz hat. Dann ca. 15 min quellen lassen. PrÃ¼fen, ob die Masse unter Druck in den HÃ¤nden zu einer Frikadelle geformt werden kann. Wenn ja, anschlieÃŸend noch leicht in SemmelbrÃ¶seln wÃ¤lzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(85)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In reichlich Butterschmalz bei geringer Hitze vorsichtig von beiden Seiten goldbraun braten. Nach dem Braten auf KÃ¼chenkrepp das Fett abtropfen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(85)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="1. Zwiebeln und Knoblauch schÃ¤len und fein wÃ¼rfeln.")
+handob = handlungsschritt(text="1. Zwiebeln und Knoblauch schälen und fein würfeln.  2. Kichererbsen abgießen, abspülen und abtropfen lassen, Rosinen abspülen.  3. Wurzelgemüse schälen und würfeln.  4. Koch-Rührelement und Rührhilfe einsetzen. Olivenöl in die Rührschüssel geben und Programm Eintopf wählen.  5. Hackfleisch nach und nach dazu bröseln, Zwiebeln, Knoblauch und Zucker zugeben und Temperatur auf 160 °C erhöhen.  6. Wurzelgemüse (Suppengrün), Zimt, Kreuzkümmel, Cayennepfeffer zugeben. Während die KCC läuft, mit Tomaten, Kichererbsen, Rosinen und Gemüsebrühe auffüllen.  7. Ende des Programms abwarten und gegebenenfalls mit Salz und Pfeffer abschmecken. Vor dem Servieren Zitronenabrieb zugeben.  Gefällt Dir dieses Rezept? Dann freuen wir uns auf Deine Bewertungs-Sternchen!")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="2. Kichererbsen abgieÃŸen, abspÃ¼len und abtropfen lassen, Rosinen abspÃ¼len.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="3. WurzelgemÃ¼se schÃ¤len und wÃ¼rfeln.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="4. Koch-RÃ¼hrelement und RÃ¼hrhilfe einsetzen. OlivenÃ¶l in die RÃ¼hrschÃ¼ssel geben und Programm Eintopf wÃ¤hlen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="5. Hackfleisch nach und nach dazu brÃ¶seln, Zwiebeln, Knoblauch und Zucker zugeben und Temperatur auf 160 Â°C erhÃ¶hen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="6. WurzelgemÃ¼se (SuppengrÃ¼n), Zimt, KreuzkÃ¼mmel, Cayennepfeffer zugeben. WÃ¤hrend die KCC lÃ¤uft, mit Tomaten, Kichererbsen, Rosinen und GemÃ¼sebrÃ¼he auffÃ¼llen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="7. Ende des Programms abwarten und gegebenenfalls mit Salz und Pfeffer abschmecken. Vor dem Servieren Zitronenabrieb zugeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="GefÃ¤llt Dir dieses Rezept? Dann freuen wir uns auf Deine Bewertungs-Sternchen!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(86)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 175 Â°C - 195 Â°C vorheizen.")
+handob = handlungsschritt(text="Den Backofen auf 175 °C - 195 °C vorheizen.  Zuerst die Schale von den 3 Zitronen abreiben, zwei Zitronen davon auspressen.  Dann Eier und Zucker schaumig rühren. Das Mehl sieben und mit Vanillezucker, Backpulver, Zitronenschale und Margarine nach und nach dazugeben. Alles gut mixen. Den Teig auf ein mit Backpapier ausgelegtes Backblech streichen. In den vorgeheizten Backofen schieben und ca. 20 Min. auf der mittleren Schiene backen.  Nun aus dem Zitronensaft und dem Puderzucker nach und nach eine Glasur mischen - bitte sehr sparsam mit dem Zitronensaft umgehen, die Glasur muss schön dickflüssig sein.  Solange der Kuchen noch warm ist, mit einer Gabel überall einstechen. Somit wird er schön saftig, denn die Glasur kann so einsickern. Dann schnell die Glasur auf dem warmen Kuchen verstreichen und auskühlen lassen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(87)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Zuerst die Schale von den 3 Zitronen abreiben, zwei Zitronen davon auspressen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(87)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dann Eier und Zucker schaumig rÃ¼hren. Das Mehl sieben und mit Vanillezucker, Backpulver, Zitronenschale und Margarine nach und nach dazugeben. Alles gut mixen. Den Teig auf ein mit Backpapier ausgelegtes Backblech streichen. In den vorgeheizten Backofen schieben und ca. 20 Min. auf der mittleren Schiene backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(87)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nun aus dem Zitronensaft und dem Puderzucker nach und nach eine Glasur mischen - bitte sehr sparsam mit dem Zitronensaft umgehen, die Glasur muss schÃ¶n dickflÃ¼ssig sein.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(87)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Solange der Kuchen noch warm ist, mit einer Gabel Ã¼berall einstechen. Somit wird er schÃ¶n saftig, denn die Glasur kann so einsickern. Dann schnell die Glasur auf dem warmen Kuchen verstreichen und auskÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(87)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das HÃ¤hnchenbrustfilet waschen, mit KÃ¼chenpapier abtupfen und in mundgerechte StÃ¼cke schneiden. Das OlivenÃ¶l mit der roten Currypaste in einer beschichteten Pfanne erhitzen und das HÃ¤hnchenfleisch darin von allen Seiten knusprig braten.")
+handob = handlungsschritt(text="Das Hähnchenbrustfilet waschen, mit Küchenpapier abtupfen und in mundgerechte Stücke schneiden. Das Olivenöl mit der roten Currypaste in einer beschichteten Pfanne erhitzen und das Hähnchenfleisch darin von allen Seiten knusprig braten.  Währenddessen die Zucchini waschen und die Karotten schälen. Nun mit einem Sparschäler rundherum die „Bandnudeln“ abschälen, bei den Zucchini möglichst das innere Kerngehäuse übrig lassen, die Karotten können komplett verwendet werden. Sollten die Scheiben zu breit werden, kann man das Gemüse mit einem Messer vor dem Abschälen längs einschneiden.  Das fertig gebratene Hähnchenfleisch herausnehmen und dabei möglichst den Bratsaft in der Pfanne lassen. Die Gemüsebandnudeln in Wasser und Brühe mit dem Bratsaft aufkochen und einige Minuten garen lassen. Derweil die Tomaten würfeln und zusammen mit dem Tomatenmark zum Gemüse geben.  Zum Schluss den Ziegenfrischkäse und das Hähnchenfleisch zugeben und alles noch einmal unter Rühren erhitzen. Mit Salz und Pfeffer abschmecken und servieren.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(88)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="WÃ¤hrenddessen die Zucchini waschen und die Karotten schÃ¤len. Nun mit einem SparschÃ¤ler rundherum die Â„BandnudelnÂ“ abschÃ¤len, bei den Zucchini mÃ¶glichst das innere KerngehÃ¤use Ã¼brig lassen, die Karotten kÃ¶nnen komplett verwendet werden. Sollten die Scheiben zu breit werden, kann man das GemÃ¼se mit einem Messer vor dem AbschÃ¤len lÃ¤ngs einschneiden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(88)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das fertig gebratene HÃ¤hnchenfleisch herausnehmen und dabei mÃ¶glichst den Bratsaft in der Pfanne lassen. Die GemÃ¼sebandnudeln in Wasser und BrÃ¼he mit dem Bratsaft aufkochen und einige Minuten garen lassen. Derweil die Tomaten wÃ¼rfeln und zusammen mit dem Tomatenmark zum GemÃ¼se geben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(88)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zum Schluss den ZiegenfrischkÃ¤se und das HÃ¤hnchenfleisch zugeben und alles noch einmal unter RÃ¼hren erhitzen. Mit Salz und Pfeffer abschmecken und servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(88)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Zucchini waschen und lÃ¤ngs in fingerdicke Scheiben schneiden. In einer Pfanne in OlivenÃ¶l von beiden Seiten anbraten, danach auf KÃ¼chenpapier abtropfen lassen. Oder alternativ die Scheiben mit OlivenÃ¶l bestreichen, ein wenig salzen und auf der obersten Schiene mit der Grillfunktion im Backofen brÃ¤unen. Das dauert allerdings lÃ¤nger.")
+handob = handlungsschritt(text="Zucchini waschen und längs in fingerdicke Scheiben schneiden. In einer Pfanne in Olivenöl von beiden Seiten anbraten, danach auf Küchenpapier abtropfen lassen. Oder alternativ die Scheiben mit Olivenöl bestreichen, ein wenig salzen und auf der obersten Schiene mit der Grillfunktion im Backofen bräunen. Das dauert allerdings länger.  Die Zwiebel in Würfel schneiden und in der Pfanne in wenig Olivenöl glasig dünsten. Die Knoblauchzehe dazu pressen und etwas mitdünsten. Das Hackfleisch hinzugeben und krümelig braten. Wenn das Fleisch Farbe bekommen hat, mit Salz, Pfeffer und Paprikapulver würzen, 1 EL Tomatenmark hinzugeben, unterrühren und eine Minute mit anschwitzen. Die Tomaten hinzugeben und mit Oregano, Thymian, Salz, Pfeffer und Paprika würzen. 10 min auf kleiner Flamme köcheln lassen, zum Schluss die gehackte Petersilie hinzugeben.  Den Frischkäse mit der Milch verrühren, wahlweise auch Sauerrahm unterrühren. Mit Salz, Pfeffer und etwas Muskat würzen, ca. 50 g Streukäse unterrühren.  Eine Lasagneform oder eine andere Auflaufform mit Zucchinischeiben auslegen. Darauf ein paar Löffel Tomaten-Hack-Soße verteilen, darauf eine Schicht Frischkäsesoße, und darauf wieder Zucchinischeiben. Weiter so schichten, bis alle Zutaten verbraucht sind. Die oberste Schicht soll Tomaten-Hack-Soße sein. Diese mit dem restlichen Käse bestreuen.  Die Zucchini-Lasagne im vorgeheizten Backofen bei 200 °C Ober-/Unterhitze in ca. 30 min goldbraun backen.  Dazu passt ein kleiner frischer Salat.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="1")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Die Zwiebel in WÃ¼rfel schneiden und in der Pfanne in wenig OlivenÃ¶l glasig dÃ¼nsten. Die Knoblauchzehe dazu pressen und etwas mitdÃ¼nsten. Das Hackfleisch hinzugeben und krÃ¼melig braten. Wenn das Fleisch Farbe bekommen hat, mit Salz, Pfeffer und Paprikapulver wÃ¼rzen, 1 EL Tomatenmark hinzugeben, unterrÃ¼hren und eine Minute mit anschwitzen. Die Tomaten hinzugeben und mit Oregano, Thymian, Salz, Pfeffer und Paprika wÃ¼rzen. 10 min auf kleiner Flamme kÃ¶cheln lassen, zum Schluss die gehackte Petersilie hinzugeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den FrischkÃ¤se mit der Milch verrÃ¼hren, wahlweise auch Sauerrahm unterrÃ¼hren. Mit Salz, Pfeffer und etwas Muskat wÃ¼rzen, ca. 50 g StreukÃ¤se unterrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine Lasagneform oder eine andere Auflaufform mit Zucchinischeiben auslegen. Darauf ein paar LÃ¶ffel Tomaten-Hack-SoÃŸe verteilen, darauf eine Schicht FrischkÃ¤sesoÃŸe, und darauf wieder Zucchinischeiben. Weiter so schichten, bis alle Zutaten verbraucht sind. Die oberste Schicht soll Tomaten-Hack-SoÃŸe sein. Diese mit dem restlichen KÃ¤se bestreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zucchini-Lasagne im vorgeheizten Backofen bei 200 Â°C Ober-/Unterhitze in ca. 30 min goldbraun backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt ein kleiner frischer Salat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(89)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zucchini schÃ¤len und anschlieÃŸend mit einem SchÃ¤lmesser in Streifen schneiden - also wie Spaghetti bzw. Bandnudeln.")
+handob = handlungsschritt(text="Die Zucchini schälen und anschließend mit einem Schälmesser in Streifen schneiden - also wie Spaghetti bzw. Bandnudeln.  Die Zucchini in etwas Olivenöl anbraten. Inzwischen die Tomaten klein schneiden und dazugeben. Dann das Mineralwasser hinzufügen (das sorgt dafür, dass die Zucchini weicher werden und sich einfach besser um die Gabel wickeln lassen). Tomatenmark und eine beliebige Menge Frischkäse dazugeben (ich empfehle: 2 TL). Salzen, pfeffern und die Kräuter hinzufügen. Eventuell noch würzen (z. B. mit Paprikapulver oder Gyrosgewürz). Noch ein wenig köcheln lassen.")
 db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(90)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zucchini in etwas OlivenÃ¶l anbraten. Inzwischen die Tomaten klein schneiden und dazugeben. Dann das Mineralwasser hinzufÃ¼gen (das sorgt dafÃ¼r, dass die Zucchini weicher werden und sich einfach besser um die Gabel wickeln lassen). Tomatenmark und eine beliebige Menge FrischkÃ¤se dazugeben (ich empfehle: 2 TL). Salzen, pfeffern und die KrÃ¤uter hinzufÃ¼gen. Eventuell noch wÃ¼rzen (z. B. mit Paprikapulver oder GyrosgewÃ¼rz). Noch ein wenig kÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(90)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffeln und MÃ¶hren schÃ¤len und in kleine StÃ¼cke schneiden. Die Paprikaschoten ebenfalls klein schneiden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(1)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Ã–l in einer Pfanne erhitzen und das Hackfleisch krÃ¼melig braten. Mit den Dosentomaten, Tomatenmark und der BrÃ¼he ablÃ¶schen. Kartoffeln, MÃ¶hren und die Paprika hinzufÃ¼gen. Alles zugedeckt ca. 40 min. bei mittlerer Hitze kÃ¶cheln lassen. Zum Reduzieren evtl. zusÃ¤tzlich ca. 10 min. ohne Deckel kÃ¶cheln lassen. Am Schluss mit den GewÃ¼rzen abschmecken und den Schmand unterrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(1)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 200 Â°C Umluft vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(2)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den BlÃ¤tterteig auslegen und mit dem FrischkÃ¤se bestreichen. Den RÃ¤ucherlachs gleichmÃ¤ÃŸig darauf verteilen. Mit etwas Dill bestreuen und zu einer Schnecke rollen. Mit einem sehr scharfen Messer in gleichmÃ¤ÃŸige dicke Scheiben (ca. 1 cm) schneiden, dann nebeneinander auf einem mit Backpapier ausgelegten Backblech verteilen und mit dem verquirlten Ei bestreichen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(2)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im heiÃŸen Backofen auf mittlerer Schiene ca. 20 - 25 Minuten backen. Vor dem Servieren abkÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(2)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Anstatt Lachs, FrischkÃ¤se und Dill kann man auch gerÃ¤ucherten Schinken verwenden. Dieser ist jedoch etwas trockener und benÃ¶tigt nur 15 - 20 Minuten im Backofen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(2)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den BlÃ¤tterteig ausrollen und eine TeighÃ¤lfte mit gut der HÃ¤lfte des Schmands bestreichen. Die HÃ¤lfte der SchinkenwÃ¼rfel und des KÃ¤ses darauf verteilen. Die Seite des BlÃ¤tterteiges, die nicht belegt ist, Ã¼ber die andere Seite klappen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(3)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wiederum die HÃ¤lfte des Teiges mit dem restlichen Schmand bestreichen und die SchinkenwÃ¼rfel und KÃ¤seraspel darauf geben. Die unbestrichene TeighÃ¤lfte darÃ¼ber klappen. Den BlÃ¤tterteig in Streifen schneiden. Vorsichtig spiralfÃ¶rmig drehen und auf ein mit Backpapier belegtes Blech legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(3)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im heiÃŸen Backofen bei 180 Â°C Ober-/Unterhitze ca. 25 Minuten backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(3)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Variante: Sehr gut schmecken diese Stangen auch, wenn man statt Schinken gerÃ¤ucherten Lachs verwendet. DafÃ¼r braucht man dann ca. 180 g.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(3)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 180 Â°C HeiÃŸluft vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(4)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den BlÃ¤tterteig aus der Packung nehmen und in ca. 4 x 4 cm groÃŸe Quadrate schneiden. Die Quadrate auf ein mit Backpapier belegtes Blech legen. Mit etwas Milch bestreichen. Tomatenscheiben darauflegen, dabei einen kleinen Rand freilassen und pfeffern.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(4)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In den vorgeheizten Backofen auf die mittlere Einschubleiste schieben und ca. 15 - 20 Min. backen, bis die RÃ¤nder leicht gebrÃ¤unt sind.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(4)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit KnoblauchwÃ¼rfelchen mit OlivenÃ¶l und Basilikum verrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(4)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die fertig gebackenen Quadrate anschlieÃŸend mit Fleur de Sel bestreuen und mit der Knoblauch-Basilikumpaste bestreichen. Entweder sofort servieren oder auch kalt genieÃŸen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(4)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die TULIP Bacon-Scheiben in etwa 5 cm groÃŸe StÃ¼ckchen schneiden. In eine Pfanne legen und 2 Min. bei krÃ¤ftiger Hitze braten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(5)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kartoffeln, Zwiebeln und Butter dazugeben und weitere 7 Min. bei mittlerer Hitze braten, bis alles knusprig und goldbraun ist. Mit Salz und Pfeffer abschmecken und das Gericht warmhalten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(5)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="WÃ¤hrenddessen das Ã–l in der Pfanne erhitzen, Eier in die Pfanne schlagen und etwa 6 Min. braten. AnschlieÃŸend mit Salz wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(5)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Gericht mit Parmesan und Thymian bestreuen und sofort mit den Spiegeleiern servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(5)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Als Beilage passen eingelegte Rote Beete dazu.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(5)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das Butterschmalz in einer tiefen Pfanne erhitzen. Das Gulasch im Butterschmalz scharf anbraten und mit Salz, Pfeffer und Paprikapulver wÃ¼rzen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(6)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wenn das Fleisch eine schÃ¶ne Farbe angenommen hat und das Wasser verdampft ist, die gehackte Zwiebel, die gepresste Knoblauchzehe und die geriebene Karotte sowie den Senf und das Tomatenmark dazugeben und kurz weiterbraten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(6)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AnschlieÃŸend mit dem Bier ablÃ¶schen und einkochen lassen. Mit der GemÃ¼sebrÃ¼he auffÃ¼llen und mit Deckel ca. 1 Stunde kÃ¶cheln lassen (bei Verwendung eines Schnellkochtopfes ca. 35 min).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(6)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Etwa 5 min. vor Ende der Garzeit die CrÃ¨me fraÃ®che einrÃ¼hren und nach Bedarf mit etwas SoÃŸenbinder andicken. Vor dem Servieren nochmal abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(6)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Als Beilage passen SpÃ¤tzle, Reis, Kartoffelbrei oder Salzkartoffeln")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(6)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die geschÃ¤lte Zwiebel wÃ¼rfeln und in einem grÃ¶ÃŸeren Topf in OlivenÃ¶l leicht anrÃ¶sten, Faschiertes dazugeben und krÃ¼melig braten. Die geschÃ¤lten Kartoffeln in kleine WÃ¼rfel schneiden, in den Topf geben und mit BrÃ¼he und Dosentomaten aufgieÃŸen - die Kartoffeln und spÃ¤ter das GemÃ¼se sollten immer leicht bedeckt sein - ansonsten BrÃ¼he nachfÃ¼llen. Gepressten Knoblauch, viel gemahlenen Pfeffer und KrÃ¤uter (z.B. getrockneten Majoran, Thymian, Oregano gemischt) dazugeben und leicht kochen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(7)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit zuerst die Karotten in dÃ¼nne Scheibchen schneiden und nach ca. 15 Minuten in den Topf geben. Die Paprikaschote in kleine WÃ¼rfel oder Steifen schneiden und den geputzten Porree (ich verwende gerne den vorgeputzten) in Scheiben schneiden und nach weiteren 10 Minuten dazugeben und noch ca. 10 Minuten kÃ¶cheln lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(7)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Eintopf gut mit KrÃ¤utersalz abschmecken und mit Petersilie bestreut servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(7)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kochzeit richtet sich natÃ¼rlich ein wenig nach der GrÃ¶ÃŸe der Kartoffel- und GemÃ¼sestÃ¼ckchen und wie knackig man es mag.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(7)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Tipp: Wer mÃ¶chte, ersetzt das eine oder andere GemÃ¼se durch Mais, Erbsen oder BrokkolirÃ¶schen oder gibt zusÃ¤tzlich etwas davon dazu und nimmt vom anderen GemÃ¼se dafÃ¼r weniger.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(7)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die frischen Kartoffeln werden ausgiebig gewaschen und dann wird ausprobiert, auf welcher Seite sie am stabilsten liegen. Jetzt von oben ca. alle drei Millimeter bis fast ganz durch mit einem scharfen und feinen Messer einschneiden. Die Kartoffeln nun auf ein Backblech mit Backpapier legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Butter wird vorsichtig im Topf bei schwacher Hitze geschmolzen. Sie darf auf keinen Fall braun werden oder verbrennen. In die Butter werden nun der Knoblauch, der Rosmarin, das Meersalz, der KreuzkÃ¼mmel und der Cayennepfeffer grÃ¼ndlich untergerÃ¼hrt. Leicht warm (und flÃ¼ssig) halten und 5 Minuten durchziehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 230 Grad (mÃ¶glichst Umluft) vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Jetzt wird die Butter mit einem TeelÃ¶ffel oder Backpinsel Ã¼ber die Kartoffeln gegeben. Nicht alles verwenden, weil die zweite HÃ¤lfte nach ca. 25 Minuten Backzeit nochmal Ã¼ber die Kartoffeln gegeben wird. Jetzt kommt das Blech mit den Kartoffeln auf der mittleren Position in den vorgeheizten Backofen. Nach der HÃ¤lfte der Garzeit nochmals mit der Buttermarinade Ã¼bergieÃŸen oder bepinseln. Gesamtbackzeit ca. 50 Minuten. Bei grÃ¶ÃŸeren Kartoffeln die Backzeit ggf. verlÃ¤ngern.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In der Zwischenzeit wird der Quark mit der Sahne, den KrÃ¤utern gemÃ¤ÃŸ Zutatenliste und der Schalotte verrÃ¼hrt und mit Salz und Pfeffer abgeschmeckt.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Jetzt werden die Kartoffeln auf Tellern angerichtet und zur Deko noch mit ein wenig grobem Meersalz Ã¼berstreut. Noch auf jeden Teller ein Klacks vom KrÃ¤uterquark geben - FERTIG.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(8)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="1. Zwiebel abziehen und in kleine WÃ¼rfel schneiden. Hackfleisch und Zwiebeln in erhitztem Ã–l ca. 5 Minuten anbraten, mit Senf und Ketchup verrÃ¼hren, mit Salz und Pfeffer abschmecken und auskÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="2. Tomaten waschen und vierteln, Gurken grob hacken. Pizzateig entrollen und in 12 Rechtecke schneiden (ca. 9 x 9 cm). Hackfleisch-Mischung, Cheddar, Tomaten und Gurken mittig auf den TeigstÃ¼cken verteilen und Teig Ã¼ber der FÃ¼llung zusammenfalten. TeigrÃ¤nder gut zusammendrÃ¼cken, sodass keine Ã–ffnung mehr bleibt und mit der verschlossenen Seite nach unten in gefettete Mulden eines Muffinblechs legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="3. Muffins mit Milch bestreichen, mit Sesam bestreuen und im vorgeheizten Backofen bei 180 Â°C (Umluft: 160 Â°C) ca. 35 Minuten backen. Cheese-Burger-Muffins etwas abkÃ¼hlen lassen, aus der Form lÃ¶sen und lauwarm, nach Wunsch mit Burgersauce und Ketchup, servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro StÃ¼ck:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kJ/kcal: 917/220")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 10,9 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 16,8 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(9)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Ã–l im Wok erhitzen, Knoblauch und Ingwer kurz darin anbraten. Dann die Fleischstreifen in den Wok geben und krÃ¤ftig anbraten. Nun alle Ã¼brigen Zutaten, bis auf die Lauchzwiebeln dazugeben und ca. 10 Minuten durchgaren. Achtung bei 4 TL Sambal Oelek wird es ganz schÃ¶n scharf!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(10)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Evtl. nochmals mit Zucker, Zitronensaft und Sojasauce abschmecken, nun die Lauchzwiebeln unterrÃ¼hren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(10)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Als Beilage eignet sich Reis, ein GemÃ¼securry und Raita oder Karottensalat mit Ingwer.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(10)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In Indien haben wir zu diesem Gericht extra Limettenachtel zum NachwÃ¼rzen bekommen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(10)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Ofen auf 200 Â°C Ober-/Unterhitze (Umluft 180 Â°C) vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebel und den Knoblauch sehr fein schneiden. Die Chilischote entkernen und ebenso fein hacken. Die Kirschtomaten waschen und halbieren. Den Parmesan reiben und den Mozzarella grob wÃ¼rfeln. Die BasilikumblÃ¤tter abzupfen, waschen und trocken tupfen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="In einem groÃŸen Topf Salzwasser zum Kochen bringen und die Nudeln darin laut Packungsangabe al dente garen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="WÃ¤hrenddessen in einer groÃŸen Pfanne OlivenÃ¶l erhitzen und Zwiebel, Knoblauch und Chilischote darin anschwitzen. Die passierten Tomaten hinzufÃ¼gen und die Sauce ein paar Minuten leicht kÃ¶cheln lassen. Dann die Sahne und den geriebenen Parmesan unterrÃ¼hren und die Sauce mit Salz, Pfeffer und einer ordentlichen Prise Zucker abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Wenn die Nudeln soweit sind, diese abgieÃŸen und in die Pfanne zur Sauce geben. Die Pfanne von der Hitze nehmen und die halbierten Kirschtomaten und die HÃ¤lfte der MozzarellawÃ¼rfel unterheben. Die BasilikumblÃ¤tter in Streifen schneiden und ebenfalls unterheben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Alles zusammen in eine Auflaufform geben, mit dem restlichen Mozzarella bestreuen und ca. 20 Minuten auf der mittleren Schiene im heiÃŸen Backofen gratinieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu passt zum Beispiel ein grÃ¼ner Salat und Knoblauchbaguette.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(11)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eine flache Gratinform mit Butter einfetten. Den Knoblauch schÃ¤len. Entweder fein wÃ¼rfeln und in der Form verteilen oder direkt in die Form pressen. Die Kartoffeln schÃ¤len und in feine Scheiben schneiden (ich nehme dafÃ¼r einen Gurkenhobel, das geht am schnellsten).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(12)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die HÃ¤lfte der Kartoffelscheiben in die Form schichten. Mit KrÃ¤utersalz und frisch geriebenem Muskat leicht wÃ¼rzen, anschlieÃŸend die restlichen Kartoffeln darauf schichten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(12)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Sahne und die Milch mischen. Mit dem GemÃ¼sebrÃ¼hepulver, KrÃ¤utersalz, Muskat und Pfeffer krÃ¤ftig wÃ¼rzen. Diese Mischung Ã¼ber die Kartoffeln geben. ButterflÃ¶ckchen auf dem Gratin verteilen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(12)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im vorgeheizten Backofen bei 180 Â°C Ober-/Unterhitze ca. 1 Stunde backen. HeiÃŸ servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(12)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="RindfleischwÃ¼rfel im Butterschmalz 5 Minuten anbraten, dabei umrÃ¼hren, dann die Zwiebeln und KnoblauchstÃ¼cke dazugeben, weitere 5 Minuten mitdÃ¼nsten. Mit Rinderbouillon und Rotwein ablÃ¶schen, mit Salz, Pfeffer, Zucker, Paprikapulver, LorbeerblÃ¤ttern, Tomatenmark und Majoran wÃ¼rzen. Dann bei geschlossenem Deckel ca. 60 Minuten bei kleiner Hitze schmoren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(13)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Kartoffel-, Paprika und KarottenstÃ¼cke zugeben und weitere ca. 20 Minuten kÃ¶cheln lassen, bis das GemÃ¼se gar ist. Dann Petersilie unterrÃ¼hren und heiÃŸ servieren")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(13)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu schmeckt Baguette.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(13)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zutaten fÃ¼r den Knetteig in eine SchÃ¼ssel geben, rasch zusammenkneten und zur Seite stellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(14)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die FÃ¼llung Margarine, Zucker, Vanillezucker, Puddingpulver und Eier in einer SchÃ¼ssel verrÃ¼hren. Dann den Quark und die saure Sahne untermischen. Die sÃ¼ÃŸe Sahne steif schlagen und unterheben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(14)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf 180 Â°C Ober-/Unterhitze vorheizen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(14)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Knetteig in einer gefetteten 26er Springform auslegen, etwa 2 - 3 cm am Rand hochziehen. Nun die FÃ¼llung in die Form geben, glatt streichen und im heiÃŸen Backofen 1 Stunde backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(14)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Achtung: Den Kuchen erst nach dem vÃ¶lligen Erkalten aus der Form nehmen, da unmittelbar nach dem Herausnehmen aus dem Backofen die Konsistenz der Quarkmasse noch zu weich ist.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(14)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach unzÃ¤hligen Feldversuchen, reichlich Google-Recherche und Restaurant-Spionage habe ich endlich ein Rezept entwickelt, das absolut authentisch und lecker schmeckt - eben wie in Bella Italia!")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="ZunÃ¤chst das Mehl mit dem Salz sieben und es in eine TeigrÃ¼hrmaschine oder einen Brotbackautomaten mit Teigfunktion fÃ¼llen. Nun die Hefe in dem lauwarmen Wasser auflÃ¶sen und anschlieÃŸend zum Mehl-Salz-Gemisch geben (Anmerkung des Chefkoch.de Teams Rezeptbearbeitung: Die angegebene Hefemenge stimmt und es handelt sich um frische Hefe).")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AnschlieÃŸend die Zutaten in 20 (!) Minuten zu einem elastischen, homogenen Teig verkneten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Anmerkung: Eine elektrische Hilfe ist hier fast schon Pflicht, zur Not tut es auch ein HandrÃ¼hrgerÃ¤t mit Knethaken. Bitte nicht verzweifelt mit der bloÃŸen Hand kneten, der Teig erreicht so einfach nicht die gewÃ¼nschte Weichheit und Konsistenz.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nach dem Kneten den Teig mit einem feuchten Tuch abdecken und zwei Stunden ruhen lassen. AnschlieÃŸend in vier StÃ¼cke zu je 200 g teilen, diese zu Kugeln formen und wieder abgedeckt weitere sechs Stunden gehen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Was ist nun das Besondere an diesem Teig-Rezept? Das Geheimnis liegt nicht in erlesenen Zutaten wie teurem Pizzamehl oder hochwertigem OlivenÃ¶l und auch nicht in Ã¼berflÃ¼ssigen Ingredienzen wie Bier, Zucker oder Eiern. Vielmehr erreicht man die geschmeidige Textur durch langes maschinelles Kneten! Die extrem geringe Menge Hefe sorgt zusammen mit der langen GÃ¤rung fÃ¼r einen Ã¤uÃŸerst aromatischen Teig.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="AbschlieÃŸend noch ein paar Tipps fÃ¼r weitere Verarbeitung:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Teig so dÃ¼nn wie mÃ¶glich ausrollen oder ziehen! Alles unter 4 mm ist ideal.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="8")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die TomatensoÃŸe einfach eine Dose SchÃ¤ltomaten mit (viel) Knoblauch, Salz, Pfeffer, etwas Zucker, Basilikum und Oregano kalt pÃ¼rieren, nicht kochen. AnschlieÃŸend mittig auf die Pizza auftragen und in kreisrunden Bewegungen mit der Kelle Ã¼ber die komplette Pizza verteilen. Nicht zu viel auftragen! Eine gute Pizza sollte man nicht in TomatensoÃŸe ertrÃ¤nken. Wenn einzelne Teigbereiche keine SoÃŸe abbekommen, macht das Ã¼berhaupt nichts. Lieber etwas weniger als etwas mehr.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="9")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Backofen auf HÃ¶chststufe vorheizen! Meiner schafft knapp 260 Â°C, das Ergebnis war super. Den Teig auf das heiÃŸe Backblech legen (mit Backpapier ist das einfacher) und bereits nach 3 - 4 Minuten ist die Pizza fertig und kann genossen werden.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(15)
-assoc = AssociationRHhat(position="10")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Butterkekse zerbrÃ¶seln, gut mit der flÃ¼ssigen Butter vermischen und die Mischung auf den Boden einer Backform drÃ¼cken. Bei 180 Â°C Ober-/Unterhitze im vorgeheizten Ofen 5 - 10 Minuten vorbacken, dann herausholen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(16)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Den Zucker mit SpeisestÃ¤rke, FrischkÃ¤se und Magerquark cremig rÃ¼hren. Das Ei, die Sahne und den Zitronensaft dazugeben und alles glatt rÃ¼hren. Nicht mit dem RÃ¼hrgerÃ¤t schlagen, sondern langsam cremig rÃ¼hren, das ist ganz wichtig. Die Creme auf den vorgebackenen Boden streichen. Den Kuchen weitere ca. 45 Minuten backen. Wenn der Rand leicht braun ist, herausnehmen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(16)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zutaten fÃ¼r den Guss miteinander verrÃ¼hren, den Guss auf den Kuchen streichen und den Kuchen nochmal 5 Minuten backen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(16)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Am besten Ã¼ber Nacht auskÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(16)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Nudeln in Salzwasser al dente kochen und abkÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(17)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die getrockneten Tomaten in StÃ¼cke schneiden, die Pinienkerne in einer trockenen Pfanne ohne Fett anrÃ¶sten. Rucola und Basilikum waschen und etwas zerrupfen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(17)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Alle Zutaten miteinander mischen und den Salat mindestens 1 Stunde ziehen lassen. Vor dem Servieren nochmal abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(17)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die Lasagneplatten zuerst die sechs Eier aufschlagen und verquirlen. Ein Backblech mit einem Backpapier auslegen, Eiermasse darauf geben und mÃ¶glichst gleichmÃ¤ÃŸig verteilen. Das Blech in den heiÃŸen Ofen schieben und die Eier bei 80 bis 100 Â°C Ober-/Unterhitze stocken lassen. Immer wieder mal rein schauen und gerne die Masse zwischendurch wieder glatt auf dem gesamten Blech verteilen, damit eine gleichmÃ¤ÃŸige Platte entsteht.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(18)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die HackfleischfÃ¼llung inzwischen die Zwiebeln schÃ¤len und hacken, dann glasig anbraten. Das Hackfleisch hinzugeben. Das Fleisch mit etwas Salz und Pfeffer wÃ¼rzen und braten. AnschlieÃŸend mit den gehackten oder frischen Tomaten und den passierten Tomaten ablÃ¶schen. Jetzt nach Belieben abschmecken und ziehen lassen. Ich nutze gerne Oregano, Basilikum, Thymian, eigentlich alles, was grÃ¼n ist und vorhanden ist.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(18)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="FÃ¼r die BÃ©chamelsauce ein wenig Ã–l heiÃŸ werden lassen und mit der Messerspitze Mehl vermengen. Mit der Sahne und ggf einem Schuss Wasser ablÃ¶schen und cremig rÃ¼hren. Mit Salz, Pfeffer und Muskat wÃ¼rzen. Die CrÃ¨me fraÃ®che hinzugeben und zur Seite stellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(18)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Nun die Eiermasse in Scheiben schneiden, die der genutzten Auflaufform entsprechen. Jetzt abwechselnd mit der Hackfleischsauce, Sauce BÃ©chamel und Lasagneplatten in der Auflaufform stapeln. Die letzte Schicht sollte die Bechamel sein, welche dann mit KÃ¤se Ã¼berstreut wird.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(18)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Alles dann so lange bei 180 Â°C Ober-/Unterhitze im heiÃŸen Ofen backen, bis der KÃ¤se goldbraun ist. Da alle Zutaten bereits gar sind, ist die Backzeit variabel, am besten schmeckt es mir so nach circa 20 Minuten.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(18)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="1. Filet trocken tupfen und in 8 Medaillons schneiden. Mit Senf bestreichen, mit Schinken umwickeln und in eine kleine Auflaufform legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="2. Champignons abtropfen lassen und in der Auflaufform zwischen den Medaillons verteilen. Mit Salz und Pfeffer wÃ¼rzen und KrÃ¤uter Ã¼berstreuen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="3. FÃ¼r die Sauce Sahne und CrÃ¨me fraÃ®che verrÃ¼hren, mit Paprikapulver, Salz und Pfeffer wÃ¼rzen, Ã¼ber die Medaillons gieÃŸen und im vorgeheizten Backofen bei 200 Â°C (Gas: Stufe 4, Umluft 180 Â°C) ca. 30 Minuten garen. SpÃ¤tzle nach Packungsanweisung zubereiten und zu dem Filet servieren.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Pro Portion:")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="kJ/kcal: 2503/598")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="EW: 51,6 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="KH: 30,2 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(19)
-assoc = AssociationRHhat(position="7")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Vom Schweinefilet die weiÃŸe Haut entfernen. Das Ã–l mit der Butter erhitzen, nicht zu heiÃŸ werden lassen. Das Fleisch mit Salz und Pfeffer wÃ¼rzen und ca. 10 Minuten von allen Seiten braten. Es soll innen noch rosa sein. Dann herausnehmen und auf einem Teller (damit der Fleischsaft aufgefangen wird) erkalten lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Im Bratfett Zwiebeln, Knoblauch und Schinken gut brÃ¤unen. Die Champignons putzen und in Scheiben schneiden und mitbraten. Dann mit BrÃ¼he ablÃ¶schen und Sahne und CrÃ¨me fraÃ®che oder Schmand und den ausgetretenen Fleischsaft zugeben. Die SoÃŸe mit Salz, Pfeffer, Tomatenmark und Senf krÃ¤ftig abschmecken. Sollte sie zu flÃ¼ssig sein, etwas SpeisestÃ¤rke in wenig kaltem Wasser anrÃ¼hren und unter RÃ¼hren zur kochenden SoÃŸe geben, bis zur gewÃ¼nschten Konsistenz. Die SoÃŸe abkÃ¼hlen lassen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Das kalte Fleisch in 1 cm breite Scheiben schneiden und dann in Streifen. Dann in die SoÃŸe geben, die Petersilie dazu und durchrÃ¼hren, kÃ¼hl stellen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Am nÃ¤chsten Tag das Gericht auf kleiner Flamme erhitzen, jedoch nicht mehr kochen. So bleibt das Fleisch rosa. Die SoÃŸe nochmals abschmecken.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="4")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Dazu schmeckt Baguette, aber auch SpÃ¤tzle und Salat.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="5")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Sollte am Vortag zubereitet werden. Deshalb auch gut geeignet fÃ¼r Feste mit grÃ¶ÃŸerer Personenzahl.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(20)
-assoc = AssociationRHhat(position="6")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Die Zwiebeln schÃ¤len und zusammen mit dem Schinken wÃ¼rfeln. Mit dem FrischkÃ¤se mischen und mit etwas Salz und viel Pfeffer abschmecken. Man kann auch bei Bedarf noch ein wenig KrÃ¤uter der Provence dazugeben.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(21)
-assoc = AssociationRHhat(position="1")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Diese Masse gut auf dem ausgebreiteten BlÃ¤tterteig verteilen. Nun den Teig vorsichtig zusammenrollen und in ca. 3 cm dicke Scheiben schneiden. Die Scheiben auf ein mit Backpapier belegtes Backblech legen.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(21)
-assoc = AssociationRHhat(position="2")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Ca. 10 Min bei 180 Â°C Umluft in den vorgeheizten Backofen schieben - je nach gewÃ¼nschtem BrÃ¤unungsgrad lÃ¤nger oder kÃ¼rzer.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(21)
-assoc = AssociationRHhat(position="3")
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Bei uns gibt es diese kleinen KÃ¶stlichkeiten sonntags heiÃŸ oder kalt oft zum Brunch. Die Rollen lassen sich aber auch gut zu jeder Party mitnehmen. Den Belag kann man nach Geschmack auch jederzeit abwandeln.")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(21)
-assoc = AssociationRHhat(position="4")
+assoc = AssociationRHhat(position=1)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
