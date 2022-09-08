@@ -17,6 +17,7 @@
           <table cellspacing="0" cellpadding="0">
             {%for i in range(0, anz_zutaten) %}
             <tr>
+                <td>{{ r_zutaten[i].verfuegbar }} &nbsp;</td>
                 <td><b> {{ r_zutaten[i].name }} &nbsp; &nbsp;</b> </td>
                 <td> {{ r_zutaten[i].menge }} {{ r_zutaten[i].einheit }} </td>
             </tr>

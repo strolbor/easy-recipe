@@ -13,14 +13,16 @@ from app.rezept import zutat, rezept
 def index():
     return render_template('base.html', title="base")
 
+#Zutatwahl
+choices_array = []
+alleZutaten = []
+
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
     return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings)
 
-choices_array = []
-alleZutaten = []
 
 home_html = "home.html"
 @app.route('/', methods=['GET', 'POST'])
@@ -210,11 +212,15 @@ def rezeptanzeige(ids):
         name = ""
         einheit = ""
         menge = ""
+        verfuegbar = "❌"
 
         def __init__(self, _name, _einheit, _menge):
             self.name = _name
             self.einheit = _einheit
             self.menge = _menge
+            if _name in choices_array:
+                self.verfuegbar = "✅"
+
 
 
     r_tags = ""
