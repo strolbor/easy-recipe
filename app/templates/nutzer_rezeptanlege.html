@@ -2,6 +2,66 @@
 
 
 {% block app_content %}
+<script>
+    $(document).ready(function () {
+
+        var maxBox = 8; //maximum input boxes allowed
+        var hinzufueger = $("#hinzufueger"); //Input boxes wrapper ID
+        var mehrBtn = $("#AddZutatInput"); //Add button ID
+
+        var x = hinzufueger.length; //initlal text box count
+        var FieldCount = 1; //to keep track of text box added
+
+        $(mehrBtn).click(function (e)  //on add input button click
+        {
+            if (x <= maxBox) //max input box allowed
+            {
+                FieldCount++; //text box added increment
+                //add input box
+                $(hinzufueger).append('<div class="row"><p class="col-xs-6"><input type="text" placeholder="Geben Sie bitte eine Zutat an" class="form-control skill_list" name="zutat[]" id="field_' + FieldCount + '""/></p><a href="#" class="btn btn-danger removeclass">-</a></div>');
+                x++; //text box increment
+            }
+            return false;
+        });
+
+        $("body").on("click", ".removeclass", function (e) { //user click on remove text
+            if (x > 1) {
+                $(this).parent('div').remove(); //remove text box
+                x--; //decrement textbox
+            }
+            return false;
+        })
+        $('#submit').click(function () {
+            $.ajax({
+                url: "/postskill",
+                method: "POST",
+                data: $('#add_zutat').serialize(),
+                success: function (data) {
+                    //alert(data)
+                    //$('#resultbox').html(data);
+                    $('#add_zutat')[0].reset();
+                }
+            });
+        });
+    });
+</script>
+<div class="form-group">
+    <!--<form name="add_skills" id="add_skills">-->
+    <form name="add_zutat" id="add_zutat">
+        <div id="hinzufueger">
+            <div class="row">
+                <div class="col-xs-6"><input type="text" name="zutat[]" placeholder="Geben Sie bitte eine Zutat an"
+                        class="form-control name_list" /></div>
+                <div class="col-xs-6"><button type="button" name="add" id="AddZutatInput"
+                        class="btn btn-success">+</button></div>
+            </div>
+        </div>
+        <br />
+        <input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
+    </form>
+</div>
+
+<!--
 <style>
     div {
         padding-left: 5px;margin-left: 0px;margin-right: 0px;padding-bottom: 7px;
@@ -10,12 +70,12 @@
 <form>
     {{ form.csrf_token }}
     <div class="row">
-        <!-- Überschrift -->
+        <!-- Überschrift --
         <div class="col-md-12"><h2>Neues Rezept anlegen.</h2></div>
     </div>
 
     <div class="row">
-        <!-- Rezeptnamen -->
+        <!-- Rezeptnamen --
         <div class="col-md-6"><h3>{{ form.rname.label }}</h3></div>
     </div>
     <div class="row " >
@@ -28,7 +88,7 @@
     </div>
 
     <div class="row ">
-         <!-- Zutatenverknüpfen -->
+         <!-- Zutatenverknüpfen --
         <div>{{ form.zutaten.label }}</div>
         <div class="col-md-7">{{ form.zutaten(class="form-control")}}</div>
         <div class="col-md-3">{{form.menge(class="form-control")}}</div>
@@ -36,7 +96,7 @@
     </div>
 
     <div class="row" >
-        <!-- Handlungschrittverknüpfer -->
+        <!-- Handlungschrittverknüpfer --
         <div>{{ form.handlung.label }}</div>
         <div>{{ form.handlung(class="form-control")}}</div>
     </div>
@@ -46,9 +106,9 @@
     </div>   
 
     <div class="row">
-        <!-- Submit des Feldes -->
+        <!-- Submit des Feldes --
         <div><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p></div>
         <div>{{form.submit(class="btn btn-success") }}</div>
     </div>
-</form>
+</form>-->
 {% endblock %}
