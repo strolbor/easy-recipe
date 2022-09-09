@@ -64,9 +64,11 @@ def modifyZutat(ids):
                 """Bild wurde gefunden und benutzt.
                 Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
                 modifyZutat.bild = picure_url
-            getkategorie = kategorie.query.get(form.kategorie.data)
+            print(form.kategorie.data)
             modifyZutat.kategorie = []
-            modifyZutat.kategorie.append(getkategorie)
+            for entrykategorie in form.kategorie.data:
+                toaddKat = kategorie.query.get(entrykategorie)
+                modifyZutat.kategorie.append(toaddKat)
         db.session.commit()
 
         flash(f"{modifyZutat.name}  wurde gespeichert")
@@ -75,7 +77,4 @@ def modifyZutat(ids):
     form.name.data = modifyZutat.name
     form.einheit.data = modifyZutat.einheit
 
-    if modifyZutat.bild == "":
-        return render_template('admin_zutat.html', form=form, titlet="Zutat Eigenschaften ändern", zukate=modifyZutat.kategorie)
-    else:
-        return render_template('admin_zutat.html', form=form, titlet="Zutat Eigenschaften ändern", showbild=modifyZutat.bild, showbilds=True, zukate=modifyZutat.kategorie)
+    return render_template('admin_zutat.html', form=form, titlet="Zutat Eigenschaften ändern", rezept=modifyZutat)

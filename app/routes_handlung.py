@@ -60,38 +60,6 @@ def modifyHandlung(ids):
     else:
         return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,titlet="Handlungsschritt ändern")
 
-
-# Handlungschritte anlegen
-@app.route('/admin/hand/addhandlung/',methods=['GET','POST'])
-def addhandlung():
-    """Dies ist der Admin Hauptindex"""
-    page = request.args.get('page', 0, type=int)
-    
-    form = forms.handlungschrittanlegen()
-    if form.validate_on_submit():
-        if request.method == 'POST':
-            bild_url = ""
-            bild_url2 = ""
-            idneu = getNewID(handlungsschritt)
-            picure_url = savepic('bildupload1', request.files, f'hand{idneu}')
-            print(picure_url)
-            if not (picure_url == "A" or picure_url == "B"):
-                """Bild wurde gefunden und benutzt.
-                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
-                bild_url = picure_url
-            # Zweites Handlungsbild
-            picure_url = savepic('bildupload2', request.files, f'hand{idneu}')
-            if not (picure_url == "A" or picure_url == "B"):
-                """Bild wurde gefunden und benutzt.
-                Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
-                bild_url2 = picure_url
-            newhand = handlungsschritt(bild=bild_url,bild2=bild_url2,text=form.beschreibung.data)
-            print(newhand)
-            db.session.add(newhand)
-            db.session.commit()
-            flash(f'Handlungsschritt wurde erfolgreich angelegt!')
-    return render_template('admin_hand.html',form=form,titlet="Neuen Handlungsschritt anlegen")
-
 # Handlungschritt verknüpfer
 # Part 1
 # Rezept auswählen
@@ -134,8 +102,3 @@ def handver2(rid):
             return redirect(url_for('handver2',rid=rid))
     return render_template('admin_handlungver.html',form=form,rezept1=rezeptw)
 
-# Handlungschritt entfernen
-@app.route('/admin/hand/removehandlungsschritt/')
-def removehandlungsschritt():
-    """Hiermit wird ein Handlungsschrittbeziehung entfernt"""
-    return remover(MODE_HAND,handlungsschritt,"removehandlungsschritt")

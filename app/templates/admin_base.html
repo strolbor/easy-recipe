@@ -54,27 +54,10 @@
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{ url_for('showTags') }}">Tags anzeigen</a>
-              <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{ url_for('addTags') }}">Tags anlegen</a>
-              <a class="dropdown-item" href="{{url_for('CHGrthat',ids=0)}}">Verknüpfung anlegen</a>
-              
-              <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('removeTagshat')}}">Verknüpfung löschen</a> 
               <a class="dropdown-item" href="{{ url_for('removeTags') }}">Tags löschen</a>
             </ul>
           </div>
-      
-      <!-- Neues Dropdown Menü --><!--
-      <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          Nutzeroptionen
-        </a>
-      
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="{{ url_for('showTags') }}">Nutzerverwaltung</a>
-          <li><hr class="dropdown-divider"></li>
-        </ul>-->
-
       </ul> <!-- navbar-nav -->
       </div><!-- collapse navbar-collapse -->
 

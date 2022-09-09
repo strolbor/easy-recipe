@@ -28,7 +28,9 @@
     <div class="col-12">
         <label class="form-label">{{ form.kategorie.label }}</label>
         <ol>
-            <li>{{zukate[0]}}</li>
+            {% for entry in rezept.kategorie%}
+                <li>{{entry.name}}</li>
+            {%endfor%}
         </ol>
         {{ form.kategorie(class="form-control") }}
     </div>
