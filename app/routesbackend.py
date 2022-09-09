@@ -39,8 +39,6 @@ MODE_TAGS = 1
 """Diese Einstellung ist da um Tags zu entfernen"""
 MODE_REZEPT = 2
 """Diese Einstellung ist da um Rezepte zu entfernen"""
-MODE_HAND = 3
-"""Diese Einstellung ist da um Handlungsschritte zu entfernen"""
 MODE_TAGver = 5
 """Diese Einstellung ist da um Verknüpfungen zw. Tags <-> Rezept zu entfernen"""
 MODE_HANDver = 6
@@ -75,8 +73,6 @@ def remover(mode: int, classes, redirect_url: str):
         return render_template('admin_remove.html', inhalt=liste.items, titlet="endgültiger Rezeptentferner", targetrezept=True, next_url=next_url, prev_url=prev_url, page=page)
     elif mode == MODE_TAGS:
         return render_template('admin_remove.html', inhalt=liste.items, titlet="endgültiger Tagsentferner", targettags=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_HAND:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungentferner von Handlungsschritten", handlung=True, next_url=next_url, prev_url=prev_url, page=page)
     elif mode == MODE_TAGver:
         return render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungentferner von Tags & Rezept", Tagver=True, next_url=next_url, prev_url=prev_url, page=page)
     elif mode == MODE_HANDver:

@@ -25,6 +25,7 @@
         <th>Position</th>
         <th>Handlungsschritt</th>
         <th>Handlungsschritt-ID</th>
+        <th></th>
     </thead>
     <tbody>
 {% for entry in rezept1.handlungsschritte%}
@@ -51,6 +52,12 @@
         </td>
         <td>
             {{entry.hid}}
+        </td>
+        <td>
+            <!-- Löschen der Zutat-->
+            <a href="{{url_for('deleterhhat',rid=rezept1.id,aid=entry.aid,redirect_url='handver2')}}"><i
+                    class="bi bi-trash"></i></a><!--rid,aid,redirect_url-->
+                    
         </td>
         
     </r>

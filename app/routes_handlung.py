@@ -2,7 +2,7 @@ from app import app, db, forms
 from app.rezept import handlungsschritt, rezept,AssociationRHhat
 from app.backend_helper import getNewID, savepic,createArrayHelper
 from app.routesbackend import remover
-from app.routesbackend import remover, MODE_HANDver,MODE_HANDadd,MODE_HANDver,MODE_HAND,showclass
+from app.routesbackend import remover, MODE_HANDver,MODE_HANDadd,MODE_HANDver,showclass
 
 import os
 from flask import redirect, render_template,request
@@ -101,35 +101,38 @@ def handver1():
 
 @app.route("/admin/hand/handver2/<path:rid>",methods=['GET','POST'])
 def handver2(rid):
-    rezeptw = rezept.query.get(rid)
+    rezeptw : rezept = rezept.query.get(rid)
     form = forms.handlungverknüpfer()
     form.handlungschritt.choices=createArrayHelper(handlungsschritt.query.all())
     rezeptw = rezept.query.get(rid)
     if request.method == "POST":
         if form.validate_on_submit:
-            assoc1 = AssociationRHhat(position=int(form.position.data)) # Extra Daten hinzufügen
-            hand = handlungsschritt.query.get(form.handlungschritt.data)
-            assoc1.hatid =  hand# Verknüpfung
-            with db.session.no_autoflush:
-                rezeptw.handlungsschritte.append(assoc1)
-            db.session.commit()
-            flash("Gespeichert")
+            # Position des Handlungsschritt erhalten
+            pos = -1
+            try:
+                pos = int(form.position.data)
+            except ValueError:
+                pass
+            # Gucken, ob es schon vorhanden ist.
+            test : bool = False
+            for entry in rezeptw.handlungsschritte:
+                if entry.position == pos:
+                    test = True
+            
+            # Wenn die Position erkannt haben und überprüft haben, dass es leer ist
+            # So können wir das Element hinzufügen.
+            if pos >= 0 and test == False:
+                assoc1 = AssociationRHhat(position=int(form.position.data)) # Extra Daten hinzufügen
+                hand = handlungsschritt.query.get(form.handlungschritt.data)
+                assoc1.hatid =  hand# Verknüpfung
+                with db.session.no_autoflush:
+                    rezeptw.handlungsschritte.append(assoc1)
+                db.session.commit()
+                flash("Gespeichert")
+            else:
+                flash("Konnte nicht gespeichert werden.")
             return redirect(url_for('handver2',rid=rid))
     return render_template('admin_handlungver.html',form=form,rezept1=rezeptw)
-
-@app.route("/admin/hand/handdeleter1")
-def handdeleter1():
-    # Erst müssen wir die Rezepte auswählen
-    # Es muss immer ein Selbstverweis sein bie redirect URL
-    return remover(MODE_HANDver,rezept,'handdeleter1')  
-
-@app.route("/admin/hand/handdeleter2/<path:rid>")
-def handdeleter2(rid):
-    # Dann die aussocication suchen
-    assoc1 =  AssociationRHhat.query.filter_by(rid=rid).all()
-    r1 = rezept.query.get(rid)
-    return render_template('admin_remove.html',inhalt=assoc1,titlet="Verknüpfungsentferner Handlungsschritte (keine Löschung der Handlungsschritte)",rid=rid,handdeleter2=True)
-    # Dann entsorechend der Auswahl die Handlungsschritte löschen
 
 # Handlungschritt entfernen
 @app.route('/admin/hand/removehandlungsschritt/')

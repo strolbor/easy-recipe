@@ -74,8 +74,9 @@ def deleterzhat(rid,zid,redirect_url):
     db.session.commit()
     return redirect(url_for(redirect_url, rid=rid, page=page))
 
+
 @app.route('/adminctl/delete/rthat/<path:rid>-<path:tid>')
-def deleterthat(rid,tid):
+def deleterthat(rid, tid):
     """Enternen von m:n-Beziehungen zwischen Rezept und Tags"""
     page = request.args.get('page', 0, type=int)
     rezeptw = rezept.query.get(rid)
@@ -84,15 +85,15 @@ def deleterthat(rid,tid):
     db.session.commit()
     return redirect(url_for('removeTagshat2',rid=rid,page=page))
 
-@app.route('/adminctl/delete/rhhat/<path:rid>-<path:aid>')
-def deleterhhat(rid,aid):
+@app.route('/adminctl/delete/rhhat/<path:rid>-<path:aid>/<path:redirect_url>')
+def deleterhhat(rid,aid,redirect_url):
     """Enternen von m:n-Beziehungen zwischen Rezept und Handlungsschritten"""
     page = request.args.get('page', 0, type=int)
     rezeptw = rezept.query.get(rid)
     assoc = AssociationRHhat.query.get(aid)
     rezeptw.handlungsschritte.remove(assoc)
     db.session.commit()
-    return redirect(url_for('handdeleter2',rid=rid,page=page))
+    return redirect(url_for(redirect_url, rid=rid, page=page))
 
 
 ##########
