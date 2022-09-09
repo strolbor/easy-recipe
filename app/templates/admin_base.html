@@ -22,11 +22,12 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen</a>
               <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('addrezept')}}">Rezept anlegen</a>
-              <a class="dropdown-item" href="{{ url_for('rezeptver1')}}">Verknüpfung anlegen</a>
+              <!--<a class="dropdown-item" href="{{url_for('addrezept')}}">Rezept anlegen</a>-->
+              <a class="dropdown-item" href="{{url_for('nutzerrezeptein')}}">Rezept anlegen</a>
+              <a class="dropdown-item" href="{{ url_for('rezeptver1')}}">Verknüpfungen ändern</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezeptentferner</a>
-              <a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsentferner</a>
+              <!--<a class="dropdown-item" href="{{url_for('removeRZhat')}}">Verknüpfungsentferner</a>-->
             </ul>
           </div>
 
@@ -58,7 +59,7 @@
               <a class="dropdown-item" href="{{ url_for('handver1') }}">Handlungsschritt Verknüpfung</a>
               
               <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{ url_for('handdeleter1') }}">Handlungsschrittbeziehungs entferner</a>
+              <!--<a class="dropdown-item" href="{{ url_for('handdeleter1') }}">Handlungsschrittbeziehungsentferner</a> Im Moment nicht benötigt-->
               <a class="dropdown-item" href="{{url_for('removehandlungsschritt')}}">Handlungsschritt löschen</a>
             </ul>
           </div><!-- End of div -->

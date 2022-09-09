@@ -57,36 +57,39 @@ class d_felder(FlaskForm):
 
 
 class rezeptanlegen(FlaskForm):
-    """ Rezeptanlege Seite im Backend """
-    rezeptname = StringField('Name des Rezepts', validators=[DataRequired()])
-    bildupload = FileField('Bild des Rezepts')
-    tags = SelectField('Tags')
+    """ Rezeptanlege Seite in der Verwaltung """
+    rezeptname = StringField('Name', validators=[DataRequired()]) # des Rezepts
+    bildupload = FileField('Bild')
+    tags = SelectField('Tag')
     submit = SubmitField('Speichern')
 
 
 class handlungschrittanlegen(FlaskForm):
-    """ Handlungsschrittanzeige Seite im Backend """
-    bildupload1 = FileField('Bild des Handlungsschrittes 1')
-    bildupload2 = FileField('Bild des Handlungsschrittes 2')
-    beschreibung = StringField(
-        'Handlungschrittbeschreibung', validators=[DataRequired()])
+    """ Handlungsschrittanzeige Seite in der Verwaltung """
+    bildupload1 = FileField('Bild 1')
+    bildupload2 = FileField('Bild 2')
+    beschreibung = TextAreaField(
+        'Beschreibung', validators=[DataRequired()])
     submit = SubmitField('Speichern')
 
 
 class rzanlegen(FlaskForm):
+    """Erstes Formular zum Rezept auswählen"""
     rezeptpicker = SelectField('Rezept Picker', validators=[DataRequired()])
     submit = SubmitField('Rezept auswählen')
 
 
 class verknupfungsanleger(FlaskForm):  # rzzutaten
+    """Feld zum Verknüpfungen anlegen"""
     zutaten = SelectMultipleField()
     submit = SubmitField('Einstellungen speichern')
 
 
 class zutatanlegen(FlaskForm):
-    name = StringField('Name der Zutat', validators=[DataRequired()])
-    einheit = StringField('Einheit der Zutat', validators=[DataRequired()])
-    bildupload = FileField('Bild der Zutat hochladen')
+    """Zutat anlegen"""
+    name = StringField('Name', validators=[DataRequired()])
+    einheit = StringField('Einheit', validators=[DataRequired()])
+    bildupload = FileField('Bild')
     kategorie = SelectMultipleField("Kategorie")
     submit = SubmitField('Speichern')
 

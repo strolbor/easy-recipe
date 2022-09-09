@@ -40,24 +40,20 @@ def modifyHandlung(ids):
                 """Bild wurde gefunden und benutzt.
                 Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
                 modifyHand.bild = picure_url
-                print("Bild neu gesetzt")
             picure_url = savepic('bildupload2', request.files, f'hand{ids}')
             if not (picure_url == "A" or picure_url == "B"):
                 """Bild wurde gefunden und benutzt.
                 Bei den Statusrückgaben von A oder B wird kein Bild hochgeladen."""
                 modifyHand.bild2 = picure_url
-                print("Bild neu gesetzt")
 
         db.session.commit()
         flash(f"{modifyHand.text} wurde gespeichert")
         return redirect(url_for('modifyHandlung',ids=ids))
     array_pic =[]
-    print(modifyHand.bild,modifyHand.bild2,modifyHand.id)
-    if modifyHand.bild != "":
+    if modifyHand.bild is not None:
         array_pic.append(modifyHand.bild)
-    if modifyHand.bild2 != "":
+    if modifyHand.bild2 is not None:
         array_pic.append(modifyHand.bild2)
-    print(array_pic)
     form.beschreibung.data = modifyHand.text
     if len(array_pic) == 0:
         return render_template('admin_hand.html',form=form,id=modifyHand.id,titlet="Handlungsschritt ändern")
@@ -124,7 +120,8 @@ def handver2(rid):
 @app.route("/admin/hand/handdeleter1")
 def handdeleter1():
     # Erst müssen wir die Rezepte auswählen
-    return remover(MODE_HANDver,rezept,'handdeleter2')  
+    # Es muss immer ein Selbstverweis sein bie redirect URL
+    return remover(MODE_HANDver,rezept,'handdeleter1')  
 
 @app.route("/admin/hand/handdeleter2/<path:rid>")
 def handdeleter2(rid):

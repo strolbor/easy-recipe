@@ -3,6 +3,7 @@
  
 {% block app_content %}
 <h3>{{titlet}}</h3>
+<h3>{{rezept1.name}}</h3>
 <form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <div class="col-12">
@@ -29,8 +30,9 @@
         
         <th>Menge</th>
         <th>Beschreibung</th>
-        <th>Status</th>
+        
         <th>Zutaten-ID</th>
+        <th>Zutat entfernen</th>
     </thead>
     <tbody>
 {% for entry in rezept1.zutaten %}
@@ -46,7 +48,7 @@
                     {{entry.hatzutat.name[0:50]}}
                 </a> [v]
               </p>
-                <div class="collapse" id="collapse-{{loop.index}}">
+                <div class="collapse" id="collapse-{{loop.index}}"><!-- Zutaten Namen-->
                   <div class="card card-body" style="width: 600px;">
                     {{entry.hatzutat.name}}
                   </div>
@@ -55,15 +57,11 @@
                     {{entry.hatzutat.name}}
                 {% endif %}
         </td>
-        <td>
-            {% if entry.optional == True %}
-                optionale Zutat
-            {% else %}
-            <p>erforderliche Zutat</p>
-            {% endif%}
-        </td>
         <td><!--Zutat ID -->
             {{entry.zid}}
+        </td>
+        <td><!-- Löschen der Zutat-->
+            <a href="{{url_for('deleterzhat',zid=entry.zid,rid=rezept1.id,redirect_url='rezeptver2')}}">DELETE</a>
         </td>
         
     </r>

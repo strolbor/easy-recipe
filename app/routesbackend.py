@@ -54,7 +54,10 @@ MODE_REZEPTadd = 8
 
 
 def remover(mode: int, classes, redirect_url: str):
-    """Funktion um Einträge zu entfernen. Generische Funktion"""
+    """Funktion um Einträge zu entfernen. Generische Funktion.
+    mode: Was soll gelöscht werden
+    classes: typ der Klasse zum abfragen
+    redirect_url: Selbstverweis auf aufrufende Funktion der URL"""
     page = request.args.get('page', 0, type=int)
     liste = classes.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
     rid = request.args.get('rid', 0, type=int)
@@ -87,7 +90,6 @@ def remover(mode: int, classes, redirect_url: str):
     elif mode == MODE_REZEPTadd:
         return (render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungadder von Zutaten <-> Rezept", MODE_REZEPTadd=True, next_url=next_url, prev_url=prev_url, page=page))
     else:
-        print("Kein Tamplate gefunden!")
         return "Kein Tamplate gefunden!"
 
 
