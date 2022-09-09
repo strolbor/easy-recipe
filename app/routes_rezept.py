@@ -2,8 +2,8 @@ import imp
 import re
 from app import app, db, forms
 from app.rezept import rezept, zutat, handlungsschritt, tags, Association, AssociationRHhat
-from app.backend_helper import getNewID, createArrayHelper, savepic
-from app.routesbackend import remover, MODE_REZEPT, MODE_RZHAT, MODE_REZEPTadd, showclass
+from app.backend_helper import getNewID, createArrayHelper, savepic, createArrayHelper2
+from app.routesbackend import remover, MODE_REZEPT,  MODE_REZEPTadd, showclass
 
 import os
 from flask import redirect, render_template, request, abort
@@ -42,21 +42,6 @@ def newRezept(rname: str, tname: str, reqmethod, reqfiles):
     db.session.commit()
     rnew: rezept  = rezept.query.filter_by(name=rname).first()
     return rnew.id
-
-
-@app.route('/admin/add/rezept/', methods=['GET', 'POST'])
-def addrezept():
-    """Seite um ein neues Rezept anzulegen."""
-    form = forms.rezeptanlegen()
-    # Alle Tags holen
-    form.tags.choices = createArrayHelper(tags.query.all())
-
-    # Formular wird abgesendet
-    if form.validate_on_submit():
-        idn = newRezept(form.rezeptname.data, form.tags.data, request.method,request.files)
-        print(idn)
-        flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
-    return render_template('admin_rezept.html', form=form, titlet="Neues Rezept anlegen")
 
 
 @app.route("/nutzer/rezept/eingabe")
@@ -179,13 +164,10 @@ def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
     form = forms.rezeptzutatadder()
     # Zutaten auswählbar machen
-    form.zutat.choices = createArrayHelper(zutat.query.all())
+    form.zutat.choices = createArrayHelper2(zutat.query.all())
     if form.validate_on_submit and request.method == "POST":
         # Wir speichern  das Formular
-        optionalbool = False
-        if form.optionaliat.data == "Ja":
-            optionalbool = True
-        assoc1 = Association(menge=int(form.menge.data), optional=optionalbool)
+        assoc1 = Association(menge=int(form.menge.data), optional=False)
         zutat1 = zutat.query.get(int(form.zutat.data))
         assoc1.hatzutat = zutat1
         try:

@@ -7,16 +7,12 @@
 <form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{form.zutat.label}}</label>
+        <label for="Name der Zutat" class="form-label">{{form.zutat.label}}</label>
         {{form.zutat(class="form-control")}}
     </div>
     <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{form.menge.label}}</label>
+        <label for="Menge der Zutat" class="form-label">{{form.menge.label}}</label>
         {{form.menge(class="form-control")}}
-    </div>
-    <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{form.optionaliat.label}}</label>
-        {{form.optionaliat(class="form-control")}}
     </div>
     <div class="col-12">
         {{form.submit(class="btn btn-success") }}
@@ -39,7 +35,7 @@
     <tr>
         
         <td><!-- Menge -->
-            {{entry.menge}}
+            {{entry.menge}} {{entry.hatzutat.einheit}}
         </td>
         <td><!-- Zutat namen -->
             <p>
@@ -61,7 +57,7 @@
             {{entry.zid}}
         </td>
         <td><!-- Löschen der Zutat-->
-            <a href="{{url_for('deleterzhat',zid=entry.zid,rid=rezept1.id,redirect_url='rezeptver2')}}">DELETE</a>
+            <a href="{{url_for('deleterzhat',zid=entry.zid,rid=rezept1.id,redirect_url='rezeptver2')}}"><i class="bi bi-trash"></i></a>
         </td>
         
     </r>

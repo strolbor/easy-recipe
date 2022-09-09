@@ -107,7 +107,7 @@ class handlungverknüpfer(FlaskForm):
 
 class rezeptzutatadder(FlaskForm):
     zutat = SelectField("Zutat auswählen")
-    optionaliat = SelectField("Optionalität", choices=["Nein", "Ja"])
+    #optionaliat = SelectField("Optionalität", choices=["Nein", "Ja"])
     menge = StringField("Menge der Zutaten", validators=[DataRequired()])
     submit = SubmitField("Speichern")
 
