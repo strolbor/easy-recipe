@@ -86,18 +86,43 @@ def postrezept():
         zutaten = request.form.getlist('zutat[]')
         menge = request.form.getlist('menge[]')
         rezeptname = request.form.get('rname')
-        tagname = request.form.get('tags')
+        tagid = request.form.get('tags')
+        handlungsschritttext = request.form.get('handlung')
         
         # Rezept anlegen
-        idn = newRezept(rezeptname, tagname,  request.method, request.files)
+        idn = newRezept(rezeptname, tagid,  request.method, request.files)
         rnew : rezept = rezept.query.get(idn)
 
         # Zutaten verknüpfen
+        counter = 0
+        for entry in zutaten:
+            print(f"Erhalten in Zutaten: {entry}")
+            zuttmp = zutat.query.get(entry)
+            assoc1 = Association(menge=menge[counter], optional=False)
+            assoc1.hatzutat = zuttmp
+            with db.session.no_autoflush:
+                rnew.zutaten.append(assoc1)
+            db.session.commit()
+            counter +=1
+
+        # Handlungschritt anlegen
+        handlung = handlungsschritt(
+            bild="", bild2="", text=handlungsschritttext)
+        db.session.add(handlung)
+        db.session.commit()
 
         # Handlungsschritt verknüpfen
+        nhand = handlungsschritt.query.filter_by(text=handlungsschritttext).first()
+        assoc1 = AssociationRHhat(position=1)
+        assoc1.hatid = nhand
+        with db.session.no_autoflush:
+            rnew.handlungsschritte.append(assoc1)
+        db.session.commit()
 
         # Tag verknüpfen
-        rnew.tags.append(tagname)
+        print(tagid)
+        tag1 = tags.query.get(tagid)
+        rnew.tags.append(tag1)
 
         # speichern
         db.session.commit()
