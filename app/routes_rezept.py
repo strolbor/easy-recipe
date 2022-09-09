@@ -96,13 +96,14 @@ def postrezept():
         # Zutaten verknüpfen
         counter = 0
         for entry in zutaten:
-            print(f"Erhalten in Zutaten: {entry}")
-            zuttmp = zutat.query.get(entry)
-            assoc1 = Association(menge=menge[counter], optional=False)
-            assoc1.hatzutat = zuttmp
-            with db.session.no_autoflush:
-                rnew.zutaten.append(assoc1)
-            db.session.commit()
+            if int(entry) > 0:
+                print(f"Erhalte Zutaten zum hinzufügen: {entry}")
+                zuttmp = zutat.query.get(entry)
+                assoc1 = Association(menge=menge[counter], optional=False)
+                assoc1.hatzutat = zuttmp
+                with db.session.no_autoflush:
+                    rnew.zutaten.append(assoc1)
+                db.session.commit()
             counter +=1
 
         # Handlungschritt anlegen
@@ -122,6 +123,7 @@ def postrezept():
         # Tag verknüpfen
         print(tagid)
         tag1 = tags.query.get(tagid)
+        rnew.tags = []
         rnew.tags.append(tag1)
 
         # speichern
@@ -131,7 +133,7 @@ def postrezept():
             print(f"Erhalten in Zutaten: {value}")
         for value in menge:
             print(f"Erhalten in Menge: {value}")
-        flash('New record created successfully')
+        #flash('New record created successfully')
     return "ok"
 
 
