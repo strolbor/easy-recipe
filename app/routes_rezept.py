@@ -126,7 +126,8 @@ def postrezept():
 def modifyrezept(ids):
     form = forms.rezeptanlegen()
     form.tags.choices = createArrayHelper(tags.query.all())
-    zuRezept = rezept.query.get(ids)
+    zuRezept : rezept = rezept.query.get(ids)
+    form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
 
     if form.validate_on_submit():
         # Name speichern
@@ -136,6 +137,8 @@ def modifyrezept(ids):
             picure_url = savepic('bildupload', request.files, f'rezept{ids}')
             if not (picure_url == "A" or picure_url == "B"):
                 zuRezept.bild = picure_url
+        # Handlungsschritt Text bearbeiten
+        zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
         # Speichern des Eintrages
         db.session.commit()
         flash(f"{zuRezept.name} wurde gespeichert!")
@@ -146,10 +149,10 @@ def modifyrezept(ids):
 
     if zuRezept.bild != "":
         # Diese Aufruf wird gemacht, wenn ein Bild vorhanden ist
-        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", showbilds=True, showbild=zuRezept.bild)
+        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", showbilds=True, showbild=zuRezept.bild, rid=ids)
     else:
         # Diese Aufruf wird gemacht, wenn kein Bild vorhanden ist
-        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern")
+        return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids)
 
 # Rezept <-> Handlungschritt Verknüpfer
 

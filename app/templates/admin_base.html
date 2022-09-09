@@ -23,7 +23,7 @@
               <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('nutzerrezeptein')}}"><i class="bi bi-arrow-up-right"></i>Rezept anlegen</a>
-              <a class="dropdown-item" href="{{ url_for('rezeptver1')}}">Verknüpfungen ändern</a>
+              <a class="dropdown-item" href="{{ url_for('rezeptver1')}}">Zutaten ändern</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezeptentferner</a>
               
@@ -44,24 +44,6 @@
               <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
             </ul>
           </div>
-
-          <!-- Neues Dropdown Menü -->
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Handlungsschrittoptionen
-            </a>
-          
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="{{url_for('showhandlungsschritt')}}">Handlungsschritt anzeigen</a> 
-              <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('addhandlung')}}">Handlungsschritt anlegen</a> 
-              <a class="dropdown-item" href="{{ url_for('handver1') }}">Handlungsschritt Verknüpfung</a>
-              
-              <li><hr class="dropdown-divider"></li>
-              
-              <a class="dropdown-item" href="{{url_for('removehandlungsschritt')}}">Handlungsschritt löschen</a>
-            </ul>
-          </div><!-- End of div -->
 
           <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">

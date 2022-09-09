@@ -61,6 +61,7 @@ class rezeptanlegen(FlaskForm):
     rezeptname = StringField('Name', validators=[DataRequired()]) # des Rezepts
     bildupload = FileField('Bild')
     tags = SelectField('Tag')
+    handlung = TextAreaField("Anleitung")
     submit = SubmitField('Speichern')
 
 
