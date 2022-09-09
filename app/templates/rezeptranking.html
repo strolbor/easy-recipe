@@ -7,18 +7,20 @@
     {% if i < anzRezepte %}
 
             {% set cardwidth = "38rem" %}
-            <div class="card" style="width: {{cardwidth}}; height: 50rem; float:left">
+            {% set cardheight = 45 %}
+            <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left;">
                 <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
                 <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
                 </a>
-                <div class="card-body">
+                {%set bodyheight = cardheight - 8 %}
+                <div class="card-body" style="overflow-y:scroll;height:{{bodyheight}}rem">
                     <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
                     <i class="card-text">{{ rezeptRankings[i].tags }}</i>
                     <p></p>
                     <p class="card-text"><b>Du hast folgende Zutaten:</b> {{ rezeptRankings[i].vorhandeneZutatenNamen }}</p>
                     <p class="card-text"><b>Dir fehlen folgende Zutaten:</b> {{ rezeptRankings[i].fehlendeZutatenNamen }}</p>
-                    <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}" class="btn btn-primary">Nachkochen </a>
                 </div>
+                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}" class="btn btn-primary" ><b>Nachkochen</b></a>
             </div>
 
     {%endif %}

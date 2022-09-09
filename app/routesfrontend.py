@@ -225,7 +225,7 @@ def rezeptanzeige(ids):
 
     r_tags = ""
     for tag in thisrezept.tags:
-        r_tags += f"{tag}, "
+        r_tags += f"{tag.name}, "
     r_tags = r_tags[:-2]
 
     r_zutaten = []

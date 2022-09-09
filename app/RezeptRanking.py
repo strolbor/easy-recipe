@@ -81,12 +81,12 @@ def getRezepteByZutatNamen(zutatnamen):
         strTags = ""
         if _rezept.tags != None:
             for tag in _rezept.tags:
-                strTags += f"{tag}{', '}"
+                strTags += f"{tag.name}{', '}"
             strTags = strTags[:-2]
 
         bewertung=0
         #TODO: Bewertungsmodus Buttons auf home implementieren und folgende Zeile löschen
-        bewertungsmodus = 2
+        bewertungsmodus = 0
         """Bewertung des Rezeptes je nach ausgewähltem Modus von home-site"""
         '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
         if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
