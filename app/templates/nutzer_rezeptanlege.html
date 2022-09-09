@@ -12,7 +12,7 @@
         var x = hinzufueger.length; //Counter der bereits vorhanden Felder
         var CounterZutaten = 1; //Counter
 
-        var zutaten = '<option value="-1">Keine angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}';
+        var zutaten = '<option value="-1">Keine angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
 
         $(mehrBtn).click(function (e)  //On-Click Event
         {
@@ -90,7 +90,7 @@
                     <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
                         <option value="-1">Keine angabe</option>
                         <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">
-                            {{entry.name}}</option>{% endfor%}
+                            {{entry.name}} ({{entry.einheit}})</option>{% endfor%}
                     </select>
                 </div>
                 <div class="col-md-5">
