@@ -1,6 +1,6 @@
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, SelectMultipleField, StringField, SelectField
+from wtforms import SubmitField, SelectMultipleField, StringField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
@@ -118,6 +118,6 @@ class rezeptanzeige(FlaskForm):
 class nutzerein(FlaskForm):
     rname = StringField('Name')
     bildupload = FileField('Bild')
-    handlung = StringField('Handlungschritt')
+    handlung = TextAreaField('Handlungschritt')
     tags = SelectField('Tags')
     submit = SubmitField("Speichern")
