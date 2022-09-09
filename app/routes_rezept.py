@@ -21,16 +21,16 @@ def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
 
-def newRezept(rname: str, tname: str, reqe):
+def newRezept(rname: str, tname: str, reqmethod, reqfiles):
     """Kapselung von Rezepte"""
     # Daten des Uploads holen
     bild_url = ""
-    if reqe.method == 'POST':
+    if reqmethod == 'POST':
         """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
         idneu = getNewID(rezept)
 
         """ Wir suchen die nächste ID"""
-        picure_url = savepic('bildupload', reqe.files, f'rezept{idneu}')
+        picure_url = savepic('bildupload', reqfiles, f'rezept{idneu}')
         if not (picure_url == "A" or picure_url == "B"):
             """ Bild wurde gefunden und hochgeladen"""
             bild_url = picure_url
@@ -40,6 +40,8 @@ def newRezept(rname: str, tname: str, reqe):
     """ Neues Rezept wurde erstellt."""
     db.session.add(new)
     db.session.commit()
+    rnew: rezept  = rezept.query.filter_by(name=rname).first()
+    return rnew.id
 
 
 @app.route('/admin/add/rezept/', methods=['GET', 'POST'])
@@ -51,7 +53,8 @@ def addrezept():
 
     # Formular wird abgesendet
     if form.validate_on_submit():
-        newRezept(form.rezeptname.data, form.tags.data, request)
+        idn = newRezept(form.rezeptname.data, form.tags.data, request.method,request.files)
+        print(idn)
         flash(form.rezeptname.data + " wurde erfolgreich angelegt!")
     return render_template('admin_rezept.html', form=form, titlet="Neues Rezept anlegen")
 
@@ -68,6 +71,7 @@ def nutzerrezeptein():
 
 @app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
 def postrezept():
+    print("hirewhi")
     # GET /nutzer/rezept/eingabe?
     # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&
     # rname=we432&
@@ -78,11 +82,25 @@ def postrezept():
     # handlung=ew&tags=1&
     # submit=Speichern
     if request.method == 'POST':
+        # Informationen abrufen
         zutaten = request.form.getlist('zutat[]')
         menge = request.form.getlist('menge[]')
         rezeptname = request.form.get('rname')
         tagname = request.form.get('tags')
-        newRezept(rezeptname, tagname,  request)
+        
+        # Rezept anlegen
+        idn = newRezept(rezeptname, tagname,  request.method, request.files)
+        rnew : rezept = rezept.query.get(idn)
+
+        # Zutaten verknüpfen
+
+        # Handlungsschritt verknüpfen
+
+        # Tag verknüpfen
+        rnew.tags.append(tagname)
+
+        # speichern
+        db.session.commit()
         print("Rezept:", rezeptname)
         for value in zutaten:
             print(f"Erhalten in Zutaten: {value}")
