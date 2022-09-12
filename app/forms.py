@@ -56,11 +56,12 @@ class d_felder(FlaskForm):
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 
 
-class rezeptanlegen(FlaskForm):
+class rezeptaendern(FlaskForm):
     """ Rezeptanlege Seite in der Verwaltung """
-    rezeptname = StringField('Name', validators=[DataRequired()]) # des Rezepts
+    rezeptname = StringField(
+        'Name', validators=[DataRequired()])  # des Rezepts
     bildupload = FileField('Bild')
-    tags = SelectField('Tag')
+    tags = SelectMultipleField('Tag')
     handlung = TextAreaField("Anleitung")
     submit = SubmitField('Speichern')
 
@@ -120,8 +121,8 @@ class rezeptanzeige(FlaskForm):
 
 
 class nutzerein(FlaskForm):
-    rname = StringField('Name')
+    rname = StringField('Name', validators=[DataRequired()])
     bildupload = FileField('Bild')
-    handlung = TextAreaField('Handlungschritt')
-    tags = SelectField('Tags')
+    handlung = TextAreaField('Handlungschritt', validators=[DataRequired()])
+    tags = SelectMultipleField('Tags', choices=["-1", "Keine Angabe"])
     submit = SubmitField("Speichern")

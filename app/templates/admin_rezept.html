@@ -1,5 +1,5 @@
 {% extends "admin_base.html" %}
-
+<!-- Rezept anzeige-->
 
 
 {% block app_content %}
@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-12">
-            <label  class="form-label">{{form.rezeptname.label}}</label>
+            <label class="form-label">{{form.rezeptname.label}}</label>
             {{form.rezeptname(class="form-control") }}
         </div>
     </div>
@@ -19,25 +19,37 @@
             {{ form.bildupload(class="form-control")}}
         </div>
     </div>
-    {% if showbilds %}
-        <div class="row">
-            <div class="col-12">
-                <label class="form-label">Bild des Rezepts</label><br />
-                <img src="/ctl/download/{{showbild}}" width="512px" height="auto"/>
-            </div>
+    {% if rezept.bild %}
+    <div class="row">
+        <div class="col-12">
+            <label class="form-label">Bild des Rezepts</label><br />
+            <img src="/ctl/download/{{rezept.bild}}" width="512px" height="auto" />
         </div>
+    </div>
     {% endif %}
 
     <div class="row">
         <div class="col-12">
-            <label class="form-label">{{ form.tags.label }}</label>
-            {{ form.tags(class="form-control") }}
+            <label class="form-label">{{ form.tags.label }}</label><br />
+            <div style="margin-left: 10px;">
+                <label class="form-label">Liste:</label>
+                <ol>
+                    {% for entry in rezept.tags%}
+                    <li>{{entry.name}}</li>
+                    {%endfor%}
+                </ol>
+
+                <label class="form-label">Auswahl</label>
+                {{ form.tags(class="form-control",size=9) }}
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <p><a target="_blank" class="btn btn-primary" href="{{url_for('rezeptver2',rid=rid)}}"><i class="bi bi-arrow-up-right"></i>Zutaten ändern</a></p>
+            <p>Zutaten</p>
+            <p><a target="_blank" class="btn btn-primary" href="{{url_for('rezeptver2',rid=rid)}}"><i
+                        class=" bi bi-arrow-up-right"></i>Zutaten ändern</a></p>
         </div>
     </div>
 
