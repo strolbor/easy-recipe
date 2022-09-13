@@ -49,10 +49,10 @@ class d_felder(FlaskForm):
         kategorieName = entry.name
         kat_zutatsubmits = []
 
+
         for zutats in entry.bkat:
             # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
             kat_zutatsubmits.append(zutat.query.get(zutats.id))
-
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 
 
