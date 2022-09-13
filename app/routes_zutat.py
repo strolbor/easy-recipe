@@ -31,7 +31,7 @@ def addzutat():
         db.session.add(newzutat)
         db.session.commit()
         flash(f'{form.name.data} wurde erfolgreich angelegt!')
-    return render_template('admin_zutat.html', form=form)
+    return render_template('admin_zutat.html', form=form, zutat=None)
 
 
 @app.route('/admin/show/zutat/')
@@ -77,4 +77,4 @@ def modifyZutat(ids):
     form.name.data = modifyZutat.name
     form.einheit.data = modifyZutat.einheit
 
-    return render_template('admin_zutat.html', form=form, titlet="Zutat Eigenschaften ändern", rezept=modifyZutat)
+    return render_template('admin_zutat.html', form=form, titlet="Zutat Eigenschaften ändern", zutat=modifyZutat)

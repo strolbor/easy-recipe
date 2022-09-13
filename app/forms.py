@@ -121,8 +121,8 @@ class rezeptanzeige(FlaskForm):
 
 
 class nutzerein(FlaskForm):
-    rname = StringField('Name', validators=[DataRequired()])
+    rname = StringField('Name')#, validators=[DataRequired()])
     bildupload = FileField('Bild')
-    handlung = TextAreaField('Handlungschritt', validators=[DataRequired()])
+    handlung = TextAreaField('Handlungschritt')#, validators=[DataRequired()])
     tags = SelectMultipleField('Tags', choices=["-1", "Keine Angabe"])
     submit = SubmitField("Speichern")
