@@ -1,6 +1,6 @@
 from wsgiref.validate import validator
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, SelectMultipleField, StringField, SelectField
+from wtforms import SubmitField, SelectMultipleField, StringField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
@@ -48,44 +48,50 @@ class d_felder(FlaskForm):
     for entry in kategorie.query.all():
         kategorieName = entry.name
         kat_zutatsubmits = []
-        for zut in entry.bkat:
-            # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
-            kat_zutatsubmits.append(zutat.query.get(zut.id))
 
+
+        for zutats in entry.bkat:
+            # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
+            kat_zutatsubmits.append(zutat.query.get(zutats.id))
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 
 
-class rezeptanlegen(FlaskForm):
-    """ Rezeptanlege Seite im Backend """
-    rezeptname = StringField('Name des Rezepts', validators=[DataRequired()])
-    bildupload = FileField('Bild des Rezepts')
-    tags = SelectField('Tags')
+class rezeptaendern(FlaskForm):
+    """ Rezeptanlege Seite in der Verwaltung """
+    rezeptname = StringField(
+        'Name', validators=[DataRequired()])  # des Rezepts
+    bildupload = FileField('Bild')
+    tags = SelectMultipleField('Tag')
+    handlung = TextAreaField("Anleitung")
     submit = SubmitField('Speichern')
 
 
 class handlungschrittanlegen(FlaskForm):
-    """ Handlungsschrittanzeige Seite im Backend """
-    bildupload1 = FileField('Bild des Handlungsschrittes 1')
-    bildupload2 = FileField('Bild des Handlungsschrittes 2')
-    beschreibung = StringField(
-        'Handlungschrittbeschreibung', validators=[DataRequired()])
+    """ Handlungsschrittanzeige Seite in der Verwaltung """
+    bildupload1 = FileField('Bild 1')
+    bildupload2 = FileField('Bild 2')
+    beschreibung = TextAreaField(
+        'Beschreibung', validators=[DataRequired()])
     submit = SubmitField('Speichern')
 
 
 class rzanlegen(FlaskForm):
+    """Erstes Formular zum Rezept auswählen"""
     rezeptpicker = SelectField('Rezept Picker', validators=[DataRequired()])
     submit = SubmitField('Rezept auswählen')
 
 
 class verknupfungsanleger(FlaskForm):  # rzzutaten
+    """Feld zum Verknüpfungen anlegen"""
     zutaten = SelectMultipleField()
     submit = SubmitField('Einstellungen speichern')
 
 
 class zutatanlegen(FlaskForm):
-    name = StringField('Name der Zutat', validators=[DataRequired()])
-    einheit = StringField('Einheit der Zutat', validators=[DataRequired()])
-    bildupload = FileField('Bild der Zutat hochladen')
+    """Zutat anlegen"""
+    name = StringField('Name', validators=[DataRequired()])
+    einheit = StringField('Einheit', validators=[DataRequired()])
+    bildupload = FileField('Bild')
     kategorie = SelectMultipleField("Kategorie")
     submit = SubmitField('Speichern')
 
@@ -103,7 +109,7 @@ class handlungverknüpfer(FlaskForm):
 
 class rezeptzutatadder(FlaskForm):
     zutat = SelectField("Zutat auswählen")
-    optionaliat = SelectField("Optionalität", choices=["Nein", "Ja"])
+    #optionaliat = SelectField("Optionalität", choices=["Nein", "Ja"])
     menge = StringField("Menge der Zutaten", validators=[DataRequired()])
     submit = SubmitField("Speichern")
 
@@ -115,8 +121,8 @@ class rezeptanzeige(FlaskForm):
 
 
 class nutzerein(FlaskForm):
-    rname = StringField('Name')
+    rname = StringField('Name')#, validators=[DataRequired()])
     bildupload = FileField('Bild')
-    handlung = StringField('Handlungschritt')
-    tags = SelectField('Tags')
+    handlung = TextAreaField('Handlungschritt')#, validators=[DataRequired()])
+    tags = SelectMultipleField('Tags', choices=["-1", "Keine Angabe"])
     submit = SubmitField("Speichern")

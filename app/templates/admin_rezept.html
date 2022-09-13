@@ -1,29 +1,65 @@
 {% extends "admin_base.html" %}
-
+<!-- Rezept anzeige-->
 
 
 {% block app_content %}
 <h3>{{titlet}}</h3>
 <form class="row g-3" action="" method="post" novalidate enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    <div class="col-12">
-        <label  class="form-label">{{form.rezeptname.label}}</label>
-        {{form.rezeptname(class="form-control") }}
+
+    <div class="row">
+        <div class="col-12">
+            <label class="form-label">{{form.rezeptname.label}}</label>
+            {{form.rezeptname(class="form-control") }}
+        </div>
     </div>
-    <div class="col-12">
-        <label class="form-label">{{ form.bildupload.label }}</label>
-        {{ form.bildupload(class="form-control")}}
+    <div class="row">
+        <div class="col-12">
+            <label class="form-label">{{ form.bildupload.label }}</label>
+            {{ form.bildupload(class="form-control")}}
+        </div>
     </div>
-    {% if showbilds %}
+    {% if rezept.bild %}
+    <div class="row">
         <div class="col-12">
             <label class="form-label">Bild des Rezepts</label><br />
-            <img src="/ctl/download/{{showbild}}" width="512px" height="auto"/>
+            <img src="/ctl/download/{{rezept.bild}}" width="512px" height="auto" />
         </div>
-    {% endif %}
-    <div class="col-12">
-        <label class="form-label">{{ form.tags.label }}</label>
-        {{ form.tags(class="form-control") }}
     </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <label class="form-label">{{ form.tags.label }}</label><br />
+            <div style="margin-left: 10px;">
+                <label class="form-label">Liste:</label>
+                <ol>
+                    {% for entry in rezept.tags%}
+                    <li>{{entry.name}}</li>
+                    {%endfor%}
+                </ol>
+
+                <label class="form-label">Auswahl</label>
+                {{ form.tags(class="form-control",size=9) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p>Zutaten</p>
+            <p><a target="_blank" class="btn btn-primary popup" href="{{url_for('rezeptver2',rid=rid)}}"><i
+                        class=" bi bi-arrow-up-right"></i>Zutaten ändern</a></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <label class="form-label">{{form.handlung.label}}</label>
+            {{ form.handlung(class="form-control")}}
+        </div>
+    </div>
+
     <div class="col-12">
         {{form.submit(class="btn btn-success") }}
     </div>

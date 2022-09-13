@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "base.html" %}
 
 
 
@@ -15,23 +15,27 @@
         <label class="form-label">{{ form.bildupload.label }}</label>
         {{ form.bildupload(class="form-control")}}
     </div>
-    {% if showbilds %}
+    {% if zutat.bild %}
     <div class="col-12">
         <label class="form-label">Bild der Zutat</label><br />
-        <img src="/ctl/download/{{showbild}}" width="512px" height="384px" />
+        <img src="/ctl/download/{{zutat.bild}}" width="512px" height="384px" />
     </div>
     {% endif %}
     <div class="col-12">
         <label class="form-label">{{ form.einheit.label }}</label>
         {{ form.einheit(class="form-control") }}
     </div>
+    {% if zutat %}
     <div class="col-12">
         <label class="form-label">{{ form.kategorie.label }}</label>
         <ol>
-            <li>{{zukate[0]}}</li>
+            {%for entry in zutat.kategorie %}
+            <li>{{entry}}</li>
+            {%endfor%}
         </ol>
         {{ form.kategorie(class="form-control") }}
     </div>
+    {% endif%}
     <div class="col-12">
         {{form.submit(class="btn btn-success") }}
     </div>
