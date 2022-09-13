@@ -46,6 +46,7 @@
                 url: "{{url_for('postrezept')}}",
                 method: "POST",
                 data: $('#add_rezept').serialize(),
+                async: false,
                 success: function (data) {
                     $('#add_rezept')[0].reset();
                 }

@@ -21,22 +21,11 @@ def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
 
-def newRezept(rname: str, tagarray, reqmethod, reqfiles):
+def newRezept(rname: str, tagarray):
     """Kapselung von Rezepte"""
-    # Daten des Uploads holen
-    bild_url = ""
-    if reqmethod == 'POST':
-        """ Die Post Methode wird aufgerufen, wenn wir ein Bild hochladen möchten und verarbeiten wollen."""
-        idneu = getNewID(rezept)
-
-        """ Wir suchen die nächste ID"""
-        picure_url = savepic('bildupload', reqfiles, f'rezept{idneu}')
-        if not (picure_url == "A" or picure_url == "B"):
-            """ Bild wurde gefunden und hochgeladen"""
-            bild_url = picure_url
 
     # Rezept anlegen
-    new = rezept(name=rname, bild=bild_url)
+    new = rezept(name=rname)
 
     # Tags adden
     for entry in tagarray:
@@ -62,8 +51,9 @@ def nutzerrezeptein():
     form.tags.choices = tagarray
     # Das ist schon so fertig
     if request.method == "POST" and form.submit.data:
-        bild = request.files
-        print("nutzerrezeptein", bild)
+        if rezept.query.filter_by(name=form.rname.data).first() is None:
+            newRezept(form.rname.data, form.tags.data)
+            print("nutzerrezeptein hat Rezept erstellt")
         rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
         pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
         rid.bild = pic_url
@@ -96,8 +86,15 @@ def postrezept():
         handlungsschritttext = request.form.get('handlung')
 
         # Rezept anlegen
-        idn = newRezept(rezeptname, taglist,  request.method, request.files)
-        rnew: rezept = rezept.query.get(idn)
+        #idn = newRezept(rezeptname, taglist,  request.method, request.files)
+        #rnew: rezept = rezept.query.get(idn)
+        if rezept.query.filter_by(name=rezeptname).first() is None:
+            """ Wenn das Rezept nicht existiert, erstelle es"""
+            newRezept(rezeptname, taglist)
+            print("AJAX hat Rezept erstellt")
+        rnew: rezept = rezept.query.filter_by(name=rezeptname).first()
+        if rnew is None:
+            print("rnew ist none")
 
         # Zutaten verknüpfen
         counter = 0
@@ -131,7 +128,7 @@ def postrezept():
 
         # speichern
         flash(f"{rezeptname} gespeichert")
-    return 0
+    return "ok"
 
 
 @app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])
