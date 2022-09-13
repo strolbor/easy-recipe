@@ -25,15 +25,17 @@
         <label class="form-label">{{ form.einheit.label }}</label>
         {{ form.einheit(class="form-control") }}
     </div>
+    {% if rezept %}
     <div class="col-12">
         <label class="form-label">{{ form.kategorie.label }}</label>
         <ol>
-            {% for entry in rezept.kategorie%}
-                <li>{{entry.name}}</li>
+            {%for entry in rezept.kategorie %}
+            <li>{{entry}}</li>
             {%endfor%}
         </ol>
         {{ form.kategorie(class="form-control") }}
     </div>
+    {% endif%}
     <div class="col-12">
         {{form.submit(class="btn btn-success") }}
     </div>

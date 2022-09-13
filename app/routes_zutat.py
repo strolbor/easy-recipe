@@ -1,5 +1,5 @@
 from app import app, db, forms
-from app.rezept import kategorie, zutat
+from app.rezept import kategorie, zutat, rezept
 from app.backend_helper import getNewID, savepic
 from app.routesbackend import remover, MODE_ZUTATEN, showclass, createArrayHelper
 
@@ -16,7 +16,7 @@ from sqlalchemy import desc
 def addzutat():
     """Hiermit wird eine neue Zutat angelegt."""
     form = forms.zutatanlegen()
-    if form.validate_on_submit():
+    if request.method == "POST" and form.submit.data:
         # Daten des Uploads holen
         bild_url = ""
         if request.method == 'POST':

@@ -43,10 +43,9 @@
         })
         $('#submit').click(function () {
             $.ajax({
-                url: "{{url_for('postrezept')}}",//"/ctl/nutzer/rezept/post",
+                url: "{{url_for('postrezept')}}",
                 method: "POST",
                 data: $('#add_rezept').serialize(),
-                //enctype: 'multipart/form-data',
                 success: function (data) {
                     $('#add_rezept')[0].reset();
                 }
@@ -103,6 +102,7 @@
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
+       <div> <button class="btn btn-primary"><a href="{{url_for('addzutat')}}" style="color: white; text-decoration: none;">Zutaten erstellen</a></button></div>
     </div>
 
 
@@ -115,6 +115,8 @@
     <div class="row">
         <div>{{ form.tags.label }}</div>
         <div>{{ form.tags(class="form-control")}}</div>
+        <div><button class="btn btn-primary"><a href="{{url_for('addTags')}}"
+                    style="color: white; text-decoration: none;">Tag erstellen</a></button></div>
     </div>
 
     <div class="row">

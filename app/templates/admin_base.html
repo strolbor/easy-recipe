@@ -39,7 +39,7 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('showZutaten')}}">Zutaten anzeigen</a>
               <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('addzutat')}}">Zutat anlegen</a>
+              <a class="dropdown-item" href="{{url_for('addzutat')}}"><i class="bi bi-arrow-up-right"></i>Zutat anlegen</a>
               <li><hr class="dropdown-divider"></li>
               <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
             </ul>
@@ -54,7 +54,7 @@
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{ url_for('showTags') }}">Tags anzeigen</a>
-              <a class="dropdown-item" href="{{ url_for('addTags') }}">Tags anlegen</a>
+              <a class="dropdown-item" href="{{ url_for('addTags') }}"><i class="bi bi-arrow-up-right"></i>Tags anlegen</a>
               <a class="dropdown-item" href="{{ url_for('removeTags') }}">Tags löschen</a>
             </ul>
           </div>
