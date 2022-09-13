@@ -19,9 +19,21 @@ alleZutaten = []
 
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
+
+
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
-    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings)
+    global globalRezeptRankings, choices_array
+    form = forms.rezeptranking()
+    if request.method == "POST":
+        if form.btnSort0.data:
+            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
+        elif form.btnSort1.data:
+            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=1)
+        elif form.btnSort2.data:
+            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
+
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings, form=form)
 
 
 home_html = "home.html"
@@ -181,7 +193,7 @@ def home():
             global globalRezeptRankings
             for entry in form.selected.choices.copy():
                 ausgewZutaten.append((entry))
-            globalRezeptRankings = getRezepteByZutatNamen(ausgewZutaten)
+            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=0)
 
             updateZutatenlisten()
 

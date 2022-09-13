@@ -120,3 +120,8 @@ class nutzerein(FlaskForm):
     handlung = StringField('Handlungschritt')
     tags = SelectField('Tags')
     submit = SubmitField("Speichern")
+
+class rezeptranking(FlaskForm):
+    btnSort0 = SubmitField(label="Bestes Verhältnis")
+    btnSort1 = SubmitField(label="Wenigste fehlende Zutaten")
+    btnSort2 = SubmitField(label="Meiste vorhandene Zutaten")

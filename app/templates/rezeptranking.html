@@ -2,6 +2,15 @@
 
 {% block app_content %}
 
+<form name="rezeptranking" id="rezeptranking" method="POST">
+{{ form.csrf_token }}
+
+<div align="right">
+    {{form.btnSort1}}
+    {{form.btnSort2}}
+    {{form.btnSort0}}
+</div>
+
 {% set anzRezepte = rezeptRankings|length %}
 {%for i in range(0, anzRezepte) %}
     {% if i < anzRezepte %}
@@ -66,5 +75,7 @@
     {%endfor%}
 </table>
 -->
+
+</form>
 
 {% endblock %}
