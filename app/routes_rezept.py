@@ -49,7 +49,7 @@ def newRezept(rname: str, tagarray, reqmethod, reqfiles):
     return rnew.id
 
 
-@app.route("/nutzer/rezept/eingabe")
+@app.route("/nutzer/rezept/eingabe", methods=["POST", "GET"])
 def nutzerrezeptein():
     """Nutzereingabe Menü"""
     form = forms.nutzerein()
@@ -61,16 +61,22 @@ def nutzerrezeptein():
         tagarray.append(entry)
     form.tags.choices = tagarray
     # Das ist schon so fertig
-    if form.validate_on_submit():
+    if request.method == "POST" and form.submit.data:
         bild = request.files
         print("nutzerrezeptein", bild)
+        rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
+        pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
+        rid.bild = pic_url
+        db.session.commit()
         return redirect(url_for('nutzerrezeptein'))
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all())
 
 
 @app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
 def postrezept():
-    print("hirewhi")
+    """AJAX Methode zum Anlegen der Methode.
+    AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().
+    """
     # GET /nutzer/rezept/eingabe?
     # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&
     # rname=we432&
@@ -78,10 +84,11 @@ def postrezept():
     # &zutat%5B%5D=3& menge%5B%5D=1&
     # zutat%5B%5D=17& menge%5B%5D=2&
     # zutat%5B%5D=16& menge%5B%5D=3
-    # handlung=ew&tags=1&
+    # handlung=ew&
+    # tags=1&
     # submit=Speichern
     if request.method == 'POST':
-        # Informationen abrufen
+        # Informationen aus Stream abrufen
         zutaten = request.form.getlist('zutat[]')
         menge = request.form.getlist('menge[]')
         rezeptname = request.form.get('rname')
@@ -90,7 +97,6 @@ def postrezept():
 
         # Rezept anlegen
         idn = newRezept(rezeptname, taglist,  request.method, request.files)
-        print("Reg-Files", request.files)
         rnew: rezept = rezept.query.get(idn)
 
         # Zutaten verknüpfen
@@ -124,15 +130,8 @@ def postrezept():
             db.session.commit()
 
         # speichern
-        flash("Speichern")
-        db.session.commit()
-        print("Rezept:", rezeptname)
-        for value in zutaten:
-            print(f"Erhalten in Zutaten: {value}")
-        for value in menge:
-            print(f"Erhalten in Menge: {value}")
-        #flash('New record created successfully')
-    return "ok"
+        flash(f"{rezeptname} gespeichert")
+    return 0
 
 
 @app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])

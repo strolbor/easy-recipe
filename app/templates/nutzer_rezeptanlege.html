@@ -46,12 +46,13 @@
                 url: "{{url_for('postrezept')}}",//"/ctl/nutzer/rezept/post",
                 method: "POST",
                 data: $('#add_rezept').serialize(),
+                //enctype: 'multipart/form-data',
                 success: function (data) {
                     $('#add_rezept')[0].reset();
                 }
             });
         });
-    });
+    });//Document Ready
 </script>
 <style>
     div {
@@ -61,7 +62,7 @@
         padding-bottom: 7px;
     }
 </style>
-<form name="add_rezept" id="add_rezept">
+<form name="add_rezept" id="add_rezept" enctype="multipart/form-data" method="post">
     {{ form.csrf_token }}
     <div class="row">
         <!-- Überschrift -->
