@@ -2,13 +2,13 @@
 
 {% block app_content %}
 
-<form name="rezeptranking" id="rezeptranking" method="POST">
+<form name="add_rezept" id="add_rezept">
 {{ form.csrf_token }}
 
 <div align="right">
-    {{form.btnSort1}}
-    {{form.btnSort2}}
-    {{form.btnSort0}}
+    {{btnSort1}}
+    {{btnSort2}}
+    {{btnSort0}}
 </div>
 
 {% set anzRezepte = rezeptRankings|length %}
@@ -36,46 +36,5 @@
 {% endfor %}
 
 
-
-
-<!--
-<table cellspacing="0" cellpadding="0">
-    {% set rezeptSpalten = 3 %}
-    {% set anzRezepte = rezeptRankings|length %}
-    {% set rezeptZeilen = anzRezepte/rezeptSpalten %}
-    {% set rezeptZeilen = rezeptZeilen|round(method='ceil')|int %}
-    {# hast bestimmte Anzahl an Zeilen, je nachdem wie viele Spalten #}
-    {# in RezeptIndex steht Index vom angezeigten Rezept, für zugriff auf rezeptRankings Array #}
-    {%for i in range(0, rezeptZeilen) %}
-    {# erschaffe nur neue Zellen, wenn auch mit rezept gefüllt wird #}
-    <tr>
-        {% for j in range(0, rezeptSpalten) %}
-        {% set rezeptIndex = 3*i+j %}
-        {% if rezeptIndex < anzRezepte %}
-        <td>
-            <div class="card" style="width: 31rem; height: 45rem;">
-                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[rezeptIndex].rid)}}">
-                <img src="/ctl/download/{{rezeptRankings[rezeptIndex].bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{ rezeptRankings[rezeptIndex].name }}</h5>
-                    <i class="card-text">{{ rezeptRankings[rezeptIndex].tags }}</i>
-                    <p></p>
-                    <p class="card-text"><b>Du hast folgende Zutaten:</b> {{ rezeptRankings[rezeptIndex].vorhandeneZutatenNamen }}</p>
-                    <p class="card-text"><b>Dir fehlen folgende Zutaten:</b> {{ rezeptRankings[rezeptIndex].fehlendeZutatenNamen }}</p>
-                    <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[rezeptIndex].rid)}}" class="btn btn-primary">Nachkochen </a>
-                </div>
-            </div>
-        </td>
-        {%endif %}
-        {%endfor%}
-    </tr>
-
-
-    {%endfor%}
-</table>
--->
-
 </form>
-
 {% endblock %}

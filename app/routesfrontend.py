@@ -257,3 +257,11 @@ def rezeptanzeige(ids):
 
 
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten, anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
+
+@app.route('/rezeptsammlung')
+def rezeptsammlung():
+    form=forms.rezeptsammlung()
+    bspZutaten = ["Bier","Gemüse","Karotte"]
+    global globalRezeptRankings
+    globalRezeptRankings = getRezepteByZutatNamen(bspZutaten, 0)
+    return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptRankings=globalRezeptRankings)

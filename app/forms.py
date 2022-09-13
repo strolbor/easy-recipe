@@ -4,7 +4,7 @@ from wtforms import SubmitField, SelectMultipleField, StringField, SelectField
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
-from app.rezept import zutat, kategorie
+from app.rezept import zutat, kategorie, rezept
 
 
 class d_felder(FlaskForm):
@@ -125,3 +125,13 @@ class rezeptranking(FlaskForm):
     btnSort0 = SubmitField(label="Bestes Verhältnis")
     btnSort1 = SubmitField(label="Wenigste fehlende Zutaten")
     btnSort2 = SubmitField(label="Meiste vorhandene Zutaten")
+
+class rezeptsammlung(FlaskForm):
+    btnSuchen = SubmitField("Suchen")
+    alleRezeptNamen = []
+    for entry in rezept.query.all():
+        alleRezeptNamen.append(entry.name)
+
+    rezeptnamen = SelectField("Rezeptsuche", choices=[""]+alleRezeptNamen)
+    rezeptkategorien = SelectField("Rezeptkategorien", choices=[""]+["Vegan","Vegetarisch","Leicht","Viele Zutaten","Tag1","Tag2","Tag3"])
+    maxZutaten = StringField("Maximale Zutaten z.B. 5")
