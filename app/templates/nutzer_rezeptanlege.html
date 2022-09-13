@@ -5,15 +5,25 @@
 <script>
     $(document).ready(function () {
 
+        //GEnerral
         var maxBox = 8; //Wieviel Felder werden max. hinzugefügt
+
+        // Zutaten
         var hinzufueger = $("#hinzufueger"); //Welcher Text soll angezeigt werden
         var mehrBtn = $("#AddZutatInput"); //Welcher Button ist dafür verantwortlich
-
+        var zutaten = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
         var x = hinzufueger.length; //Counter der bereits vorhanden Felder
         var CounterZutaten = 1; //Counter
 
-        var zutaten = '<option value="-1">Keine angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
+        //Tags
+        var hinzufuegerTags = $("#hinzufuegerTag"); //Welcher Text soll angezeigt werden
+        var mehrBtnTags = $("#AddTagInput"); //Welcher Button ist dafür verantwortlich
+        var tags = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}';
+        var y = hinzufuegerTags.length;
+        var CounterTags = 1
+        
 
+        
         $(mehrBtn).click(function (e)  //On-Click Event
         {
             if (x <= maxBox) // Methode zum begrenzen
@@ -27,20 +37,46 @@
                     </div> \
                     <div class="col-md-5"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
                     <div class="col-md-2">\
-                        <a href="#" class="btn btn-danger removeclass">-</a> \
+                        <a href="#" class="btn btn-danger removeclassZutat">-</a> \
                     </div></div>');
                 x++; //text box erhöhen
             }
             return false;
         });
+        $(mehrBtnTags).click(function (e)  //On-Click Event
+        {
+            if (y <= maxBox) // Methode zum begrenzen
+            {
+                CounterTags++;
+                //Mehr Buttons
+                $(hinzufuegerTags).append('<div class="row"> \
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte ein Tag an" class="form-control" name="tags[]" id="field_' + CounterTags + '">\
+                        '+ tags + '\
+                        </select>\
+                    </div> \
+                    <div class="col-md-2">\
+                        <a href="#" class="btn btn-danger removeclassTag">-</a> \
+                    </div> \
+                    </div>');
+                y++; //text box erhöhen
+            }
+            return false;
+        });
 
-        $("body").on("click", ".removeclass", function (e) { //Box entferne Methode
+        $("body").on("click", ".removeclassZutat", function (e) { //Box entferne Methode
             if (x > 1) {
                 $(this).parent('div').parent('div').remove(); //Entferne Zutat box
                 x--; //textbox anzahl verringern
             }
             return false;
-        })
+        });
+        $("body").on("click", ".removeclassTag", function (e) { //Box entferne Methode
+            if (y > 1) {
+                $(this).parent('div').parent('div').remove(); //Entferne Tag box
+                y--; //textbox anzahl verringern
+            }
+            return false;
+        });
         $('#submit').click(function () {
             $.ajax({
                 url: "{{url_for('postrezept')}}",
@@ -89,10 +125,11 @@
             <div class="row">
                 <div class="col-md-5">
                     <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
-                        <option value="-1">Keine angabe</option>
+                        <option value="-1">Keine Angabe</option>
                         <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">
                             {{entry.name}} ({{entry.einheit}})</option>{% endfor%}
                     </select>
+                    
                 </div>
                 <div class="col-md-5">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
@@ -100,10 +137,13 @@
                 </div>
                 <div class="col-md-2">
                     <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                    
+                       
+                    
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
-       <div> <button class="btn btn-primary"><a href="{{url_for('addzutat')}}" style="color: white; text-decoration: none;">Zutaten erstellen</a></button></div>
+       <div><a href="{{url_for('addzutat')}}" style="color: white; text-decoration: none;">Zutaten erstellen</a></div>
     </div>
 
 
@@ -114,10 +154,23 @@
         <div>{{ form.handlung(class="form-control",size=15)}}</div>
     </div>
     <div class="row">
-        <div>{{ form.tags.label }}</div>
-        <div>{{ form.tags(class="form-control")}}</div>
-        <div><button class="btn btn-primary"><a href="{{url_for('addTags')}}"
-                    style="color: white; text-decoration: none;">Tag erstellen</a></button></div>
+        <!-- Tags-->
+        <p>Tags</p>
+        <div id="hinzufuegerTag">
+            <div class="row">
+                <div class="col-md-5">
+                    <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
+                        <option value="-1">Keine Angabe</option>
+                        <option value="-1">----</option>{%for entry in tags%}<option value="{{entry.id}}">
+                            {{entry.name}}</option>{% endfor%}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" name="add" id="AddTagInput" class="btn btn-success">+</button>
+                </div>
+            </div><!-- end of id=row -->
+        </div> <!-- end of id=hinzufueger-->
+        <div> <a href="{{url_for('addTags')}}" style="color: white; text-decoration: none;">Tags erstellen</a></div>
     </div>
 
     <div class="row">

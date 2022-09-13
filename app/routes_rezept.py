@@ -29,7 +29,8 @@ def newRezept(rname: str, tagarray):
 
     # Tags adden
     for entry in tagarray:
-        new.tags.append(tags.query.get(entry))
+        if int(entry) > 0:
+            new.tags.append(tags.query.get(entry))
 
     """ Neues Rezept der Datenbank hinzufügen."""
     db.session.add(new)
@@ -42,24 +43,17 @@ def newRezept(rname: str, tagarray):
 def nutzerrezeptein():
     """Nutzereingabe Menü"""
     form = forms.nutzerein()
-    # Alle Tags holen
-    tagarray = []
-    tagarray.append(['-1', "Keine Angabe"])
-    tag2 = createArrayHelper(tags.query.all())
-    for entry in tag2:
-        tagarray.append(entry)
-    form.tags.choices = tagarray
     # Das ist schon so fertig
     if request.method == "POST" and form.submit.data:
         if rezept.query.filter_by(name=form.rname.data).first() is None:
-            newRezept(form.rname.data, form.tags.data)
+            newRezept(form.rname.data,[])
             print("nutzerrezeptein hat Rezept erstellt")
         rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
         pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
         rid.bild = pic_url
         db.session.commit()
         return redirect(url_for('nutzerrezeptein'))
-    return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all())
+    return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
 
 
 @app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
@@ -82,7 +76,7 @@ def postrezept():
         zutaten = request.form.getlist('zutat[]')
         menge = request.form.getlist('menge[]')
         rezeptname = request.form.get('rname')
-        taglist = request.form.getlist('tags')
+        taglist = request.form.getlist('tags[]')
         handlungsschritttext = request.form.get('handlung')
 
         # Rezept anlegen
@@ -99,15 +93,17 @@ def postrezept():
         # Zutaten verknüpfen
         counter = 0
         for entry in zutaten:
-            if int(entry) > 0:  # Abfrage, ob es eine gültige Zutat ist. Gültig heißt nicht -1 oder kleiner
-                print(f"Erhalte Zutaten zum hinzufügen: {entry}")
-                zuttmp = zutat.query.get(entry)
-                assoc1 = Association(menge=menge[counter], optional=False)
-                assoc1.hatzutat = zuttmp
-                with db.session.no_autoflush:
-                    rnew.zutaten.append(assoc1)
-                db.session.commit()
-            counter += 1
+            if Association.query.get((rnew.id,entry)) is None:
+                if int(entry) > 0:  # Abfrage, ob es eine gültige Zutat ist. Gültig heißt nicht -1 oder kleiner
+                    
+                    zuttmp = zutat.query.get(entry)
+                    print(f"Erhalte Zutaten zum hinzufügen: {zuttmp.name}")
+                    assoc1 = Association(menge=menge[counter], optional=False)
+                    assoc1.hatzutat = zuttmp
+                    with db.session.no_autoflush:
+                        rnew.zutaten.append(assoc1)
+                    db.session.commit()
+                counter += 1
 
         # Handlungschritt anlegen
         handlung = handlungsschritt(
@@ -116,15 +112,21 @@ def postrezept():
         db.session.commit()
 
         # Handlungsschritt verknüpfen
-        # Wenn nichts in den Handlungsschritt geschrieben ist, ignorieren
-        if len(handlungsschritttext) > 1:
-            nhand = handlungsschritt.query.filter_by(
-                text=handlungsschritttext).first()
-            assoc1 = AssociationRHhat(position=1)
-            assoc1.hatid = nhand
-            with db.session.no_autoflush:
-                rnew.handlungsschritte.append(assoc1)
-            db.session.commit()
+        nhand = handlungsschritt.query.filter_by(
+            text=handlungsschritttext).first()
+        assoc1 = AssociationRHhat(position=1)
+        assoc1.hatid = nhand
+        with db.session.no_autoflush:
+            rnew.handlungsschritte.append(assoc1)
+        db.session.commit()
+
+        # TODO: Tags verknüpfen
+        for entry in taglist:
+            if int(entry) > 0:
+                atag = tags.query.get(int(entry))
+                rnew.tags.append(atag)
+        db.session.commit()
+        
 
         # speichern
         flash(f"{rezeptname} gespeichert")
@@ -149,7 +151,10 @@ def modifyrezept(ids):
             zuRezept.bild = picure_url
 
         # Handlungsschritt Text bearbeiten
-        zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
+        try:
+            zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
+        except IndexError:
+            pass
 
         # Tag speichern
         for tagentry in form.tags.data:
@@ -161,7 +166,10 @@ def modifyrezept(ids):
         flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept', ids=ids))
     print("Naebhu")
-    form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
+    try:
+        form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
+    except IndexError:
+        pass
     form.rezeptname.data = zuRezept.name
     # Tags
     tagarry = []
@@ -171,7 +179,10 @@ def modifyrezept(ids):
         tagarry.append(entry)
     form.tags.choices = tagarry
     if zuRezept.tags is not None:
-        form.tags.data = [zuRezept.tags[0].id, zuRezept.tags[0].name]
+        try:
+            form.tags.data = [zuRezept.tags[0].id, zuRezept.tags[0].name]
+        except IndexError:
+            pass
 
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 
