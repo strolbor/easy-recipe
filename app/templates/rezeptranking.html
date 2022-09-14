@@ -2,13 +2,13 @@
 
 {% block app_content %}
 
-<form name="add_rezept" id="add_rezept">
+<form name="add_rezept" id="add_rezept" method="POST">
 {{ form.csrf_token }}
 
 <div align="right">
-    {{btnSort1}}
-    {{btnSort2}}
-    {{btnSort0}}
+    {{form.btnSort1(class="btn btn-light")}}
+    {{form.btnSort2(class="btn btn-light")}}
+    {{form.btnSort0(class="btn btn-light")}}
 </div>
 
 {% set anzRezepte = rezeptRankings|length %}

@@ -127,7 +127,7 @@ class rezeptranking(FlaskForm):
     btnSort2 = SubmitField(label="Meiste vorhandene Zutaten")
 
 class rezeptsammlung(FlaskForm):
-    btnSuchen = SubmitField("Suchen")
+    btnSuchen = SubmitField("Suche passende Rezepte")
     alleRezeptNamen = []
     for entry in rezept.query.all():
         alleRezeptNamen.append(entry.name)
