@@ -88,10 +88,16 @@
                 }
             });
         });
+
+        $('#select2option1').select2({  // init Select2 on form's suchfeld field
+            placeholder: "Zutat suchen",
+            allowClear: true,
+            "width": "40%"
+        });
     });//Document Ready
 </script>
 <style>
-    div {
+    .fnu {
         padding-left: 5px;
         margin-left: 0px;
         margin-right: 0px;
@@ -100,37 +106,32 @@
 </style>
 <form name="add_rezept" id="add_rezept" enctype="multipart/form-data" method="post">
     {{ form.csrf_token }}
-    <div class="row">
+    <div class="row fnu">
         <!-- Überschrift -->
         <div class="col-md-12">
             <h2>Neues Rezept anlegen</h2>
         </div>
     </div>
 
-    <div class="row ">
+    <div class="row fnu">
         <!-- Rezeptnamen -->
         <div>{{ form.rname.label }}</div>
         <div class="col-md-6">{{form.rname(class="form-control",title="rezeptnamen eingabe")}}</div>
     </div>
 
-    <div class="row  ">
+    <div class="row  fnu">
         <div><label class="form-label">{{ form.bildupload.label }}</label></div>
         <div>{{ form.bildupload(class="form-control")}}</div>
     </div>
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Zutatenverknüpfer-->
         <p>Zutaten</p>
         <div id="hinzufueger">
             <div class="row">
-                <div class="col-md-5">
-                    <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
-                        <option value="-1">Keine Angabe</option>
-                        <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">
-                            {{entry.name}} ({{entry.einheit}})</option>{% endfor%}
-                    </select>
-                    
-                </div>
+                <div class="col-md-5" id="select2option1">
+                    <select name="zutat[]" id="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control"><option value="-1">Keine Angabe</option> <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}</select>
+                </div><!-- end of select2option1 -->
                 <div class="col-md-5">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
                         class="form-control" value="0">
@@ -143,17 +144,17 @@
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
-       <div><a href="{{url_for('addzutat')}}" style="color: white; text-decoration: none;">Zutaten erstellen</a></div>
+       <div><a href="{{url_for('addzutat')}}" style="text-decoration: none;">Zutaten erstellen</a></div>
     </div>
 
 
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Handlungschrittverknüpfer -->
         <div>{{ form.handlung.label }}</div>
         <div>{{ form.handlung(class="form-control",size=15)}}</div>
     </div>
-    <div class="row">
+    <div class="row fnu">
         <!-- Tags-->
         <p>Tags</p>
         <div id="hinzufuegerTag">
@@ -161,8 +162,8 @@
                 <div class="col-md-5">
                     <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
                         <option value="-1">Keine Angabe</option>
-                        <option value="-1">----</option>{%for entry in tags%}<option value="{{entry.id}}">
-                            {{entry.name}}</option>{% endfor%}
+                        <option value="-1">----</option>
+                        {%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}
                     </select>
                 </div>
                 <div class="col-md-2">
@@ -170,10 +171,10 @@
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
-        <div> <a href="{{url_for('addTags')}}" style="color: white; text-decoration: none;">Tags erstellen</a></div>
+        <div> <a href="{{url_for('addTags')}}" style="text-decoration: none;">Tags erstellen</a></div>
     </div>
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Submit des Feldes -->
         <div>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore

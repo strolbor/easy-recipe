@@ -18,7 +18,9 @@ def addzutat():
     """Hiermit wird eine neue Zutat angelegt."""
     form = forms.zutatanlegen()
     if request.method == "POST" and form.submit.data:
-        if zutat.query.filter_by(name=form.name.data).first() is not None:
+        tmp = zutat.query.filter_by(name=form.name.data).first()
+        print(tmp)
+        if tmp is None:
             # Daten des Uploads holen
             bild_url = ""
             idneu = getNewID(zutat)
