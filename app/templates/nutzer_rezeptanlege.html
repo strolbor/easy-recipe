@@ -3,10 +3,18 @@
 
 {% block app_content %}
 <script>
+    function initSelect() {
+        $('select').select2({  // init Select2 on form's suchfeld field
+            placeholder: "Suche",
+            allowClear: true,
+            width: 'element',
+        });
+    }
     $(document).ready(function () {
 
         //GEnerral
         var maxBox = 8; //Wieviel Felder werden max. hinzugefügt
+        
 
         // Zutaten
         var hinzufueger = $("#hinzufueger"); //Welcher Text soll angezeigt werden
@@ -30,17 +38,20 @@
             {
                 CounterZutaten++;
                 //Mehr Buttons
-                $(hinzufueger).append('<div class="row"> \
+                $(hinzufueger).append('<div class="row fnu"> \
                     <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-5"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
+                    <div class="col-md-2"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"></div> \
                     <div class="col-md-2">\
-                        <a href="#" class="btn btn-danger removeclassZutat">-</a> \
+                        <a href="#" class="btn btn-danger removeclassZutat" style="width: 36px;height: 36px;">- </a> \
                     </div></div>');
                 x++; //text box erhöhen
             }
+             //TODO: SELECT
+             initSelect();
+            
             return false;
         });
         $(mehrBtnTags).click(function (e)  //On-Click Event
@@ -49,17 +60,19 @@
             {
                 CounterTags++;
                 //Mehr Buttons
-                $(hinzufuegerTags).append('<div class="row"> \
-                    <div class="col-md-5"><select placeholder="Geben Sie bitte ein Tag an" class="form-control" name="tags[]" id="field_' + CounterTags + '">\
+                $(hinzufuegerTags).append('<div class="row fnu"> \
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte ein Tag an" class="select2-selection__rendered" name="tags[]" id="field_' + CounterTags + '">\
                         '+ tags + '\
                         </select>\
                     </div> \
                     <div class="col-md-2">\
-                        <a href="#" class="btn btn-danger removeclassTag">-</a> \
+                        <a href="#" class="removeclassTag"><button type="button" name="add" id="AddZutatInput" class="btn btn-danger" style="width: 36px;height: 36px;">-</button></a> \
                     </div> \
                     </div>');
                 y++; //text box erhöhen
             }
+            //TODO: SELECT
+            initSelect();
             return false;
         });
 
@@ -88,12 +101,9 @@
                 }
             });
         });
-
-        $('#select2option1').select2({  // init Select2 on form's suchfeld field
-            placeholder: "Zutat suchen",
-            allowClear: true,
-            "width": "40%"
-        });
+        //TODO: SELECT
+        initSelect();
+       
     });//Document Ready
 </script>
 <style>
@@ -128,16 +138,19 @@
         <!-- Zutatenverknüpfer-->
         <p>Zutaten</p>
         <div id="hinzufueger">
-            <div class="row">
-                <div class="col-md-5" id="select2option1">
-                    <select name="zutat[]" id="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control"><option value="-1">Keine Angabe</option> <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}</select>
-                </div><!-- end of select2option1 -->
+            <div class="row fnu">
                 <div class="col-md-5">
+                    <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
+                     <option value="-1">Keine Angabe</option>
+                     <option value="-1">----</option>
+                     {%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}</select>
+                </div><!-- end of select2option1 -->
+                <div class="col-md-2">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="form-control" value="0">
+                        class="select2-selection__rendered" value="0" width="auto"> 
                 </div>
                 <div class="col-md-2">
-                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
                     
                        
                     
@@ -158,7 +171,7 @@
         <!-- Tags-->
         <p>Tags</p>
         <div id="hinzufuegerTag">
-            <div class="row">
+            <div class="row fnu">
                 <div class="col-md-5">
                     <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
                         <option value="-1">Keine Angabe</option>
@@ -167,7 +180,7 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" name="add" id="AddTagInput" class="btn btn-success">+</button>
+                    <button type="button" name="add" id="AddTagInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->

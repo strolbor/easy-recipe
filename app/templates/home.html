@@ -47,34 +47,12 @@
             </thead>
             <tbody>
 
-                <!--
-                <tr>
-                    <td class="suchtext" autofocus> Suche eine Zutat: {{ form.suchtext() }} {{ form.submitSuchtext }}</td>
-                </tr>
-                -->
-
-                <!--
-                <tr>
-                <script type="text/javascript">
-                    function textboxtest() {
-                        document.getElementById('id01').value = "test"
-
-                        return
-                    }
-                </script>
-                <input type="text" id="id01" onKeyUp="return textboxtest()" />
-
-                </tr>
-                -->
-
-
                 <tr>
                     <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff }}</td>
                 </tr>
 
 
                 <tr>
-                  <!-- <td class="eingabe" id=""> {{ form.eingabe(size=15, class='form-control',multiple='multiple') }}</td> -->
 
                   <!-- Hier ist Zelle mit verschiedenen Kategorien -->
                   <td width="80%">
@@ -100,11 +78,6 @@
                   <!-- </div> BEENDET SCROLLLEISTE -->
                   </td>
 
-
-                    <!-- alte Buttons für hinzufügen / entfernen -->
-                  <!-- <td class="buttons">{{ form.submitRm(class="btn btn-danger") }} {{ form.submitAdd(class="btn btn-success") }}</td> -->
-
-                    <!-- Liste ausgewählter ZUtaten -->
                   <td>
                       <table>
                       {% for chosenZutat in choices_array %}
