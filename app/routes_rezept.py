@@ -50,8 +50,10 @@ def nutzerrezeptein():
             print(f"nutzerrezeptein hat Rezept {form.rname.data} erstellt")
         rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
         pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
+        if not (pic_url == "A" or pic_url == "B"):
+            rid.bild = pic_url
         print("Bild:", pic_url)
-        rid.bild = pic_url
+        print(request.files)
         db.session.commit()
         return redirect(url_for('nutzerrezeptein'))
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
