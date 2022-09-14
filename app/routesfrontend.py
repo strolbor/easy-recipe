@@ -6,6 +6,7 @@ from werkzeug.utils import redirect
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
 from app.rezept import zutat, rezept
+from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung
 
 
 
@@ -261,7 +262,25 @@ def rezeptanzeige(ids):
 @app.route('/rezeptsammlung')
 def rezeptsammlung():
     form=forms.rezeptsammlung()
+
+    class PassendeRezeptliste:
+        rezepte = []
+        name = ""
+
+        def __init__(self, _name, _rezepte):
+            self.name = _name
+            self.rezepte = _rezepte
+
+    veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "vegan"), _name="Vegane Rezepte")
+    fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "fleisch"), _name="Rezepte mit Fleisch")
+    einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "einfach"), _name="Einfache Rezepte")
+    rezeptsammlungen = [veganes, fleisch, einfach]
+    anzRezeptvorschlaege = 0
+    for sammlung in rezeptsammlungen:
+        anzRezeptvorschlaege += len(sammlung.rezepte)
+
     bspZutaten = ["Bier","Gemüse","Karotte"]
     global globalRezeptRankings
     globalRezeptRankings = getRezepteByZutatNamen(bspZutaten, 0)
-    return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptRankings=globalRezeptRankings)
+    return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptRankings=globalRezeptRankings,
+                           rezeptsammlungen=rezeptsammlungen, anzRezeptvorschlaege=anzRezeptvorschlaege)
