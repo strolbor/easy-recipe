@@ -47,9 +47,10 @@ def nutzerrezeptein():
     if request.method == "POST" and form.submit.data:
         if rezept.query.filter_by(name=form.rname.data).first() is None:
             newRezept(form.rname.data,[])
-            print("nutzerrezeptein hat Rezept erstellt")
+            print(f"nutzerrezeptein hat Rezept {form.rname.data} erstellt")
         rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
         pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
+        print("Bild:", pic_url)
         rid.bild = pic_url
         db.session.commit()
         return redirect(url_for('nutzerrezeptein'))
@@ -85,7 +86,7 @@ def postrezept():
         if rezept.query.filter_by(name=rezeptname).first() is None:
             """ Wenn das Rezept nicht existiert, erstelle es"""
             newRezept(rezeptname, taglist)
-            print("AJAX hat Rezept erstellt")
+            print(f"AJAX hat Rezept {rezeptname} erstellt")
         rnew: rezept = rezept.query.filter_by(name=rezeptname).first()
         if rnew is None:
             print("rnew ist none")
@@ -165,7 +166,6 @@ def modifyrezept(ids):
         db.session.commit()
         flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept', ids=ids))
-    print("Naebhu")
     try:
         form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
     except IndexError:
