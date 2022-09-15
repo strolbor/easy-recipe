@@ -55,22 +55,6 @@ def postrezept():
     """AJAX Methode zum Anlegen der Methode.
     AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().
     """
-    # GET /nutzer/rezept/eingabe?
-    # csrf_token=ImQyYmE0ZjNiMTY0YTgyZDZiNzhjOWMxMjQwY2Y5N2Q2MWY0MTUyZWMi.YxnmQQ.PvCAKVJUzzIA8VIXTdAn4HRUTmI&
-    # rname=we432&
-    # bildupload=
-    # &zutat%5B%5D=3& menge%5B%5D=1&
-    # zutat%5B%5D=17& menge%5B%5D=2&
-    # zutat%5B%5D=16& menge%5B%5D=3
-    # handlung=ew&
-    # tags=1&
-    # submit=Speichern
-    print("==== Request Header ====")
-    print(request.headers)
-    print("==== Request Data ====")
-    print(request.data)
-    print("==== Request files ====")
-    print(request.files)
     if request.method == 'POST':
         # Informationen aus Stream abrufen
         zutaten = request.form.getlist('zutat[]')

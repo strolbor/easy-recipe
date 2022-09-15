@@ -44,7 +44,7 @@
                         </select>\
                     </div> \
                     <div class="col-md-2"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
-                        <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn btn-danger">-</button></a> \
+                        <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn-sm btn-danger">-</button></a> \
                     </div>');
                 x++; //text box erhöhen
             }
@@ -67,7 +67,7 @@
                         </select>\
                     </div> \
                     <div class="col-md-2">\
-                        <a href="#" class="removeclassTag"><button type="button" name="add" id="AddZutatInput" class="btn btn-danger" style="width: 36px;height: 36px;">-</button></a> \
+                        <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-danger removeclassTag" style="width: 36px;height: 36px;">-</button> \
                     </div> \
                     </div>');
                 y++; //text box erhöhen
@@ -119,13 +119,20 @@
         padding-bottom: 7px;
        
     }
-    #hinzufueger .btn {
+    
+    .btn-sm {
         width: 36px;
         
     }
+
     #hinzufueger .row{
         margin-top: 5px;
     }
+
+    #hinzufuegerTag .row{
+        margin-top: 5px;
+    }
+
 
     #add_rezept .row .abstand  {
         margin-bottom: 8px;
@@ -170,7 +177,7 @@
                 <div class="col-md-2">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
                         class="select2-selection__rendered" value="0" width="auto">
-                        <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                        <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-success">+</button>
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
@@ -197,7 +204,7 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="button" name="add" id="AddTagInput" class="btn btn-success">+</button>
+                    <button type="button" name="add" id="AddTagInput" class="btn-sm btn-success">+</button>
                 </div>
                 
             </div><!-- end of id=row -->
