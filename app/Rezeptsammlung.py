@@ -92,6 +92,7 @@ def getRezeptByEigenschaft(anzahl, eigenschaft):
 
         if len(passendeRezepte) >= anzahl:
             return passendeRezepte
+    return passendeRezepte
 
 def getRezepteByTag(tag):
     passendeRezepte = []
@@ -106,3 +107,18 @@ def getRezepteByTag(tag):
                 passendeRezepte.append(neuesRezept)
 
     return passendeRezepte
+
+def getRezepteByMaxZutaten(anzahl):
+    passendeRezepte = []
+    for rez in rezept.query.all():
+        if len(rez.zutaten) <= anzahl:
+            r_tags=""
+            for tag in rez.tags:
+                r_tags += f"{tag.name}, "
+            r_tags = r_tags[:-2]
+            neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=r_tags, _bild=rez.bild)
+            passendeRezepte.append(neuesRezept)
+
+    return passendeRezepte
+
+

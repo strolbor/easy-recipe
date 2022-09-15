@@ -40,6 +40,7 @@
 
 <div class="container">
     <div class="row">
+        <!--
         <div class="col-2" style="vertical-align:top; margin:5px; background-color:#E7E7E7">
             <p><b>Angewandte Filter:</b> </p>
             <div class="form-check form-switch">
@@ -51,7 +52,8 @@
                 <label class="form-check-label" for="flexSwitchCheckCheckedFleisch">Fleisch</label>
             </div>
         </div>
-        <div class="col-9">
+        -->
+        <div class="col">
             <div class="container" style="margin:5px;" > <!-- Filteroptionen und Suche Button -->
                 <div class="row">
                     <div class="col">
@@ -64,11 +66,11 @@
                         <div>{{form.maxZutaten}}</div>
                     </div>
                     <div class="col-2">
-                        <div>{{form.btnSuchen(class="btn btn-light btn-lg", style="align:right")}}</div>
+                        <div>{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</div>
                     </div>
                 </div>
                 <!-- Rezeptvorschläge: -->
-                {% set anzRezepte = rezeptRankings|length %}
+
                 {% set anzSammlungen = rezeptsammlungen|length %}
                 <div class="row">
                     <div class="col">
@@ -78,41 +80,33 @@
                         <p></p>
 
                         {% for i in range(0, anzSammlungen) %}
-                        <p><h5><b>{{ rezeptsammlungen[i].name }}</b></h5></p>
-                            {% set rezeptsammlung = rezeptsammlungen[i] %}
-                            {% set rezepteInSammlung = rezeptsammlung.rezepte|length %}
-                            {% for j in range(0, rezepteInSammlung) %}
-
-                            <a href="{{ url_for('rezeptanzeige',ids=rezeptsammlung.rezepte[j].rid)}}">
-                            <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:5px; border:none;">
-                                <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                                <div class="card-body" style="overflow-y:scroll;">
-                                    <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
-                                    <i class="card-text">{{ rezeptsammlung.rezepte[j].tags }}</i>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <p><h5><b>{{ rezeptsammlungen[i].name }}</b></h5>
                                 </div>
                             </div>
-                            </a>
-                            {% endfor %}
-                        {% endfor %}
+                            <div class="row">
+                                <div class="col">
+                                    {% set rezeptsammlung = rezeptsammlungen[i] %}
+                                    {% set rezepteInSammlung = rezeptsammlung.rezepte|length %}
+                                    {% for j in range(0, rezepteInSammlung) %}
 
-
-
-                        <!-- ALTE NICHT GEORDNETE REZEPTVORSCHLÄGE
-                        {%for i in range(0, anzRezepte) %}
-                        {% if i < anzRezepte %}
-
-                        <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
-                        <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:5px; border:none;">
-                            <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                            <div class="card-body" style="overflow-y:scroll;">
-                                <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
-                                <i class="card-text">{{ rezeptRankings[i].tags }}</i>
+                                    <a href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
+                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:5px; border:none;">
+                                        <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
+                                        <div class="card-body" style="overflow-y:scroll;">
+                                            <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
+                                            <i class="card-text">{{ rezeptsammlung.rezepte[j].tags }}</i>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        </a>
-                        {%endif %}
                         {% endfor %}
-                        -->
+
 
                     </div>
                 </div>

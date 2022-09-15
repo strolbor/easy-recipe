@@ -112,27 +112,7 @@ def home():
     if form.validate_on_submit():
         print("validate")
 
-        if form.submitAdd.data:
-            # Item soll hinzugefügt werden
-            # Neue ausgewählte Elemente werden kopiert
-            # und hinzugefügt
-            for entry in form.eingabe.data.copy():
-                if not choices_array.__contains__(entry):
-                    choices_array.append(entry)
-            
-            # Neue List wird kopiert in die Liste
-            updateZutatenlisten()
-            
-            if len(form.eingabe.data) == 0:
-                flash("Input error")
-            else:
-                flash("Success")
-            # neues Template an Client senden
-            form.eingabe.data = []
-            form.selected.data = []
-            return render_template(home_html,form=form,choices_array=choices_array)
-
-        elif form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
+        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
             # Item soll hinzugefügt werden
             # Neue ausgewählte Elemente werden kopiert
             # und hinzugefügt
@@ -149,43 +129,6 @@ def home():
             form.selected.data = []
 
             return render_template(home_html, form=form,choices_array=choices_array)
-
-        elif form.submitRm.data:
-            print("submitRm")
-            # Item soll aus choices entfernt werden
-
-            # Aktuelle Auswahl kopieren
-            #form.selected.choices = choices_array.copy()
-            array = choices_array.copy()
-            #print(array)
-            # Was wir entfernen wollen, kopieren
-            to_delete = form.selected.data.copy()
-            #print(to_delete)
-            try:
-                for entry in to_delete:
-                    array.remove(entry)
-            except ValueError:
-                pass
-            #print(array)
-            #form.selected.choices = array.copy()
-            choices_array = array.copy()
-
-            updateZutatenlisten()
-
-            if len(form.selected.data) == 0:
-                flash("Input error")
-            else:
-                flash("Success")
-
-            
-            form.eingabe.data = []
-            form.selected.data = []
-            return render_template(home_html,form=form,choices_array=choices_array)
-        elif form.submitLoesen.data:
-            form.eingabe.data = []
-            form.selected.data = []
-            form.selected.choices = choices_array
-            return render_template(home_html,form=form,choices_array=choices_array)
 
         elif form.submitSuchen.data:
             print("Submit suchen")
@@ -235,6 +178,47 @@ def rezeptanzeige(ids):
                 self.verfuegbar = "✅"
 
 
+    r_tags = ""
+    for tag in thisrezept.tags:
+        r_tags += f"{tag.name}, "
+    r_tags = r_tags[:-2]
+
+    r_zutaten = []
+    for zutat in thisrezept.zutaten:
+        zname = zutat.hatzutat.name
+        zeineit = zutat.hatzutat.einheit
+        zmenge = zutat.menge
+        #wenn menge gleich 0 dann daten kaputt -> nix anzeigen
+        if zmenge == "0":
+            zmenge = ""
+        r_z = r_zutat(_name=zname, _einheit=zeineit, _menge=zmenge)
+        r_zutaten.append(r_z)
+
+    r_handl = []
+    for handlungsschritt in thisrezept.handlungsschritte:
+        r_handl.append(handlungsschritt.hatid.text)
+
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
+                           anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
+
+@app.route('/rezeptsammlung/<path:ids>', methods=['GET', 'POST'])
+def rezeptsammlung_id(ids):
+    form = forms.rezeptanzeige()
+    thisrezept = rezept.query.get(ids)
+    #print(thisrezept.zutaten)
+
+    class r_zutat:
+        name = ""
+        einheit = ""
+        menge = ""
+        verfuegbar = ""
+
+        def __init__(self, _name, _einheit, _menge):
+            self.name = _name
+            self.einheit = _einheit
+            self.menge = _menge
+            if _name in choices_array:
+                self.verfuegbar = ""
 
     r_tags = ""
     for tag in thisrezept.tags:
@@ -256,10 +240,11 @@ def rezeptanzeige(ids):
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
 
+    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
+                           anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
 
-    return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten, anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
 
-@app.route('/rezeptsammlung')
+@app.route('/rezeptsammlung', methods=['GET', 'POST'])
 def rezeptsammlung():
     form=forms.rezeptsammlung()
 
@@ -267,10 +252,46 @@ def rezeptsammlung():
         rezepte = []
         name = ""
 
+        def removeRezept(self, rez):
+            try:
+                self.rezepte.remove(rez)
+            except:
+                pass
+
         def __init__(self, _name, _rezepte):
             self.name = _name
             self.rezepte = _rezepte
 
+    passendeRezepte = PassendeRezeptliste("", [])
+
+    #wenn nicht erster Aufruf:
+    if request.method == "POST":
+        if form.btnSuchen.data:
+            rezeptSuchbegriff = form.rezeptnamen.data
+            if rezeptSuchbegriff != "":
+                passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
+                return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+            if form.rezeptkategorien.data:
+                eigenschaft = form.rezeptkategorien.data.lower()
+                passendeRezepte = PassendeRezeptliste(form.rezeptkategorien.data, getRezeptByEigenschaft(1000, eigenschaft))
+
+            try:
+                print("ZAHLFILTER")
+                for rez in passendeRezepte.rezepte.copy:
+                    if len(rez.zutaten) > form.maxZutaten.data:
+                        passendeRezepte.removeRezept(rez)
+            except Exception:
+                print(Exception)
+
+
+            return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
+                                   rezeptsammlungen=[passendeRezepte],
+                                   anzRezeptvorschlaege=len(passendeRezepte.rezepte))
+
+
+
+
+    #wenn erster Aufruf:
     veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "vegan"), _name="Vegane Rezepte")
     fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "fleisch"), _name="Rezepte mit Fleisch")
     einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "einfach"), _name="Einfache Rezepte")
@@ -279,8 +300,5 @@ def rezeptsammlung():
     for sammlung in rezeptsammlungen:
         anzRezeptvorschlaege += len(sammlung.rezepte)
 
-    bspZutaten = ["Bier","Gemüse","Karotte"]
-    global globalRezeptRankings
-    globalRezeptRankings = getRezepteByZutatNamen(bspZutaten, 0)
-    return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptRankings=globalRezeptRankings,
-                           rezeptsammlungen=rezeptsammlungen, anzRezeptvorschlaege=anzRezeptvorschlaege)
+    return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptsammlungen=rezeptsammlungen,
+                           anzRezeptvorschlaege=anzRezeptvorschlaege)
