@@ -91,16 +91,18 @@
             }
             return false;
         });
-        $('#submit').click(function () {
-            $.ajax({
-                url: "{{url_for('postrezept')}}",
-                method: "POST",
-                data: $('#add_rezept').serialize(),
-                async: false,
-                success: function (data) {
-                    $('#add_rezept')[0].reset();
-                }
-            });
+        var myFile = document.getElementById('bildupload');  // Our HTML files' ID
+        var myName = document.getElementById('rname');
+        $('#submit').click(function (event) {
+             event.preventDefault();
+             var files = myFile.files;
+             var formData = new FormData($('#add_rezept')[0]);
+             var file = files[0];
+             formData.append('bildupload', file, file.name);
+
+             var xhr = new XMLHttpRequest();
+              xhr.open('POST', "{{url_for('postrezept')}}", true);
+              xhr.send(formData);
         });
         //TODO: SELECT
         initSelect();
@@ -206,8 +208,7 @@
     <div class="row fnu">
         <!-- Submit des Feldes -->
         <div class="col-md-7">
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p>
+            <p></p>
         </div>
         <div>{{form.submit(class="btn btn-success") }}</div>
     </div>

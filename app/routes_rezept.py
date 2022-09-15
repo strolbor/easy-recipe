@@ -74,6 +74,13 @@ def postrezept():
     # handlung=ew&
     # tags=1&
     # submit=Speichern
+    print("==== Request Header ====")
+    print(request.headers)
+    print("==== Request Data ====")
+    print(request.data)
+    print("==== Request files ====")
+    print(request.files)
+    print(savepic('bildupload', request.files, f'tmp'))
     if request.method == 'POST':
         # Informationen aus Stream abrufen
         zutaten = request.form.getlist('zutat[]')
