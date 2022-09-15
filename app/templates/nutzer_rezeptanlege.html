@@ -3,17 +3,35 @@
 
 {% block app_content %}
 <script>
+    function initSelect() {
+        $('select').select2({  // init Select2 on form's suchfeld field
+            placeholder: "Suche",
+            allowClear: true,
+            width: 'element',
+        });
+    }
     $(document).ready(function () {
 
-        var maxBox = 8; //Wieviel Felder werden max. hinzugefügt
+        //GEnerral
+        var maxBox = 20; //Wieviel Felder werden max. hinzugefügt
+        
+
+        // Zutaten
         var hinzufueger = $("#hinzufueger"); //Welcher Text soll angezeigt werden
         var mehrBtn = $("#AddZutatInput"); //Welcher Button ist dafür verantwortlich
-
+        var zutaten = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
         var x = hinzufueger.length; //Counter der bereits vorhanden Felder
         var CounterZutaten = 1; //Counter
 
-        var zutaten = '<option value="-1">Keine angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
+        //Tags
+        var hinzufuegerTags = $("#hinzufuegerTag"); //Welcher Text soll angezeigt werden
+        var mehrBtnTags = $("#AddTagInput"); //Welcher Button ist dafür verantwortlich
+        var tags = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}';
+        var y = hinzufuegerTags.length;
+        var CounterTags = 1
+        
 
+        
         $(mehrBtn).click(function (e)  //On-Click Event
         {
             if (x <= maxBox) // Methode zum begrenzen
@@ -21,109 +39,170 @@
                 CounterZutaten++;
                 //Mehr Buttons
                 $(hinzufueger).append('<div class="row"> \
-                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '" >\
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-5"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="form-control" id="mfield_' + CounterZutaten + '"></div> \
-                    <div class="col-md-2">\
-                        <a href="#" class="btn btn-danger removeclass">-</a> \
-                    </div></div>');
+                    <div class="col-md-2"><input type="number" name="menge[]" value="0" min="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
+                        <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn-sm btn-danger">-</button></a> \
+                    </div>');
                 x++; //text box erhöhen
             }
+             //TODO: SELECT
+             initSelect();
+            
+            return false;
+        });
+        $(mehrBtnTags).click(function (e)  //On-Click Event
+        {
+            if (y <= maxBox) // Methode zum begrenzen
+            {
+                CounterTags++;
+                //Mehr Buttons
+                // <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
+                $(hinzufuegerTags).append('<div class="row"> \
+                    <div class="col-md-5">\
+                        <select placeholder="Geben Sie bitte ein Tag an" class="form-control" name="tags[]" id="field_' + CounterTags + '">\
+                        '+ tags + '\
+                        </select>\
+                    </div> \
+                    <div class="col-md-2">\
+                        <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-danger removeclassTag" style="width: 36px;height: 36px;">-</button> \
+                    </div> \
+                    </div>');
+                y++; //text box erhöhen
+            }
+            //TODO: SELECT
+            initSelect();
             return false;
         });
 
-        $("body").on("click", ".removeclass", function (e) { //Box entferne Methode
+        $("body").on("click", ".removeclassZutat", function (e) { //Box entferne Methode
             if (x > 1) {
                 $(this).parent('div').parent('div').remove(); //Entferne Zutat box
                 x--; //textbox anzahl verringern
             }
             return false;
-        })
-        $('#submit').click(function () {
-            $.ajax({
-                url: "{{url_for('postrezept')}}",
-                method: "POST",
-                data: $('#add_rezept').serialize(),
-                success: function (data) {
-                    $('#add_rezept')[0].reset();
-                }
-            });
         });
+        $("body").on("click", ".removeclassTag", function (e) { //Box entferne Methode
+            if (y > 1) {
+                $(this).parent('div').parent('div').remove(); //Entferne Tag box
+                y--; //textbox anzahl verringern
+            }
+            return false;
+        });
+        var myFile = document.getElementById('bildupload');  // Our HTML files' ID
+        $('#submit').click(function (event) {
+            event.preventDefault();
+            var files = myFile.files;
+            var formData = new FormData($('#add_rezept')[0]);
+            var file = files[0];
+            formData.append('bildupload', file, file.name);
+
+            var xhr = new XMLHttpRequest();
+            hr.open('POST', "{{url_for('postrezept')}}", true);
+            xhr.send(formData);
+            $('#add_rezept')[0].reset();
+        });
+        //TODO: SELECT
+        initSelect();
+        window.onresize = function () {
+                initSelect();
+        }
     });//Document Ready
 </script>
 <style>
-    div {
+    .fnu {
         padding-left: 5px;
         margin-left: 0px;
-        margin-right: 0px;
-        padding-bottom: 7px;
+        margin-right: 0px; 
     }
+
+    .btn-sm {
+        width: 36px;
+        
+    }
+
+
 </style>
 <form name="add_rezept" id="add_rezept" enctype="multipart/form-data" method="post">
     {{ form.csrf_token }}
-    <div class="row">
+    <div class="row fnu">
         <!-- Überschrift -->
-        <div class="col-md-12">
+        <div class="col-md-7">
             <h2>Neues Rezept anlegen</h2>
         </div>
     </div>
 
-    <div class="row ">
+    <div class="row fnu">
         <!-- Rezeptnamen -->
-        <div>{{ form.rname.label }}</div>
-        <div class="col-md-6">{{form.rname(class="form-control",title="rezeptnamen eingabe")}}</div>
+        <div class="col-md-7 abstand">{{ form.rname.label }}</div>
+        <div class="col-md-7 ">{{form.rname(class="form-control",title="Rezeptnamen Eingabe")}}</div>
     </div>
 
-    <div class="row  ">
-        <div><label class="form-label">{{ form.bildupload.label }}</label></div>
-        <div>{{ form.bildupload(class="form-control")}}</div>
+    <div class="row fnu">
+        <div class="col-md-7"><label class="form-label">{{ form.bildupload.label }}</label></div>
+        <div class="col-md-7">{{ form.bildupload(class="form-control")}}</div>
     </div>
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Zutatenverknüpfer-->
-        <p>Zutaten</p>
+        <div class="row">
+            <div class="col-md-7">
+                <p>Zutaten</p>
+            </div>
+        </div>
+
         <div id="hinzufueger">
             <div class="row">
                 <div class="col-md-5">
                     <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
-                        <option value="-1">Keine angabe</option>
-                        <option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">
-                            {{entry.name}} ({{entry.einheit}})</option>{% endfor%}
-                    </select>
-                </div>
-                <div class="col-md-5">
-                    <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="form-control" value="0">
-                </div>
+                     <option value="-1">Keine Angabe</option>
+                     <option value="-1">----</option>
+                     {%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}</select>
+                </div><!-- end of select2option1 -->
                 <div class="col-md-2">
-                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
+                    <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
+                        class="select2-selection__rendered" value="0" min="0" width="auto">
+                        <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-success">+</button>
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
-       <div> <button class="btn btn-primary"><a href="{{url_for('addzutat')}}" style="color: white; text-decoration: none;">Zutaten erstellen</a></button></div>
+       <div><a href="{{url_for('addzutat')}}" style="text-decoration: none;">Zutaten erstellen</a></div>
     </div>
 
 
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Handlungschrittverknüpfer -->
-        <div>{{ form.handlung.label }}</div>
-        <div>{{ form.handlung(class="form-control",size=15)}}</div>
+        <div class="col-md-7 abstand">{{ form.handlung.label }}</div>
+        <div class="col-md-7">{{ form.handlung(class="form-control",size=15)}}</div>
     </div>
-    <div class="row">
-        <div>{{ form.tags.label }}</div>
-        <div>{{ form.tags(class="form-control")}}</div>
-        <div><button class="btn btn-primary"><a href="{{url_for('addTags')}}"
-                    style="color: white; text-decoration: none;">Tag erstellen</a></button></div>
+    <div class="row fnu">
+        <!-- Tags-->
+        <p>Tags</p>
+        <div id="hinzufuegerTag">
+            <div class="row">
+                <div class="col-md-5">
+                    <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
+                        <option value="-1">Keine Angabe</option>
+                        <option value="-1">----</option>
+                        {%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" name="add" id="AddTagInput" class="btn-sm btn-success">+</button>
+                </div>
+                
+            </div><!-- end of id=row -->
+        </div> <!-- end of id=hinzufueger-->
+        <div> <a href="{{url_for('addTags')}}" style="text-decoration: none;">Tags erstellen</a></div>
     </div>
 
-    <div class="row">
+    <div class="row fnu">
         <!-- Submit des Feldes -->
-        <div>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-                et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p>
+        <div class="col-md-7">
+            <p></p>
         </div>
         <div>{{form.submit(class="btn btn-success") }}</div>
     </div>

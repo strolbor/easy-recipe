@@ -26,7 +26,11 @@ def deleteRezept(ids):
         handdel = handlungsschritt.query.get(entry.hid)
         db.session.delete(handdel)
         db.session.delete(entry)
+    
 
+    # Tags vom Rezept löschen
+    repdel.tags = []
+       
     # Rezept löschen
     db.session.delete(repdel)
     
@@ -38,6 +42,10 @@ def deleteTags(ids):
     """Tags Objekt entfernen"""
     page = request.args.get('page', 0, type=int)
     tagdel = tags.query.get(ids)
+
+    # Tag Zugehörigkeiten löschen
+    tagdel.belongs = []
+    
     # Tag löschen
     db.session.delete(tagdel)
 

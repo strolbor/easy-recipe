@@ -9,13 +9,21 @@
 <nav aria-label="Page navigation" class="mitte">
     <ul class="pagination">
         {% if prev_url %}
-            
-            <li class="page-item"><a class="page-link" href="{{ prev_url  }}">{{  page - 1 }}</a></li>
+            <li class="page-item"><a class="page-link" href="{{ prev_url  }}">{{ prev_url.split("=")[1]}}</a></li>
         {% endif %}
-        <li class="page-item"><a class="page-link" href="#">{{  page  }}</a></li>
+        
+        <li class="page-item"><a class="page-link" href="#">
+            {% if page == 0%}
+                {{ page +1 }}
+            {% else %}
+            {{ page }}
+            {% endif %}
+        </a></li>
         {% if next_url %}
-            <li class="page-item"><a class="page-link" href="{{ next_url }}">{{  page +1 }}</a></li>                
+            <li class="page-item"><a class="page-link" href="{{ next_url }}">
+            {{ next_url.split("=")[1]}}</a></li>                
             
         {% endif %}
     </ul>
+    
 </nav>

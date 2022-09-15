@@ -15,4 +15,4 @@ webscraper/dummy
 *txt
 webscraper/schon
 *tar
-app/app.db
+*.db

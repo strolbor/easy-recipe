@@ -3,16 +3,17 @@ from app import app
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
 from flask import request
-from app.rezept import handlungsschritt
 import cv2
 
 
 def createFolderIfNotExists(name):
+    """Ordner erstellen"""
     if not os.path.exists(name):
         os.makedirs(name)
 
 
 def getNewID(classes):
+    """Mithilfe dieser Funktion erhalten wir die neue ID des Rezepts"""
     queryobj = classes.query.order_by(desc(classes.id)).first()
     idneu = 0
     if not queryobj is None:
@@ -22,6 +23,7 @@ def getNewID(classes):
 
 
 def createArrayHelper(arrayeingabe: list):
+    """Mithilfe dieser Funktion wird ein Array der Form [id, {name}] erstellt"""
     array = []
     for entry in arrayeingabe:
         try:
@@ -32,6 +34,7 @@ def createArrayHelper(arrayeingabe: list):
 
 
 def createArrayHelper2(arrayeingabe: list):
+    """Mithilfe dieser Funktion wird ein Array der Form [id, {name} (einheit)] erstellt"""
     array = []
     for entry in arrayeingabe:
         try:
@@ -42,6 +45,7 @@ def createArrayHelper2(arrayeingabe: list):
 
 
 def savepic(feldname, rfiles, ordner) -> str:
+    """Diese Funktion speichert unser Bild ab und anschließend wird es resized."""
     if feldname not in rfiles:
         """ Bild wurde garnicht erst hochgeladen"""
         return "A"

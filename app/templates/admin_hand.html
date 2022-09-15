@@ -5,33 +5,58 @@
 <h3>{{titlet}}</h3>
 <form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-
-    <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{ form.bildupload1.label }}</label>
-        {{ form.bildupload1(class="form-control")}}
-
-    </div>
-    <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{ form.bildupload2.label }}</label>
-        {{ form.bildupload2(class="form-control")}}
-
-    </div>
-    <div class="col-12">
-        <label for="formGroupExampleInput" class="form-label">{{ form.beschreibung.label }}</label>
-        {{form.beschreibung(class="form-control")}}
-    </div>
-    {% if showbilds %}
-        {% for entry in array_pic %}
+    <div class="row">
         <div class="col-12">
-            <label class="form-label">Bild des Rezepts</label><br />
-            <img src="/ctl/download/{{entry}}" /><br />
+            <label for="formGroupExampleInput" class="form-label">{{ form.bildupload1.label }}</label>
+            {{ form.bildupload1(class="form-control")}}
+        
         </div>
-        {% endfor %}
-
-    {% endif %}
-    <div class="col-12">
-        {{form.submit(class="btn btn-success") }}
     </div>
+    
+
+    <div class="row">
+        <div class="col-12">
+            <label for="formGroupExampleInput" class="form-label">{{ form.bildupload2.label }}</label>
+            {{ form.bildupload2(class="form-control")}}
+        
+        </div>
+    </div>
+    
+
+    <div class="row">
+        <div class="col-12">
+            <label for="formGroupExampleInput" class="form-label">{{ form.beschreibung.label }}</label>
+            {{form.beschreibung(class="form-control")}}
+        </div>
+    </div>
+    
+
+    <div class="row">
+        {% if handob.bild %}
+            <div class="col-12">
+                <label class="form-label">Bild</label><br />
+                <img src="/ctl/download/{{handob.bild}}" /><br />
+            </div>
+        {% endif %}
+    </div>
+    
+
+    <div class="row">
+        {% if handob.bild2 %}
+        <div class="col-12">
+            <label class="form-label">2. Bild</label><br />
+            <img src="/ctl/download/{{handob.bild2}}" /><br />
+        </div>
+        {% endif %}
+    </div>
+    
+
+    <div class="row">
+        <div class="col-12">
+            {{form.submit(class="btn btn-success") }}
+        </div>
+    </div>
+    
 
 </form>
 {% endblock %}
