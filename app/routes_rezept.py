@@ -80,17 +80,19 @@ def postrezept():
         # Zutaten verknüpfen
         counter = 0
         for entry in zutaten:
+            # Abfrage, ob Verbindung schon da ist
             if Association.query.get((rnew.id,entry)) is None:
                 if int(entry) > 0:  # Abfrage, ob es eine gültige Zutat ist. Gültig heißt nicht -1 oder kleiner
-                    
                     zuttmp = zutat.query.get(entry)
                     print(f"Erhalte Zutaten zum hinzufügen: {zuttmp.name}")
                     assoc1 = Association(menge=menge[counter], optional=False)
                     assoc1.hatzutat = zuttmp
                     with db.session.no_autoflush:
                         rnew.zutaten.append(assoc1)
-                    
+                # else: nichts zu tun, weil -1 ungültig ist und für Keine Angabe stehen    
                 counter += 1
+            else:
+                flash(f"Diese Verknüpfung ({rnew.id},{entry}) existiert schon.")
 
         # Handlungschritt anlegen
         handlung = handlungsschritt(
@@ -105,7 +107,7 @@ def postrezept():
         with db.session.no_autoflush:
             rnew.handlungsschritte.append(assoc1)
         
-        # TODO: Tags verknüpfen
+        # Tags verknüpfen
         for entry in taglist:
             if int(entry) > 0:
                 atag = tags.query.get(int(entry))
@@ -113,7 +115,7 @@ def postrezept():
         db.session.commit()
 
         # speichern
-        flash(f"{rezeptname} ({rezeptname.id}) gespeichert")
+        flash(f"{rezeptname} ({rezeptname.id}) wurde gespeichert!")
     return "ok"
 
 
@@ -126,8 +128,6 @@ def modifyrezept(ids):
 
         # Name speichern
         zuRezept.name = form.rezeptname.data
-        bild = request.files
-        print(bild)
 
         # Bild aktualisieren
         picure_url = savepic('bildupload', request.files, f'rezept{ids}')
@@ -135,10 +135,8 @@ def modifyrezept(ids):
             zuRezept.bild = picure_url
 
         # Handlungsschritt Text bearbeiten
-        try:
-            zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
-        except IndexError:
-            pass
+        zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
+
 
         # Tag speichern
         for tagentry in form.tags.data:
@@ -149,10 +147,9 @@ def modifyrezept(ids):
         db.session.commit()
         flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept', ids=ids))
-    try:
-        form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
-    except IndexError:
-        pass
+
+    form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
+
     form.rezeptname.data = zuRezept.name
     # Tags
     tagarry = []
@@ -165,7 +162,7 @@ def modifyrezept(ids):
         try:
             form.tags.data = [zuRezept.tags[0].id, zuRezept.tags[0].name]
         except IndexError:
-            pass
+            print("Indexerror bei modifyrezept")
 
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 

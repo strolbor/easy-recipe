@@ -2,69 +2,84 @@
 
  
 {% block app_content %}
-<h3>{{titlet}}</h3>
-<h3>{{rezept1.name}}</h3>
+
+<div class="row">
+    <h3>{{titlet}}</h3>
+</div>
+<div class="row">
+    <h3>{{rezept1.name}}</h3>
+</div>
+
+
+
 <form action="" method="post" novalidate class="row g-3" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    <div class="col-12">
-        <label for="Name der Zutat" class="form-label">{{form.zutat.label}}</label>
-        {{form.zutat(class="form-control")}}
+    <div class="row">
+        <div class="col-12">
+            <label for="Name der Zutat" class="form-label">{{form.zutat.label}}</label>
+            {{form.zutat(class="form-control")}}
+        </div>
     </div>
-    <div class="col-12">
-        <label for="Menge der Zutat" class="form-label">{{form.menge.label}}</label>
-        {{form.menge(class="form-control")}}
+    <div class="row">
+        <div class="col-12">
+            <label for="Menge der Zutat" class="form-label">{{form.menge.label}}</label>
+            {{form.menge(class="form-control")}}
+        </div>
     </div>
-    <div class="col-12">
-        {{form.submit(class="btn btn-success") }}
-    </div>
+    <div class="row">
+        <div class="col-12">
+            {{form.submit(class="btn btn-success") }}
+        </div>
+    </div>    
 </form>
 
 <hr />
-<h3>Das Rezept hat folgende Zutaten:</h3>
-<table class="table">
-    <thead>
-        
-        <th>Menge</th>
-        <th>Beschreibung</th>
-        
-        <th>Zutaten-ID</th>
-        <th></th>
-    </thead>
-    <tbody>
-{% for entry in rezept1.zutaten %}
-    <tr>
-        
-        <td><!-- Menge -->
-            {{entry.menge}} {{entry.hatzutat.einheit}}
-        </td>
-        <td><!-- Zutat namen -->
-            <p>
-                {% if entry.hatzutat.name | count > 50 %}
-                <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse">
-                    {{entry.hatzutat.name[0:50]}}
-                </a> [v]
-              </p>
-                <div class="collapse" id="collapse-{{loop.index}}"><!-- Zutaten Namen-->
-                  <div class="card card-body" style="width: 600px;">
-                    {{entry.hatzutat.name}}
-                  </div>
-                </div>
-                {% else %}
-                    {{entry.hatzutat.name}}
-                {% endif %}
-        </td>
-        <td><!--Zutat ID -->
-            {{entry.zid}}
-        </td>
-        <td><!-- Löschen der Zutat-->
-            <a href="{{url_for('deleterzhat',zid=entry.zid,rid=rezept1.id,redirect_url='rezeptver2')}}"><i class="bi bi-trash"></i></a>
-        </td>
-        
-    </r>
-{% endfor %}
-</tbody>
-</table>
-
+<div class="row">
+    <h3>Das Rezept hat folgende Zutaten:</h3>
+    <table class="table">
+        <thead>
+            
+            <th>Menge</th>
+            <th>Beschreibung</th>
+            
+            <th>Zutaten-ID</th>
+            <th></th>
+        </thead>
+        <tbody>
+    {% for entry in rezept1.zutaten %}
+        <tr>
+            
+            <td><!-- Menge -->
+                {{entry.menge}} {{entry.hatzutat.einheit}}
+            </td>
+            <td><!-- Zutat namen -->
+                <p>
+                    {% if entry.hatzutat.name | count > 50 %}
+                    <a type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse">
+                        {{entry.hatzutat.name[0:50]}}
+                    </a> [v]
+                </p>
+                    <div class="collapse" id="collapse-{{loop.index}}"><!-- Zutaten Namen-->
+                    <div class="card card-body" style="width: 600px;">
+                        {{entry.hatzutat.name}}
+                    </div>
+                    </div>
+                    {% else %}
+                        {{entry.hatzutat.name}}
+                    {% endif %}
+            </td>
+            <td><!--Zutat ID -->
+                {{entry.zid}}
+            </td>
+            <td><!-- Löschen der Zutat-->
+                <a href="{{url_for('deleterzhat',zid=entry.zid,rid=rezept1.id,redirect_url='rezeptver2')}}"><i class="bi bi-trash"></i></a>
+            </td>
+            
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
 {% endblock %}
 
 

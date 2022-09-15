@@ -43,7 +43,7 @@
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-2"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
+                    <div class="col-md-2"><input type="number" name="menge[]" value="0" min="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
                         <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn-sm btn-danger">-</button></a> \
                     </div>');
                 x++; //text box erhöhen
@@ -115,28 +115,15 @@
     .fnu {
         padding-left: 5px;
         margin-left: 0px;
-        margin-right: 0px;
-        padding-bottom: 7px;
-       
+        margin-right: 0px; 
     }
-    
+
     .btn-sm {
         width: 36px;
         
     }
 
-    #hinzufueger .row{
-        margin-top: 5px;
-    }
 
-    #hinzufuegerTag .row{
-        margin-top: 5px;
-    }
-
-
-    #add_rezept .row .abstand  {
-        margin-bottom: 8px;
-    }
 </style>
 <form name="add_rezept" id="add_rezept" enctype="multipart/form-data" method="post">
     {{ form.csrf_token }}
@@ -176,7 +163,7 @@
                 </div><!-- end of select2option1 -->
                 <div class="col-md-2">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="select2-selection__rendered" value="0" width="auto">
+                        class="select2-selection__rendered" value="0" min="0" width="auto">
                         <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-success">+</button>
                 </div>
             </div><!-- end of id=row -->

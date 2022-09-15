@@ -1,13 +1,11 @@
 from app import app, db, forms
 from app.rezept import handlungsschritt, rezept,AssociationRHhat
-from app.backend_helper import getNewID, savepic,createArrayHelper
+from app.backend_helper import savepic,createArrayHelper
 from app.routesbackend import remover
-from app.routesbackend import remover, MODE_HANDver,MODE_HANDadd,MODE_HANDver,showclass
+from app.routesbackend import remover, MODE_HANDadd,showclass
 
-import os
 from flask import redirect, render_template,request
 from flask.helpers import flash, url_for
-from sqlalchemy import desc
 
 ##############
 #  Handlung  #
@@ -28,8 +26,6 @@ def modifyHandlung(ids):
     form = forms.handlungschrittanlegen()
     # Handlungschritt Objekt holen
     modifyHand = handlungsschritt.query.get(ids)
-    page = request.args.get('page', 0, type=int)
-
 
     # Wenn Formular abgeschickt ist
     if form.validate_on_submit():
@@ -49,16 +45,9 @@ def modifyHandlung(ids):
         db.session.commit()
         flash(f"{modifyHand.text} wurde gespeichert")
         return redirect(url_for('modifyHandlung',ids=ids))
-    array_pic =[]
-    if modifyHand.bild is not None:
-        array_pic.append(modifyHand.bild)
-    if modifyHand.bild2 is not None:
-        array_pic.append(modifyHand.bild2)
     form.beschreibung.data = modifyHand.text
-    if len(array_pic) == 0:
-        return render_template('admin_hand.html',form=form,id=modifyHand.id,titlet="Handlungsschritt ändern")
-    else:
-        return render_template('admin_hand.html',form=form,id=modifyHand.id,array_pic=array_pic,showbilds=True,titlet="Handlungsschritt ändern")
+    return render_template('admin_hand.html', form=form, handob=modifyHand)
+
 
 # Handlungschritt verknüpfer
 # Part 1
