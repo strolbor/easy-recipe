@@ -118,7 +118,7 @@
     {{ form.csrf_token }}
     <div class="row fnu">
         <!-- Überschrift -->
-        <div class="col-md-12">
+        <div class="col-md-7">
             <h2>Neues Rezept anlegen</h2>
         </div>
     </div>
@@ -126,19 +126,19 @@
     <div class="row fnu">
         <!-- Rezeptnamen -->
         <div>{{ form.rname.label }}</div>
-        <div class="col-md-6">{{form.rname(class="form-control",title="rezeptnamen eingabe")}}</div>
+        <div class="col-md-7">{{form.rname(class="form-control",title="Rezeptnamen Eingabe")}}</div>
     </div>
 
-    <div class="row  fnu">
+    <div class="row fnu">
         <div><label class="form-label">{{ form.bildupload.label }}</label></div>
-        <div>{{ form.bildupload(class="form-control")}}</div>
+        <div  class="col-md-7">{{ form.bildupload(class="form-control")}}</div>
     </div>
 
     <div class="row fnu">
         <!-- Zutatenverknüpfer-->
         <p>Zutaten</p>
         <div id="hinzufueger">
-            <div class="row fnu">
+            <div class="row">
                 <div class="col-md-5">
                     <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
                      <option value="-1">Keine Angabe</option>
@@ -151,9 +151,6 @@
                 </div>
                 <div class="col-md-2">
                     <button type="button" name="add" id="AddZutatInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
-                    
-                       
-                    
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
@@ -165,13 +162,13 @@
     <div class="row fnu">
         <!-- Handlungschrittverknüpfer -->
         <div>{{ form.handlung.label }}</div>
-        <div>{{ form.handlung(class="form-control",size=15)}}</div>
+        <div class="col-md-7">{{ form.handlung(class="form-control",size=15)}}</div>
     </div>
     <div class="row fnu">
         <!-- Tags-->
         <p>Tags</p>
         <div id="hinzufuegerTag">
-            <div class="row fnu">
+            <div class="row">
                 <div class="col-md-5">
                     <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
                         <option value="-1">Keine Angabe</option>
@@ -179,6 +176,7 @@
                         {%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}
                     </select>
                 </div>
+                <div class="col-md-2"></div>
                 <div class="col-md-2">
                     <button type="button" name="add" id="AddTagInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
                 </div>
