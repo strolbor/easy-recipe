@@ -44,17 +44,8 @@ def nutzerrezeptein():
     """Nutzereingabe Menü"""
     form = forms.nutzerein()
     # Das ist schon so fertig
-    if request.method == "POST" and form.submit.data:
-        if rezept.query.filter_by(name=form.rname.data).first() is None:
-            newRezept(form.rname.data,[])
-            print(f"nutzerrezeptein hat Rezept {form.rname.data} erstellt")
-        rid : rezept = rezept.query.filter_by(name=form.rname.data).first()
-        pic_url = savepic('bildupload', request.files, f'rezept{rid.id}')
-        if not (pic_url == "A" or pic_url == "B"):
-            rid.bild = pic_url
-        print("Bild:", pic_url)
-        print(request.files)
-        db.session.commit()
+    if request.method == 'POST' and form.submit.data:
+        # Reload der Seite mit dem Flash, der zeigt, dass es gespeichert wruden ist.
         return redirect(url_for('nutzerrezeptein'))
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
 
@@ -80,7 +71,6 @@ def postrezept():
     print(request.data)
     print("==== Request files ====")
     print(request.files)
-    print(savepic('bildupload', request.files, f'tmp'))
     if request.method == 'POST':
         # Informationen aus Stream abrufen
         zutaten = request.form.getlist('zutat[]')
@@ -97,9 +87,12 @@ def postrezept():
             newRezept(rezeptname, taglist)
             print(f"AJAX hat Rezept {rezeptname} erstellt")
         rnew: rezept = rezept.query.filter_by(name=rezeptname).first()
-        if rnew is None:
-            print("rnew ist none")
 
+        #Bild hochladen
+        pic_url = savepic('bildupload', request.files, f'rezept{rnew.id}')
+        if not (pic_url == "A" or pic_url == "B"):
+            rnew.bild = pic_url
+        
         # Zutaten verknüpfen
         counter = 0
         for entry in zutaten:
@@ -112,15 +105,14 @@ def postrezept():
                     assoc1.hatzutat = zuttmp
                     with db.session.no_autoflush:
                         rnew.zutaten.append(assoc1)
-                    db.session.commit()
+                    
                 counter += 1
 
         # Handlungschritt anlegen
         handlung = handlungsschritt(
             bild="", bild2="", text=handlungsschritttext)
         db.session.add(handlung)
-        db.session.commit()
-
+        
         # Handlungsschritt verknüpfen
         nhand = handlungsschritt.query.filter_by(
             text=handlungsschritttext).first()
@@ -128,18 +120,16 @@ def postrezept():
         assoc1.hatid = nhand
         with db.session.no_autoflush:
             rnew.handlungsschritte.append(assoc1)
-        db.session.commit()
-
+        
         # TODO: Tags verknüpfen
         for entry in taglist:
             if int(entry) > 0:
                 atag = tags.query.get(int(entry))
                 rnew.tags.append(atag)
         db.session.commit()
-        
 
         # speichern
-        flash(f"{rezeptname} gespeichert")
+        flash(f"{rezeptname} ({rezeptname.id}) gespeichert")
     return "ok"
 
 

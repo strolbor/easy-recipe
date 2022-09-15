@@ -92,17 +92,17 @@
             return false;
         });
         var myFile = document.getElementById('bildupload');  // Our HTML files' ID
-        var myName = document.getElementById('rname');
         $('#submit').click(function (event) {
-             event.preventDefault();
-             var files = myFile.files;
-             var formData = new FormData($('#add_rezept')[0]);
-             var file = files[0];
-             formData.append('bildupload', file, file.name);
+            event.preventDefault();
+            var files = myFile.files;
+            var formData = new FormData($('#add_rezept')[0]);
+            var file = files[0];
+            formData.append('bildupload', file, file.name);
 
-             var xhr = new XMLHttpRequest();
-              xhr.open('POST', "{{url_for('postrezept')}}", true);
-              xhr.send(formData);
+            var xhr = new XMLHttpRequest();
+            hr.open('POST', "{{url_for('postrezept')}}", true);
+            xhr.send(formData);
+            $('#add_rezept')[0].reset();
         });
         //TODO: SELECT
         initSelect();
