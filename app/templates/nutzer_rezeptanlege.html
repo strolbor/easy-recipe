@@ -38,15 +38,14 @@
             {
                 CounterZutaten++;
                 //Mehr Buttons
-                $(hinzufueger).append('<div class="row fnu"> \
-                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '">\
+                $(hinzufueger).append('<div class="row"> \
+                    <div class="col-md-5"><select placeholder="Geben Sie bitte eine Zutat an" class="form-control" name="zutat[]" id="field_' + CounterZutaten + '" >\
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-2"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"></div> \
-                    <div class="col-md-2">\
-                        <a href="#" class="btn btn-danger removeclassZutat" style="width: 36px;height: 36px;">- </a> \
-                    </div></div>');
+                    <div class="col-md-2"><input type="number" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
+                        <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn btn-danger">-</button></a> \
+                    </div>');
                 x++; //text box erhöhen
             }
              //TODO: SELECT
@@ -60,8 +59,10 @@
             {
                 CounterTags++;
                 //Mehr Buttons
-                $(hinzufuegerTags).append('<div class="row fnu"> \
-                    <div class="col-md-5"><select placeholder="Geben Sie bitte ein Tag an" class="select2-selection__rendered" name="tags[]" id="field_' + CounterTags + '">\
+                // <select name="tags[]" placeholder="Geben Sie bitte eine Tag an" class="form-control">
+                $(hinzufuegerTags).append('<div class="row"> \
+                    <div class="col-md-5">\
+                        <select placeholder="Geben Sie bitte ein Tag an" class="form-control" name="tags[]" id="field_' + CounterTags + '">\
                         '+ tags + '\
                         </select>\
                     </div> \
@@ -103,7 +104,9 @@
         });
         //TODO: SELECT
         initSelect();
-       
+        window.onresize = function () {
+                initSelect();
+        }
     });//Document Ready
 </script>
 <style>
@@ -112,6 +115,18 @@
         margin-left: 0px;
         margin-right: 0px;
         padding-bottom: 7px;
+       
+    }
+    #hinzufueger .btn {
+        width: 36px;
+        
+    }
+    #hinzufueger .row{
+        margin-top: 5px;
+    }
+
+    #add_rezept .row .abstand  {
+        margin-bottom: 8px;
     }
 </style>
 <form name="add_rezept" id="add_rezept" enctype="multipart/form-data" method="post">
@@ -125,18 +140,23 @@
 
     <div class="row fnu">
         <!-- Rezeptnamen -->
-        <div>{{ form.rname.label }}</div>
-        <div class="col-md-7">{{form.rname(class="form-control",title="Rezeptnamen Eingabe")}}</div>
+        <div class="col-md-7 abstand">{{ form.rname.label }}</div>
+        <div class="col-md-7 ">{{form.rname(class="form-control",title="Rezeptnamen Eingabe")}}</div>
     </div>
 
     <div class="row fnu">
-        <div><label class="form-label">{{ form.bildupload.label }}</label></div>
-        <div  class="col-md-7">{{ form.bildupload(class="form-control")}}</div>
+        <div class="col-md-7"><label class="form-label">{{ form.bildupload.label }}</label></div>
+        <div class="col-md-7">{{ form.bildupload(class="form-control")}}</div>
     </div>
 
     <div class="row fnu">
         <!-- Zutatenverknüpfer-->
-        <p>Zutaten</p>
+        <div class="row">
+            <div class="col-md-7">
+                <p>Zutaten</p>
+            </div>
+        </div>
+
         <div id="hinzufueger">
             <div class="row">
                 <div class="col-md-5">
@@ -147,10 +167,8 @@
                 </div><!-- end of select2option1 -->
                 <div class="col-md-2">
                     <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="select2-selection__rendered" value="0" width="auto"> 
-                </div>
-                <div class="col-md-2">
-                    <button type="button" name="add" id="AddZutatInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
+                        class="select2-selection__rendered" value="0" width="auto">
+                        <button type="button" name="add" id="AddZutatInput" class="btn btn-success">+</button>
                 </div>
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
@@ -161,7 +179,7 @@
 
     <div class="row fnu">
         <!-- Handlungschrittverknüpfer -->
-        <div>{{ form.handlung.label }}</div>
+        <div class="col-md-7 abstand">{{ form.handlung.label }}</div>
         <div class="col-md-7">{{ form.handlung(class="form-control",size=15)}}</div>
     </div>
     <div class="row fnu">
@@ -176,10 +194,10 @@
                         {%for entry in tags%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}
                     </select>
                 </div>
-                <div class="col-md-2"></div>
                 <div class="col-md-2">
-                    <button type="button" name="add" id="AddTagInput" class="btn btn-success" style="width: 36px;height: 36px;">+</button>
+                    <button type="button" name="add" id="AddTagInput" class="btn btn-success">+</button>
                 </div>
+                
             </div><!-- end of id=row -->
         </div> <!-- end of id=hinzufueger-->
         <div> <a href="{{url_for('addTags')}}" style="text-decoration: none;">Tags erstellen</a></div>
@@ -187,7 +205,7 @@
 
     <div class="row fnu">
         <!-- Submit des Feldes -->
-        <div>
+        <div class="col-md-7">
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
                 et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et</p>
         </div>
