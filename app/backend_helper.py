@@ -3,6 +3,7 @@ from app import app
 from sqlalchemy import desc
 from werkzeug.utils import secure_filename
 from flask import request
+from flask.helpers import flash, url_for
 import cv2
 
 
@@ -55,9 +56,16 @@ def savepic(feldname, rfiles, ordner) -> str:
         return "B"
     if file:
         """ Bild ist vorhanden"""
-        file = request.files[feldname]
         filename = secure_filename(file.filename)
+        print()
+        #Dateiendung erfragen, ob es ein Bild ist
+        if filename.split(".")[1] not in app.config['ALLOWED_EXTENSIONS']:
+            flash(
+                f"Fehler: Es wurde keine Bilddatei im Format {', '.join(app.config['ALLOWED_EXTENSIONS'])} erkannt")
+            return "B"
+            # Wenn es keine Bilddatei ist, verwirf es
         createFolderIfNotExists(os.path.join(app.instance_path, ordner))
+        # Checken, ob es ein Bild ist
         path = os.path.join(app.instance_path, ordner, filename)
         # bild_url=filename
         bild_url = os.path.join(ordner, filename)

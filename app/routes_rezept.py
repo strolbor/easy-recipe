@@ -2,8 +2,8 @@ import imp
 import re
 from app import app, db, forms
 from app.rezept import rezept, zutat, handlungsschritt, tags, Association, AssociationRHhat
-from app.backend_helper import getNewID, createArrayHelper, savepic, createArrayHelper2
-from app.routesbackend import remover, MODE_REZEPT,  MODE_REZEPTadd, showclass
+from app.backend_helper import createArrayHelper, savepic, createArrayHelper2
+from app.routesbackend import showclass
 
 import os
 from flask import redirect, render_template, request, abort
@@ -16,7 +16,7 @@ import sqlalchemy
 ##############
 
 
-@app.route('/admin/show/rezepte/')
+@app.route('/rezept/show/')
 def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
@@ -39,7 +39,7 @@ def newRezept(rname: str, tagarray):
     return rnew.id
 
 
-@app.route("/nutzer/rezept/eingabe", methods=["POST", "GET"])
+@app.route("/rezept/eingabe/", methods=["POST", "GET"])
 def nutzerrezeptein():
     """Nutzereingabe Menü"""
     form = forms.nutzerein()
@@ -50,7 +50,7 @@ def nutzerrezeptein():
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
 
 
-@app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
+@app.route("/rezept/eingabe/ctl/", methods=["POST", "GET"])
 def postrezept():
     """AJAX Methode zum Anlegen der Methode.
     AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().
@@ -64,12 +64,9 @@ def postrezept():
         handlungsschritttext = request.form.get('handlung')
 
         # Rezept anlegen
-        #idn = newRezept(rezeptname, taglist,  request.method, request.files)
-        #rnew: rezept = rezept.query.get(idn)
-        if rezept.query.filter_by(name=rezeptname).first() is None:
-            """ Wenn das Rezept nicht existiert, erstelle es"""
-            newRezept(rezeptname, taglist)
-            print(f"AJAX hat Rezept {rezeptname} erstellt")
+        """ Wenn das Rezept nicht existiert, erstelle es"""
+        newRezept(rezeptname, taglist)
+        print(f"AJAX hat Rezept {rezeptname} erstellt")
         rnew: rezept = rezept.query.filter_by(name=rezeptname).first()
 
         #Bild hochladen
@@ -107,12 +104,6 @@ def postrezept():
         with db.session.no_autoflush:
             rnew.handlungsschritte.append(assoc1)
         
-        # Tags verknüpfen
-        for entry in taglist:
-            atag = tags.query.get(int(entry))
-            if int(entry) > 0 and atag not in rnew.tags:
-                rnew.tags.append(atag)
-                flash(f"Add Tag {atag.name}")
         db.session.commit()
 
         # speichern
@@ -120,11 +111,16 @@ def postrezept():
     return "ok"
 
 
-@app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])
+@app.route('/rezept/modify/<path:ids>/', methods=['GET', 'POST'])
 def modifyrezept(ids):
     form = forms.rezeptaendern()
     zuRezept: rezept = rezept.query.get(ids)
+    if zuRezept is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showRezepte', page=page))
     if request.method == "POST" and form.submit.data:
+        # Rezept bearbeiten
+        # Und alles mögliche aus dem Formular abspeichern
         print("Validate")
 
         # Name speichern
@@ -140,6 +136,7 @@ def modifyrezept(ids):
 
 
         # Tag speichern
+        zuRezept.tags = []
         for tagentry in form.tags.data:
             tmpTag = tags.query.get(tagentry)
             zuRezept.tags.append(tmpTag)
@@ -168,14 +165,14 @@ def modifyrezept(ids):
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 
 
-@app.route("/admin/rezept/rezeptver1")
-def rezeptver1():
-    return remover(MODE_REZEPTadd, rezept, 'rezeptver1')
 
 
-@app.route("/admin/rezept/rezeptver2/<path:rid>", methods=['GET', 'POST'])
+@app.route("/rezept/zutatenedit/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
+    if rezept1 is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showZutaten', page=page))
     form = forms.rezeptzutatadder()
     # Zutaten auswählbar machen
     form.zutat.choices = createArrayHelper2(zutat.query.all())
@@ -197,7 +194,27 @@ def rezeptver2(rid):
     return render_template('admin_addrzver.html', form=form, rezept1=rezept1)
 
 
-@app.route('/admin/rezept/removeRezept')
-def removeRezept():
-    """ Löschen eines Rezeptes"""
-    return remover(MODE_REZEPT, rezept, 'removeRezept')
+@app.route('/rezept/delete/<path:ids>')
+def deleteRezept(ids):
+    """Rezept Objekt entfernen"""
+    page = request.args.get('page', 0, type=int)
+    repdel = rezept.query.get(ids)
+    if repdel is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showRezepte', page=page))
+
+    # Handlungsschritte & Verknüpfung löschen
+    for entry in repdel.handlungsschritte:
+        handdel = handlungsschritt.query.get(entry.hid)
+        db.session.delete(handdel)
+        db.session.delete(entry)
+
+    # Tags vom Rezept löschen
+    repdel.tags = []
+    db.session.commit()
+
+    # Rezept löschen
+    db.session.delete(repdel)
+
+    db.session.commit()
+    return redirect(url_for('showRezepte', page=page))

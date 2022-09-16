@@ -6,52 +6,6 @@ from flask.helpers import url_for
 #####################
 # Objekte entfernen #
 #####################
-@app.route('/adminctl/delete/zutat/<path:ids>')
-def deleteZutat(ids):
-    """Zutaten Objekt entfernen"""
-    page = request.args.get('page', 0, type=int)
-    db.session.delete(zutat.query.get(ids))
-    db.session.commit()
-    return redirect(url_for('removeZutat',page=page))
-    
-
-@app.route('/adminctl/delete/rezept/<path:ids>')
-def deleteRezept(ids):
-    """Rezept Objekt entfernen"""
-    page = request.args.get('page', 0, type=int)
-    repdel = rezept.query.get(ids)
-
-    # Handlungsschritte & Verknüpfung löschen
-    for entry in repdel.handlungsschritte:
-        handdel = handlungsschritt.query.get(entry.hid)
-        db.session.delete(handdel)
-        db.session.delete(entry)
-    
-
-    # Tags vom Rezept löschen
-    repdel.tags = []
-    db.session.commit()
-       
-    # Rezept löschen
-    db.session.delete(repdel)
-    
-    db.session.commit()
-    return redirect(url_for('removeRezept',page=page))
-
-@app.route('/adminctl/delete/tags/<path:ids>')
-def deleteTags(ids):
-    """Tags Objekt entfernen"""
-    page = request.args.get('page', 0, type=int)
-    tagdel = tags.query.get(ids)
-
-    # Tag Zugehörigkeiten löschen
-    tagdel.belongs = []
-    
-    # Tag löschen
-    db.session.delete(tagdel)
-
-    db.session.commit()
-    return redirect(url_for('removeTags',page=page))
 
 @app.route('/adminctl/delete/handlung/<path:ids>')
 def deleteHandlung(ids):

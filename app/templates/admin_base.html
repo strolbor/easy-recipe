@@ -21,27 +21,22 @@
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('showRezepte')}}">Rezept anzeigen</a>
-              <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('nutzerrezeptein')}}"><i class="bi bi-arrow-up-right"></i>Rezept anlegen</a>
-              <a class="dropdown-item" href="{{ url_for('rezeptver1')}}">Zutaten ändern</a>
-              <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('removeRezept')}}">Rezeptentferner</a>
               
+              <a class="dropdown-item" href="{{url_for('nutzerrezeptein')}}"><i class="bi bi-arrow-up-right"></i>Rezept anlegen</a>
+                           
             </ul>
           </div>
 
           <!-- Neues Dropdown Menü -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              Zutatoptionen
+              Zutatenoptionen
             </a>
           
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('showZutaten')}}">Zutaten anzeigen</a>
-              <li><hr class="dropdown-divider"></li>
+              
               <a class="dropdown-item" href="{{url_for('addzutat')}}"><i class="bi bi-arrow-up-right"></i>Zutat anlegen</a>
-              <li><hr class="dropdown-divider"></li>
-              <a class="dropdown-item" href="{{url_for('removeZutat')}}">Zutatenentferner</a>
             </ul>
           </div>
 
@@ -55,7 +50,6 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="{{ url_for('showTags') }}">Tags anzeigen</a>
               <a class="dropdown-item" href="{{ url_for('addTags') }}"><i class="bi bi-arrow-up-right"></i>Tags anlegen</a>
-              <a class="dropdown-item" href="{{ url_for('removeTags') }}">Tags löschen</a>
             </ul>
           </div>
       </ul> <!-- navbar-nav -->

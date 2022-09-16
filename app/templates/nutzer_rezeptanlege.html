@@ -97,12 +97,17 @@
             var files = myFile.files;
             var formData = new FormData($('#add_rezept')[0]);
             var file = files[0];
-            formData.append('bildupload', file, file.name);
+            console.log(file)
+            if (file === undefined){} else {
+                formData.append('bildupload', file, file.name);
+            }
+            
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', "{{url_for('postrezept')}}", true);
             xhr.send(formData);
             $('#add_rezept')[0].reset();
+           
         });
         //TODO: SELECT
         initSelect();

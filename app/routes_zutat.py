@@ -1,8 +1,9 @@
-from operator import methodcaller
+from tkinter.messagebox import NO
 from app import app, db, forms
-from app.rezept import kategorie, zutat, rezept
+from app.rezept import kategorie, zutat
 from app.backend_helper import getNewID, savepic
-from app.routesbackend import remover, MODE_ZUTATEN, showclass, createArrayHelper
+from app.routesbackend import showclass
+from app.backend_helper import createArrayHelper
 
 import os
 from flask import redirect, render_template, request
@@ -13,7 +14,7 @@ from sqlalchemy import desc
 ##############
 #    Zutat   #
 ##############
-@app.route('/admin/add/Zutat/', methods=['GET', 'POST'])
+@app.route('/zutat/add/', methods=['GET', 'POST'])
 def addzutat():
     """Hiermit wird eine neue Zutat angelegt."""
     form = forms.zutatanlegen()
@@ -39,22 +40,33 @@ def addzutat():
     return render_template('admin_zutat.html', form=form, zutat=None)
 
 
-@app.route('/admin/show/zutat/')
+@app.route('/zutat/show/')
 def showZutaten():
     return showclass(zutat, zutat.name, "Zutaten", "showZutaten")
 
 
-@app.route('/admin/remove/zutat')
-def removeZutat():
-    """Hiermit wird eine Zutat entfernt"""
-    return remover(MODE_ZUTATEN, zutat, 'removeZutat')
+@app.route('/zutat/delete/<path:ids>')
+def deleteZutat(ids):
+    """Zutaten Objekt entfernen"""
+    page = request.args.get('page', 0, type=int)
+    zutatdel = zutat.query.get(ids)
+    if zutatdel is None:
+        return redirect(url_for('showZutaten', page=page))
+    else:
+        db.session.delete(zutatdel)
+        db.session.commit()
+    return redirect(url_for('showZutaten', page=page))
 
 
-@app.route('/admin/modify/zutat/<path:ids>', methods=['GET', 'POST'])
+@app.route('/zutat/modify/<path:ids>', methods=['GET', 'POST'])
 def modifyZutat(ids):
     """Hiermit wird eine Zutat modifiziert."""
     form = forms.zutatanlegen()
     modifyZutat = zutat.query.get(ids)
+    print(modifyZutat)
+    if modifyZutat is None:
+        
+        return redirect(url_for('modifyZutat', ids=ids))
     form.kategorie.choices = createArrayHelper(kategorie.query.all())
 
     if request.method == "POST" and form.submit.data:
@@ -76,7 +88,7 @@ def modifyZutat(ids):
             modifyZutat.kategorie.append(toaddKat)
         db.session.commit()
 
-        flash(f"{modifyZutat.name}  wurde gespeichert")
+        flash(f"{modifyZutat.name} wurde gespeichert")
         return redirect(url_for('modifyZutat', ids=ids))
 
 
