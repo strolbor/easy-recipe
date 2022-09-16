@@ -10,7 +10,7 @@ from flask import redirect, render_template, request, abort
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
 import sqlalchemy
-
+from flask_paginate import Pagination, get_page_args
 ##############
 #   Rezept   #
 ##############
@@ -171,12 +171,20 @@ def rezeptver1():
     page = request.args.get('page', 0, type=int)
     liste = rezept.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
     rid = request.args.get('rid', 0, type=int)
-    next_url = url_for('rezeptver1', page=liste.next_num,
-                       rid=rid) if liste.has_next else None
-    prev_url = url_for('rezeptver1', page=liste.prev_num,
-                       rid=rid) if liste.has_prev else None
 
-    return (render_template('admin_remove.html', inhalt=liste.items, titlet="Zutaten ändern", next_url=next_url, prev_url=prev_url, page=page))
+
+    page = int(request.args.get('page', 1))
+    per_page = app.config['ITEMS_PER_PAGE']
+    offset = (page - 1) * per_page
+
+    files = rezept.query.order_by(rezept.name)
+    files_for_render = files.limit(per_page).offset(offset)
+
+
+    pagination = Pagination(page=page, per_page=per_page, offset=offset,
+                            total=files.count(), css_framework='bootstrap3',
+                            search=False)
+    return render_template('admin_remove.html', inhalt=files_for_render, pagination=pagination, titlet="Zutaten ändern", page=page, redirect_url='rezeptver1', MODE_REZEPTadd=True)
 
 @app.route("/admin/rezept/rezeptver2/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):

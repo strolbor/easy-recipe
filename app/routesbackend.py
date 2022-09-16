@@ -25,15 +25,6 @@ def admin():
 
 def showclass(classes, sortedby, title, redirect_url):
     """Paginate a section"""
-    page = request.args.get('page', 0, type=int)
-    liste = classes.query.order_by(sortedby).paginate(
-        page, app.config['ITEMS_PER_PAGE'], False)
-    next_url = url_for(
-        redirect_url, page=liste.next_num) if liste.has_next else None
-    prev_url = url_for(
-        redirect_url, page=liste.prev_num) if liste.has_prev else None
-    
-    #Testfeld
     page = int(request.args.get('page', 1))
     per_page = app.config['ITEMS_PER_PAGE']
     offset = (page - 1) * per_page
@@ -46,7 +37,6 @@ def showclass(classes, sortedby, title, redirect_url):
     pagination = Pagination(page=page, per_page=per_page, offset=offset,
                             total=files.count(), css_framework='bootstrap3',
                             search=search)
-    print(pagination.pages)
     return render_template('admin_show.html', liste=files_for_render, pagination=pagination, titlet=title, page=page, redirect_url=redirect_url)
 
 
