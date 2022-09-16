@@ -10,13 +10,13 @@ from flask import redirect, render_template, request, abort
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
 import sqlalchemy
-from flask_paginate import Pagination, get_page_args
+
 ##############
 #   Rezept   #
 ##############
 
 
-@app.route('/admin/show/rezepte/')
+@app.route('/rezept/show/')
 def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
@@ -39,7 +39,7 @@ def newRezept(rname: str, tagarray):
     return rnew.id
 
 
-@app.route("/nutzer/rezept/eingabe", methods=["POST", "GET"])
+@app.route("/rezept/eingabe/", methods=["POST", "GET"])
 def nutzerrezeptein():
     """Nutzereingabe Menü"""
     form = forms.nutzerein()
@@ -50,7 +50,7 @@ def nutzerrezeptein():
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
 
 
-@app.route("/ctl/nutzer/rezept/post", methods=["POST", "GET"])
+@app.route("/rezept/eingabe/ctl/", methods=["POST", "GET"])
 def postrezept():
     """AJAX Methode zum Anlegen der Methode.
     AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().
@@ -111,7 +111,7 @@ def postrezept():
     return "ok"
 
 
-@app.route('/admin/modify/rezept/<path:ids>', methods=['GET', 'POST'])
+@app.route('/rezept/modify/<path:ids>/', methods=['GET', 'POST'])
 def modifyrezept(ids):
     form = forms.rezeptaendern()
     zuRezept: rezept = rezept.query.get(ids)
@@ -162,31 +162,9 @@ def modifyrezept(ids):
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 
 
-@app.route("/admin/rezept/rezeptver1")
-def rezeptver1():
-    """Funktion um Einträge zu entfernen. Generische Funktion.
-    mode: Was soll gelöscht werden
-    classes: typ der Klasse zum abfragen
-    redirect_url: Selbstverweis auf aufrufende Funktion der URL"""
-    page = request.args.get('page', 0, type=int)
-    liste = rezept.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
-    rid = request.args.get('rid', 0, type=int)
 
 
-    page = int(request.args.get('page', 1))
-    per_page = app.config['ITEMS_PER_PAGE']
-    offset = (page - 1) * per_page
-
-    files = rezept.query.order_by(rezept.name)
-    files_for_render = files.limit(per_page).offset(offset)
-
-
-    pagination = Pagination(page=page, per_page=per_page, offset=offset,
-                            total=files.count(), css_framework='bootstrap3',
-                            search=False)
-    return render_template('admin_remove.html', inhalt=files_for_render, pagination=pagination, titlet="Zutaten ändern", page=page, redirect_url='rezeptver1', MODE_REZEPTadd=True)
-
-@app.route("/admin/rezept/rezeptver2/<path:rid>", methods=['GET', 'POST'])
+@app.route("/rezept/zutatenedit/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
     form = forms.rezeptzutatadder()
@@ -210,7 +188,7 @@ def rezeptver2(rid):
     return render_template('admin_addrzver.html', form=form, rezept1=rezept1)
 
 
-@app.route('/adminctl/delete/rezept/<path:ids>')
+@app.route('/rezept/delete/<path:ids>')
 def deleteRezept(ids):
     """Rezept Objekt entfernen"""
     page = request.args.get('page', 0, type=int)

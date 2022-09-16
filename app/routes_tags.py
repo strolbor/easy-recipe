@@ -1,10 +1,10 @@
 from app import app, db, forms
-from app.rezept import rezept, zutat,handlungsschritt,tags,Association,AssociationRHhat
+from app.rezept import rezept,tags
 from app.backend_helper import createArrayHelper
 from app.routesbackend import showclass
 
 import os
-from flask import redirect, render_template,request, abort
+from flask import redirect, render_template
 from flask.helpers import flash, url_for
 from sqlalchemy import desc
 
@@ -17,7 +17,7 @@ from sqlalchemy import desc
 def showTags():
     return showclass(tags,tags.name,"Tags","showTags")
 
-# Tags hiunzufügen
+# Tags hinzufügen
 @app.route("/admin/tags/addTags",methods=['GET','POST'])
 def addTags():
     form = forms.taganlegen()

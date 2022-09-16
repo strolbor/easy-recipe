@@ -1,14 +1,7 @@
-from app import app, db, forms
-from app.rezept import rezept, zutat, handlungsschritt, tags, Association, AssociationRHhat
-from app.backend_helper import createFolderIfNotExists, getNewID, createArrayHelper, savepic
-
-
+from app import app
 import os
-from flask import redirect, render_template, request, abort
-from flask.helpers import flash, url_for
-from sqlalchemy import desc
-
-from flask_paginate import Pagination, get_page_args
+from flask import render_template, request
+from flask_paginate import Pagination
 
 
 ##############
@@ -40,20 +33,3 @@ def showclass(classes, sortedby, title, redirect_url):
     return render_template('admin_show.html', liste=files_for_render, pagination=pagination, titlet=title, page=page, redirect_url=redirect_url)
 
 
-
-
-
-
-##############
-#   generic  #
-##############
-
-
-def entfernerAnzeiger(classes, redirect_url: str, title):
-    """Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten"""
-    form = forms.rzanlegen()
-    form.rezeptpicker.choices = createArrayHelper(
-        classes.query.order_by(classes.name).all())
-    if form.validate_on_submit():
-        return redirect(url_for(redirect_url, ids=form.rezeptpicker.data))
-    return render_template('admin_rzpicker.html', form=form, titlet=title)

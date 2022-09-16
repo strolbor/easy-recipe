@@ -32,6 +32,4 @@ app.config['ALLOWED_EXTENSIONS'] = ['png', 'jpg', 'jpeg']
 
 app.debug = True
 
-from app import forms, rezept, routesnutzer, \
-    routesbackend, routesbackend_function, routes_handlung, routes_rezept, routes_tags, routes_zutat, \
-    routesfrontend, routesdownload
+from app import forms, rezept, routesbackend, routesbackend_function,  routes_rezept, routes_tags, routes_zutat, routesfrontend, routesdownload
