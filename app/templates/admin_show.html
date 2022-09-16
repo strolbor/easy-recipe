@@ -63,16 +63,19 @@
                 </div>
                 <!-- Bubles -->
                 {% if titlet == "Zutaten" %}
+                <!-- Zahlen sind zur Zutat gehörige Rezepte-->
                     <span class="badge bg-primary rounded-pill">{{ message.rezepte | count}}</span>
                 {% endif %}
                 {% if titlet == "Rezepte" %}
+                <!-- Zahlen sind zur Rezept gehörige Zutaten-->
                     <span class="badge bg-primary rounded-pill">{{ message.zutaten | count}}</span>
                 {% endif %}
                 {% if titlet == "Tags" %}
+                <!-- Zahlen sind zur Tag gehörige Rezepte -->
                     <span class="badge bg-primary rounded-pill">{{ message.belongs | count}}</span>
                 {% endif %}
             </li>
         {% endfor %}
     </ol>
-        {% include 'admin_inc_pagi.html' %}
+    {% include 'admin_inc_pagi.html' %}
 {% endblock %}
