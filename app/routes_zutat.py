@@ -1,3 +1,4 @@
+from tkinter.messagebox import NO
 from app import app, db, forms
 from app.rezept import kategorie, zutat
 from app.backend_helper import getNewID, savepic
@@ -48,8 +49,12 @@ def showZutaten():
 def deleteZutat(ids):
     """Zutaten Objekt entfernen"""
     page = request.args.get('page', 0, type=int)
-    db.session.delete(zutat.query.get(ids))
-    db.session.commit()
+    zutatdel = zutat.query.get(ids)
+    if zutatdel is None:
+        return redirect(url_for('showZutaten', page=page))
+    else:
+        db.session.delete(zutatdel)
+        db.session.commit()
     return redirect(url_for('showZutaten', page=page))
 
 
@@ -58,6 +63,10 @@ def modifyZutat(ids):
     """Hiermit wird eine Zutat modifiziert."""
     form = forms.zutatanlegen()
     modifyZutat = zutat.query.get(ids)
+    print(modifyZutat)
+    if modifyZutat is None:
+        
+        return redirect(url_for('modifyZutat', ids=ids))
     form.kategorie.choices = createArrayHelper(kategorie.query.all())
 
     if request.method == "POST" and form.submit.data:
@@ -79,7 +88,7 @@ def modifyZutat(ids):
             modifyZutat.kategorie.append(toaddKat)
         db.session.commit()
 
-        flash(f"{modifyZutat.name}  wurde gespeichert")
+        flash(f"{modifyZutat.name} wurde gespeichert")
         return redirect(url_for('modifyZutat', ids=ids))
 
 

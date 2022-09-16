@@ -7,25 +7,6 @@ from flask.helpers import url_for
 # Objekte entfernen #
 #####################
 
-    
-
-
-
-@app.route('/adminctl/delete/tags/<path:ids>')
-def deleteTags(ids):
-    """Tags Objekt entfernen"""
-    page = request.args.get('page', 0, type=int)
-    tagdel = tags.query.get(ids)
-
-    # Tag Zugehörigkeiten löschen
-    tagdel.belongs = []
-    
-    # Tag löschen
-    db.session.delete(tagdel)
-
-    db.session.commit()
-    return redirect(url_for('removeTags',page=page))
-
 @app.route('/adminctl/delete/handlung/<path:ids>')
 def deleteHandlung(ids):
     """Handlungsschritt Objekt entfernen"""

@@ -115,6 +115,9 @@ def postrezept():
 def modifyrezept(ids):
     form = forms.rezeptaendern()
     zuRezept: rezept = rezept.query.get(ids)
+    if zuRezept is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showRezepte', page=page))
     if request.method == "POST" and form.submit.data:
         # Rezept bearbeiten
         # Und alles mögliche aus dem Formular abspeichern
@@ -167,6 +170,9 @@ def modifyrezept(ids):
 @app.route("/rezept/zutatenedit/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
+    if rezept1 is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showZutaten', page=page))
     form = forms.rezeptzutatadder()
     # Zutaten auswählbar machen
     form.zutat.choices = createArrayHelper2(zutat.query.all())
@@ -193,6 +199,9 @@ def deleteRezept(ids):
     """Rezept Objekt entfernen"""
     page = request.args.get('page', 0, type=int)
     repdel = rezept.query.get(ids)
+    if repdel is None:
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('showRezepte', page=page))
 
     # Handlungsschritte & Verknüpfung löschen
     for entry in repdel.handlungsschritte:
