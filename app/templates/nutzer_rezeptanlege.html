@@ -100,7 +100,7 @@
             formData.append('bildupload', file, file.name);
 
             var xhr = new XMLHttpRequest();
-            hr.open('POST', "{{url_for('postrezept')}}", true);
+            xhr.open('POST', "{{url_for('postrezept')}}", true);
             xhr.send(formData);
             $('#add_rezept')[0].reset();
         });

@@ -30,6 +30,7 @@ def deleteRezept(ids):
 
     # Tags vom Rezept löschen
     repdel.tags = []
+    db.session.commit()
        
     # Rezept löschen
     db.session.delete(repdel)

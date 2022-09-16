@@ -109,13 +109,14 @@ def postrezept():
         
         # Tags verknüpfen
         for entry in taglist:
-            if int(entry) > 0:
-                atag = tags.query.get(int(entry))
+            atag = tags.query.get(int(entry))
+            if int(entry) > 0 and atag not in rnew.tags:
                 rnew.tags.append(atag)
+                flash(f"Add Tag {atag.name}")
         db.session.commit()
 
         # speichern
-        flash(f"{rezeptname} ({rezeptname.id}) wurde gespeichert!")
+        flash(f"{rnew.name} ({rnew.id}) wurde gespeichert!")
     return "ok"
 
 
