@@ -134,4 +134,4 @@ class rezeptsammlung(FlaskForm):
 
     rezeptnamen = SelectField("Rezeptsuche", choices=[""]+alleRezeptNamen)
     rezeptkategorien = SelectField("Filter", choices=[""]+["Vegan", "Vegetarisch", "Einfach", "Fleisch"])
-    maxZutaten = StringField(render_kw={"placeholder": "Maximale Zutaten"})
+    maxZutaten = SelectField("Maximale Zutaten", choices=["",4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])

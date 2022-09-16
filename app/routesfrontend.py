@@ -252,12 +252,6 @@ def rezeptsammlung():
         rezepte = []
         name = ""
 
-        def removeRezept(self, rez):
-            try:
-                self.rezepte.remove(rez)
-            except:
-                pass
-
         def __init__(self, _name, _rezepte):
             self.name = _name
             self.rezepte = _rezepte
@@ -271,24 +265,25 @@ def rezeptsammlung():
             if rezeptSuchbegriff != "":
                 passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
                 return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+
             if form.rezeptkategorien.data:
                 eigenschaft = form.rezeptkategorien.data.lower()
                 passendeRezepte = PassendeRezeptliste(form.rezeptkategorien.data, getRezeptByEigenschaft(1000, eigenschaft))
 
-            try:
-                print("ZAHLFILTER")
-                for rez in passendeRezepte.rezepte.copy:
-                    if len(rez.zutaten) > form.maxZutaten.data:
-                        passendeRezepte.removeRezept(rez)
-            except Exception:
-                print(Exception)
+            if form.maxZutaten.data:
+                maxZutaten = int(form.maxZutaten.data)
+                for rez in passendeRezepte.rezepte.copy():
+                    if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
+                        passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
 
+
+            form.rezeptnamen.data = ""
+            #form.rezeptkategorien.data = ""
+            #form.maxZutaten.data = ""
 
             return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
                                    rezeptsammlungen=[passendeRezepte],
                                    anzRezeptvorschlaege=len(passendeRezepte.rezepte))
-
-
 
 
     #wenn erster Aufruf:

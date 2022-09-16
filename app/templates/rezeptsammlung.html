@@ -57,10 +57,10 @@
             <div class="container" style="margin:5px;" > <!-- Filteroptionen und Suche Button -->
                 <div class="row">
                     <div class="col">
-                        {{form.rezeptnamen(width="90%", align="bottom")}}
+                        {{form.rezeptnamen}}
                     </div>
                     <div class="col">
-                        {{form.rezeptkategorien(width="90%", align="bottom")}}
+                        {{form.rezeptkategorien}}
                     </div>
                     <div class="col">
                         <div>{{form.maxZutaten}}</div>
@@ -93,7 +93,7 @@
                                     {% for j in range(0, rezepteInSammlung) %}
 
                                     <a href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
-                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:5px; border:none;">
+                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
                                         <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
                                         <div class="card-body" style="overflow-y:scroll;">
                                             <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
@@ -125,8 +125,13 @@
                 allowClear: true,
                 "width": "90%"
             });
-            $('#rezeptkategorien').select2({  // init Select2 on form's rezeptnamen field
+            $('#rezeptkategorien').select2({
                 placeholder: "{{ form.rezeptkategorien.label.text }}",
+                allowClear: true,
+                "width": "90%"
+            });
+            $('#maxZutaten').select2({
+                placeholder: "{{ form.maxZutaten.label.text }}",
                 allowClear: true,
                 "width": "90%"
             });
