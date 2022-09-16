@@ -44,6 +44,13 @@ def showZutaten():
     return showclass(zutat, zutat.name, "Zutaten", "showZutaten")
 
 
+@app.route('/adminctl/delete/zutat/<path:ids>')
+def deleteZutat(ids):
+    """Zutaten Objekt entfernen"""
+    page = request.args.get('page', 0, type=int)
+    db.session.delete(zutat.query.get(ids))
+    db.session.commit()
+    return redirect(url_for('showZutaten', page=page))
 
 @app.route('/admin/modify/zutat/<path:ids>', methods=['GET', 'POST'])
 def modifyZutat(ids):

@@ -8,22 +8,60 @@
 </style>
 <nav aria-label="Page navigation" class="mitte">
     <ul class="pagination">
-        {% if prev_url %}
-            <li class="page-item"><a class="page-link" href="{{ prev_url  }}">{{ prev_url.split("=")[1].split("&")[0]}}</a></li>
-        {% endif %}
-        
-        <li class="page-item"><a class="page-link" href="#">
-            {% if page == 0%}
-                {{ page +1 }}
-            {% else %}
-            {{ page }}
+        {% set last = pagination.pages | count -1 %}
+        {% set maxPage = pagination.pages[last] %}
+        <!-- Zum Seitenangang -->
+        {% if page > 3%}
+            <li class="page-item"><a class="page-link" href="{{ url_for(redirect_url,page=1) }}">1</a></li>
+            {% if page > 4%}
+                <li class="page-item page-link">...</li>
             {% endif %}
-        </a></li>
-        {% if next_url %}
-            <li class="page-item"><a class="page-link" href="{{ next_url }}">
-            {{ next_url.split("=")[1].split("&")[0]}}</a></li>                
-            
         {% endif %}
+
+        <!-- vorletzte Seite-->
+        {% set pagepp = page -2 %}
+        {% if pagepp > 0 %} <li class="page-item">
+            <a class="page-link" href="{{ url_for(redirect_url,page=pagepp) }}">{{pagepp}}</a>
+            </li>
+            {% endif%}
+
+            <!-- Übernächste Seite-->
+            {% set pagep = page -1 %}
+            {% if pagep > 0 %} <li class="page-item">
+                <a class="page-link" href="{{ url_for(redirect_url,page=pagep) }}">{{pagep}}</a>
+                </li>
+                {% endif%}
+
+        <!-- aktuelle Seite-->
+        <li class="page-item"><a class="page-link"
+                href="{{ url_for(redirect_url,page=page) }}">{{page}}</a></li>
+
+
+        <!-- Nächste Seite-->
+        {% set pagen = page + 1 %}
+        {% if pagen < maxPage %} <li class="page-item">
+            <a class="page-link" href="{{ url_for(redirect_url,page=pagen) }}">{{pagen}}</a>
+            </li>
+            {% endif%}
+        <!-- Übernächste Seite-->
+        {% set pagenn = page + 2 %}
+        {% if pagenn < maxPage %} 
+            <li class="page-item">
+                
+                <a class="page-link"href="{{ url_for(redirect_url,page=pagenn) }}">{{pagenn}}</a>
+            </li>
+        {% endif%}
+    
+        
+
+        
+        <!-- Seitenende-->
+        {% if page < maxPage -1 %}
+            {% if page + 2 < maxPage%}
+                <li class="page-item page-link">...</li>
+            {% endif%}
+            <li class="page-item"><a class="page-link" href="{{ url_for(redirect_url,page=maxPage) }}">{{pagination.pages[last]}}</a></li>
+        {% endif%}
     </ul>
     
 </nav>

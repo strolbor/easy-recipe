@@ -20,7 +20,6 @@ class Config(object):
 
 app = Flask(__name__)
 UPLOAD_FOLDER = os.path.abspath(app.instance_path)
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
@@ -29,7 +28,7 @@ migrate = Migrate(app, db)
 app.config["SECRET_KEY"] = "bhjewjvhewhewhje"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ITEMS_PER_PAGE'] = 9
-
+app.config['ALLOWED_EXTENSIONS'] = ['png', 'jpg', 'jpeg']
 
 app.debug = True
 

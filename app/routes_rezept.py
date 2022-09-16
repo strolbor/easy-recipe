@@ -202,7 +202,24 @@ def rezeptver2(rid):
     return render_template('admin_addrzver.html', form=form, rezept1=rezept1)
 
 
-@app.route('/admin/rezept/removeRezept')
-def removeRezept():
-    """ Löschen eines Rezeptes"""
-    return remover(MODE_REZEPT, rezept, 'removeRezept')
+@app.route('/adminctl/delete/rezept/<path:ids>')
+def deleteRezept(ids):
+    """Rezept Objekt entfernen"""
+    page = request.args.get('page', 0, type=int)
+    repdel = rezept.query.get(ids)
+
+    # Handlungsschritte & Verknüpfung löschen
+    for entry in repdel.handlungsschritte:
+        handdel = handlungsschritt.query.get(entry.hid)
+        db.session.delete(handdel)
+        db.session.delete(entry)
+
+    # Tags vom Rezept löschen
+    repdel.tags = []
+    db.session.commit()
+
+    # Rezept löschen
+    db.session.delete(repdel)
+
+    db.session.commit()
+    return redirect(url_for('showRezepte', page=page))
