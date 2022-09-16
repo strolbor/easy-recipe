@@ -2,39 +2,61 @@
 
 {% block app_content %}
 
+<style>
+    .card:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+        height: auto;
+        z-index: 1;
+        position:relative;
+    }
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>
+
 <form name="add_rezept" id="add_rezept" method="POST">
 {{ form.csrf_token }}
 
-<div align="right">
-    {{form.btnSort1(class="btn btn-light")}}
-    {{form.btnSort2(class="btn btn-light")}}
-    {{form.btnSort0(class="btn btn-light")}}
+<div class="container">
+    <div class="row">
+        <div class="col" align="right">
+            {{form.btnSort1(class="btn btn-light btn-sm")}}
+            {{form.btnSort2(class="btn btn-light btn-sm")}}
+            {{form.btnSort0(class="btn btn-light btn-sm")}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+        {% set anzRezepte = rezeptRankings|length %}
+        {%for i in range(0, anzRezepte) %}
+            {% if i < anzRezepte %}
+                    {% set cardwidth = "24rem" %}
+                    {% set cardheight = 32 %}
+                    <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
+                    <div class="card col" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
+                        <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
+                        {%set bodyheight = cardheight / 5 * 2 %}
+                        <div class="card-body" style="overflow-y:scroll;height:{{bodyheight}}rem">
+                            <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
+                            <i class="card-text">{{ rezeptRankings[i].tags }}</i>
+                            <p></p>
+                            <p class="card-text"><b>Vorhanden:</b> {{ rezeptRankings[i].vorhandeneZutatenNamen }}</p>
+                            <p class="card-text"><b>Fehlt:</b> {{ rezeptRankings[i].fehlendeZutatenNamen }}</p>
+                        </div>
+                        <!-- <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}" class="btn btn-primary" ><b>Nachkochen</b></a> -->
+                    </div>
+                    </a>
+            {%endif %}
+        {% endfor %}
+
+        </div>
+    </div>
 </div>
-
-{% set anzRezepte = rezeptRankings|length %}
-{%for i in range(0, anzRezepte) %}
-    {% if i < anzRezepte %}
-
-            {% set cardwidth = "38rem" %}
-            {% set cardheight = 45 %}
-            <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left;">
-                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
-                <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                </a>
-                {%set bodyheight = cardheight - 8 %}
-                <div class="card-body" style="overflow-y:scroll;height:{{bodyheight}}rem">
-                    <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
-                    <i class="card-text">{{ rezeptRankings[i].tags }}</i>
-                    <p></p>
-                    <p class="card-text"><b>Du hast folgende Zutaten:</b> {{ rezeptRankings[i].vorhandeneZutatenNamen }}</p>
-                    <p class="card-text"><b>Dir fehlen folgende Zutaten:</b> {{ rezeptRankings[i].fehlendeZutatenNamen }}</p>
-                </div>
-                <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}" class="btn btn-primary" ><b>Nachkochen</b></a>
-            </div>
-
-    {%endif %}
-{% endfor %}
-
 
 </form>
 {% endblock %}

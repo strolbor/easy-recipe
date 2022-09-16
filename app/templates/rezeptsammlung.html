@@ -7,6 +7,8 @@
         transform: scale(1.05);
         box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
         height: auto;
+        z-index: 1;
+        position:relative;
     }
     .card:after {
         content: "";
@@ -24,13 +26,15 @@
 
 </style>
 
-  <script
+
+<script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
 
 <form name="rezeptsammlung" id="rezeptsammlung" method="POST">
 {{ form.csrf_token }}
@@ -57,7 +61,7 @@
             <div class="container" style="margin:5px;" > <!-- Filteroptionen und Suche Button -->
                 <div class="row">
                     <div class="col">
-                        {{form.rezeptnamen}}
+                        {{form.rezeptnamen(onchange="window.location.href='{{ url_for( 'rezeptsammlung') }}';")}}
                     </div>
                     <div class="col">
                         {{form.rezeptkategorien}}
@@ -93,7 +97,7 @@
                                     {% for j in range(0, rezepteInSammlung) %}
 
                                     <a href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
-                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
+                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:6px; border:none;">
                                         <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
                                         <div class="card-body" style="overflow-y:scroll;">
                                             <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
@@ -118,24 +122,25 @@
 </form>
 
 
-    <script>
-        $(document).ready(function() {
-            $('#rezeptnamen').select2({  // init Select2 on form's rezeptnamen field
-                placeholder: "{{ form.rezeptnamen.label.text }}",
-                allowClear: true,
-                "width": "90%"
-            });
-            $('#rezeptkategorien').select2({
-                placeholder: "{{ form.rezeptkategorien.label.text }}",
-                allowClear: true,
-                "width": "90%"
-            });
-            $('#maxZutaten').select2({
-                placeholder: "{{ form.maxZutaten.label.text }}",
-                allowClear: true,
-                "width": "90%"
-            });
+<script>
+
+    $(document).ready(function() {
+        $('#rezeptnamen').select2({  // init Select2 on form's rezeptnamen field
+            placeholder: "{{ form.rezeptnamen.label.text }}",
+            allowClear: true,
+            "width": "90%"
         });
-    </script>
+        $('#rezeptkategorien').select2({
+            placeholder: "{{ form.rezeptkategorien.label.text }}",
+            allowClear: true,
+            "width": "90%"
+        });
+        $('#maxZutaten').select2({
+            placeholder: "{{ form.maxZutaten.label.text }}",
+            allowClear: true,
+            "width": "90%"
+        });
+    });
+</script>
 
 {% endblock %}

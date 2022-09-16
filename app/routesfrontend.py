@@ -276,10 +276,7 @@ def rezeptsammlung():
                     if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
                         passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
 
-
             form.rezeptnamen.data = ""
-            #form.rezeptkategorien.data = ""
-            #form.maxZutaten.data = ""
 
             return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
                                    rezeptsammlungen=[passendeRezepte],
@@ -295,5 +292,6 @@ def rezeptsammlung():
     for sammlung in rezeptsammlungen:
         anzRezeptvorschlaege += len(sammlung.rezepte)
 
+    form.rezeptnamen.data = ""
     return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptsammlungen=rezeptsammlungen,
                            anzRezeptvorschlaege=anzRezeptvorschlaege)
