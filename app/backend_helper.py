@@ -55,7 +55,6 @@ def savepic(feldname, rfiles, ordner) -> str:
         return "B"
     if file:
         """ Bild ist vorhanden"""
-        file = request.files[feldname]
         filename = secure_filename(file.filename)
         createFolderIfNotExists(os.path.join(app.instance_path, ordner))
         path = os.path.join(app.instance_path, ordner, filename)

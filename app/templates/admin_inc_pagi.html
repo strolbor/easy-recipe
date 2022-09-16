@@ -9,7 +9,7 @@
 <nav aria-label="Page navigation" class="mitte">
     <ul class="pagination">
         {% if prev_url %}
-            <li class="page-item"><a class="page-link" href="{{ prev_url  }}">{{ prev_url.split("=")[1]}}</a></li>
+            <li class="page-item"><a class="page-link" href="{{ prev_url  }}">{{ prev_url.split("=")[1].split("&")[0]}}</a></li>
         {% endif %}
         
         <li class="page-item"><a class="page-link" href="#">
@@ -21,7 +21,7 @@
         </a></li>
         {% if next_url %}
             <li class="page-item"><a class="page-link" href="{{ next_url }}">
-            {{ next_url.split("=")[1]}}</a></li>                
+            {{ next_url.split("=")[1].split("&")[0]}}</a></li>                
             
         {% endif %}
     </ul>

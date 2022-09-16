@@ -1,8 +1,7 @@
 from app import app, db, forms
 from app.rezept import handlungsschritt, rezept,AssociationRHhat
 from app.backend_helper import savepic,createArrayHelper
-from app.routesbackend import remover
-from app.routesbackend import remover, MODE_HANDadd,showclass
+from app.routesbackend import showclass
 
 from flask import redirect, render_template,request
 from flask.helpers import flash, url_for

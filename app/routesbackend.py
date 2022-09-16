@@ -33,56 +33,9 @@ def showclass(classes, sortedby, title, redirect_url):
     return render_template('admin_show.html', liste=liste.items, titlet=title, next_url=next_url, prev_url=prev_url, showCase=True, page=page)
 
 
-MODE_ZUTATEN = 0
-"""Diese Einstellung ist da um Zutaten zu entfernen"""
-MODE_TAGS = 1
-"""Diese Einstellung ist da um Tags zu entfernen"""
-MODE_REZEPT = 2
-"""Diese Einstellung ist da um Rezepte zu entfernen"""
-MODE_TAGver = 5
-"""Diese Einstellung ist da um Verknüpfungen zw. Tags <-> Rezept zu entfernen"""
-MODE_HANDver = 6
-"""Diese Einstellung ist da um Verknüpfungen zw. Handlungschritten <-> Rezept zu entfernen"""
-MODE_HANDadd = 7
-"""Diese Einstellung ist da um Verknüpfungen zw. Handlungschritten <-> Rezept hinzuzufügen"""
-MODE_REZEPTadd = 8
-"""Diese Einstellung ist da um Verknüpfungen zw. Zutat <-> Rezept hinzuzufügen"""
 
 
-def remover(mode: int, classes, redirect_url: str):
-    """Funktion um Einträge zu entfernen. Generische Funktion.
-    mode: Was soll gelöscht werden
-    classes: typ der Klasse zum abfragen
-    redirect_url: Selbstverweis auf aufrufende Funktion der URL"""
-    page = request.args.get('page', 0, type=int)
-    liste = classes.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
-    rid = request.args.get('rid', 0, type=int)
-    if mode != MODE_HANDver:
-        next_url = url_for(
-            redirect_url, page=liste.next_num) if liste.has_next else None
-        prev_url = url_for(
-            redirect_url, page=liste.prev_num) if liste.has_prev else None
-    else:
-        next_url = url_for(redirect_url, page=liste.next_num,
-                           rid=rid) if liste.has_next else None
-        prev_url = url_for(redirect_url, page=liste.prev_num,
-                           rid=rid) if liste.has_prev else None
-    if mode == MODE_ZUTATEN:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="endgültiger Zutatentferner", targetzutat=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_REZEPT:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="endgültiger Rezeptentferner", targetrezept=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_TAGS:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="endgültiger Tagsentferner", targettags=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_TAGver:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungentferner von Tags & Rezept", Tagver=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_HANDver:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungentferner von Handlungschritten & Rezept", HANDver=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_HANDadd:
-        return render_template('admin_remove.html', inhalt=liste.items, titlet="Verknüpfungadder von Handlungschritten & Rezept", MODE_HANDadd=True, next_url=next_url, prev_url=prev_url, page=page)
-    elif mode == MODE_REZEPTadd:
-        return (render_template('admin_remove.html', inhalt=liste.items, titlet="Zutaten ändern", MODE_REZEPTadd=True, next_url=next_url, prev_url=prev_url, page=page))
-    else:
-        return "Kein Tamplate gefunden!"
+
 
 ##############
 #   generic  #

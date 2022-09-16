@@ -2,8 +2,8 @@ import imp
 import re
 from app import app, db, forms
 from app.rezept import rezept, zutat, handlungsschritt, tags, Association, AssociationRHhat
-from app.backend_helper import getNewID, createArrayHelper, savepic, createArrayHelper2
-from app.routesbackend import remover, MODE_REZEPT,  MODE_REZEPTadd, showclass
+from app.backend_helper import createArrayHelper, savepic, createArrayHelper2
+from app.routesbackend import showclass
 
 import os
 from flask import redirect, render_template, request, abort
@@ -64,12 +64,9 @@ def postrezept():
         handlungsschritttext = request.form.get('handlung')
 
         # Rezept anlegen
-        #idn = newRezept(rezeptname, taglist,  request.method, request.files)
-        #rnew: rezept = rezept.query.get(idn)
-        if rezept.query.filter_by(name=rezeptname).first() is None:
-            """ Wenn das Rezept nicht existiert, erstelle es"""
-            newRezept(rezeptname, taglist)
-            print(f"AJAX hat Rezept {rezeptname} erstellt")
+        """ Wenn das Rezept nicht existiert, erstelle es"""
+        newRezept(rezeptname, taglist)
+        print(f"AJAX hat Rezept {rezeptname} erstellt")
         rnew: rezept = rezept.query.filter_by(name=rezeptname).first()
 
         #Bild hochladen
@@ -107,12 +104,6 @@ def postrezept():
         with db.session.no_autoflush:
             rnew.handlungsschritte.append(assoc1)
         
-        # Tags verknüpfen
-        for entry in taglist:
-            atag = tags.query.get(int(entry))
-            if int(entry) > 0 and atag not in rnew.tags:
-                rnew.tags.append(atag)
-                flash(f"Add Tag {atag.name}")
         db.session.commit()
 
         # speichern
@@ -125,6 +116,8 @@ def modifyrezept(ids):
     form = forms.rezeptaendern()
     zuRezept: rezept = rezept.query.get(ids)
     if request.method == "POST" and form.submit.data:
+        # Rezept bearbeiten
+        # Und alles mögliche aus dem Formular abspeichern
         print("Validate")
 
         # Name speichern
@@ -140,6 +133,7 @@ def modifyrezept(ids):
 
 
         # Tag speichern
+        zuRezept.tags = []
         for tagentry in form.tags.data:
             tmpTag = tags.query.get(tagentry)
             zuRezept.tags.append(tmpTag)
@@ -170,8 +164,19 @@ def modifyrezept(ids):
 
 @app.route("/admin/rezept/rezeptver1")
 def rezeptver1():
-    return remover(MODE_REZEPTadd, rezept, 'rezeptver1')
+    """Funktion um Einträge zu entfernen. Generische Funktion.
+    mode: Was soll gelöscht werden
+    classes: typ der Klasse zum abfragen
+    redirect_url: Selbstverweis auf aufrufende Funktion der URL"""
+    page = request.args.get('page', 0, type=int)
+    liste = rezept.query.paginate(page, app.config['ITEMS_PER_PAGE'], False)
+    rid = request.args.get('rid', 0, type=int)
+    next_url = url_for('rezeptver1', page=liste.next_num,
+                       rid=rid) if liste.has_next else None
+    prev_url = url_for('rezeptver1', page=liste.prev_num,
+                       rid=rid) if liste.has_prev else None
 
+    return (render_template('admin_remove.html', inhalt=liste.items, titlet="Zutaten ändern", next_url=next_url, prev_url=prev_url, page=page))
 
 @app.route("/admin/rezept/rezeptver2/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):

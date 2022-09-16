@@ -2,7 +2,7 @@ from operator import methodcaller
 from app import app, db, forms
 from app.rezept import kategorie, zutat, rezept
 from app.backend_helper import getNewID, savepic
-from app.routesbackend import remover, MODE_ZUTATEN, showclass, createArrayHelper
+from app.routesbackend import showclass, createArrayHelper
 
 import os
 from flask import redirect, render_template, request
@@ -43,11 +43,6 @@ def addzutat():
 def showZutaten():
     return showclass(zutat, zutat.name, "Zutaten", "showZutaten")
 
-
-@app.route('/admin/remove/zutat')
-def removeZutat():
-    """Hiermit wird eine Zutat entfernt"""
-    return remover(MODE_ZUTATEN, zutat, 'removeZutat')
 
 
 @app.route('/admin/modify/zutat/<path:ids>', methods=['GET', 'POST'])
