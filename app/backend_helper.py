@@ -61,7 +61,7 @@ def savepic(feldname, rfiles, ordner) -> str:
         #Dateiendung erfragen, ob es ein Bild ist
         if filename.split(".")[1] not in app.config['ALLOWED_EXTENSIONS']:
             flash(
-                f"Es wurde keine Bilddatei im Format {', '.join(app.config['ALLOWED_EXTENSIONS'])} erkannt")
+                f"Fehler: Es wurde keine Bilddatei im Format {', '.join(app.config['ALLOWED_EXTENSIONS'])} erkannt")
             return "B"
             # Wenn es keine Bilddatei ist, verwirf es
         createFolderIfNotExists(os.path.join(app.instance_path, ordner))
