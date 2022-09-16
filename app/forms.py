@@ -3,7 +3,7 @@ from wtforms import SubmitField, SelectMultipleField, StringField, SelectField, 
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileField
 from app import db
-from app.rezept import zutat, kategorie
+from app.rezept import zutat, kategorie, rezept
 
 
 class d_felder(FlaskForm):
@@ -124,3 +124,18 @@ class nutzerein(FlaskForm):
     bildupload = FileField('Bild')
     handlung = TextAreaField('Handlungschritt')#, validators=[DataRequired()])
     submit = SubmitField("Speichern")
+
+class rezeptranking(FlaskForm):
+    btnSort0 = SubmitField(label="Bestes Verhältnis")
+    btnSort1 = SubmitField(label="Wenigste fehlende Zutaten")
+    btnSort2 = SubmitField(label="Meiste vorhandene Zutaten")
+
+class rezeptsammlung(FlaskForm):
+    btnSuchen = SubmitField("🔎")
+    alleRezeptNamen = []
+    for entry in rezept.query.all():
+        alleRezeptNamen.append(entry.name)
+
+    rezeptnamen = SelectField("Rezeptsuche", choices=[""]+alleRezeptNamen)
+    rezeptkategorien = SelectField("Filter", choices=[""]+["Vegan", "Vegetarisch", "Einfach", "Fleisch"])
+    maxZutaten = SelectField("Maximale Zutaten", choices=["",4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
