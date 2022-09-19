@@ -11,8 +11,12 @@ class Rezeptsammlung:
     def __init__(self, _rid, _name, _tags, _bild):
         self.rid=_rid
         self.name = _name
-        if len(_tags) > 0:
-            self.tags = _tags
+        r_tags = ""
+        for tag in _tags:
+            r_tags += f"{tag.name}, "
+        r_tags = r_tags[:-2]
+        if len(r_tags) > 0:
+            self.tags = r_tags
         self.bild = _bild
 
 
@@ -83,11 +87,7 @@ def getRezeptByEigenschaft(anzahl, eigenschaft):
             bedingung = isEinfach(rez)
 
         if bedingung:
-            r_tags = ""
-            for tag in rez.tags:
-                r_tags += f"{tag.name}, "
-            r_tags = r_tags[:-2]
-            neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=r_tags, _bild=rez.bild)
+            neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=rez.tags, _bild=rez.bild)
             passendeRezepte.append(neuesRezept)
 
         if len(passendeRezepte) >= anzahl:
@@ -99,11 +99,7 @@ def getRezepteByTag(tag):
     for rez in rezept.query.all():
         for _tag in rez.tags:
             if _tag.name == tag:
-                r_tags = ""
-                for tag in rez.tags:
-                    r_tags += f"{tag.name}, "
-                r_tags = r_tags[:-2]
-                neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=r_tags, _bild=rez.bild)
+                neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=rez.tags, _bild=rez.bild)
                 passendeRezepte.append(neuesRezept)
 
     return passendeRezepte

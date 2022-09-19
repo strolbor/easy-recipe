@@ -136,6 +136,6 @@ class rezeptsammlung(FlaskForm):
     for entry in rezept.query.all():
         alleRezeptNamen.append(entry.name)
 
-    rezeptnamen = SelectField("Rezeptsuche", choices=[""]+alleRezeptNamen)
-    rezeptkategorien = SelectField("Filter", choices=[""]+["Vegan", "Vegetarisch", "Einfach", "Fleisch"])
+    rezeptnamen = SelectField("Direktsuche", choices=[""]+alleRezeptNamen)
+    rezeptkategorien = SelectField("Eigenschaft", choices=[""]+["Vegan", "Vegetarisch", "Einfach", "Fleisch"])
     maxZutaten = SelectField("Maximale Zutaten", choices=["",4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])

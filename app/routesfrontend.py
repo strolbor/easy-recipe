@@ -272,9 +272,14 @@ def rezeptsammlung():
 
             if form.maxZutaten.data:
                 maxZutaten = int(form.maxZutaten.data)
-                for rez in passendeRezepte.rezepte.copy():
-                    if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
-                        passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
+                if form.rezeptkategorien.data:
+                    for rez in passendeRezepte.rezepte.copy():
+                        if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
+                            passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
+                else:
+                    for rez in rezept.query.all():
+                        if len(rez.zutaten) <= maxZutaten:
+                            passendeRezepte.rezepte.append( Rezeptsammlung(rez.id, rez.name, rez.tags, rez.bild) )
 
             form.rezeptnamen.data = ""
 
@@ -284,9 +289,9 @@ def rezeptsammlung():
 
 
     #wenn erster Aufruf:
-    veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "vegan"), _name="Vegane Rezepte")
-    fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "fleisch"), _name="Rezepte mit Fleisch")
-    einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "einfach"), _name="Einfache Rezepte")
+    veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "vegan"), _name="Vegane Rezepte")
+    fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "fleisch"), _name="Rezepte mit Fleisch")
+    einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "einfach"), _name="Einfache Rezepte")
     rezeptsammlungen = [veganes, fleisch, einfach]
     anzRezeptvorschlaege = 0
     for sammlung in rezeptsammlungen:

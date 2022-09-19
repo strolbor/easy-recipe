@@ -43,111 +43,79 @@
 {% set cardwidth = "18rem" %}
 {% set cardheight = 24 %}
 
-<div class="container">
-    <div class="row">
-        <!--
-        <div class="col-2" style="vertical-align:top; margin:5px; background-color:#E7E7E7">
-            <p><b>Angewandte Filter:</b> </p>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedLeicht" checked>
-                <label class="form-check-label" for="flexSwitchCheckCheckedLeicht">Leicht</label>
-            </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedFleisch" checked>
-                <label class="form-check-label" for="flexSwitchCheckCheckedFleisch">Fleisch</label>
-            </div>
-        </div>
-        -->
-        <div class="col">
-            <div class="container" style="margin:5px;" > <!-- Filteroptionen und Suche Button -->
-                <!-- <div class="row">
-                    <div class="col">
-                        {{form.rezeptnamen(onchange="window.location.href='{{ url_for( 'rezeptsammlung') }}';")}}
-                    </div>
-                    <div class="col">
-                        {{form.rezeptkategorien}}
-                    </div>
-                    <div class="col">
-                        <div>{{form.maxZutaten}}</div>
-                    </div>
-                    <div class="col-2">
-                        <div>{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</div>
-                    </div>
-                </div>
-                -->
-
-                  {% block _navbar %}
-                  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container">
-                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#_navbarToggler"
-                        aria-controls="_navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>Filter
-                      </button>
-                      <div class="collapse navbar-collapse" id="_navbarToggler">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                          <li class="nav-item" style="width:350px">
-                            <a class="nav-link active" aria-current="page" >{{form.rezeptnamen(onchange="window.location.href='{{ url_for( 'rezeptsammlung') }}';")}}</a>
-                          </li>
-                          <li class="nav-item" style="width:200px">
-                            <a class="nav-link" >{{form.rezeptkategorien}}</a>
-                          </li>
-                          <li class="nav-item" style="width:200px">
-                            <a class="nav-link" >{{form.maxZutaten}}</a>
-                          </li>
-                          <li class="nav-item" style="width:150px">
-                            <a class="nav-link" >{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </nav>
-                  {% endblock %}
-
-                <!-- Rezeptvorschläge: -->
-
-                {% set anzSammlungen = rezeptsammlungen|length %}
-                <div class="row">
-                    <div class="col">
-                        <p></p>
-                        <p><h3><b>Rezeptvorschläge ({{anzRezeptvorschlaege}})</b></h3>
-                        <p></p>
-                        <p></p>
-
-                        {% for i in range(0, anzSammlungen) %}
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <p><h5><b>{{ rezeptsammlungen[i].name }}</b></h5>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    {% set rezeptsammlung = rezeptsammlungen[i] %}
-                                    {% set rezepteInSammlung = rezeptsammlung.rezepte|length %}
-                                    {% for j in range(0, rezepteInSammlung) %}
-
-                                    <a href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
-                                    <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:6px; border:none;">
-                                        <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                                        <div class="card-body" style="overflow-y:scroll;">
-                                            <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
-                                            <i class="card-text">{{ rezeptsammlung.rezepte[j].tags }}</i>
-                                        </div>
-                                    </div>
-                                    </a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
 
 
-                    </div>
-                </div>
-            </div>
-        </div>
+  {% block _navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#_navbarToggler"
+        aria-controls="_navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>&nbsp; Filter
+      </button>
+      <div class="collapse navbar-collapse" id="_navbarToggler">
+        <span class="navbar-text">Finde Rezepte: </span>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!--
+          <li class="nav-item" style="width:350px">
+            <a class="nav-link active" aria-current="page" ></a>
+          </li>
+          -->
+          <li class="nav-item" style="width:200px">
+            <a class="nav-link" >{{form.rezeptkategorien}}</a>
+          </li>
+          <li class="nav-item" style="width:200px">
+            <a class="nav-link" >{{form.maxZutaten}}</a>
+          </li>
+          <li class="nav-item" style="width:150px; horiz-align: right">
+            <a class="nav-link" >{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</a>
+          </li>
+        </ul>
+          <span style="width: 350px">
+              {{form.rezeptnamen(onchange="window.location.href='{{ url_for( 'rezeptsammlung') }}';")}}
+          </span>
+      </div>
+
+  </nav>
+  {% endblock %}
+
+<!-- Rezeptvorschläge: -->
+
+{% set anzSammlungen = rezeptsammlungen|length %}
+<div class="row">
+    <div class="col">
+        <p></p>
+        <p><h3><b>Rezeptvorschläge ({{anzRezeptvorschlaege}})</b></h3>
+        <p></p>
+        <p></p>
     </div>
 </div>
+
+{% for i in range(0, anzSammlungen) %}
+<div class="row">
+    <div class="col">
+        <p><h5><b>{{ rezeptsammlungen[i].name }}</b></h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {% set rezeptsammlung = rezeptsammlungen[i] %}
+        {% set rezepteInSammlung = rezeptsammlung.rezepte|length %}
+        {% for j in range(0, rezepteInSammlung) %}
+
+        <a class="col" href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
+        <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:6px; border:none;">
+            <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
+            <div class="card-body" style="overflow-y:scroll;">
+                <h5 class="card-title">{{ rezeptsammlung.rezepte[j].name }}</h5>
+                <i class="card-text">{{ rezeptsammlung.rezepte[j].tags }}</i>
+            </div>
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
 
 </form>
 
