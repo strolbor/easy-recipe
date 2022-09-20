@@ -55,11 +55,6 @@
       <div class="collapse navbar-collapse" id="_navbarToggler">
         <span class="navbar-text">Finde Rezepte: </span>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!--
-          <li class="nav-item" style="width:350px">
-            <a class="nav-link active" aria-current="page" ></a>
-          </li>
-          -->
           <li class="nav-item" style="width:200px">
             <a class="nav-link" >{{form.rezeptkategorien}}</a>
           </li>
@@ -71,7 +66,7 @@
           </li>
         </ul>
           <span style="width: 350px">
-              {{form.rezeptnamen(onchange="window.location.href='{{ url_for( 'rezeptsammlung') }}';")}}
+              {{form.rezeptnamen}}
           </span>
       </div>
 
@@ -123,10 +118,17 @@
 <script>
 
     $(document).ready(function() {
+        console.log("test1");
         $('#rezeptnamen').select2({  // init Select2 on form's rezeptnamen field
             placeholder: "{{ form.rezeptnamen.label.text }}",
             allowClear: true,
             "width": "90%"
+        });
+        $('#rezeptnamen').on('select2:select', function (e) {
+            console.log("selected2")
+            $('#btnSuchen').click()
+            return false;
+
         });
         $('#rezeptkategorien').select2({
             placeholder: "{{ form.rezeptkategorien.label.text }}",

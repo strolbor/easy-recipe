@@ -7,6 +7,7 @@ from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen
 from app.rezept import zutat, rezept
 from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung
+import logging
 
 
 
@@ -20,7 +21,6 @@ alleZutaten = []
 
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
-
 
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
@@ -258,9 +258,20 @@ def rezeptsammlung():
 
     passendeRezepte = PassendeRezeptliste("", [])
 
+    print("aufgerufen")
+
     #wenn nicht erster Aufruf:
     if request.method == "POST":
+        print("POST")
+        print(form.rezeptnamen.data)
+        rezeptSuchbegriff = form.rezeptnamen.data
+        if rezeptSuchbegriff != "":
+            passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
+            form.rezeptnamen.data = ""
+            return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+
         if form.btnSuchen.data:
+            print("DATA gefunden")
             rezeptSuchbegriff = form.rezeptnamen.data
             if rezeptSuchbegriff != "":
                 passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
@@ -280,8 +291,6 @@ def rezeptsammlung():
                     for rez in rezept.query.all():
                         if len(rez.zutaten) <= maxZutaten:
                             passendeRezepte.rezepte.append( Rezeptsammlung(rez.id, rez.name, rez.tags, rez.bild) )
-
-            form.rezeptnamen.data = ""
 
             return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
                                    rezeptsammlungen=[passendeRezepte],
