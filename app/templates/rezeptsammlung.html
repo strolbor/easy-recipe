@@ -97,7 +97,7 @@
         {% set rezepteInSammlung = rezeptsammlung.rezepte|length %}
         {% for j in range(0, rezepteInSammlung) %}
 
-        <a class="col" href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid)}}">
+        <a class="col" href="{{ url_for('rezeptsammlung_id',ids=rezeptsammlung.rezepte[j].rid )}}">
         <div class="card" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:6px; border:none;">
             <img src="/ctl/download/{{rezeptsammlung.rezepte[j].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
             <div class="card-body" style="overflow-y:scroll;">

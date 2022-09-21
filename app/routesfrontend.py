@@ -22,8 +22,8 @@ alleZutaten = []
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
 
-@app.route('/rezeptranking', methods=['GET', 'POST'])
-def rezeptranking():
+@app.route('/rezeptranking/mit_<path:zNamen>', methods=['GET', 'POST'])
+def rezeptranking(zNamen):
     global globalRezeptRankings, choices_array
     form = forms.rezeptranking()
     if request.method == "POST":
@@ -38,24 +38,23 @@ def rezeptranking():
 
 
 home_html = "home.html"
+alleZutaten = []
+try:
+    for entry in zutat.query.order_by(zutat.name).all():
+        alleZutaten.append(entry.name)
+    pass
+except Exception as e:
+    logging.error(e)
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     global choices_array
     form = forms.d_felder()
 
     global alleZutaten
-    alleZutaten = []
-    try:
-        for entry in zutat.query.order_by(zutat.name).all():
-            alleZutaten.append(entry.name)
-        pass
-    except Exception as e:
-        print(e)
 
     def updateZutatenlisten():
-        #global choices_array
         form.selected.choices = choices_array.copy()
-        #global alleZutaten
         verbleibendeZutaten = alleZutaten.copy()
         for entry in choices_array:
             try:
@@ -63,15 +62,6 @@ def home():
             except:
                 pass
 
-        #verbleibendeZutaten = updateMitSuchtext( verbleibendeZutaten=verbleibendeZutaten.copy() ).copy()
-
-        if form.suchtext.data != "" and form.suchtext.data != None :
-            uebrigeZutaten = []
-            for entry in verbleibendeZutaten.copy():
-                if str(form.suchtext.data).lower() in str(entry).lower():
-                    uebrigeZutaten.append(entry)
-            verbleibendeZutaten = uebrigeZutaten.copy()
-            #form.suchtext.data = ""
 
         form.eingabe.choices = verbleibendeZutaten
         form.suchfeld.choices = [""] + verbleibendeZutaten
@@ -141,7 +131,9 @@ def home():
 
             updateZutatenlisten()
 
-            return redirect(url_for('rezeptranking'))
+            choices_array.sort()
+            zNamen = [str(choice) for choice in choices_array]
+            return redirect(url_for('rezeptranking', zNamen=",".join(zNamen)))
             #return render_template("rezeptranking.html", rezeptRankings = _rezeptRankings)
 
         elif form.submitSuchtext.data:
@@ -158,7 +150,7 @@ def home():
     return render_template(home_html, form=form,choices_array=choices_array)
 
 
-@app.route('/rezept/<path:ids>', methods=['GET', 'POST'])
+@app.route('/rezept/<ids>/', methods=['GET', 'POST'])
 def rezeptanzeige(ids):
     form = forms.rezeptanzeige()
     thisrezept = rezept.query.get(ids)

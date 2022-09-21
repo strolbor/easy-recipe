@@ -49,7 +49,7 @@
             <tbody>
 
                 <tr>
-                    <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff }}</td>
+                    <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff(style="visibility: hidden;") }}</td>
                 </tr>
 
 
@@ -115,6 +115,12 @@
                 allowClear: true,
                 "width": "style"
             });
+            $('#suchfeld').on('select2:select', function (e) {
+                $('#sumbitAddSuchbegriff').click()
+            return false;
+
+        });
+
         });
     </script>
 

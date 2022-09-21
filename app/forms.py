@@ -1,6 +1,6 @@
-from flask_wtf import FlaskForm
 from wtforms import SubmitField, SelectMultipleField, StringField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from app import db
 from app.rezept import zutat, kategorie, rezept
@@ -26,7 +26,7 @@ class d_felder(FlaskForm):
 
     # Altes Suchfeld
     suchtext = StringField('Zutat suchen')
-    submitSuchtext = SubmitField('Starte Zutatensuche')
+    submitSuchtext = SubmitField('Direktsuche')
 
     # "Neues" Suchfeld, Script mit Dropdown Menü
     suchfeld = SelectField("Starte Zutatensuche", choices=[""] + zutatenListe)
@@ -34,6 +34,7 @@ class d_felder(FlaskForm):
 
     # Kategorien mit Buttons für Zutaten und Stringfields für Kategorienamen
     class homepage_kategorie():
+        """Name der Kategorie und dazugehörige Zutaten"""
         name = ""
         zutaten = []
 
