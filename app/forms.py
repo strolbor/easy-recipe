@@ -16,18 +16,19 @@ class d_felder(FlaskForm):
         pass
     except Exception as e:
         print(e)
-    eingabe = SelectMultipleField(
+    """eingabe = SelectMultipleField(
         'Zur Verfügung stehende Objekte', choices=zutatenListe)
     selected = SelectMultipleField('Ausgewählte Objekte', choices=[])
     submitAdd = SubmitField("-->")        # Hinzufuegen
     submitRm = SubmitField("<--")  # Entfernen
     submitLoesen = SubmitField("Auswahl lösen")
-    submitSuchen = SubmitField("Suchen")
+    
 
     # Altes Suchfeld
     suchtext = StringField('Zutat suchen')
-    submitSuchtext = SubmitField('Direktsuche')
+    submitSuchtext = SubmitField('Direktsuche')"""
 
+    submitSuchen = SubmitField("Suchen")
     # "Neues" Suchfeld, Script mit Dropdown Menü
     suchfeld = SelectField("Starte Zutatensuche", choices=[""] + zutatenListe)
     sumbitAddSuchbegriff = SubmitField("Hinzufügen")

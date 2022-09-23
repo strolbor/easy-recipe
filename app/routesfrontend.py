@@ -54,7 +54,7 @@ def home():
     global alleZutaten
 
     def updateZutatenlisten():
-        form.selected.choices = choices_array.copy()
+        #form.selected.choices = choices_array.copy()
         verbleibendeZutaten = alleZutaten.copy()
         for entry in choices_array:
             try:
@@ -63,24 +63,21 @@ def home():
                 pass
 
 
-        form.eingabe.choices = verbleibendeZutaten
-        form.suchfeld.choices = [""] + verbleibendeZutaten
+        #form.eingabe.choices = verbleibendeZutaten
+        #form.suchfeld.choices = [""] + verbleibendeZutaten
 
     updateZutatenlisten()
 
-    print("eingabe",form.eingabe.data)
-    print("selected",form.selected.data)
+    #print("eingabe",form.eingabe.data)
+    #print("selected",form.selected.data)
     if form.errors:
         for error_field, error_message in form.errors.iteritems():
             print(error_field,error_message)
 
-
-
+    erstes = True
     '''FÜR ERSTEN AUFRUF IMMER MIT NEUEN SUBMIT BUTTONS ANPASSEN!!!!!'''
-    if not form.submitAdd.data and not form.submitRm.data and not form.submitSuchen.data and not form.submitLoesen.data \
-            and not form.submitSuchtext.data and not form.sumbitAddSuchbegriff.data:
+    if not  form.submitSuchen.data and not form.sumbitAddSuchbegriff.data:
         #prüfe welche Zutat gedrückt wurde
-        erstes = True
         for zut in alleZutaten:
             if 'btn%s'%zut in request.form:
                 if zut not in choices_array:
@@ -98,7 +95,6 @@ def home():
             updateZutatenlisten()
 
 
-    #TODO: Legacy Ifs aufräumen
     if form.validate_on_submit():
         print("validate")
 
@@ -114,10 +110,6 @@ def home():
             # Neue List wird kopiert in die Liste
             updateZutatenlisten()
 
-            # neues Template an Client senden
-            form.eingabe.data = []
-            form.selected.data = []
-
             return render_template(home_html, form=form,choices_array=choices_array)
 
         elif form.submitSuchen.data:
@@ -125,8 +117,8 @@ def home():
             """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
             ausgewZutaten = []
             global globalRezeptRankings
-            for entry in form.selected.choices.copy():
-                ausgewZutaten.append((entry))
+            for entry in choices_array:
+                ausgewZutaten.append(entry)
             globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=0)
 
             updateZutatenlisten()
@@ -134,19 +126,14 @@ def home():
             choices_array.sort()
             zNamen = [str(choice) for choice in choices_array]
             return redirect(url_for('rezeptranking', zNamen=",".join(zNamen)))
-            #return render_template("rezeptranking.html", rezeptRankings = _rezeptRankings)
-
-        elif form.submitSuchtext.data:
-            updateZutatenlisten()
-            return render_template(home_html, form=form,choices_array=choices_array)
 
         else:
             #flash("Don't hack this!")
             pass
 
 
-    print("last return")
     updateZutatenlisten()
+
     return render_template(home_html, form=form,choices_array=choices_array)
 
 

@@ -35,11 +35,11 @@
         {%for i in range(0, anzRezepte) %}
             {% if i < anzRezepte %}
                     {% set cardwidth = "24rem" %}
-                    {% set cardheight = 32 %}
+                    {% set cardheight = 36 %}
                     <a href="{{ url_for('rezeptanzeige', ids=rezeptRankings[i].rid, )}}">
                     <div class="card col" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
                         <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                        {%set bodyheight = cardheight / 5 * 2 %}
+                        {%set bodyheight = cardheight / 5 * 3 %}
                         <div class="card-body" style="overflow-y:scroll;height:{{bodyheight}}rem">
                             <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
                             <i class="card-text">{{ rezeptRankings[i].tags }}</i>

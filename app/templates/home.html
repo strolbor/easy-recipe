@@ -3,47 +3,68 @@
 
  
 
-  {% block app_content %}
+{% block app_content %}
 
-  <style>
-  .table th.middle {
-      width: 90px;
-  }
-  .table input {
-      margin: 5px 10px;
-      
-  }
-  .table td.eingabe {
-      width: 300px;
-  }
-  .table td.submit {
-      padding: 5px;
-  }
-  .save {
-      margin-left: 10px;
-  }
-  
-  .table td.buttons {
-      align-content: center;
-      vertical-align: middle;
-  }
+<style>
+.table th.middle {
+  width: 90px;
+}
+.table input {
+  margin: 5px 10px;
 
-  .right{
+}
+.table td.eingabe {
+  width: 300px;
+}
+.table td.submit {
+  padding: 5px;
+}
+.save {
+  margin-left: 10px;
+}
+
+.table td.buttons {
+  align-content: center;
+  vertical-align: middle;
+}
+
+.right{
     justify-content: right;
     display: flex;
-  }
+}
 
-  </style>
+</style>
 
+<script>
+    $(document).ready(function() {
 
-    <form action="/" method="post" novalidate>
-      {{ form.csrf_token }}
+        {% for choice in choices_array %}
+        $('#btn{{ choice }}').on('click', function (e){
+            console.log("clicked {{ choice }}")
+        });
+        {% endfor %}
+
+        $('#suchfeld').select2({  // init Select2 on form's suchfeld field
+            placeholder: "{{ form.suchfeld.label.text }}",
+            allowClear: true,
+            "width": "style"
+        });
+        $('#suchfeld').on('select2:select', function (e) {
+            $('#sumbitAddSuchbegriff').click()
+            return false;
+        });
+    });
+</script>
+
+<form action="/" method="post" novalidate>
+{{ form.csrf_token }}
+    <body>
         <table class="table table-sm asn">
             <thead> 
               <tr>
-                <th>{{ form.eingabe.label }}</th>
-                <!-- <th class="middle">Auswahl</th> -->
-                <th >{{ form.selected.label }}</th>
+                <th>Zutatenauswahl</th>
+
+                <th>Gewählte Zutaten</th>
               </tr>
             </thead>
             <tbody>
@@ -61,14 +82,14 @@
                   {% for i in range(0, form.kategorien|length) %}
                       <div>
                       {% set kategorie = form.kategorien[i] %}
-                          <p><h4><b>{{ kategorie.name }}</b></h4></p>
+                          <p><h4><b>{{ kategorie.name }}</b></h4>
 
                       <!-- Buttons mit allen Zutaten: -->
                       <p>
                       {% for j in range(0, kategorie.zutaten|length) %}
                           {% set zutatname = kategorie.zutaten[j].name %}
                           {% if not zutatname in choices_array %}
-                          <button name="btn{{ zutatname }}" class="btn btn-light btn-lg"> {{ zutatname }} </button>
+                          <button id="btn{{ zutatname }}" name="btn{{ zutatname }}" class="btn btn-light btn-lg" style="margin:5px"> {{ zutatname }} </button>
                           {% endif %}
                       {% endfor %}
                       </p>
@@ -96,32 +117,19 @@
                   </td>
 
                     <!-- Alte AUswahlliste -->
-                  <!-- <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td> -->
+
                 </tr>
 
 
                 <tr>
-                    <!-- ALter AUswahl lösen <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td> -->
+
 
                 </tr>
             </tbody>
         </table>
-    </form>
+    </body>
+</form>
 
-    <script>
-        $(document).ready(function() {
-            $('#suchfeld').select2({  // init Select2 on form's suchfeld field
-                placeholder: "{{ form.suchfeld.label.text }}",
-                allowClear: true,
-                "width": "style"
-            });
-            $('#suchfeld').on('select2:select', function (e) {
-                $('#sumbitAddSuchbegriff').click()
-            return false;
 
-        });
 
-        });
-    </script>
-
-  {% endblock %}
+{% endblock %}
