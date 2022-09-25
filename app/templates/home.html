@@ -1,98 +1,119 @@
 {% extends "base.html" %}
 
+  {% block app_content %}
 
- 
+  <style>
+  .table th.middle {
+      width: 90px;
+  }
+  .table input {
+      margin: 5px 10px;
 
-{% block app_content %}
+  }
+  .table td.eingabe {
+      width: 300px;
+  }
+  .table td.submit {
+      padding: 5px;
+  }
+  .save {
+      margin-left: 10px;
+  }
 
-<style>
-.table th.middle {
-  width: 90px;
-}
-.table input {
-  margin: 5px 10px;
+  .table td.buttons {
+      align-content: center;
+      vertical-align: middle;
+  }
 
-}
-.table td.eingabe {
-  width: 300px;
-}
-.table td.submit {
-  padding: 5px;
-}
-.save {
-  margin-left: 10px;
-}
-
-.table td.buttons {
-  align-content: center;
-  vertical-align: middle;
-}
-
-.right{
+  .right{
     justify-content: right;
     display: flex;
-}
+  }
 
-</style>
+  .zutat{
+    padding: 11px 16px;
+    cursor: pointer;
+    border-width: 1px;
+    border-radius: 0px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 20px;
+    font-weight: 400;
+    -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden !important;
 
-<script>
-    $(document).ready(function() {
+  }
+  .zutat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
 
-        {% for choice in choices_array %}
-        $('#btn{{ choice }}').on('click', function (e){
-            console.log("clicked {{ choice }}")
-        });
-        {% endfor %}
+  .suchen{
+    display:inline-block;
+    color:#1111AA;
+    border:1px solid #1111AA;
+    background:#EEEEFF;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+  }
 
-        $('#suchfeld').select2({  // init Select2 on form's suchfeld field
-            placeholder: "{{ form.suchfeld.label.text }}",
-            allowClear: true,
-            "width": "style"
-        });
-        $('#suchfeld').on('select2:select', function (e) {
-            $('#sumbitAddSuchbegriff').click()
-            return false;
-        });
-    });
-</script>
 
-<form action="/" method="post" novalidate>
-{{ form.csrf_token }}
-    <body>
+  .submitSuchen{
+      visibility: visible;
+  }
+
+  </style>
+
+
+    <form id="home" name="home"  action="/" method="post" novalidate>
+      {{ form.csrf_token }}
+      {{ JSGlue.include() }}
         <table class="table table-sm asn">
-            <thead> 
+            <thead>
               <tr>
-                <th>Zutatenauswahl</th>
-
-                <th>Gewählte Zutaten</th>
+                <th>Alle Zutaten</th>
+                <!-- <th class="middle">Auswahl</th> -->
+                <th>Ausgewählte Zutaten</th>
               </tr>
             </thead>
             <tbody>
 
                 <tr>
                     <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff(style="visibility: hidden;") }}</td>
+                    <td class="align-left"> <div id="altSuche" href="{{ url_for('update_choices_array', jsarray='') }}" class="suchen" onclick="clickedSuchen(event)">Starte Suche</div> </td>
                 </tr>
 
 
                 <tr>
 
+                <!-- KEINE UNTERSTRICHE IN ZUTATNAMEN ODER KATEGORIENAMEN !!!! -->
+
                   <!-- Hier ist Zelle mit verschiedenen Kategorien -->
                   <td width="80%">
                   <!-- <div style="overflow-y:scroll;height:800px"> -->
                   {% for i in range(0, form.kategorien|length) %}
-                      <div>
                       {% set kategorie = form.kategorien[i] %}
+                      <div id="kat{{ kategorie.name | replace(" ", "_") }}">
                           <p><h4><b>{{ kategorie.name }}</b></h4>
 
-                      <!-- Buttons mit allen Zutaten: -->
-                      <p>
-                      {% for j in range(0, kategorie.zutaten|length) %}
-                          {% set zutatname = kategorie.zutaten[j].name %}
-                          {% if not zutatname in choices_array %}
-                          <button id="btn{{ zutatname }}" name="btn{{ zutatname }}" class="btn btn-light btn-lg" style="margin:5px"> {{ zutatname }} </button>
-                          {% endif %}
-                      {% endfor %}
-                      </p>
+                          <!-- Buttons mit allen Zutaten: -->
+                          <div class="row" id="row{{ kategorie.name | replace(" ", "_") }}">
+                          {% for j in range(0, kategorie.zutaten|length) %}
+
+                              {% set zutatname = kategorie.zutaten[j].name %}
+                              {% if not zutatname in choices_array %}
+                              <div id="btn{{ zutatname | replace(" ", "_") }}" onclick="clickedZutat('btn{{ zutatname }}')"
+                                   class="col-md-auto zutat" data-kategorie="{{ kategorie.name | replace(" ", "_") }}"> {{ zutatname }} </div>
+                              {% endif %}
+
+                          {% endfor %}
+                          </div>
 
                       </div>
 
@@ -100,36 +121,104 @@
                   <!-- </div> BEENDET SCROLLLEISTE -->
                   </td>
 
-                  <td>
+
+                  <!-- Hier alle ausgewählten Zutaten reinladen -->
+                  <td id="ausgewZutaten">
                       <table>
                       {% for chosenZutat in choices_array %}
                         <tr>
-                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%; background-color:white" > {{ chosenZutat }} </button></td>
+                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%;
+                                    background-color:white" > {{ chosenZutat }} </button></td>
                         </tr>
                       {% endfor %}
 
-                          <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
-                          {% if choices_array|length != 0 %}
-                          <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg")}}</td></tr>
-                          <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
-                          {% endif %}
+                      <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
+                      {# if choices_array|length != 0 #}
+                          <!-- <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg submitSuchen")}}</td></tr> -->
+                          <tr></tr>
+                      <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
+                      {# endif #}
+
                       </table>
                   </td>
 
-                    <!-- Alte AUswahlliste -->
-
                 </tr>
 
-
-                <tr>
-
-
-                </tr>
             </tbody>
         </table>
-    </body>
-</form>
+    </form>
+
+    <script>
+        const choicesDiv = document.querySelector("#ausgewZutaten");
+
+        function clickedZutat(id) {
+            var btnZutat = document.querySelector("#" + id.replaceAll(" ", "_"))
+            var parentNode = btnZutat.parentNode
+
+            if (parentNode.id.slice(0, 3) == "row"){
+                choicesDiv.appendChild(btnZutat)
+
+            }else if (parentNode.id == "ausgewZutaten"){
+                kategorieDiv = document.querySelector("#row" + btnZutat.dataset.kategorie)
+                kategorieDiv.appendChild(btnZutat)
+            }
+        }
 
 
+        function clickedSuchen(event){
+            zutatenliste = getAusgewZutaten().join("|")
+            if (zutatenliste == ""){
+                location.href = Flask.url_for('rezeptsammlung')
+            }else {
+                location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
+            }
+        }
 
-{% endblock %}
+
+        function getAusgewZutaten(){
+            var arrZutaten = []
+            for (let i = 0; i < choicesDiv.children.length; i++) {
+                var child = choicesDiv.children.item(i)
+
+                // vermeide submitSuchen Button -> nur wenn btn davor steht
+                if (child.id.slice(0, 3) == "btn"){
+                    arrZutaten.push(child.innerText)
+                }
+            }
+
+            return arrZutaten
+        }
+
+
+        $(document).ready(function() {
+
+            $('#suchfeld').on('select2:select', function (e) {
+                var btnZutat = document.querySelector("#btn" + $('#suchfeld').val().replaceAll(" ", "_"))
+                var parentNode = btnZutat.parentNode
+
+                $('#suchfeld').select2("")
+
+                if (parentNode.id.slice(0, 3) == "row") {
+                    choicesDiv.appendChild(btnZutat)
+                }
+
+                return false;
+            });
+
+            {% for zut in form.alleZutaten %}
+            $('btn{{ zut.name }}').on('click',
+                function (){
+                    console.log("pressed {{ zname }}")
+                }
+            )
+            {% endfor %}
+
+            $('#suchfeld').select2({  // init Select2 on form's suchfeld field
+                placeholder: "{{ form.suchfeld.label.text }}",
+                allowClear: true,
+                "width": "style"
+            });
+        });
+    </script>
+
+  {% endblock %}

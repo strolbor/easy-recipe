@@ -30,7 +30,7 @@ class d_felder(FlaskForm):
 
     submitSuchen = SubmitField("Suchen")
     # "Neues" Suchfeld, Script mit Dropdown Menü
-    suchfeld = SelectField("Starte Zutatensuche", choices=[""] + zutatenListe)
+    suchfeld = SelectField("Direktsuche", choices=[""] + zutatenListe)
     sumbitAddSuchbegriff = SubmitField("Hinzufügen")
 
     # Kategorien mit Buttons für Zutaten und Stringfields für Kategorienamen
@@ -38,22 +38,23 @@ class d_felder(FlaskForm):
         """Name der Kategorie und dazugehörige Zutaten"""
         name = ""
         zutaten = []
-
         def __init__(self, _name, _zutaten):
             self.name = _name
             self.zutaten = _zutaten
 
     # Kategorien beinhaltet Objekte der Klasse oben, jeweils ein Stringfield für Name und Array von Submitfields
     kategorien = []
+    alleZutaten = []
 
     for entry in kategorie.query.all():
         kategorieName = entry.name
         kat_zutatsubmits = []
 
-
         for zutats in entry.bkat:
             # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
             kat_zutatsubmits.append(zutat.query.get(zutats.id))
+            alleZutaten.append(zutats)
+
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 
 

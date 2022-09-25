@@ -22,8 +22,16 @@ alleZutaten = []
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
 
-@app.route('/rezeptranking/mit_<path:zNamen>', methods=['GET', 'POST'])
-def rezeptranking(zNamen):
+@app.route('/update_choices_array/<path:jsarray>', methods=['GET', 'POST'])
+def update_choices_array(jsarray):
+    # jsarray ist array mit | abgetrennt
+    global choices_array, globalRezeptRankings
+    choices_array = jsarray.split("|")
+    globalRezeptRankings = globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
+    return redirect(url_for('rezeptranking'))
+
+@app.route('/rezeptranking', methods=['GET', 'POST'])
+def rezeptranking():
     global globalRezeptRankings, choices_array
     form = forms.rezeptranking()
     if request.method == "POST":
@@ -112,7 +120,7 @@ def home():
 
             return render_template(home_html, form=form,choices_array=choices_array)
 
-        elif form.submitSuchen.data:
+        elif 1== 0 and form.submitSuchen.data:
             print("Submit suchen")
             """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
             ausgewZutaten = []
@@ -125,7 +133,7 @@ def home():
 
             choices_array.sort()
             zNamen = [str(choice) for choice in choices_array]
-            return redirect(url_for('rezeptranking', zNamen=",".join(zNamen)))
+            return redirect(url_for('rezeptranking')) #zNamen=",".join(zNamen)))
 
         else:
             #flash("Don't hack this!")
