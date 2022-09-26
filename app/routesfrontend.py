@@ -45,7 +45,7 @@ def rezeptranking():
         elif form.btnSort2.data:
             globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
 
-    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings, form=form)
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings, form=form, )
 
 
 home_html = "home.html"
@@ -101,47 +101,8 @@ def home():
 
         # wenn sonst erster Aufruf
         if erstes:
-            print("first")
             choices_array = []
             updateZutatenlisten()
-
-
-    if form.validate_on_submit():
-        print("validate")
-
-        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
-            # Item soll hinzugefügt werden
-            # Neue ausgewählte Elemente werden kopiert
-            # und hinzugefügt
-            #print(str(form.suchfeld.choices) + " zutaten links übrig")
-            entry = form.suchfeld.data
-            if not choices_array.__contains__(entry):
-                choices_array.append(entry)
-
-            # Neue List wird kopiert in die Liste
-            updateZutatenlisten()
-
-            return render_template(home_html, form=form,choices_array=choices_array)
-
-        elif 1== 0 and form.submitSuchen.data:
-            print("Submit suchen")
-            """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
-            ausgewZutaten = []
-            global globalRezeptRankings
-            for entry in choices_array:
-                ausgewZutaten.append(entry)
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=0)
-
-            updateZutatenlisten()
-
-            choices_array.sort()
-            zNamen = [str(choice) for choice in choices_array]
-            return redirect(url_for('rezeptranking', zutaten=zNamen)) #zNamen=",".join(zNamen)))
-
-        else:
-            #flash("Don't hack this!")
-            pass
-
 
     updateZutatenlisten()
 

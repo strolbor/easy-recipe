@@ -145,13 +145,6 @@
                         </tr>
                       {% endfor %}
 
-                      <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
-                      {# if choices_array|length != 0 #}
-                          <!-- <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg submitSuchen")}}</td></tr> -->
-                          <tr></tr>
-                      <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
-                      {# endif #}
-
                       </table>
                   </td>
 
@@ -164,6 +157,30 @@
     <script>
         const choicesDiv = document.querySelector("#ausgewZutaten");
 
+        function formatUmlautToURL(mitUmlaute){
+            mitUmlaute = mitUmlaute.replaceAll("Ä", "%C3%84")
+            .replaceAll("ä", "%C3%A4")
+            .replaceAll("Ö", "%C3%96")
+            .replaceAll("ö", "%C3%B6")
+            .replaceAll("Ü", "%C3%9C")
+            .replaceAll("ü", "%C3%BC")
+            .replaceAll("ß", "%C3%9F")
+            .replaceAll(" ", "%20")
+            return mitUmlaute
+        }
+        function formatURLToUmlaut(ohneUmlaute){
+            ohneUmlaute = ohneUmlaute.replaceAll("%C3%84", "Ä")
+            .replaceAll("%C3%A4", "ä")
+            .replaceAll("%C3%96", "Ö")
+            .replaceAll("%C3%B6", "ö")
+            .replaceAll("%C3%9C", "Ü")
+            .replaceAll("%C3%BC", "ü")
+            .replaceAll("%C3%9F", "ß")
+            .replaceAll("%20", " ")
+            return ohneUmlaute
+        }
+
+
         function clickedZutat(btnZutat) {
             //var btnZutat = id //document.querySelector("#" + id.replaceAll(" ", "_"))
             console.log(this)
@@ -172,11 +189,15 @@
             if (parentNode.id.slice(0, 3) == "row"){
                 choicesDiv.appendChild(btnZutat)
                 btnZutat.classList.add("gewaehlt")
+                window.location.href = window.location.href + "#"+btnZutat.innerText
 
             }else if (parentNode.id == "ausgewZutaten"){
                 kategorieDiv = document.querySelector("#row" + btnZutat.dataset.kategorie)
                 kategorieDiv.appendChild(btnZutat)
                 btnZutat.classList.remove("gewaehlt")
+
+                console.log(window.location.href.replaceAll("#" + btnZutat.innerText, ""))
+                window.location.href = window.location.href.replaceAll("#" + formatUmlautToURL(btnZutat.innerText), "")
             }
         }
 
@@ -207,7 +228,31 @@
         }
 
 
+        //wenn zurückgesprungen wird, lade Zutaten aus URL wieder rein
+        function ladeAusgewZutaten(){
+            //ohne localhost:5000 als erstes element
+            var zutaten = window.location.href.split("#").slice(1)
+            var bereitsAusgewZutaten = getAusgewZutaten()
+            for (let i = 0; i < zutaten.length; i++) {
+                zut = zutaten[i]
+                if (!bereitsAusgewZutaten.includes( formatUmlautToURL(zut) )){
+                    //versuche Item in URL zu finden
+                    try {
+                        btnZutat = document.querySelector("#btn" + formatURLToUmlaut(zut).replaceAll(" ", "_"))
+                        choicesDiv.appendChild(btnZutat)
+                        btnZutat.classList.add("gewaehlt")
+                    } catch (error) {
+                        console.error(error)
+                        window.location.href = window.location.href.replaceAll("#" + formatUmlautToURL(zut), "")
+                        continue
+                    }
+                }
+            }
+        }
+
+
         $(document).ready(function() {
+            ladeAusgewZutaten()
 
             $('#suchfeld').on('select2:select', function (e) {
                 var btnZutat = document.querySelector("#btn" + $('#suchfeld').val().replaceAll(" ", "_"))
