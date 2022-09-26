@@ -27,17 +27,20 @@ def update_choices_array(jsarray):
     # jsarray ist array mit | abgetrennt
     global choices_array, globalRezeptRankings
     choices_array = jsarray.split("|")
-    globalRezeptRankings = globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
-    return redirect(url_for('rezeptranking'))
+    globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
+    return redirect(url_for('rezeptranking', zutaten=jsarray))
 
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
     global globalRezeptRankings, choices_array
+
+    choices_array = request.args['zutaten'].split('|')
+    #Standard
+    globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
+
     form = forms.rezeptranking()
     if request.method == "POST":
-        if form.btnSort0.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
-        elif form.btnSort1.data:
+        if form.btnSort1.data:
             globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=1)
         elif form.btnSort2.data:
             globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
@@ -133,7 +136,7 @@ def home():
 
             choices_array.sort()
             zNamen = [str(choice) for choice in choices_array]
-            return redirect(url_for('rezeptranking')) #zNamen=",".join(zNamen)))
+            return redirect(url_for('rezeptranking', zutaten=zNamen)) #zNamen=",".join(zNamen)))
 
         else:
             #flash("Don't hack this!")

@@ -31,10 +31,8 @@
   }
 
   .zutat{
-    padding: 11px 16px;
     cursor: pointer;
     border-width: 1px;
-    border-radius: 0px;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
     font-size: 20px;
@@ -43,7 +41,8 @@
     -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
     overflow: hidden !important;
-
+    border-radius: 10;
+    margin: 5px;
   }
   .zutat:hover {
     transform: scale(1.05);
@@ -52,20 +51,34 @@
 
   .suchen{
     display:inline-block;
-    color:#1111AA;
-    border:1px solid #1111AA;
-    background:#EEEEFF;
+    border:1px solid #EEE;
+    background:#EEE;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     cursor:pointer;
     vertical-align:middle;
-    max-width: 100px;
     padding: 5px;
     text-align: center;
+    border-radius: 5;
+    font-size: 20px;
+    float: right;
   }
 
-
-  .submitSuchen{
-      visibility: visible;
+  .gewaehlt{
+    padding: 11px 16px;
+    cursor: pointer;
+    border-width: 1px;
+    border-radius: 10px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 20px;
+    font-weight: 400;
+    -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden !important;
+    color: #0c4128;
+    background-color: #c8eadc;
+    margin: 5px;
   }
 
   </style>
@@ -86,7 +99,7 @@
 
                 <tr>
                     <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff(style="visibility: hidden;") }}</td>
-                    <td class="align-left"> <div id="altSuche" href="{{ url_for('update_choices_array', jsarray='') }}" class="suchen" onclick="clickedSuchen(event)">Starte Suche</div> </td>
+                    <td class="align-left"> <div id="altSuche" href="{{ url_for('update_choices_array', jsarray='') }}" class="suchen" onclick="clickedSuchen(event)">🔎 Passende Rezepte</div> </td>
                 </tr>
 
 
@@ -108,7 +121,7 @@
 
                               {% set zutatname = kategorie.zutaten[j].name %}
                               {% if not zutatname in choices_array %}
-                              <div id="btn{{ zutatname | replace(" ", "_") }}" onclick="clickedZutat('btn{{ zutatname }}')"
+                              <div id="btn{{ zutatname | replace(" ", "_") }}" onclick="clickedZutat(this)"
                                    class="col-md-auto zutat" data-kategorie="{{ kategorie.name | replace(" ", "_") }}"> {{ zutatname }} </div>
                               {% endif %}
 
@@ -151,16 +164,19 @@
     <script>
         const choicesDiv = document.querySelector("#ausgewZutaten");
 
-        function clickedZutat(id) {
-            var btnZutat = document.querySelector("#" + id.replaceAll(" ", "_"))
+        function clickedZutat(btnZutat) {
+            //var btnZutat = id //document.querySelector("#" + id.replaceAll(" ", "_"))
+            console.log(this)
             var parentNode = btnZutat.parentNode
 
             if (parentNode.id.slice(0, 3) == "row"){
                 choicesDiv.appendChild(btnZutat)
+                btnZutat.classList.add("gewaehlt")
 
             }else if (parentNode.id == "ausgewZutaten"){
                 kategorieDiv = document.querySelector("#row" + btnZutat.dataset.kategorie)
                 kategorieDiv.appendChild(btnZutat)
+                btnZutat.classList.remove("gewaehlt")
             }
         }
 
@@ -170,7 +186,8 @@
             if (zutatenliste == ""){
                 location.href = Flask.url_for('rezeptsammlung')
             }else {
-                location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
+                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste})
+                //location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
             }
         }
 
@@ -200,18 +217,11 @@
 
                 if (parentNode.id.slice(0, 3) == "row") {
                     choicesDiv.appendChild(btnZutat)
+                    btnZutat.classList.add("gewaehlt")
                 }
 
                 return false;
             });
-
-            {% for zut in form.alleZutaten %}
-            $('btn{{ zut.name }}').on('click',
-                function (){
-                    console.log("pressed {{ zname }}")
-                }
-            )
-            {% endfor %}
 
             $('#suchfeld').select2({  // init Select2 on form's suchfeld field
                 placeholder: "{{ form.suchfeld.label.text }}",

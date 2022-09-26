@@ -54,11 +54,17 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
     """Trage ZutatIDs die der Nutzer hat zusammen und RezeptIDs von rezepten, die mit jeder Zutat in Frage kommen"""
     for zutatname in zutatnamen:
         zutatid = -1
+
         """finde Zutat-ID zum Zutatenname"""
-        for entry in zutat.query.filter_by(name=zutatname):
-            zutatid = entry.id
-            if not zutatid in zutatIDList:
-                zutatIDList.append(zutatid)
+        matching = zutat.query.filter_by(name=zutatname)
+        """Error Fix, falls es die Zutat nicht gibt"""
+        if matching.count() < 1:
+            continue
+
+        if not matching.first().id in zutatIDList:
+            zutatid = matching[0].id
+            zutatIDList.append(matching[0].id)
+
         """finde Rezepte, die diese Zutat beinhalten"""
         for entry in zutat.query.get(zutatid).rezepte:
             """entry sind Association-Object (siehe rezept.py)"""
@@ -84,9 +90,6 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
                 strTags += f"{tag.name}{', '}"
             strTags = strTags[:-2]
 
-        bewertung=0
-        #TODO: Bewertungsmodus Buttons auf home implementieren und folgende Zeile löschen
-        """Bewertung des Rezeptes je nach ausgewähltem Modus von home-site"""
         '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
         if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
             bewertung = 0 - len(fehlendeZutatenNamen)
