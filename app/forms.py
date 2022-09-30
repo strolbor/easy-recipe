@@ -33,7 +33,7 @@ class d_felder(FlaskForm):
 
     # Kategorien beinhaltet Objekte der Klasse oben, jeweils ein Stringfield für Name und Array von Submitfields
     kategorien = []
-    alleZutaten = []
+    #alleZutaten = []
 
     for entry in kategorie.query.all():
         kategorieName = entry.name
@@ -42,7 +42,7 @@ class d_felder(FlaskForm):
         for zutats in entry.bkat:
             # hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet
             kat_zutatsubmits.append(zutat.query.get(zutats.id))
-            alleZutaten.append(zutats)
+            #alleZutaten.append(zutats)
 
         kategorien.append(homepage_kategorie(kategorieName, kat_zutatsubmits))
 

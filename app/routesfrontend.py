@@ -1,14 +1,13 @@
-from random import random
+import random
 
 from flask import render_template, flash, url_for, request
 from werkzeug.utils import redirect
 
 from app import app, forms
-from app.RezeptRanking import getRezepteByZutatNamen
+from app.RezeptRanking import getRezepteByZutatNamen, getRezepteByZutatIDs
 from app.rezept import zutat, rezept
 from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung
-import logging
-
+import logging, time
 
 
 @app.route('/base')
@@ -35,8 +34,20 @@ def rezeptranking():
     global globalRezeptRankings, choices_array
 
     choices_array = request.args['zutaten'].split('|')
-    #Standard
+    #Mach int-Array draus wegen kompatibilität
+    zutatIDs = list(map(int, request.args['ids'].split('|')))
+
+    # Standard
+    start_time = time.time()
     globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
+    print(f"{time.time() - start_time} s mit Namen gesamt")
+
+    start_time = time.time()
+    testRankings = getRezepteByZutatIDs(zutatids=zutatIDs, bewertungsmodus=0)
+
+    globalRezeptRankings = testRankings
+
+    print(f"{time.time() - start_time} s mit IDs gesamt")
 
     form = forms.rezeptranking()
     if request.method == "POST":
@@ -45,7 +56,7 @@ def rezeptranking():
         elif form.btnSort2.data:
             globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
 
-    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings, form=form, )
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=testRankings, form=form, choices_array=choices_array)
 
 
 home_html = "home.html"
@@ -59,6 +70,7 @@ except Exception as e:
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+
     global choices_array
     form = forms.d_felder()
 
@@ -249,6 +261,11 @@ def rezeptsammlung():
 
 
     #wenn erster Aufruf:
+
+    #genriere iste von zufälligen Rezeptvorschlägen, die Kategorie erfüllen
+    """_veganRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "vegan"))
+    _fleischRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "fleisch"))
+    _einfachRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "einfach"))"""
     veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "vegan"), _name="Vegane Rezepte")
     fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "fleisch"), _name="Rezepte mit Fleisch")
     einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "einfach"), _name="Einfache Rezepte")
@@ -258,5 +275,6 @@ def rezeptsammlung():
         anzRezeptvorschlaege += len(sammlung.rezepte)
 
     form.rezeptnamen.data = ""
+
     return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptsammlungen=rezeptsammlungen,
                            anzRezeptvorschlaege=anzRezeptvorschlaege)

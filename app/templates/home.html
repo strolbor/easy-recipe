@@ -81,8 +81,15 @@
     margin: 5px;
   }
 
-  </style>
+  .katSelect{
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+      /* Column | row */
+    }
 
+  </style>
 
     <form id="home" name="home"  action="/" method="post" novalidate>
       {{ form.csrf_token }}
@@ -98,10 +105,24 @@
             <tbody>
 
                 <tr>
-                    <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff(style="visibility: hidden;") }}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col katSelect">
+                                <select class="form-select" onchange="springZuKategorie(this)" style="font-size: 13px; height: 30px">
+                                    <option value="" disabled selected hidden>Gehe zu Kategorie</option>
+                                    {% for kategorie in form.kategorien %}
+                                        <option value="{{ kategorie.name }}">{{ kategorie.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                Suche eine Zutat: {{ form.suchfeld }}
+                            </div>
+                        </div>
+
+                    </td>
                     <td class="align-left"> <div id="altSuche" href="{{ url_for('update_choices_array', jsarray='') }}" class="suchen" onclick="clickedSuchen(event)">🔎 Passende Rezepte</div> </td>
                 </tr>
-
 
                 <tr>
 
@@ -122,7 +143,8 @@
                               {% set zutatname = kategorie.zutaten[j].name %}
                               {% if not zutatname in choices_array %}
                               <div id="btn{{ zutatname | replace(" ", "_") }}" onclick="clickedZutat(this)"
-                                   class="col-md-auto zutat" data-kategorie="{{ kategorie.name | replace(" ", "_") }}"> {{ zutatname }} </div>
+                                   class="col-md-auto zutat" data-kategorie="{{ kategorie.name | replace(" ", "_") }}"
+                                    data-zid="{{ kategorie.zutaten[j].id }}"> {{ zutatname }} </div>
                               {% endif %}
 
                           {% endfor %}
@@ -156,64 +178,69 @@
 
     <script>
         const choicesDiv = document.querySelector("#ausgewZutaten");
+        const zutatTrenner = '|'
 
         function formatUmlautToURL(mitUmlaute){
-            mitUmlaute = mitUmlaute.replaceAll("Ä", "%C3%84")
-            .replaceAll("ä", "%C3%A4")
-            .replaceAll("Ö", "%C3%96")
-            .replaceAll("ö", "%C3%B6")
-            .replaceAll("Ü", "%C3%9C")
-            .replaceAll("ü", "%C3%BC")
-            .replaceAll("ß", "%C3%9F")
-            .replaceAll(" ", "%20")
-            return mitUmlaute
-        }
-        function formatURLToUmlaut(ohneUmlaute){
-            ohneUmlaute = ohneUmlaute.replaceAll("%C3%84", "Ä")
-            .replaceAll("%C3%A4", "ä")
-            .replaceAll("%C3%96", "Ö")
-            .replaceAll("%C3%B6", "ö")
-            .replaceAll("%C3%9C", "Ü")
-            .replaceAll("%C3%BC", "ü")
-            .replaceAll("%C3%9F", "ß")
-            .replaceAll("%20", " ")
-            return ohneUmlaute
+            return mitUmlaute.replaceAll("Ä", "%C3%84")
+                .replaceAll("ä", "%C3%A4")
+                .replaceAll("Ö", "%C3%96")
+                .replaceAll("ö", "%C3%B6")
+                .replaceAll("Ü", "%C3%9C")
+                .replaceAll("ü", "%C3%BC")
+                .replaceAll("ß", "%C3%9F")
+                .replaceAll(" ", "%20")
         }
 
+        function formatURLToUmlaut(ohneUmlaute){
+            return ohneUmlaute.replaceAll("%C3%84", "Ä")
+                .replaceAll("%C3%A4", "ä")
+                .replaceAll("%C3%96", "Ö")
+                .replaceAll("%C3%B6", "ö")
+                .replaceAll("%C3%9C", "Ü")
+                .replaceAll("%C3%BC", "ü")
+                .replaceAll("%C3%9F", "ß")
+                .replaceAll("%20", " ")
+        }
+
+        function addToURL(zutatname) {
+            location.href = location.href + zutatTrenner + zutatname
+        }
 
         function clickedZutat(btnZutat) {
-            //var btnZutat = id //document.querySelector("#" + id.replaceAll(" ", "_"))
-            console.log(this)
             var parentNode = btnZutat.parentNode
+
+            if (!location.href.includes("#")){
+                location.href += "#"
+            }
 
             if (parentNode.id.slice(0, 3) == "row"){
                 choicesDiv.appendChild(btnZutat)
                 btnZutat.classList.add("gewaehlt")
-                window.location.href = window.location.href + "#"+btnZutat.innerText
+                addToURL(btnZutat.innerText);
 
             }else if (parentNode.id == "ausgewZutaten"){
                 kategorieDiv = document.querySelector("#row" + btnZutat.dataset.kategorie)
                 kategorieDiv.appendChild(btnZutat)
                 btnZutat.classList.remove("gewaehlt")
 
-                console.log(window.location.href.replaceAll("#" + btnZutat.innerText, ""))
-                window.location.href = window.location.href.replaceAll("#" + formatUmlautToURL(btnZutat.innerText), "")
+                location.href = location.href.replaceAll(zutatTrenner + formatUmlautToURL(btnZutat.innerText), "")
             }
         }
 
 
         function clickedSuchen(event){
-            zutatenliste = getAusgewZutaten().join("|")
+            zutatenliste = getAusgewZutatNamen().join("|")
+            zutatenIDliste = getAusgewZutatIDs().join("|")
             if (zutatenliste == ""){
                 location.href = Flask.url_for('rezeptsammlung')
             }else {
-                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste})
+                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste, 'ids' : zutatenIDliste})
                 //location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
             }
         }
 
 
-        function getAusgewZutaten(){
+        function getAusgewZutatNamen(){
             var arrZutaten = []
             for (let i = 0; i < choicesDiv.children.length; i++) {
                 var child = choicesDiv.children.item(i)
@@ -228,11 +255,26 @@
         }
 
 
+        function getAusgewZutatIDs(){
+            var arrZutaten = []
+            for (let i = 0; i < choicesDiv.children.length; i++) {
+                var child = choicesDiv.children.item(i)
+
+                // vermeide submitSuchen Button -> nur wenn btn davor steht
+                if (child.id.slice(0, 3) == "btn"){
+                    arrZutaten.push(child.dataset.zid)
+                }
+            }
+
+            return arrZutaten
+        }
+
+
         //wenn zurückgesprungen wird, lade Zutaten aus URL wieder rein
         function ladeAusgewZutaten(){
             //ohne localhost:5000 als erstes element
-            var zutaten = window.location.href.split("#").slice(1)
-            var bereitsAusgewZutaten = getAusgewZutaten()
+            var zutaten = location.href.split(zutatTrenner).slice(1)
+            var bereitsAusgewZutaten = getAusgewZutatNamen()
             for (let i = 0; i < zutaten.length; i++) {
                 zut = zutaten[i]
                 if (!bereitsAusgewZutaten.includes( formatUmlautToURL(zut) )){
@@ -243,15 +285,24 @@
                         btnZutat.classList.add("gewaehlt")
                     } catch (error) {
                         console.error(error)
-                        window.location.href = window.location.href.replaceAll("#" + formatUmlautToURL(zut), "")
+                        location.href = location.href.replaceAll(zutatTrenner + formatUmlautToURL(zut), "")
                         continue
                     }
                 }
             }
         }
 
+        function springZuKategorie(selectfield){
+            var katName = selectfield.value
+            document.getElementById("kat" + katName.replaceAll(" ", "_")).scrollIntoView()
+        }
 
         $(document).ready(function() {
+
+            if (!location.href.includes("?")){
+                location.href = Flask.url_for('home', {"zutaten" : "#"})
+            }
+
             ladeAusgewZutaten()
 
             $('#suchfeld').on('select2:select', function (e) {
@@ -263,6 +314,7 @@
                 if (parentNode.id.slice(0, 3) == "row") {
                     choicesDiv.appendChild(btnZutat)
                     btnZutat.classList.add("gewaehlt")
+                    addToURL(btnZutat.innerText);
                 }
 
                 return false;

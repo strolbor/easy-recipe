@@ -30,6 +30,12 @@
 
     <div class="row">
         <div class="col">
+            <h5>Passende Rezepte mit <b>{{ choices_array | join(', ') }}</b>:</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
 
         {% set anzRezepte = rezeptRankings|length %}
         {%for i in range(0, anzRezepte) %}

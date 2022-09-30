@@ -1,5 +1,8 @@
+
 import app
 from app.rezept import zutat, rezept, kategorie
+import random
+from sqlalchemy.sql.expression import func
 
 class Rezeptsammlung:
     rid = -1
@@ -11,10 +14,12 @@ class Rezeptsammlung:
     def __init__(self, _rid, _name, _tags, _bild):
         self.rid=_rid
         self.name = _name
+
         r_tags = ""
         for tag in _tags:
-            r_tags += f"{tag.name}, "
+            r_tags += f"{str(tag).replace('Tag','')}, "
         r_tags = r_tags[:-2]
+
         if len(r_tags) > 0:
             self.tags = r_tags
         self.bild = _bild
@@ -74,7 +79,8 @@ def isEinfach(rez):
 """BISHER EIGENSCHAFT vegan, vegetarisch, fleisch, einfach"""
 def getRezeptByEigenschaft(anzahl, eigenschaft):
     passendeRezepte = []
-    for rez in rezept.query.all():
+    alleRez = rezept.query.all()
+    for rez in random.sample( alleRez, len(alleRez)):
         bedingung=False
 
         if eigenschaft=="vegan":
