@@ -21,12 +21,22 @@
         <div class="row">
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-3">
                 <div class="container" style="padding-left: 0px; padding-right: 0px">
-                {%for i in range(0, anz_zutaten) %}
-                <div class="row">
-                    <div class="col"><b> {{ r_zutaten[i].name }} &nbsp; &nbsp;</b> </div>
-                    <div class="col"> {{ r_zutaten[i].menge }} {{ r_zutaten[i].einheit }} </div>
-                </div>
-                {%endfor%}
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn-primary btn-sm">
+                                🗒️Einkaufsliste
+                            </button>
+                        </div>
+                    </div>
+                    {%for i in range(0, anz_zutaten) %}
+                    <div class="row">
+                        {% if not r_zutaten[i].verfuegbar == "" %}
+                        <div class="col"><b> {{ r_zutaten[i].verfuegbar }} &nbsp; &nbsp;</b> </div>
+                        {% endif %}
+                        <div class="col"><b> {{ r_zutaten[i].name }} &nbsp; &nbsp;</b> </div>
+                        <div class="col"> {{ r_zutaten[i].menge }} {{ r_zutaten[i].einheit }} </div>
+                    </div>
+                    {%endfor%}
                 </div>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-9">

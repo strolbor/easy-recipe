@@ -41,7 +41,7 @@
     -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
     overflow: hidden !important;
-    border-radius: 10;
+    border-radius: 10px;
     margin: 5px;
   }
   .zutat:hover {
@@ -58,7 +58,7 @@
     vertical-align:middle;
     padding: 5px;
     text-align: center;
-    border-radius: 5;
+    border-radius: 5px;
     font-size: 20px;
     float: right;
   }
@@ -286,7 +286,6 @@
                     } catch (error) {
                         console.error(error)
                         location.href = location.href.replaceAll(zutatTrenner + formatUmlautToURL(zut), "")
-                        continue
                     }
                 }
             }
