@@ -77,7 +77,6 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
             if not entry.rid in rezeptIDList:
                 rezeptIDList.append(entry.rid)
 
-    print(f"{time.time() - start_time} s mit Namen Datenbankzugriffszeit")
 
     """Rückgabewert: diese Liste, wird von rezeptanzeige.html interpretiert und genutzt"""
     rezeptRankings = []
@@ -126,19 +125,20 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
 
 
 
-def getRezepteByZutatIDs(zutatids, bewertungsmodus):
+def getRezepteByZutatIDs(ausgewZutaten, bewertungsmodus):
     """speichere Zutaten und mögliche Rezepte ab"""
     """Trage ZutatIDs die der Nutzer hat zusammen und RezeptIDs von rezepten, die mit jeder Zutat in Frage kommen"""
 
-    start_time = time.time()
+    zutatids = []
+    zutaten = zutat.query.filter(zutat.name.in_(ausgewZutaten))
+    for zut in zutaten:
+        zutatids.append(zut.id)
 
     #SELECT * from Association, rezept WHERE Association.zid IN [zutatids] AND Association.rid = rezept.id
 
-    assoc_items = Association.query.filter(Association.zid.in_(zutatids)).join(rezept)
+    assoc_items = Association.query.filter(Association.zid.in_(zutatids))
     rezeptIDList = (item.rid for item in assoc_items)
     passendeRezepte = rezept.query.filter(rezept.id.in_(rezeptIDList))
-
-    print(f"{time.time() - start_time} s mit IDs Datenbankzugriffszeit")
 
 
     """Rückgabewert: diese Liste, wird von rezeptanzeige.html interpretiert und genutzt"""

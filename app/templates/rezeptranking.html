@@ -19,6 +19,7 @@
 
 <form name="rezeptranking" id="rezeptranking" method="POST">
 {{ form.csrf_token }}
+{{ JSGlue.include() }}
 
     <div class="row">
         <div class="col" align="right">
@@ -42,7 +43,7 @@
             {% if i < anzRezepte %}
                     {% set cardwidth = "24rem" %}
                     {% set cardheight = 36 %}
-                    <a href="{{ url_for('rezeptanzeige', ids=rezeptRankings[i].rid, )}}">
+                    <a href="" onclick="getRezeptURL({{ rezeptRankings[i].rid }}, this)">
                     <div class="card col" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
                         <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
                         {%set bodyheight = cardheight / 5 * 3 %}
@@ -63,4 +64,13 @@
     </div>
 
 </form>
+
+<script>
+    function getRezeptURL(id, objekt){
+        var vorhZutaten = location.href.split("zutaten=")[1]
+        var rez_url = Flask.url_for('rezeptanzeige', {'id' : id, 'zutaten' : vorhZutaten})
+        objekt.setAttribute("href", rez_url)
+    }
+
+</script>
 {% endblock %}

@@ -230,11 +230,11 @@
 
         function clickedSuchen(event){
             zutatenliste = getAusgewZutatNamen().join("|")
-            zutatenIDliste = getAusgewZutatIDs().join("|")
+            //zutatenIDliste = getAusgewZutatIDs().join("|")
             if (zutatenliste == ""){
                 location.href = Flask.url_for('rezeptsammlung')
             }else {
-                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste, 'ids' : zutatenIDliste})
+                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste})
                 //location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
             }
         }

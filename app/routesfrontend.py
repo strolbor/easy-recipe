@@ -1,6 +1,7 @@
+import pathlib
 import random
 
-from flask import render_template, flash, url_for, request
+from flask import render_template, flash, url_for, request, send_file
 from werkzeug.utils import redirect
 
 from app import app, forms
@@ -31,32 +32,21 @@ def update_choices_array(jsarray):
 
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
-    global globalRezeptRankings, choices_array
 
-    choices_array = request.args['zutaten'].split('|')
+    ausgewZutaten = request.args['zutaten'].split('|')
     #Mach int-Array draus wegen kompatibilität
-    zutatIDs = list(map(int, request.args['ids'].split('|')))
+    #zutatIDs = list(map(int, request.args['ids'].split('|')))
 
-    # Standard
-    start_time = time.time()
-    globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
-    print(f"{time.time() - start_time} s mit Namen gesamt")
-
-    start_time = time.time()
-    testRankings = getRezepteByZutatIDs(zutatids=zutatIDs, bewertungsmodus=0)
-
-    globalRezeptRankings = testRankings
-
-    print(f"{time.time() - start_time} s mit IDs gesamt")
+    testRankings = getRezepteByZutatIDs(ausgewZutaten=ausgewZutaten, bewertungsmodus=0)
 
     form = forms.rezeptranking()
     if request.method == "POST":
         if form.btnSort1.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=1)
+            testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=1)
         elif form.btnSort2.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
+            testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=2)
 
-    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=testRankings, form=form, choices_array=choices_array)
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=testRankings, form=form, choices_array=ausgewZutaten)
 
 
 home_html = "home.html"
@@ -121,10 +111,12 @@ def home():
     return render_template(home_html, form=form,choices_array=choices_array)
 
 
-@app.route('/rezept/<ids>/', methods=['GET', 'POST'])
-def rezeptanzeige(ids):
+@app.route('/rezept', methods=['GET', 'POST'])
+def rezeptanzeige():
+    id = request.args['id']
+    zutaten = request.args['zutaten'].split('|')
     form = forms.rezeptanzeige()
-    thisrezept = rezept.query.get(ids)
+    thisrezept = rezept.query.get(id)
     #print(thisrezept.zutaten)
 
     class r_zutat:
@@ -137,7 +129,7 @@ def rezeptanzeige(ids):
             self.name = _name
             self.einheit = _einheit
             self.menge = _menge
-            if _name in choices_array:
+            if _name in zutaten:
                 self.verfuegbar = "✅"
 
 
@@ -278,3 +270,22 @@ def rezeptsammlung():
 
     return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptsammlungen=rezeptsammlungen,
                            anzRezeptvorschlaege=anzRezeptvorschlaege)
+
+@app.route('/einkaufliste', methods=['GET', 'POST'])
+def einkaufliste():
+    zutaten = request.args['zutaten'].split('|')
+    rezeptname = request.args['rezeptname']
+
+    print(f"zutatarray in py  {zutaten}")
+    temp = f"einkaufliste{random.randint(0, 1000)}"
+    filepath = pathlib.Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
+
+    txtZutatenliste = open(filepath, 'w')
+
+    txtZutatenliste.write("\n".join([f"Einkaufzettel für {rezeptname}:", ""] + zutaten))
+
+    txtZutatenliste.close()
+
+    print(f"current path {filepath}")
+    return send_file(filepath, as_attachment=True)
+

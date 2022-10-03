@@ -1,46 +1,59 @@
 {% extends "base.html" %}
 
 {% block app_content %}
+    {{ JSGlue.include() }}
+
     <h3>{{titlet}}</h3>
     <style>
         .a {
             color: white;
         }
-        
+        .einkaufliste{
+            cursor: pointer;
+            border-width: 1px;
+            border-radius: 10px;
+            border-color: #0033B3;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            font-weight: 400;
+            overflow: hidden !important;
+            margin: 5px;
+        }
     </style>
 
     <form action="/" method="post" novalidate>
+
         <div class="row">
             <div class="col">
                 <img src="/ctl/download/{{rezept.bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
-                <h5>{{ rezept.name }}</h5>
+                <h5 id="head_rezeptname">{{ rezept.name }}</h5>
                 <i >{{ r_tags }}</i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div id="einkaufliste" onclick="getEinkaufliste(this)" class="einkaufliste">
+                    🗒️Einkaufsliste
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-3">
-                <div class="container" style="padding-left: 0px; padding-right: 0px">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn-primary btn-sm">
-                                🗒️Einkaufsliste
-                            </button>
-                        </div>
-                    </div>
+                <div class="container" id="zutatcontainer" style="padding-left: 0px; padding-right: 0px">
                     {%for i in range(0, anz_zutaten) %}
+
                     <div class="row">
                         {% if not r_zutaten[i].verfuegbar == "" %}
-                        <div class="col"><b> {{ r_zutaten[i].verfuegbar }} &nbsp; &nbsp;</b> </div>
+                        <div class="col-1"><b> {{ r_zutaten[i].verfuegbar }}</b> </div>
                         {% endif %}
-                        <div class="col"><b> {{ r_zutaten[i].name }} &nbsp; &nbsp;</b> </div>
-                        <div class="col"> {{ r_zutaten[i].menge }} {{ r_zutaten[i].einheit }} </div>
+                        <div class="col-7" id="name{{ i }}"><b> {{ r_zutaten[i].name }}</b> </div>
+                        <div class="col-4"> {{ r_zutaten[i].menge }} {{ r_zutaten[i].einheit }} </div>
                     </div>
                     {%endfor%}
                 </div>
             </div>
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-9">
-                <p></p>
                 {%for i in range(0, anz_handl) %}
                     <p>{{ r_handl[i] }}</p>
                 {%endfor%}
@@ -49,5 +62,52 @@
 
 
     </form>
+
+
+    <script>
+
+        function arrayRemove(arr, value) {
+            for( var i = 0; i < arr.length; i++){
+
+                if ( arr[i] === value) {
+                    arr.splice(i, 1);
+                    i--;
+                }
+            }
+            return arr
+        }
+
+        function getEinkaufliste(button){
+            const queryString = window.location.search
+            const urlParams = new URLSearchParams(queryString)
+            const vorhZutaten = urlParams.get('zutaten').split("|")
+
+            var zutatenliste = []
+            var anzZutaten = document.getElementById("zutatcontainer").children.length
+            for (let i = 0; i < anzZutaten; i++) {
+                zut = document.getElementById("name" + i).innerText
+                zutatenliste.push(zut)
+            }
+
+            var arrFehlZutaten = zutatenliste
+
+            for (let i = 0; i < vorhZutaten.length; i++) {
+                zut = vorhZutaten[i]
+                arrFehlZutaten = arrayRemove(arrFehlZutaten, zut)
+            }
+
+            var fehlZutaten = ""
+            for (let i = 0; i < arrFehlZutaten.length; i++) {
+                zut = arrFehlZutaten[i]
+                fehlZutaten += zut + "|"
+            }
+            fehlZutaten = fehlZutaten.slice(0, -1)
+
+            var rezeptname = document.getElementById("head_rezeptname").innerText
+
+            location.href = Flask.url_for('einkaufliste', {'zutaten' : fehlZutaten, 'rezeptname' : rezeptname})
+        }
+
+    </script>
 
 {% endblock %}
