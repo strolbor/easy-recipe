@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "rezeptsortierungen.html" %}
 
-{% block app_content %}
+{% block card_content %}
 
 <style>
     .card:hover{
@@ -44,34 +44,6 @@
 {% set cardheight = 24 %}
 
 
-
-  {% block _navbar %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#_navbarToggler"
-        aria-controls="_navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>&nbsp; Filter
-      </button>
-      <div class="collapse navbar-collapse" id="_navbarToggler">
-        <span class="navbar-text">Finde Rezepte: </span>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item" style="width:200px">
-            <a class="nav-link" >{{form.rezeptkategorien}}</a>
-          </li>
-          <li class="nav-item" style="width:200px">
-            <a class="nav-link" >{{form.maxZutaten}}</a>
-          </li>
-          <li class="nav-item" style="width:150px; horiz-align: right">
-            <a class="nav-link" >{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</a>
-          </li>
-        </ul>
-          <span style="width: 350px">
-              {{form.rezeptnamen}}
-          </span>
-      </div>
-
-  </nav>
-  {% endblock %}
 
 <!-- Rezeptvorschläge: -->
 

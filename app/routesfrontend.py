@@ -7,7 +7,7 @@ from werkzeug.utils import redirect
 from app import app, forms
 from app.RezeptRanking import getRezepteByZutatNamen, getRezepteByZutatIDs
 from app.rezept import zutat, rezept
-from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung
+from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung, isVegan, isVegetarisch, isEinfach, isFleisch
 import logging, time
 
 
@@ -22,13 +22,6 @@ alleZutaten = []
 #TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable
 globalRezeptRankings = []
 
-@app.route('/update_choices_array/<path:jsarray>', methods=['GET', 'POST'])
-def update_choices_array(jsarray):
-    # jsarray ist array mit | abgetrennt
-    global choices_array, globalRezeptRankings
-    choices_array = jsarray.split("|")
-    globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
-    return redirect(url_for('rezeptranking', zutaten=jsarray))
 
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
@@ -45,6 +38,44 @@ def rezeptranking():
             testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=1)
         elif form.btnSort2.data:
             testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=2)
+
+        rezeptSuchbegriff = form.rezeptnamen.data
+
+        if form.btnSuchen.data:
+            if rezeptSuchbegriff != "":
+                passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
+                form.rezeptnamen.data = ""
+                return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+
+            if form.rezeptkategorien.data:
+                # EIgenschaft aus [vegan, vegetarisch, einfach, fleisch]
+                eigenschaft = form.rezeptkategorien.data.lower()
+
+                for ranking in testRankings.copy():
+                    rez = rezept.query.get(ranking.rid)
+
+                    bedingung = True
+                    if eigenschaft == "vegan":
+                        bedingung = isVegan(rez)
+                    elif eigenschaft == "vegetarisch":
+                        bedingung = isVegetarisch(rez)
+                    elif eigenschaft == "fleisch":
+                        bedingung = isFleisch(rez)
+                    elif eigenschaft == "einfach":
+                        bedingung = isEinfach(rez)
+
+                    if not bedingung:
+                        testRankings.remove(ranking)
+
+            if form.maxZutaten.data:
+                maxZutaten = int(form.maxZutaten.data)
+
+                for ranking in testRankings.copy():
+                    rez = rezept.query.get(ranking.rid)
+
+                    if len(rez.zutaten) > maxZutaten:
+                        testRankings.remove(ranking)
+
 
     return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=testRankings, form=form, choices_array=ausgewZutaten)
 
