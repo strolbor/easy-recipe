@@ -8,7 +8,7 @@ class Rezeptsammlung:
     rid = -1
     name = ""
     """speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird"""
-    tags = "Keine Tags"
+    tags = ""
     bild = ""
 
     def __init__(self, _rid, _name, _tags, _bild):
