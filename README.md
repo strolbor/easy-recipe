@@ -1,8 +1,4 @@
 # Easy Recipe
 
-{% extends "adminbase.html" %}
 
-
-{% block app_content %}
-
-{% endblock %}
+pip install -r reqierements.txt

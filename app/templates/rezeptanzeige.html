@@ -8,6 +8,7 @@
         .a {
             color: white;
         }
+
         .einkaufliste{
             cursor: pointer;
             border-width: 1px;
@@ -19,6 +20,36 @@
             overflow: hidden !important;
             margin: 5px;
         }
+
+        .handlungsschritt{
+            cursor: pointer;
+            border-width: 1px;
+            font-size: 20px;
+            font-weight: 400;
+            overflow: hidden !important;
+            border-radius: 10px;
+            margin: 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,.06), 0 4px 8px rgba(0,0,0,.03);
+
+        }
+
+        .handlungsschritt:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+
+        }
+
+        .geschafft{
+            cursor: pointer;
+            border-width: 1px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 400;
+            color: #0c4128;
+            background-color: #c8eadc;
+            margin: 5px;
+        }
+
+
     </style>
 
     <form action="/" method="post" novalidate>
@@ -26,7 +57,7 @@
         <div class="row">
             <div class="col">
                 <img src="/ctl/download/{{rezept.bild}}" class="card-img-top" alt="Kein Bild" style="width: 31rem;">
-                <h5 id="head_rezeptname">{{ rezept.name }}</h5>
+                <h4 id="head_rezeptname">{{ rezept.name }}</h4>
                 <i >{{ r_tags }}</i>
             </div>
         </div>
@@ -39,10 +70,10 @@
         </div>
 
         <div class="row">
+
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-3">
                 <div class="container" id="zutatcontainer" style="padding-left: 0px; padding-right: 0px">
                     {%for i in range(0, anz_zutaten) %}
-
                     <div class="row">
                         {% if not r_zutaten[i].verfuegbar == "" %}
                         <div class="col-1"><b> {{ r_zutaten[i].verfuegbar }}</b> </div>
@@ -53,13 +84,23 @@
                     {%endfor%}
                 </div>
             </div>
+
             <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-9">
                 {%for i in range(0, anz_handl) %}
-                    <p>{{ r_handl[i] }}</p>
+                <div class="row">
+                    <div class="col handlungsschritt" id="hs{{ i }}" onclick="clicked_hs(this)">
+                        {{ r_handl[i] }}
+                    </div>
+                </div>
                 {%endfor%}
-            </div>
-      </div>
 
+                <!-- Hier Feld für Notizen -->
+                <p>
+                <p><h5>✏ Notizen & Anmerkungen</h5>
+                <p><textarea rows="5" style="width: 100%"></textarea>
+            </div>
+
+        </div>
 
     </form>
 
@@ -107,6 +148,16 @@
 
             location.href = Flask.url_for('einkaufliste', {'zutaten' : fehlZutaten, 'rezeptname' : rezeptname})
         }
+
+
+        function clicked_hs(item){
+            if( !item.classList.contains("geschafft") ){
+                item.classList.add("geschafft")
+            }else{
+                item.classList.remove("geschafft")
+            }
+        }
+
 
     </script>
 

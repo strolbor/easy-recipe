@@ -1,4 +1,5 @@
-import pathlib
+import os.path
+from pathlib import Path
 import random
 
 from flask import render_template, flash, url_for, request, send_file
@@ -180,10 +181,25 @@ def rezeptanzeige():
         r_z = r_zutat(_name=zname, _einheit=zeineit, _menge=zmenge)
         r_zutaten.append(r_z)
 
+
     r_handl = []
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
 
+
+    """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
+    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+    txtHandl = open(rezPath / "handlungsschritte.txt", "r")
+    arr_hs = []
+    for line in txtHandl.readlines():
+        arr_hs.append(line.replace("\n", ""))
+
+    for line in arr_hs:
+        print(line)
+
+
+    # war vorher r_handl statt arr_hs
+    r_handl = arr_hs
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
 
@@ -309,7 +325,7 @@ def einkaufliste():
 
     print(f"zutatarray in py  {zutaten}")
     temp = f"einkaufliste{random.randint(0, 1000)}"
-    filepath = pathlib.Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
+    filepath = Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
 
     txtZutatenliste = open(filepath, 'w')
 
