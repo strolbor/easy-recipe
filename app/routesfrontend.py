@@ -5,9 +5,9 @@ import random
 from flask import render_template, flash, url_for, request, send_file
 from werkzeug.utils import redirect
 
-from app import app, forms
+from app import app, forms, db
 from app.RezeptRanking import getRezepteByZutatNamen, getRezepteByZutatIDs
-from app.rezept import zutat, rezept, tags
+from app.rezept import zutat, rezept, tags, Association
 from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung, isVegan, isVegetarisch, isEinfach, isFleisch
 import logging, time
 
@@ -93,7 +93,7 @@ except Exception as e:
 @app.route('/', methods=['GET', 'POST'])
 def home():
 
-    alleTags = []
+    """alleTags = []
     alleTagNamen = []
     for rez in rezept.query.all():
         for tag in rez.tags:
@@ -105,11 +105,12 @@ def home():
         vorkommen = alleTags.count(tag)
         print(f"{tag} ist {vorkommen} mal")
 
-    deltags = [64, 65, 66, 67, 20]
+    deltags = [64, 65, 66, 67, 20]"""
 
+
+    form = forms.d_felder()
 
     global choices_array
-    form = forms.d_felder()
 
     global alleZutaten
 
@@ -202,6 +203,7 @@ def rezeptanzeige():
         r_handl.append(handlungsschritt.hatid.text)
 
 
+
     """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
     rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
     txtHandl = open(rezPath / "handlungsschritte.txt", "r")
@@ -209,14 +211,24 @@ def rezeptanzeige():
     for line in txtHandl.readlines():
         arr_hs.append(line.replace("\n", ""))
 
-    for line in arr_hs:
-        print(line)
-
-
     # war vorher r_handl statt arr_hs
     r_handl = arr_hs
+
+
+    """ersetze Zutaten temporär mit Daten aus Webscraper, EINKAUFLISTE HAUT DANN NICHT GANZ HIN"""
+    txtZutaten = open(Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name / "zutaten.txt")
+    arrZutaten =[]
+    for line in txtZutaten.readlines():
+        zname = line.strip().split("|")[1]
+        menge = line.strip().split("|")[0]
+        arrZutaten.append(r_zutat(zname, "", menge))
+
+
+    """IN ORIGINAL NIMM r_zutaten statt arrZutaten"""
+    r_zutaten = arrZutaten
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
+
 
 @app.route('/rezeptsammlung/<path:ids>', methods=['GET', 'POST'])
 def rezeptsammlung_id(ids):
@@ -256,6 +268,18 @@ def rezeptsammlung_id(ids):
     r_handl = []
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
+
+
+    """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
+    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+    txtHandl = open(rezPath / "handlungsschritte.txt", "r")
+    arr_hs = []
+    for line in txtHandl.readlines():
+        arr_hs.append(line.replace("\n", ""))
+
+
+    # war vorher r_handl statt arr_hs
+    r_handl = arr_hs
 
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
