@@ -27,6 +27,8 @@ write(fileWriter,"# -*- coding: ISO8859 -*-")
 write(fileWriter,"from app import db")
 write(fileWriter,"import sqlalchemy")
 write(fileWriter,"from app.rezept import Association,AssociationRHhat,handlungsschritt, rezept, zutat,tags\n")
+write(fileWriter, "AssociationRHhat.query.delete()")
+write(fileWriter, "handlungsschritt.query.delete()")
 
 
 #ldir = ["Bauerntopf"]
@@ -38,14 +40,16 @@ for rezeptentry in ldir:
     inputfile = codecs.open(os.path.join(path2,rezeptentry,"handlungsschritte.txt"),"r")
     pos = 0
     array = inputfile.readlines()
-    #print(array)
+    
     try:
         array.remove('\r\n')
         array.remove('\n')
+        array.remove('')
     except ValueError:
         pass
     arr2 = []
     for line in array:
+        line = line.strip()
         line = line.replace("\n","")
         line = line.replace("\r","")
         line = line.replace('"',"")#
@@ -54,25 +58,26 @@ for rezeptentry in ldir:
         line= line.replace("ü","ue")
         line= line.replace("ä","ae")
         line= line.replace("ö","oe")
-        arr2.append(line)
+        if len(line) != 0:
+            arr2.append(line)
     pos +=1
-    #print(arr2)
-    line = ' '.join(arr2)
-    
-    print(line)
-   
+    #print(arr2)   
     # Objekt erstellen
-    write(fileWriter,f"handob = handlungsschritt(text=\"{line}\")")
-    write(fileWriter,"db.session.add(handob)")
-    write(fileWriter,"db.session.commit()")
-    
-    write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
-    write(fileWriter,f"assoc = AssociationRHhat(position=1)")
-    write(fileWriter,"assoc.hatid = handob")
-    write(fileWriter,"with db.session.no_autoflush:")
-    write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
-    write(fileWriter,"db.session.commit()\n")
-    fileWriter.flush()
+    pos = 1
+    for entry2 in arr2:
+        #print(entry2)
+        write(fileWriter, f"handob = handlungsschritt(text=\"{entry2}\")")
+        write(fileWriter,"db.session.add(handob)")
+        write(fileWriter,"db.session.commit()")
+        
+        write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
+        write(fileWriter,f"assoc = AssociationRHhat(position={pos})")
+        write(fileWriter,"assoc.hatid = handob")
+        write(fileWriter,"with db.session.no_autoflush:")
+        write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
+        write(fileWriter,"db.session.commit()\n")
+        pos +=1
+        fileWriter.flush()
     inputfile.close()
 
 # Closer
