@@ -3,6 +3,10 @@ import pathlib
 from app.rezept import rezept,tags
 import codecs
 
+#
+## Mithilfe diesen Hilfskript werden den Rezepten ihre Tags gegeben.
+#
+
 path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"webscraper","Rezepte") 
 ldir = os.listdir(path2)

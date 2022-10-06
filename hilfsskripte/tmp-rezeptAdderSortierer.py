@@ -1,6 +1,5 @@
 import os
 import pathlib
-from Levenshtein import distance
 
 def zutatAehnlich(zutat1: str, zutat2: str):
     zutat1 = zutat1.split(",")[0]

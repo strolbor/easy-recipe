@@ -8,6 +8,10 @@ from app.rezept import rezept,tags, handlungsschritt,AssociationRHhat
 from app import db
 import codecs
 
+#
+## Mithilfe diesen Skriptes werden Die Verknüpfung zwischen Rezept und Handlungsschritte erstellt.
+#
+
 #Predefined Fkt
 def write(file,eintrag):
     file.write(eintrag+"\n")
@@ -45,7 +49,7 @@ for rezeptentry in ldir:
         line = line.replace("\n","")
         line = line.replace("\r","")
         line = line.replace('"',"")#
-        line = line.replace('�',"�")
+        line = line.replace('�',"�")
         line= line.replace("ß","ss")
         line= line.replace("ü","ue")
         line= line.replace("ä","ae")
