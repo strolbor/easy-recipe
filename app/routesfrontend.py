@@ -177,8 +177,9 @@ def rezeptanzeige():
             self.name = _name
             self.einheit = _einheit
             self.menge = _menge
-            if _name in zutaten:
-                self.verfuegbar = "✅"
+            for zut in zutaten:
+                if _name in zut:
+                    self.verfuegbar = "✅"
 
 
     r_tags = ""
