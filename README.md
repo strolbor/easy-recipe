@@ -1,6 +1,11 @@
 # Easy Recipe
 
-Easy Recipe ist eine Reverse-Rezeptsuchmaschine, bei der man die Rezepte anhand der Zutaten suchen kann.
+Auf der Homepage gibt der Nutzer Zutaten ein, die er gerade im Kühlschrank oder Gewürzregal zur Verfügung hat. 
+Aus diesen Zutaten wird in der Datenbank nach passenden Rezepten gesucht.
+Diese Rezepte werden geordnet auf der Folgeseite angezeigt.
+Der Nutzer kann auch Rezepte durchstöbern, ohne vorher Zutaten einzugeben. 
+Außerdem kann nach Eigenschaften von Rezepten gefiltert werden, wie zum Beispiel vegan, vegetarisch, mit Fleisch oder einfache Rezepte.
+
 
 
 ## Datenbank
@@ -19,7 +24,15 @@ Wichtige Erweiterungen.
   * 
 
 ## Programm starten
-Mithilfe von *python easy-recipe.py* für die Entwicklung bzw. mit einen Production-WSGI Server, wie gunicorn.
+Installation der benötigten Packages: 
+- venv/Scripts/pip.exe install -r requirements.txt
+
+Starten der Anwendung: 
+- venv/Scripts/python.exe -m flask run
+- python easy-recipe.py
+
+Production-WSGI Server:
+gunicorn easy-recipe:app/
 
 ## Umwanldungsskripte
 ### Kategorie-ersteller.py
