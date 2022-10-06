@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<style>
+    .card:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+        height: auto;
+        z-index: 1;
+        position:relative;
+    }
+    .card:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        height: 5em;
+        width: 100%;
+        background: linear-gradient(0deg, white, transparent);
+        background-image: -webkit-linear-gradient(bottom, white, transparent);
+    }
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        color: inherit;
+    }
+
+
+</style>
+
+
+<script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous">
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+
+<form name="rezeptsammlung" id="rezeptsammlung" method="POST">
+{{ form.csrf_token }}
+
+{% set cardwidth = "18rem" %}
+{% set cardheight = 24 %}
+
+
+
+  {% block _navbar %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#_navbarToggler"
+        aria-controls="_navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>&nbsp; Filter
+      </button>
+      <div class="collapse navbar-collapse" id="_navbarToggler">
+        <span class="navbar-text">Finde Rezepte: </span>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" style="width:200px">
+            <a class="nav-link" >{{form.rezeptkategorien}}</a>
+          </li>
+          <li class="nav-item" style="width:200px">
+            <a class="nav-link" >{{form.maxZutaten}}</a>
+          </li>
+          <li class="nav-item" style="width:150px; horiz-align: right">
+            <a class="nav-link" >{{form.btnSuchen(class="btn btn-light btn-sm", style="align:right")}}</a>
+          </li>
+        </ul>
+          <span style="width: 350px">
+              {{form.rezeptnamen}}
+          </span>
+      </div>
+
+  </nav>
+  {% endblock %}
+
+
+    {% block card_content %}
+
+    {% endblock %}
+
+</form>
+
+
+
+{% endblock %}

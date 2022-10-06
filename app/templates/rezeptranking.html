@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "rezeptsortierungen.html" %}
 
-{% block app_content %}
+{% block card_content %}
 
 <style>
     .card:hover{
@@ -17,10 +17,12 @@
 
 </style>
 
-<form name="add_rezept" id="add_rezept" method="POST">
-{{ form.csrf_token }}
 
-<div class="container">
+
+<form name="rezeptranking" id="rezeptranking" method="POST">
+{{ form.csrf_token }}
+{{ JSGlue.include() }}
+
     <div class="row">
         <div class="col" align="right">
             {{form.btnSort1(class="btn btn-light btn-sm")}}
@@ -31,16 +33,22 @@
 
     <div class="row">
         <div class="col">
+            <h5>Passende Rezepte mit <b>{{ choices_array | join(', ') }}</b>:</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
 
         {% set anzRezepte = rezeptRankings|length %}
         {%for i in range(0, anzRezepte) %}
             {% if i < anzRezepte %}
                     {% set cardwidth = "24rem" %}
-                    {% set cardheight = 32 %}
-                    <a href="{{ url_for('rezeptanzeige',ids=rezeptRankings[i].rid)}}">
+                    {% set cardheight = 36 %}
+                    <a href="" onclick="getRezeptURL({{ rezeptRankings[i].rid }}, this)">
                     <div class="card col" style="width: {{cardwidth}}; height: {{cardheight}}rem; float:left; margin:10px; border:none;">
                         <img src="/ctl/download/{{rezeptRankings[i].bild}}" class="card-img-top" alt="Kein Bild" style="width: {{cardwidth}};">
-                        {%set bodyheight = cardheight / 5 * 2 %}
+                        {%set bodyheight = cardheight / 5 * 3 %}
                         <div class="card-body" style="overflow-y:scroll;height:{{bodyheight}}rem">
                             <h5 class="card-title">{{ rezeptRankings[i].name }}</h5>
                             <i class="card-text">{{ rezeptRankings[i].tags }}</i>
@@ -56,7 +64,41 @@
 
         </div>
     </div>
-</div>
 
 </form>
+
+<script>
+    function getRezeptURL(id, objekt){
+        var vorhZutaten = location.href.split("zutaten=")[1]
+        var rez_url = Flask.url_for('rezeptanzeige', {'id' : id, 'zutaten' : vorhZutaten})
+        objekt.setAttribute("href", rez_url)
+    }
+
+
+    $(document).ready(function() {
+        console.log("test1");
+        $('#rezeptnamen').select2({  // init Select2 on form's rezeptnamen field
+            placeholder: "{{ form.rezeptnamen.label.text }}",
+            allowClear: true,
+            "width": "90%"
+        });
+        $('#rezeptnamen').on('select2:select', function (e) {
+            console.log("selected2")
+            $('#btnSuchen').click()
+            return false;
+
+        });
+        $('#rezeptkategorien').select2({
+            placeholder: "{{ form.rezeptkategorien.label.text }}",
+            allowClear: true,
+            "width": "90%"
+        });
+        $('#maxZutaten').select2({
+            placeholder: "{{ form.maxZutaten.label.text }}",
+            allowClear: true,
+            "width": "90%"
+        });
+    });
+
+</script>
 {% endblock %}

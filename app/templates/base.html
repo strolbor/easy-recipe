@@ -12,6 +12,7 @@
 
   <!-- JQuery -->
   <script src="{{url_for('downloadfoto',filename='css/jquery.min.js')}}" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   
   <!-- Selectfield JS-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
@@ -21,6 +22,17 @@
     .row {
       margin-top: 5px;
     }
+    .navbar-toggler{
+        height: 30px;
+
+    }
+    .navbar-toggler-icon{
+        width: 22px !important;
+        height: 22px !important;
+        vertical-align: top;
+        margin-top: 1px;
+    }
+
   </style>
   
 </head>
@@ -31,7 +43,7 @@
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
         aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>Menü
+        <span class="navbar-toggler-icon"></span>&nbsp;Menü
       </button>
 
       <a class="navbar-brand" href="/">Easy-Recipe</a>
@@ -56,7 +68,7 @@
   {% endblock %}
 
   {% block content %}
-  <div class="container-fluid">
+  <div class="container">
     <!-- style="padding-left: 325px;padding-right: 325px;"-->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
