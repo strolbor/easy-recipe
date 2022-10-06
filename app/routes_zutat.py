@@ -63,10 +63,9 @@ def modifyZutat(ids):
     """Hiermit wird eine Zutat modifiziert."""
     form = forms.zutatanlegen()
     modifyZutat = zutat.query.get(ids)
-    print(modifyZutat)
     if modifyZutat is None:
-        
-        return redirect(url_for('modifyZutat', ids=ids))
+        page = int(request.args.get('page', 1))
+        return redirect(url_for('modifyZutat', page=page))
     form.kategorie.choices = createArrayHelper(kategorie.query.all())
 
     if request.method == "POST" and form.submit.data:
