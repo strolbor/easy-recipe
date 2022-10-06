@@ -1,11 +1,13 @@
+import time
+
 import app
-from app.rezept import zutat, rezept
+from app.rezept import zutat, rezept, Association   #Association verknüpft Zutat / Rezept
 
 class RezeptRanking:
     rid = -1
     name = ""
     """speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird"""
-    tags = "Keine Tags"
+    tags = ""
     bild = ""
     vorhandeneZutatenNamen = ""
     fehlendeZutatenNamen = ""
@@ -52,18 +54,29 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
     zutatIDList = []
     rezeptIDList = []
     """Trage ZutatIDs die der Nutzer hat zusammen und RezeptIDs von rezepten, die mit jeder Zutat in Frage kommen"""
+
+    start_time = time.time()
+
     for zutatname in zutatnamen:
         zutatid = -1
+
         """finde Zutat-ID zum Zutatenname"""
-        for entry in zutat.query.filter_by(name=zutatname):
-            zutatid = entry.id
-            if not zutatid in zutatIDList:
-                zutatIDList.append(zutatid)
+        matching = zutat.query.filter_by(name=zutatname)
+
+        """Error Fix, falls es die Zutat nicht gibt"""
+        if matching.count() < 1:
+            continue
+
+        if not matching.first().id in zutatIDList:
+            zutatid = matching[0].id
+            zutatIDList.append(matching[0].id)
+
         """finde Rezepte, die diese Zutat beinhalten"""
         for entry in zutat.query.get(zutatid).rezepte:
             """entry sind Association-Object (siehe rezept.py)"""
             if not entry.rid in rezeptIDList:
                 rezeptIDList.append(entry.rid)
+
 
     """Rückgabewert: diese Liste, wird von rezeptanzeige.html interpretiert und genutzt"""
     rezeptRankings = []
@@ -84,10 +97,8 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
                 strTags += f"{tag.name}{', '}"
             strTags = strTags[:-2]
 
-        bewertung=0
-        #TODO: Bewertungsmodus Buttons auf home implementieren und folgende Zeile löschen
-        """Bewertung des Rezeptes je nach ausgewähltem Modus von home-site"""
         '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
+        bewertung=0
         if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
             bewertung = 0 - len(fehlendeZutatenNamen)
         elif bewertungsmodus == 2: #möglichst viele vorhandene Zutaten
@@ -110,3 +121,62 @@ def getRezepteByZutatNamen(zutatnamen, bewertungsmodus):
     return rezeptRankings
 
     #TODO: Tags beachten, Mengen beachten
+
+
+
+
+def getRezepteByZutatIDs(ausgewZutaten, bewertungsmodus):
+    """speichere Zutaten und mögliche Rezepte ab"""
+    """Trage ZutatIDs die der Nutzer hat zusammen und RezeptIDs von rezepten, die mit jeder Zutat in Frage kommen"""
+
+    zutatids = []
+    zutaten = zutat.query.filter(zutat.name.in_(ausgewZutaten))
+    for zut in zutaten:
+        zutatids.append(zut.id)
+
+    #SELECT * from Association, rezept WHERE Association.zid IN [zutatids] AND Association.rid = rezept.id
+
+    assoc_items = Association.query.filter(Association.zid.in_(zutatids))
+    rezeptIDList = (item.rid for item in assoc_items)
+    passendeRezepte = rezept.query.filter(rezept.id.in_(rezeptIDList))
+
+
+    """Rückgabewert: diese Liste, wird von rezeptanzeige.html interpretiert und genutzt"""
+    rezeptRankings = []
+    for _rezept in passendeRezepte:
+        vorhandeneZutatenNamen = []
+        fehlendeZutatenNamen = []
+        for entryZutat in _rezept.zutaten:
+            """entryZutat ist Association"""
+            if entryZutat.zid in zutatids:
+                vorhandeneZutatenNamen.append(entryZutat.hatzutat.name)
+            else:
+                fehlendeZutatenNamen.append(entryZutat.hatzutat.name)
+
+        strTags = ""
+        if _rezept.tags != None:
+            for tag in _rezept.tags:
+                strTags += f"{tag.name}{', '}"
+            strTags = strTags[:-2]
+
+        '''FÄNGT BEI MODUS 0 ALS STANDARD AN SIEHE UNTEN'''
+        if bewertungsmodus == 1: #möglichst absolut wenig Fehlende Zutaten
+            bewertung = 0 - len(fehlendeZutatenNamen)
+        elif bewertungsmodus == 2: #möglichst viele vorhandene Zutaten
+            bewertung = len(vorhandeneZutatenNamen)
+        else:   #Standard 0: Verhältnis von fehlende Zutaten durch vorhandene Zutaten möglichst gering
+            if (len(fehlendeZutatenNamen) + len(vorhandeneZutatenNamen)) > 0:
+                bewertung = 1 - len(fehlendeZutatenNamen) / (len(fehlendeZutatenNamen) + len(vorhandeneZutatenNamen))
+
+
+        rezeptRanking = RezeptRanking(_rid=_rezept.id, _name=_rezept.name, _tags=strTags, _bild=_rezept.bild,
+                                      _vorhandeneZutatenNamen=vorhandeneZutatenNamen,
+                                      _fehlendeZutatenNamen=fehlendeZutatenNamen,
+                                      _bewertung=bewertung)
+        if not rezeptRanking in rezeptRankings:
+            rezeptRankings.append(rezeptRanking)
+
+    """Sortiere Liste anhand der Bewertungen der Elemente absteigend:"""
+    rezeptRankings.sort(reverse=True)
+    rezeptRankings = rezeptRankings[0:app.Config.REZEPTRANKINGS_PER_PAGE]
+    return rezeptRankings

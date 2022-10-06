@@ -1,18 +1,27 @@
+
 import app
 from app.rezept import zutat, rezept, kategorie
+import random
+from sqlalchemy.sql.expression import func
 
 class Rezeptsammlung:
     rid = -1
     name = ""
     """speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird"""
-    tags = "Keine Tags"
+    tags = ""
     bild = ""
 
     def __init__(self, _rid, _name, _tags, _bild):
         self.rid=_rid
         self.name = _name
-        if len(_tags) > 0:
-            self.tags = _tags
+
+        r_tags = ""
+        for tag in _tags:
+            r_tags += f"{str(tag).replace('Tag','')}, "
+        r_tags = r_tags[:-2]
+
+        if len(r_tags) > 0:
+            self.tags = r_tags
         self.bild = _bild
 
 
@@ -70,7 +79,8 @@ def isEinfach(rez):
 """BISHER EIGENSCHAFT vegan, vegetarisch, fleisch, einfach"""
 def getRezeptByEigenschaft(anzahl, eigenschaft):
     passendeRezepte = []
-    for rez in rezept.query.all():
+    alleRez = rezept.query.all()
+    for rez in random.sample( alleRez, len(alleRez)):
         bedingung=False
 
         if eigenschaft=="vegan":
@@ -83,11 +93,7 @@ def getRezeptByEigenschaft(anzahl, eigenschaft):
             bedingung = isEinfach(rez)
 
         if bedingung:
-            r_tags = ""
-            for tag in rez.tags:
-                r_tags += f"{tag.name}, "
-            r_tags = r_tags[:-2]
-            neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=r_tags, _bild=rez.bild)
+            neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=rez.tags, _bild=rez.bild)
             passendeRezepte.append(neuesRezept)
 
         if len(passendeRezepte) >= anzahl:
@@ -99,11 +105,7 @@ def getRezepteByTag(tag):
     for rez in rezept.query.all():
         for _tag in rez.tags:
             if _tag.name == tag:
-                r_tags = ""
-                for tag in rez.tags:
-                    r_tags += f"{tag.name}, "
-                r_tags = r_tags[:-2]
-                neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=r_tags, _bild=rez.bild)
+                neuesRezept = Rezeptsammlung(_rid=rez.id, _name=rez.name, _tags=rez.tags, _bild=rez.bild)
                 passendeRezepte.append(neuesRezept)
 
     return passendeRezepte

@@ -1,13 +1,15 @@
-from random import random
+import os.path
+from pathlib import Path
+import random
 
-from flask import render_template, flash, url_for, request
+from flask import render_template, flash, url_for, request, send_file
 from werkzeug.utils import redirect
 
-from app import app, forms
-from app.RezeptRanking import getRezepteByZutatNamen
-from app.rezept import zutat, rezept
-from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung
-
+from app import app, forms, db
+from app.RezeptRanking import getRezepteByZutatNamen, getRezepteByZutatIDs
+from app.rezept import zutat, rezept, tags, Association
+from app.Rezeptsammlung import getRezeptByEigenschaft, Rezeptsammlung, isVegan, isVegetarisch, isEinfach, isFleisch
+import logging, time
 
 
 @app.route('/base')
@@ -24,38 +26,96 @@ globalRezeptRankings = []
 
 @app.route('/rezeptranking', methods=['GET', 'POST'])
 def rezeptranking():
-    global globalRezeptRankings, choices_array
+
+    ausgewZutaten = request.args['zutaten'].split('|')
+    #Mach int-Array draus wegen kompatibilität
+    #zutatIDs = list(map(int, request.args['ids'].split('|')))
+
+    testRankings = getRezepteByZutatIDs(ausgewZutaten=ausgewZutaten, bewertungsmodus=0)
+
     form = forms.rezeptranking()
     if request.method == "POST":
-        if form.btnSort0.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=0)
-        elif form.btnSort1.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=1)
+        if form.btnSort1.data:
+            testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=1)
         elif form.btnSort2.data:
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=choices_array, bewertungsmodus=2)
+            testRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=2)
 
-    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=globalRezeptRankings, form=form)
+        rezeptSuchbegriff = form.rezeptnamen.data
+
+        if form.btnSuchen.data:
+            if rezeptSuchbegriff != "":
+                passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
+                form.rezeptnamen.data = ""
+                return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+
+            if form.rezeptkategorien.data:
+                # EIgenschaft aus [vegan, vegetarisch, einfach, fleisch]
+                eigenschaft = form.rezeptkategorien.data.lower()
+
+                for ranking in testRankings.copy():
+                    rez = rezept.query.get(ranking.rid)
+
+                    bedingung = True
+                    if eigenschaft == "vegan":
+                        bedingung = isVegan(rez)
+                    elif eigenschaft == "vegetarisch":
+                        bedingung = isVegetarisch(rez)
+                    elif eigenschaft == "fleisch":
+                        bedingung = isFleisch(rez)
+                    elif eigenschaft == "einfach":
+                        bedingung = isEinfach(rez)
+
+                    if not bedingung:
+                        testRankings.remove(ranking)
+
+            if form.maxZutaten.data:
+                maxZutaten = int(form.maxZutaten.data)
+
+                for ranking in testRankings.copy():
+                    rez = rezept.query.get(ranking.rid)
+
+                    if len(rez.zutaten) > maxZutaten:
+                        testRankings.remove(ranking)
+
+
+    return render_template('rezeptranking.html', title="Rezeptranking", rezeptRankings=testRankings, form=form, choices_array=ausgewZutaten)
 
 
 home_html = "home.html"
+alleZutaten = []
+try:
+    for entry in zutat.query.order_by(zutat.name).all():
+        alleZutaten.append(entry.name)
+    pass
+except Exception as e:
+    logging.error(e)
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    global choices_array
+
+    """alleTags = []
+    alleTagNamen = []
+    for rez in rezept.query.all():
+        for tag in rez.tags:
+            alleTags.append(tag.id)
+            if not tag.id in alleTagNamen:
+                alleTagNamen.append(tag.id)
+
+    for tag in alleTagNamen:
+        vorkommen = alleTags.count(tag)
+        print(f"{tag} ist {vorkommen} mal")
+
+    deltags = [64, 65, 66, 67, 20]"""
+
+
     form = forms.d_felder()
 
+    global choices_array
+
     global alleZutaten
-    alleZutaten = []
-    try:
-        for entry in zutat.query.order_by(zutat.name).all():
-            alleZutaten.append(entry.name)
-        pass
-    except Exception as e:
-        print(e)
 
     def updateZutatenlisten():
-        #global choices_array
-        form.selected.choices = choices_array.copy()
-        #global alleZutaten
+        #form.selected.choices = choices_array.copy()
         verbleibendeZutaten = alleZutaten.copy()
         for entry in choices_array:
             try:
@@ -63,34 +123,22 @@ def home():
             except:
                 pass
 
-        #verbleibendeZutaten = updateMitSuchtext( verbleibendeZutaten=verbleibendeZutaten.copy() ).copy()
 
-        if form.suchtext.data != "" and form.suchtext.data != None :
-            uebrigeZutaten = []
-            for entry in verbleibendeZutaten.copy():
-                if str(form.suchtext.data).lower() in str(entry).lower():
-                    uebrigeZutaten.append(entry)
-            verbleibendeZutaten = uebrigeZutaten.copy()
-            #form.suchtext.data = ""
-
-        form.eingabe.choices = verbleibendeZutaten
-        form.suchfeld.choices = [""] + verbleibendeZutaten
+        #form.eingabe.choices = verbleibendeZutaten
+        #form.suchfeld.choices = [""] + verbleibendeZutaten
 
     updateZutatenlisten()
 
-    print("eingabe",form.eingabe.data)
-    print("selected",form.selected.data)
+    #print("eingabe",form.eingabe.data)
+    #print("selected",form.selected.data)
     if form.errors:
         for error_field, error_message in form.errors.iteritems():
             print(error_field,error_message)
 
-
-
+    erstes = True
     '''FÜR ERSTEN AUFRUF IMMER MIT NEUEN SUBMIT BUTTONS ANPASSEN!!!!!'''
-    if not form.submitAdd.data and not form.submitRm.data and not form.submitSuchen.data and not form.submitLoesen.data \
-            and not form.submitSuchtext.data and not form.sumbitAddSuchbegriff.data:
+    if not  form.submitSuchen.data and not form.sumbitAddSuchbegriff.data:
         #prüfe welche Zutat gedrückt wurde
-        erstes = True
         for zut in alleZutaten:
             if 'btn%s'%zut in request.form:
                 if zut not in choices_array:
@@ -103,65 +151,20 @@ def home():
 
         # wenn sonst erster Aufruf
         if erstes:
-            print("first")
             choices_array = []
             updateZutatenlisten()
 
-
-    #TODO: Legacy Ifs aufräumen
-    if form.validate_on_submit():
-        print("validate")
-
-        if form.sumbitAddSuchbegriff.data and len(form.suchfeld.choices) != 0 and form.suchfeld.data!="":
-            # Item soll hinzugefügt werden
-            # Neue ausgewählte Elemente werden kopiert
-            # und hinzugefügt
-            #print(str(form.suchfeld.choices) + " zutaten links übrig")
-            entry = form.suchfeld.data
-            if not choices_array.__contains__(entry):
-                choices_array.append(entry)
-
-            # Neue List wird kopiert in die Liste
-            updateZutatenlisten()
-
-            # neues Template an Client senden
-            form.eingabe.data = []
-            form.selected.data = []
-
-            return render_template(home_html, form=form,choices_array=choices_array)
-
-        elif form.submitSuchen.data:
-            print("Submit suchen")
-            """gibt passende Reihenfolge der passendsten Rezepte für die ausgewählten Zutaten"""
-            ausgewZutaten = []
-            global globalRezeptRankings
-            for entry in form.selected.choices.copy():
-                ausgewZutaten.append((entry))
-            globalRezeptRankings = getRezepteByZutatNamen(zutatnamen=ausgewZutaten, bewertungsmodus=0)
-
-            updateZutatenlisten()
-
-            return redirect(url_for('rezeptranking'))
-            #return render_template("rezeptranking.html", rezeptRankings = _rezeptRankings)
-
-        elif form.submitSuchtext.data:
-            updateZutatenlisten()
-            return render_template(home_html, form=form,choices_array=choices_array)
-
-        else:
-            #flash("Don't hack this!")
-            pass
-
-
-    print("last return")
     updateZutatenlisten()
+
     return render_template(home_html, form=form,choices_array=choices_array)
 
 
-@app.route('/rezept/<path:ids>', methods=['GET', 'POST'])
-def rezeptanzeige(ids):
+@app.route('/rezept', methods=['GET', 'POST'])
+def rezeptanzeige():
+    id = request.args['id']
+    zutaten = request.args['zutaten'].split('|')
     form = forms.rezeptanzeige()
-    thisrezept = rezept.query.get(ids)
+    thisrezept = rezept.query.get(id)
     #print(thisrezept.zutaten)
 
     class r_zutat:
@@ -174,8 +177,9 @@ def rezeptanzeige(ids):
             self.name = _name
             self.einheit = _einheit
             self.menge = _menge
-            if _name in choices_array:
-                self.verfuegbar = "✅"
+            for zut in zutaten:
+                if _name in zut:
+                    self.verfuegbar = "✅"
 
 
     r_tags = ""
@@ -194,12 +198,38 @@ def rezeptanzeige(ids):
         r_z = r_zutat(_name=zname, _einheit=zeineit, _menge=zmenge)
         r_zutaten.append(r_z)
 
+
     r_handl = []
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
 
+
+
+    """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
+    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+    txtHandl = open(rezPath / "handlungsschritte.txt", "r")
+    arr_hs = []
+    for line in txtHandl.readlines():
+        arr_hs.append(line.replace("\n", ""))
+
+    # war vorher r_handl statt arr_hs
+    r_handl = arr_hs
+
+
+    """ersetze Zutaten temporär mit Daten aus Webscraper, EINKAUFLISTE HAUT DANN NICHT GANZ HIN"""
+    txtZutaten = open(Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name / "zutaten.txt")
+    arrZutaten =[]
+    for line in txtZutaten.readlines():
+        zname = line.strip().split("|")[1]
+        menge = line.strip().split("|")[0]
+        arrZutaten.append(r_zutat(zname, "", menge))
+
+
+    """IN ORIGINAL NIMM r_zutaten statt arrZutaten"""
+    r_zutaten = arrZutaten
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
+
 
 @app.route('/rezeptsammlung/<path:ids>', methods=['GET', 'POST'])
 def rezeptsammlung_id(ids):
@@ -240,6 +270,18 @@ def rezeptsammlung_id(ids):
     for handlungsschritt in thisrezept.handlungsschritte:
         r_handl.append(handlungsschritt.hatid.text)
 
+
+    """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
+    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+    txtHandl = open(rezPath / "handlungsschritte.txt", "r")
+    arr_hs = []
+    for line in txtHandl.readlines():
+        arr_hs.append(line.replace("\n", ""))
+
+
+    # war vorher r_handl statt arr_hs
+    r_handl = arr_hs
+
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
 
@@ -258,9 +300,20 @@ def rezeptsammlung():
 
     passendeRezepte = PassendeRezeptliste("", [])
 
+    print("aufgerufen")
+
     #wenn nicht erster Aufruf:
     if request.method == "POST":
+        print("POST")
+        print(form.rezeptnamen.data)
+        rezeptSuchbegriff = form.rezeptnamen.data
+        if rezeptSuchbegriff != "":
+            passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
+            form.rezeptnamen.data = ""
+            return redirect(url_for('rezeptsammlung_id', ids=passendesRezept.id))
+
         if form.btnSuchen.data:
+            print("DATA gefunden")
             rezeptSuchbegriff = form.rezeptnamen.data
             if rezeptSuchbegriff != "":
                 passendesRezept = rezept.query.filter_by(name=rezeptSuchbegriff).first()
@@ -272,11 +325,14 @@ def rezeptsammlung():
 
             if form.maxZutaten.data:
                 maxZutaten = int(form.maxZutaten.data)
-                for rez in passendeRezepte.rezepte.copy():
-                    if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
-                        passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
-
-            form.rezeptnamen.data = ""
+                if form.rezeptkategorien.data:
+                    for rez in passendeRezepte.rezepte.copy():
+                        if len(rezept.query.get(rez.rid).zutaten) > maxZutaten:
+                            passendeRezepte.rezepte.remove( Rezeptsammlung(rez.rid, rez.name, rez.tags, rez.bild) )
+                else:
+                    for rez in rezept.query.all():
+                        if len(rez.zutaten) <= maxZutaten:
+                            passendeRezepte.rezepte.append( Rezeptsammlung(rez.id, rez.name, rez.tags, rez.bild) )
 
             return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
                                    rezeptsammlungen=[passendeRezepte],
@@ -284,14 +340,39 @@ def rezeptsammlung():
 
 
     #wenn erster Aufruf:
-    veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "vegan"), _name="Vegane Rezepte")
-    fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "fleisch"), _name="Rezepte mit Fleisch")
-    einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(3, "einfach"), _name="Einfache Rezepte")
+
+    #genriere iste von zufälligen Rezeptvorschlägen, die Kategorie erfüllen
+    """_veganRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "vegan"))
+    _fleischRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "fleisch"))
+    _einfachRezeptListe = random.shuffle(getRezeptByEigenschaft(100, "einfach"))"""
+    veganes = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "vegan"), _name="Vegane Rezepte")
+    fleisch = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "fleisch"), _name="Rezepte mit Fleisch")
+    einfach = PassendeRezeptliste(_rezepte=getRezeptByEigenschaft(4, "einfach"), _name="Einfache Rezepte")
     rezeptsammlungen = [veganes, fleisch, einfach]
     anzRezeptvorschlaege = 0
     for sammlung in rezeptsammlungen:
         anzRezeptvorschlaege += len(sammlung.rezepte)
 
     form.rezeptnamen.data = ""
+
     return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form, rezeptsammlungen=rezeptsammlungen,
                            anzRezeptvorschlaege=anzRezeptvorschlaege)
+
+@app.route('/einkaufliste', methods=['GET', 'POST'])
+def einkaufliste():
+    zutaten = request.args['zutaten'].split('|')
+    rezeptname = request.args['rezeptname']
+
+    print(f"zutatarray in py  {zutaten}")
+    temp = f"einkaufliste{random.randint(0, 1000)}"
+    filepath = Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
+
+    txtZutatenliste = open(filepath, 'w')
+
+    txtZutatenliste.write("\n".join([f"Einkaufzettel für {rezeptname}:", ""] + zutaten))
+
+    txtZutatenliste.close()
+
+    print(f"current path {filepath}")
+    return send_file(filepath, as_attachment=True)
+

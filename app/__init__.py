@@ -4,6 +4,7 @@ from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_jsglue import JSGlue
 
 basedir = ""
 
@@ -18,7 +19,10 @@ class Config(object):
     REZEPTRANKINGS_PER_PAGE = 1000
 
 
+jsglue = JSGlue()
+
 app = Flask(__name__)
+jsglue.init_app(app)
 UPLOAD_FOLDER = os.path.abspath(app.instance_path)
 
 app.config.from_object(Config)

@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 
-
- 
-
   {% block app_content %}
 
   <style>
@@ -11,7 +8,7 @@
   }
   .table input {
       margin: 5px 10px;
-      
+
   }
   .table td.eingabe {
       width: 300px;
@@ -22,7 +19,7 @@
   .save {
       margin-left: 10px;
   }
-  
+
   .table td.buttons {
       align-content: center;
       vertical-align: middle;
@@ -33,45 +30,125 @@
     display: flex;
   }
 
+  .zutat{
+    cursor: pointer;
+    border-width: 1px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 20px;
+    font-weight: 400;
+    -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden !important;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  .zutat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  }
+
+  .suchen{
+    display:inline-block;
+    border:1px solid #EEE;
+    background:#EEE;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    float: right;
+  }
+
+  .gewaehlt{
+    padding: 11px 16px;
+    cursor: pointer;
+    border-width: 1px;
+    border-radius: 10px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    font-size: 20px;
+    font-weight: 400;
+    -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.12);
+    overflow: hidden !important;
+    color: #0c4128;
+    background-color: #c8eadc;
+    margin: 5px;
+  }
+
+  .katSelect{
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+      /* Column | row */
+    }
+
   </style>
 
-
-    <form action="/" method="post" novalidate>
+    <form id="home" name="home"  action="/" method="post" novalidate>
       {{ form.csrf_token }}
+      {{ JSGlue.include() }}
         <table class="table table-sm asn">
-            <thead> 
+            <thead>
               <tr>
-                <th>{{ form.eingabe.label }}</th>
+                <th>Alle Zutaten</th>
                 <!-- <th class="middle">Auswahl</th> -->
-                <th >{{ form.selected.label }}</th>
+                <th>Ausgewählte Zutaten</th>
               </tr>
             </thead>
             <tbody>
 
                 <tr>
-                    <td> Suche eine Zutat: {{ form.suchfeld }} {{ form.sumbitAddSuchbegriff }}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col katSelect">
+                                <select class="form-select" onchange="springZuKategorie(this)" style="font-size: 13px; height: 30px">
+                                    <option value="" disabled selected hidden>Gehe zu Kategorie</option>
+                                    {% for kategorie in form.kategorien %}
+                                        <option value="{{ kategorie.name }}">{{ kategorie.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                Suche eine Zutat: {{ form.suchfeld }}
+                            </div>
+                        </div>
+
+                    </td>
+                    <td class="align-left"> <div id="altSuche" href="{{ url_for('rezeptranking', zutaten='') }}" class="suchen" onclick="clickedSuchen(event)">🔎 Passende Rezepte</div> </td>
                 </tr>
 
-
                 <tr>
+
+                <!-- KEINE UNTERSTRICHE IN ZUTATNAMEN ODER KATEGORIENAMEN !!!! -->
 
                   <!-- Hier ist Zelle mit verschiedenen Kategorien -->
                   <td width="80%">
                   <!-- <div style="overflow-y:scroll;height:800px"> -->
                   {% for i in range(0, form.kategorien|length) %}
-                      <div>
                       {% set kategorie = form.kategorien[i] %}
-                          <p><h4><b>{{ kategorie.name }}</b></h4></p>
+                      <div id="kat{{ kategorie.name | replace(" ", "_") }}">
+                          <p><h4><b>{{ kategorie.name }}</b></h4>
 
-                      <!-- Buttons mit allen Zutaten: -->
-                      <p>
-                      {% for j in range(0, kategorie.zutaten|length) %}
-                          {% set zutatname = kategorie.zutaten[j].name %}
-                          {% if not zutatname in choices_array %}
-                          <button name="btn{{ zutatname }}" class="btn btn-light btn-lg"> {{ zutatname }} </button>
-                          {% endif %}
-                      {% endfor %}
-                      </p>
+                          <!-- Buttons mit allen Zutaten: -->
+                          <div class="row" id="row{{ kategorie.name | replace(" ", "_") }}">
+                          {% for j in range(0, kategorie.zutaten|length) %}
+
+                              {% set zutatname = kategorie.zutaten[j].name %}
+                              {% if not zutatname in choices_array %}
+                              <div id="btn{{ zutatname | replace(" ", "_") }}" onclick="clickedZutat(this)"
+                                   class="col-md-auto zutat" data-kategorie="{{ kategorie.name | replace(" ", "_") }}"
+                                    data-zid="{{ kategorie.zutaten[j].id }}"> {{ zutatname }} </div>
+                              {% endif %}
+
+                          {% endfor %}
+                          </div>
 
                       </div>
 
@@ -79,37 +156,169 @@
                   <!-- </div> BEENDET SCROLLLEISTE -->
                   </td>
 
-                  <td>
+
+                  <!-- Hier alle ausgewählten Zutaten reinladen -->
+                  <td id="ausgewZutaten">
                       <table>
                       {% for chosenZutat in choices_array %}
                         <tr>
-                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%; background-color:white" > {{ chosenZutat }} </button></td>
+                            <td><button name="btn{{ chosenZutat }}" class="btn btn-info btn-lg" style="width:100%;
+                                    background-color:white" > {{ chosenZutat }} </button></td>
                         </tr>
                       {% endfor %}
 
-                          <!-- Blende rezeptsuche-Button aus, wenn keine Zutaten ausgewählt -->
-                          {% if choices_array|length != 0 %}
-                          <tr><td class="right">{{ form.submitSuchen(class="btn btn-primary btn-lg")}}</td></tr>
-                          <!-- TODO: Bei 0 ausgewählten Zutaten Button für Allgemeine Rezepteliste hier einfügen -->
-                          {% endif %}
                       </table>
                   </td>
 
-                    <!-- Alte AUswahlliste -->
-                  <!-- <td class="eingabe">{{form.selected(size=15, class='form-control',multiple='multiple')}}</td> -->
                 </tr>
 
-
-                <tr>
-                    <!-- ALter AUswahl lösen <td class="save">{{ form.submitLoesen(class="btn btn-primary") }}</td> -->
-
-                </tr>
             </tbody>
         </table>
     </form>
 
     <script>
+        const choicesDiv = document.querySelector("#ausgewZutaten");
+        const zutatTrenner = '|'
+
+        function formatUmlautToURL(mitUmlaute){
+            return mitUmlaute.replaceAll("Ä", "%C3%84")
+                .replaceAll("ä", "%C3%A4")
+                .replaceAll("Ö", "%C3%96")
+                .replaceAll("ö", "%C3%B6")
+                .replaceAll("Ü", "%C3%9C")
+                .replaceAll("ü", "%C3%BC")
+                .replaceAll("ß", "%C3%9F")
+                .replaceAll(" ", "%20")
+        }
+
+        function formatURLToUmlaut(ohneUmlaute){
+            return ohneUmlaute.replaceAll("%C3%84", "Ä")
+                .replaceAll("%C3%A4", "ä")
+                .replaceAll("%C3%96", "Ö")
+                .replaceAll("%C3%B6", "ö")
+                .replaceAll("%C3%9C", "Ü")
+                .replaceAll("%C3%BC", "ü")
+                .replaceAll("%C3%9F", "ß")
+                .replaceAll("%20", " ")
+        }
+
+        function addToURL(zutatname) {
+            location.href = location.href + zutatTrenner + zutatname
+        }
+
+        function clickedZutat(btnZutat) {
+            var parentNode = btnZutat.parentNode
+
+            if (!location.href.includes("#")){
+                location.href += "#"
+            }
+
+            if (parentNode.id.slice(0, 3) == "row"){
+                choicesDiv.appendChild(btnZutat)
+                btnZutat.classList.add("gewaehlt")
+                addToURL(btnZutat.innerText);
+
+            }else if (parentNode.id == "ausgewZutaten"){
+                kategorieDiv = document.querySelector("#row" + btnZutat.dataset.kategorie)
+                kategorieDiv.appendChild(btnZutat)
+                btnZutat.classList.remove("gewaehlt")
+
+                location.href = location.href.replaceAll(zutatTrenner + formatUmlautToURL(btnZutat.innerText), "")
+            }
+        }
+
+
+        function clickedSuchen(event){
+            zutatenliste = getAusgewZutatNamen().join("|")
+            //zutatenIDliste = getAusgewZutatIDs().join("|")
+            if (zutatenliste == ""){
+                location.href = Flask.url_for('rezeptsammlung')
+            }else {
+                location.href = Flask.url_for('rezeptranking', {'zutaten' : zutatenliste})
+                //location.href = Flask.url_for('update_choices_array', {"jsarray": zutatenliste})
+            }
+        }
+
+
+        function getAusgewZutatNamen(){
+            var arrZutaten = []
+            for (let i = 0; i < choicesDiv.children.length; i++) {
+                var child = choicesDiv.children.item(i)
+
+                // vermeide submitSuchen Button -> nur wenn btn davor steht
+                if (child.id.slice(0, 3) == "btn"){
+                    arrZutaten.push(child.innerText)
+                }
+            }
+
+            return arrZutaten
+        }
+
+
+        function getAusgewZutatIDs(){
+            var arrZutaten = []
+            for (let i = 0; i < choicesDiv.children.length; i++) {
+                var child = choicesDiv.children.item(i)
+
+                // vermeide submitSuchen Button -> nur wenn btn davor steht
+                if (child.id.slice(0, 3) == "btn"){
+                    arrZutaten.push(child.dataset.zid)
+                }
+            }
+
+            return arrZutaten
+        }
+
+
+        //wenn zurückgesprungen wird, lade Zutaten aus URL wieder rein
+        function ladeAusgewZutaten(){
+            //ohne localhost:5000 als erstes element
+            var zutaten = location.href.split(zutatTrenner).slice(1)
+            var bereitsAusgewZutaten = getAusgewZutatNamen()
+            for (let i = 0; i < zutaten.length; i++) {
+                zut = zutaten[i]
+                if (!bereitsAusgewZutaten.includes( formatUmlautToURL(zut) )){
+                    //versuche Item in URL zu finden
+                    try {
+                        btnZutat = document.querySelector("#btn" + formatURLToUmlaut(zut).replaceAll(" ", "_"))
+                        choicesDiv.appendChild(btnZutat)
+                        btnZutat.classList.add("gewaehlt")
+                    } catch (error) {
+                        console.error(error)
+                        location.href = location.href.replaceAll(zutatTrenner + formatUmlautToURL(zut), "")
+                    }
+                }
+            }
+        }
+
+        function springZuKategorie(selectfield){
+            var katName = selectfield.value
+            document.getElementById("kat" + katName.replaceAll(" ", "_")).scrollIntoView()
+        }
+
         $(document).ready(function() {
+
+            if (!location.href.includes("?")){
+                location.href = Flask.url_for('home', {"zutaten" : "#"})
+            }
+
+            ladeAusgewZutaten()
+
+            $('#suchfeld').on('select2:select', function (e) {
+                var btnZutat = document.querySelector("#btn" + $('#suchfeld').val().replaceAll(" ", "_"))
+                var parentNode = btnZutat.parentNode
+
+                $('#suchfeld').select2("")
+
+                if (parentNode.id.slice(0, 3) == "row") {
+                    choicesDiv.appendChild(btnZutat)
+                    btnZutat.classList.add("gewaehlt")
+                    addToURL(btnZutat.innerText);
+                }
+
+                return false;
+            });
+
             $('#suchfeld').select2({  // init Select2 on form's suchfeld field
                 placeholder: "{{ form.suchfeld.label.text }}",
                 allowClear: true,
