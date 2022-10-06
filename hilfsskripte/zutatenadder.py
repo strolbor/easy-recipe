@@ -1,8 +1,11 @@
 import os
 import pathlib
-from Levenshtein import distance
 import re
 import operator
+
+#
+## Mit dieses Hilfskript werden die Zutaten normalisiert und in die Datenbank eingespeichert
+#
 
 path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"Rezepte") 

@@ -2,17 +2,20 @@ import os
 import pathlib
 import shutil
 
+#
+## Mit diesen Hilfsskript werden die Rezepte erstellt. und in der "data-rezept-add.py" gespeichert.
+# 
+
 path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"Rezepte") 
 ldir = os.listdir(path2)
 
-fileout2 = open("rezept-add.txt","w")
+fileout2 = open("data-rezept-add.py","w")
 
 rezeptarray = []
 zahler = 1
 for entry in ldir:
     picpath = f"rezept{zahler}/{entry}.png"
-    # addRezept(name='{entry}',bild='{picpath}')
     path3 =  os.path.join(path,"dummy",picpath.split("/")[0])
     zahler = zahler + 1
     if not os.path.exists(path3):

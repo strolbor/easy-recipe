@@ -6,6 +6,10 @@ from app import db
 from app.rezept import rezept, zutat
 import codecs
 
+#
+## Mithilfe diesen Skripts werden Zutaten und Rezepte mit einander verbunden.
+#
+
 path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"webscraper","Rezepte") 
 ldir = os.listdir(path2)
