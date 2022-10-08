@@ -132,7 +132,46 @@ def modifyrezept(ids):
             zuRezept.bild = picure_url
 
         # Handlungsschritt Text bearbeiten
-        zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
+        # alt
+        #zuRezept.handlungsschritte[0].hatid.text = form.handlung.data
+        txt = form.handlung.data
+        txtarr = txt.split("\n")
+        assocArr = zuRezept.handlungsschritte
+        print(len(txtarr),len(assocArr))
+        posArray = 0
+        # Für jeden Eintrag im Textarea müssen wir ein Eintrag in der Assoc machen
+        for entry in txtarr:
+            # Wir können die Handlungschritte überschreiben
+            if posArray < len(assocArr):
+                zuRezept.handlungsschritte[posArray].hatid.text = txtarr[posArray]
+                print(f"Ändere {txtarr[posArray]}")
+            else:
+                # Wir müssen neue Associations machen
+                handNew = handlungsschritt(text=txtarr[posArray])
+                assocNew = AssociationRHhat(position=posArray)
+                handlung = handNew
+                assocNew.hatid = handlung
+                with db.session.no_autoflush:
+                    zuRezept.handlungsschritte.append(assocNew)
+                db.session.commit()
+                print("Neue Assoc")
+            posArray += 1
+        print(assocArr[posArray:])
+        for entry in assocArr[posArray:]:
+            print(f"lösche {entry.aid}")
+            # Handlungsschritt löschen
+            rezeptausAssoc = entry.hatid
+            db.session.delete(rezeptausAssoc)
+            # Association löschen
+            try:
+                zuRezept.handlungsschritte.remove(entry)
+            except ValueError:
+                pass
+            db.session.commit()
+
+
+        
+
 
 
         # Tag speichern
@@ -146,7 +185,13 @@ def modifyrezept(ids):
         flash(f"{zuRezept.name} wurde gespeichert!")
         return redirect(url_for('modifyrezept', ids=ids))
 
-    form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
+    # Anzeigen der Handlungschritte
+    ## alt
+    #form.handlung.data = zuRezept.handlungsschritte[0].hatid.text
+    handlarray = []
+    for entry in zuRezept.handlungsschritte:
+        handlarray.append(entry.hatid.text)
+    form.handlung.data = '\n'.join(handlarray)
 
     form.rezeptname.data = zuRezept.name
     # Tags
