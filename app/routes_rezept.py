@@ -20,7 +20,6 @@ import sqlalchemy
 def showRezepte():
     return showclass(rezept, rezept.name, "Rezepte", "showRezepte")
 
-
 def newRezept(rname: str, tagarray):
     """Kapselung von Rezepte"""
 
@@ -38,7 +37,6 @@ def newRezept(rname: str, tagarray):
     rnew: rezept = rezept.query.filter_by(name=rname).first()
     return rnew.id
 
-
 @app.route("/rezept/eingabe/", methods=["POST", "GET"])
 def nutzerrezeptein():
     """Nutzereingabe Menü"""
@@ -48,7 +46,6 @@ def nutzerrezeptein():
         # Reload der Seite mit dem Flash, der zeigt, dass es gespeichert wruden ist.
         return redirect(url_for('nutzerrezeptein'))
     return render_template('nutzer_rezeptanlege.html', form=form, zutaten=zutat.query.all(), tags=tags.query.all())
-
 
 @app.route("/rezept/eingabe/ctl/", methods=["POST", "GET"])
 def postrezept():
@@ -113,7 +110,6 @@ def postrezept():
         # speichern
         flash(f"{rnew.name} ({rnew.id}) wurde gespeichert!")
     return "ok"
-
 
 @app.route('/rezept/modify/<path:ids>/', methods=['GET', 'POST'])
 def modifyrezept(ids):
@@ -206,9 +202,6 @@ def modifyrezept(ids):
 
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 
-
-
-
 @app.route("/rezept/zutatenedit/<path:rid>", methods=['GET', 'POST'])
 def rezeptver2(rid):
     rezept1 = rezept.query.get(rid)
@@ -234,7 +227,6 @@ def rezeptver2(rid):
             flash("Fehler: Zutat wurde bereits verknüpft!")
 
     return render_template('admin_addrzver.html', form=form, rezept1=rezept1)
-
 
 @app.route('/rezept/delete/<path:ids>')
 def deleteRezept(ids):
