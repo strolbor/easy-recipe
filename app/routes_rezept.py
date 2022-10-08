@@ -92,18 +92,22 @@ def postrezept():
                 flash(f"Diese Verknüpfung ({rnew.id},{entry}) existiert schon.")
 
         # Handlungschritt anlegen
-        handlung = handlungsschritt(
-            bild="", bild2="", text=handlungsschritttext)
-        db.session.add(handlung)
-        
-        # Handlungsschritt verknüpfen
-        nhand = handlungsschritt.query.filter_by(
-            text=handlungsschritttext).first()
-        assoc1 = AssociationRHhat(position=1)
-        assoc1.hatid = nhand
-        with db.session.no_autoflush:
-            rnew.handlungsschritte.append(assoc1)
-        
+        txt = handlungsschritttext
+        txtarr = txt.split("\n")
+        posArr = 0
+        # entry ist ein String
+        for entry in txtarr:
+            # Wir müssen neue Associations machen
+            handNew = handlungsschritt(text=entry)
+            assocNew = AssociationRHhat(position=posArr)
+            handlung = handNew
+            assocNew.hatid = handlung
+            with db.session.no_autoflush:
+                rnew.handlungsschritte.append(assocNew)
+            db.session.commit()
+            print("Neue Assoc")
+            posArr +=1
+                
         db.session.commit()
 
         # speichern
