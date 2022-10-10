@@ -5,6 +5,7 @@ _static/
 _templates/
 app/__pycache__/
 venv/
+_webscraper/
 run_website.bat
 db*
 instance/
