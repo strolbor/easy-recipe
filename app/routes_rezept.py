@@ -175,9 +175,12 @@ def modifyrezept(ids):
             # Bei "Keine Angabe" soll alles gelöscht werden.
             zuRezept.tags = []
         for tagentry in form.tags.data:
-            if int(tagentry) > 0:
-                tmpTag = tags.query.get(tagentry)
-                zuRezept.tags.append(tmpTag)
+            try:
+                if int(tagentry) > 0:
+                    tmpTag = tags.query.get(tagentry)
+                    zuRezept.tags.append(tmpTag)
+            except ValueError:
+                pass
 
         # Speichern des Eintrages
         db.session.commit()
