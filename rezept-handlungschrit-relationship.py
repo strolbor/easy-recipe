@@ -52,12 +52,12 @@ for rezeptentry in ldir:
         line = line.strip()
         line = line.replace("\n","")
         line = line.replace("\r","")
-        line = line.replace('"',"")#
-        line = line.replace('�',"�")
-        line= line.replace("ß","ss")
-        line= line.replace("ü","ue")
-        line= line.replace("ä","ae")
-        line= line.replace("ö","oe")
+        line = line.replace('"',"")
+        line = line.replace('�',"")
+        #line= line.replace("ß","ss")
+        #line= line.replace("ü","ue")
+        #line= line.replace("ä","ae")
+        #line= line.replace("ö","oe")
         if len(line) != 0:
             arr2.append(line)
     pos +=1
@@ -65,19 +65,24 @@ for rezeptentry in ldir:
     # Objekt erstellen
     pos = 1
     for entry2 in arr2:
-        #print(entry2)
-        write(fileWriter, f"handob = handlungsschritt(text=\"{entry2}\")")
-        write(fileWriter,"db.session.add(handob)")
-        write(fileWriter,"db.session.commit()")
-        
-        write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
-        write(fileWriter,f"assoc = AssociationRHhat(position={pos})")
-        write(fileWriter,"assoc.hatid = handob")
-        write(fileWriter,"with db.session.no_autoflush:")
-        write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
-        write(fileWriter,"db.session.commit()\n")
-        pos +=1
-        fileWriter.flush()
+        if rezaus.id == 22:
+            print(entry2)
+        if not (entry2.startswith("Fett") or entry2.startswith("Kohlenhy") or entry2.startswith("Energie") or entry2.startswith("Eiwei") or entry2.startswith("Nährwerte")):
+            
+            write(fileWriter, f"handob = handlungsschritt(text=\"{entry2}\")")
+            write(fileWriter,"db.session.add(handob)")
+            write(fileWriter,"db.session.commit()")
+            
+            write(fileWriter,f"rezaus = rezept.query.get({rezaus.id})")
+            write(fileWriter,f"assoc = AssociationRHhat(position={pos})")
+            write(fileWriter,"assoc.hatid = handob")
+            write(fileWriter,"with db.session.no_autoflush:")
+            write(fileWriter,"    rezaus.handlungsschritte.append(assoc)")
+            write(fileWriter,"db.session.commit()\n")
+            pos +=1
+            fileWriter.flush()
+        else:
+            print(f"Nicht aufgenommen bei {rezaus.name} => {entry2}")
     inputfile.close()
 
 # Closer
