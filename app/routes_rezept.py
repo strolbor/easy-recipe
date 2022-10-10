@@ -175,7 +175,6 @@ def modifyrezept(ids):
             # Bei "Keine Angabe" soll alles gelöscht werden.
             zuRezept.tags = []
         for tagentry in form.tags.data:
-            print(tagentry)
             if int(tagentry) > 0:
                 tmpTag = tags.query.get(tagentry)
                 zuRezept.tags.append(tmpTag)
