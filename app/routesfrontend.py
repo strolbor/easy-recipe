@@ -204,29 +204,29 @@ def rezeptanzeige():
         r_handl.append(handlungsschritt.hatid.text)
 
 
+    try:
+        """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
+        rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+        txtHandl = open(rezPath / "handlungsschritte.txt", "r")
+        arr_hs = []
+        for line in txtHandl.readlines():
+            arr_hs.append(line.replace("\n", ""))
 
-    """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
-    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
-    txtHandl = open(rezPath / "handlungsschritte.txt", "r")
-    arr_hs = []
-    for line in txtHandl.readlines():
-        arr_hs.append(line.replace("\n", ""))
-
-    # war vorher r_handl statt arr_hs
-    r_handl = arr_hs
-
-
-    """ersetze Zutaten temporär mit Daten aus Webscraper, EINKAUFLISTE HAUT DANN NICHT GANZ HIN"""
-    txtZutaten = open(Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name / "zutaten.txt")
-    arrZutaten =[]
-    for line in txtZutaten.readlines():
-        zname = line.strip().split("|")[1]
-        menge = line.strip().split("|")[0]
-        arrZutaten.append(r_zutat(zname, "", menge))
+        """ersetze Zutaten temporär mit Daten aus Webscraper, EINKAUFLISTE HAUT DANN NICHT GANZ HIN"""
+        """txtZutaten = open(Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name / "zutaten.txt")
+        arrZutaten =[]
+        for line in txtZutaten.readlines():
+            zname = line.strip().split("|")[1]
+            menge = line.strip().split("|")[0]
+            arrZutaten.append(r_zutat(zname, "", menge))"""
+    except:
+        pass
 
 
     """IN ORIGINAL NIMM r_zutaten statt arrZutaten"""
-    r_zutaten = arrZutaten
+    #r_zutaten = arrZutaten
+    # war vorher r_handl statt arr_hs
+    # r_handl = arr_hs
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
 
@@ -272,15 +272,15 @@ def rezeptsammlung_id(ids):
 
 
     """ersetze Handlungsschritte temporär durch in Dateien erkannte HS"""
-    rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
+    """rezPath = Path(__file__).parent.parent / "webscraper" / "Rezepte" / thisrezept.name
     txtHandl = open(rezPath / "handlungsschritte.txt", "r")
     arr_hs = []
     for line in txtHandl.readlines():
-        arr_hs.append(line.replace("\n", ""))
+        arr_hs.append(line.replace("\n", ""))"""
 
 
     # war vorher r_handl statt arr_hs
-    r_handl = arr_hs
+    #r_handl = arr_hs
 
     return render_template('rezeptanzeige.html', form=form, rezept=thisrezept, r_tags=r_tags, r_zutaten=r_zutaten,
                            anz_zutaten=len(r_zutaten), r_handl=r_handl, anz_handl=len(r_handl))
