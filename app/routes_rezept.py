@@ -170,10 +170,15 @@ def modifyrezept(ids):
             db.session.commit()
 
         # Tag speichern
-        zuRezept.tags = []
+        if len(form.tags.data) != 0:
+            # Wenn wir keine Tags anwählen soll nichts passieren
+            # Bei "Keine Angabe" soll alles gelöscht werden.
+            zuRezept.tags = []
         for tagentry in form.tags.data:
-            tmpTag = tags.query.get(tagentry)
-            zuRezept.tags.append(tmpTag)
+            print(tagentry)
+            if int(tagentry) > 0:
+                tmpTag = tags.query.get(tagentry)
+                zuRezept.tags.append(tmpTag)
 
         # Speichern des Eintrages
         db.session.commit()
@@ -187,18 +192,13 @@ def modifyrezept(ids):
     form.handlung.data = '\n'.join(handlarray)
 
     form.rezeptname.data = zuRezept.name
-    # Tags
+    # Tags auswahl setzen
     tagarry = []
     tagarry.append(["-1", "Keine Angabe"])
     tmp = createArrayHelper(tags.query.all())
     for entry in tmp:
         tagarry.append(entry)
     form.tags.choices = tagarry
-    if zuRezept.tags is not None:
-        try:
-            form.tags.data = [zuRezept.tags[0].id, zuRezept.tags[0].name]
-        except IndexError:
-            print("Indexerror bei modifyrezept")
 
     return render_template('admin_rezept.html', form=form, titlet="Rezepts ändern", rid=ids, rezept=zuRezept)
 
