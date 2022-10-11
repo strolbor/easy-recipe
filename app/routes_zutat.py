@@ -81,11 +81,12 @@ def modifyZutat(ids):
             modifyZutat.bild = picure_url
 
         # Kategorien reintun
-        modifyZutat.kategorie = []
-        for entrykategorie in form.kategorie.data:
-            toaddKat = kategorie.query.get(entrykategorie)
-            modifyZutat.kategorie.append(toaddKat)
-        db.session.commit()
+        if len(form.kategorie.data) != 0:
+            modifyZutat.kategorie = []
+            for entrykategorie in form.kategorie.data:
+                toaddKat = kategorie.query.get(entrykategorie)
+                modifyZutat.kategorie.append(toaddKat)
+            db.session.commit()
 
         flash(f"{modifyZutat.name} wurde gespeichert")
         return redirect(url_for('modifyZutat', ids=ids))

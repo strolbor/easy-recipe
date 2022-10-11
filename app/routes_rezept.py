@@ -86,7 +86,8 @@ def postrezept():
                 # else: nichts zu tun, weil -1 ungültig ist und für Keine Angabe stehen    
                 counter += 1
             else:
-                flash(f"Diese Verknüpfung ({rnew.id},{entry}) existiert schon.")
+                pass
+                #flash(f"Diese Verknüpfung ({rnew.id},{entry}) existiert schon.")
 
         # Handlungschritt anlegen
         txt = handlungsschritttext
@@ -108,7 +109,7 @@ def postrezept():
         db.session.commit()
 
         # speichern
-        flash(f"{rnew.name} ({rnew.id}) wurde gespeichert!")
+        #flash(f"{rnew.name} ({rnew.id}) wurde gespeichert!")
     return "ok"
 
 @app.route('/rezept/modify/<path:ids>/', methods=['GET', 'POST'])

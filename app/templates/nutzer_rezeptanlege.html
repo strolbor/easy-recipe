@@ -107,6 +107,7 @@
             xhr.open('POST', "{{url_for('postrezept')}}", true);
             xhr.send(formData);
             $('#add_rezept')[0].reset();
+            alert("Rezept wurde erfolgreich angelegt.");
            
         });
         //TODO: SELECT
