@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from app import app, db, forms
 from app.rezept import rezept,tags
 from app.backend_helper import createArrayHelper

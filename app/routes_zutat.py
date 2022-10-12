@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from app import app, db, forms
 from app.rezept import kategorie, zutat
 from app.backend_helper import getNewID, savepic
