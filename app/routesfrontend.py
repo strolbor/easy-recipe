@@ -366,10 +366,10 @@ def einkaufliste():
     print(f"zutatarray in py  {zutaten}")
     temp = f"einkaufliste{random.randint(0, 1000)}"
     filepath = Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
-    txtZutatenliste = None
-    try:
+
+    if os.path.exists(filepath.parent):
         txtZutatenliste = open(filepath, 'w')
-    except:
+    else:
         os.mkdir(filepath.parent)
         txtZutatenliste = open(filepath, 'w')
 
