@@ -42,14 +42,15 @@
                     {% if titlet == "Zutaten" %}
                     <div class="fw-bold">
                         <a href="{{ url_for('modifyZutat',ids=message.id) }}"><i class="bi bi-pencil">ändern</i></a>
-                        <a href="{{url_for('deleteZutat',ids=message.id,page=page)}}"><i class="bi bi-trash">Entfernen</i></a>
+                        <a href="{{ url_for('deleteZutat',ids=message.id,page=page)}}"><i class="bi bi-trash">Entfernen</i></a>
                     </div>
                 {% endif %}
                 {% if titlet == "Rezepte" %}
                     <div class="fw-bold">
+                        <a href="{{ url_for('rezeptsammlung_id',ids=message.id) }}"><i class="bi bi-eye">Rezept anzeigen</i></a>
                         <a href="{{ url_for('modifyrezept',ids=message.id) }}"><i class="bi bi-pencil">Rezept ändern</i></a>
-                        <a href="{{url_for('rezeptver2',rid=message.id)}}"><i class="bi bi-pencil">Zutaten ändern</i></a>
-                        <a href="{{url_for('deleteRezept',ids=message.id,page=page)}}"><i class="bi bi-trash">Entfernen</i></a>
+                        <a href="{{ url_for('rezeptver2',rid=message.id)}}"><i class="bi bi-pencil">Zutaten ändern</i></a>
+                        <a href="{{ url_for('deleteRezept',ids=message.id,page=page)}}"><i class="bi bi-trash">Entfernen</i></a>
                         
                     </div>
                     

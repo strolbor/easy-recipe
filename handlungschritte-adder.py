@@ -1146,46 +1146,6 @@ with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
 db.session.commit()
 
-handob = handlungsschritt(text="Energie kJ/kcal 1354/324")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position=5)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eiweiﬂ 2,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position=6)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fett 13,3 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position=7)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kohlenhydrate 47,2 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(22)
-assoc = AssociationRHhat(position=8)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
 handob = handlungsschritt(text="Zubereitung:")
 db.session.add(handob)
 db.session.commit()
@@ -4761,46 +4721,6 @@ db.session.add(handob)
 db.session.commit()
 rezaus = rezept.query.get(84)
 assoc = AssociationRHhat(position=5)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Energie kJ/kcal 1059/253")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position=6)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Eiweiﬂ 12,1 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position=7)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Fett 7,6 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position=8)
-assoc.hatid = handob
-with db.session.no_autoflush:
-    rezaus.handlungsschritte.append(assoc)
-db.session.commit()
-
-handob = handlungsschritt(text="Kohlenhydrate 32 g")
-db.session.add(handob)
-db.session.commit()
-rezaus = rezept.query.get(84)
-assoc = AssociationRHhat(position=9)
 assoc.hatid = handob
 with db.session.no_autoflush:
     rezaus.handlungsschritte.append(assoc)
