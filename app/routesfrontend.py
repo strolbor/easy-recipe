@@ -366,8 +366,13 @@ def einkaufliste():
     print(f"zutatarray in py  {zutaten}")
     temp = f"einkaufliste{random.randint(0, 1000)}"
     filepath = Path(__file__).parent.resolve() / 'einkauflisten' / f"{temp}.txt"
+    txtZutatenliste = None
+    try:
+        txtZutatenliste = open(filepath, 'w')
+    except:
+        os.mkdir(filepath.parent)
+        txtZutatenliste = open(filepath, 'w')
 
-    txtZutatenliste = open(filepath, 'w')
 
     txtZutatenliste.write("\n".join([f"Einkaufzettel für {rezeptname}:", ""] + zutaten))
 
