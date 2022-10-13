@@ -122,6 +122,7 @@ class zutat(db.Model):
     __tablename__ = "zutatsql"
     id = db.Column(db.Integer, primary_key=True)
     einheit = db.Column(db.String)
+    # Entferung auf Grund zur Änderung, dass die Relation den Wert erhält
     bild = db.Column(db.String)
     name = db.Column(db.String)
 

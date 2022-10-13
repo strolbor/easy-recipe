@@ -14,7 +14,7 @@ path = pathlib.Path(__file__).parent.absolute()
 path2 = os.path.join(path,"webscraper","Rezepte") 
 ldir = os.listdir(path2)
 
-fileAdder = open("hat-add.py","w")
+fileAdder = open("data-hat-add.py","w")
 fileLog = open("hat-scrapper.log","w")
 bigerror = open("bigerror.txt","w")
 
@@ -94,22 +94,27 @@ for entry in ldir:
             except IndexError:
                 print(f"Ihre Eingabe ({auswahl}) ist außerhalb des Arrays. Bitt erneut versuchen.\n")
             except ValueError:
-                write(bigerror,f"{auswahl} war ein ValueEroor.")
+                write(bigerror,f"{auswahl} war ein ValueError.")
             print(zutat_wahl, "wurde gewählt.\n")
         
         write(fileLog,f"> {zutat_wahl.name} wurde genommen.")
         # Die Zahl der Menge holen
-        tmp = re.search("[0-9]+",line)
+        """tmp = re.search("[0-9]+",line)
         menge = 0
         if not tmp is None:
-            menge = int(line[tmp.span()[0]:tmp.span()[1]])
+            menge = int(line[tmp.span()[0]:tmp.span()[1]])"""
+        # Dies oben ist alt. 
+        # Wir haben die Menge als String definiert, deswegen können wir das ganze nehmen.
+        print(line)
+
+        menge = line.split("|")[0]
 
 
         
         write(fileLog,f"> wird {zutat_wahl.name} hinzugefügt.")
         write(fileAdder,f"try:")
         write(fileAdder,f"   print('Rezept: {str(rezept_aus.name)} wird {zutat_wahl.name} hinzugefügt.')")
-        write(fileAdder,f"   assoc1 = Association(menge={menge},optional=False)")
+        write(fileAdder,f"   assoc1 = Association(menge=\"{menge}\",optional=False)")
         write(fileAdder,f"   zutat = zutat.query.get({str(zutat_wahl.id)})")
         write(fileAdder,f"   rezept1 = rezept.query.get({str(rezept_aus.id)})")
         write(fileAdder,f"   assoc1.hatzutat= zutat")

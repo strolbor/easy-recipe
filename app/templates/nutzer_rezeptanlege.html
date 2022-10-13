@@ -19,7 +19,7 @@
         // Zutaten
         var hinzufueger = $("#hinzufueger"); //Welcher Text soll angezeigt werden
         var mehrBtn = $("#AddZutatInput"); //Welcher Button ist dafür verantwortlich
-        var zutaten = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}';
+        var zutaten = '<option value="-1">Keine Angabe</option><option value="-1">----</option>{%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}';
         var x = hinzufueger.length; //Counter der bereits vorhanden Felder
         var CounterZutaten = 1; //Counter
 
@@ -43,7 +43,7 @@
                         '+ zutaten + '\
                         </select>\
                     </div> \
-                    <div class="col-md-2"><input type="number" name="menge[]" value="0" min="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
+                    <div class="col-md-2"><input type="text" name="menge[]" value="0" placeholder="Bitte geben Sie die dazugehörige Menge ein" class="select2-selection__rendered" id="mfield_' + CounterZutaten + '"> \
                         <a href="#" class="removeclassZutat" style="width: 36px;height: 36px;"><button class="btn-sm btn-danger">-</button></a> \
                     </div>');
                 x++; //text box erhöhen
@@ -165,11 +165,11 @@
                     <select name="zutat[]" placeholder="Geben Sie bitte eine Zutat an" class="form-control">
                      <option value="-1">Keine Angabe</option>
                      <option value="-1">----</option>
-                     {%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}} ({{entry.einheit}})</option>{% endfor%}</select>
+                     {%for entry in zutaten%}<option value="{{entry.id}}">{{entry.name}}</option>{% endfor%}</select>
                 </div><!-- end of select2option1 -->
                 <div class="col-md-2">
-                    <input type="number" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
-                        class="select2-selection__rendered" value="0" min="0" width="auto">
+                    <input type="text" name="menge[]" placeholder="Bitte geben Sie die dazugehörige Menge ein"
+                        class="select2-selection__rendered" value="0" width="auto">
                         <button type="button" name="add" id="AddZutatInput" class="btn-sm btn-success">+</button>
                 </div>
             </div><!-- end of id=row -->

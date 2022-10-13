@@ -213,10 +213,10 @@ def rezeptver2(rid):
         return redirect(url_for('showZutaten', page=page))
     form = forms.rezeptzutatadder()
     # Zutaten auswählbar machen
-    form.zutat.choices = createArrayHelper2(zutat.query.all())
+    form.zutat.choices = createArrayHelper(zutat.query.all())
     if form.validate_on_submit and request.method == "POST":
         # Wir speichern  das Formular
-        assoc1 = Association(menge=int(form.menge.data), optional=False)
+        assoc1 = Association(menge=form.menge.data, optional=False)
         zutat1 = zutat.query.get(int(form.zutat.data))
         assoc1.hatzutat = zutat1
         try:
