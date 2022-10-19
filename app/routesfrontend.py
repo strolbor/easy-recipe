@@ -322,6 +322,9 @@ def rezeptsammlung():
             if form.rezeptkategorien.data:
                 eigenschaft = form.rezeptkategorien.data.lower()
                 passendeRezepte = PassendeRezeptliste(form.rezeptkategorien.data, getRezeptByEigenschaft(1000, eigenschaft))
+                return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
+                                       rezeptsammlungen=[passendeRezepte],
+                                       anzRezeptvorschlaege=len(passendeRezepte.rezepte))
 
             if form.maxZutaten.data:
                 maxZutaten = int(form.maxZutaten.data)
@@ -334,9 +337,9 @@ def rezeptsammlung():
                         if len(rez.zutaten) <= maxZutaten:
                             passendeRezepte.rezepte.append( Rezeptsammlung(rez.id, rez.name, rez.tags, rez.bild) )
 
-            return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
-                                   rezeptsammlungen=[passendeRezepte],
-                                   anzRezeptvorschlaege=len(passendeRezepte.rezepte))
+                return render_template('rezeptsammlung.html', title="Rezeptsammlung", form=form,
+                                       rezeptsammlungen=[passendeRezepte],
+                                       anzRezeptvorschlaege=len(passendeRezepte.rezepte))
 
 
     #wenn erster Aufruf:

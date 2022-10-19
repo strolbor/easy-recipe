@@ -99,6 +99,7 @@
         $('#rezeptnamen').on('select2:select', function (e) {
             console.log("selected2")
             $('#btnSuchen').click()
+            $('#rezeptnamen').val(null)
             return false;
 
         });
