@@ -84,3 +84,6 @@ Mit dieses Hilfskript werden die Zutaten normalisiert und in die Datenbank einge
 * Webscraper-Daten 
 #### erstellt:
 * Zutaten
+
+# Binärdaten
+* https://drive.google.com/drive/folders/1ElHNEzfGqB4-3EV3GZyg-ngCRvpf5NC2?usp=share_link
