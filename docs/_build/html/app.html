@@ -37,38 +37,856 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link zu dieser Überschrift">¶</a></h2>
 </section>
-<section id="module-app.routesbackend">
-<span id="app-routesbackend-module"></span><h2>app.routesbackend module<a class="headerlink" href="#module-app.routesbackend" title="Link zu dieser Überschrift">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.CHGver2">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">CHGver2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#CHGver2"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.CHGver2" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Wir wählen, die Zutaten aus, die wir zum rezept speichern wollen.</p>
+<section id="module-app.RezeptRanking">
+<span id="app-rezeptranking-module"></span><h2>app.RezeptRanking module<a class="headerlink" href="#module-app.RezeptRanking" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.RezeptRanking.</span></span><span class="sig-name descname"><span class="pre">RezeptRanking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_rid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_bild</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_vorhandeneZutatenNamen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_fehlendeZutatenNamen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_bewertung</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/RezeptRanking.html#RezeptRanking"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.RezeptRanking.RezeptRanking" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.bewertung">
+<span class="sig-name descname"><span class="pre">bewertung</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.bewertung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.bild">
+<span class="sig-name descname"><span class="pre">bild</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.bild" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.fehlendeZutatenNamen">
+<span class="sig-name descname"><span class="pre">fehlendeZutatenNamen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.fehlendeZutatenNamen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bewertung 0 bis 1, 1 ist gut und 0 schlecht = 1 - fehlendeZutaten/zutatenGesamtNötig</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.name" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.rid">
+<span class="sig-name descname"><span class="pre">rid</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.rid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.tags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.RezeptRanking.RezeptRanking.vorhandeneZutatenNamen">
+<span class="sig-name descname"><span class="pre">vorhandeneZutatenNamen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.RezeptRanking.RezeptRanking.vorhandeneZutatenNamen" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.CHGverknupfung">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">CHGverknupfung</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#CHGverknupfung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.CHGverknupfung" title="Link zu dieser Definition">¶</a></dt>
+<dt class="sig sig-object py" id="app.RezeptRanking.getRezepteByZutatIDs">
+<span class="sig-prename descclassname"><span class="pre">app.RezeptRanking.</span></span><span class="sig-name descname"><span class="pre">getRezepteByZutatIDs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ausgewZutaten</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bewertungsmodus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/RezeptRanking.html#getRezepteByZutatIDs"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.RezeptRanking.getRezepteByZutatIDs" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>speichere Zutaten und mögliche Rezepte ab</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.RezeptRanking.getRezepteByZutatNamen">
+<span class="sig-prename descclassname"><span class="pre">app.RezeptRanking.</span></span><span class="sig-name descname"><span class="pre">getRezepteByZutatNamen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zutatnamen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bewertungsmodus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/RezeptRanking.html#getRezepteByZutatNamen"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.RezeptRanking.getRezepteByZutatNamen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>speichere Zutaten und mögliche Rezepte ab</p>
+</dd></dl>
+
+</section>
+<section id="module-app.Rezeptsammlung">
+<span id="app-rezeptsammlung-module"></span><h2>app.Rezeptsammlung module<a class="headerlink" href="#module-app.Rezeptsammlung" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.Rezeptsammlung">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">Rezeptsammlung</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_rid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_bild</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#Rezeptsammlung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.Rezeptsammlung" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.Rezeptsammlung.bild">
+<span class="sig-name descname"><span class="pre">bild</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.Rezeptsammlung.Rezeptsammlung.bild" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.Rezeptsammlung.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.Rezeptsammlung.Rezeptsammlung.name" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.Rezeptsammlung.rid">
+<span class="sig-name descname"><span class="pre">rid</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#app.Rezeptsammlung.Rezeptsammlung.rid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.Rezeptsammlung.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.Rezeptsammlung.Rezeptsammlung.tags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.getRezeptByEigenschaft">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">getRezeptByEigenschaft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anzahl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eigenschaft</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#getRezeptByEigenschaft"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.getRezeptByEigenschaft" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.getRezepteByMaxZutaten">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">getRezepteByMaxZutaten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anzahl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#getRezepteByMaxZutaten"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.getRezepteByMaxZutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.getRezepteByTag">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">getRezepteByTag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#getRezepteByTag"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.getRezepteByTag" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.isEinfach">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">isEinfach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rez</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#isEinfach"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.isEinfach" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.isFleisch">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">isFleisch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rez</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#isFleisch"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.isFleisch" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.isVegan">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">isVegan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rez</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#isVegan"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.isVegan" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.Rezeptsammlung.isVegetarisch">
+<span class="sig-prename descclassname"><span class="pre">app.Rezeptsammlung.</span></span><span class="sig-name descname"><span class="pre">isVegetarisch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rez</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/Rezeptsammlung.html#isVegetarisch"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Rezeptsammlung.isVegetarisch" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-app.backend_helper">
+<span id="app-backend-helper-module"></span><h2>app.backend_helper module<a class="headerlink" href="#module-app.backend_helper" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.backend_helper.createArrayHelper">
+<span class="sig-prename descclassname"><span class="pre">app.backend_helper.</span></span><span class="sig-name descname"><span class="pre">createArrayHelper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrayeingabe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/backend_helper.html#createArrayHelper"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.backend_helper.createArrayHelper" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Mithilfe dieser Funktion wird ein Array der Form [id, {name}] erstellt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.backend_helper.createArrayHelper2">
+<span class="sig-prename descclassname"><span class="pre">app.backend_helper.</span></span><span class="sig-name descname"><span class="pre">createArrayHelper2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrayeingabe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/backend_helper.html#createArrayHelper2"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.backend_helper.createArrayHelper2" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Mithilfe dieser Funktion wird ein Array der Form [id, {name} (einheit)] erstellt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.backend_helper.createFolderIfNotExists">
+<span class="sig-prename descclassname"><span class="pre">app.backend_helper.</span></span><span class="sig-name descname"><span class="pre">createFolderIfNotExists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/backend_helper.html#createFolderIfNotExists"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.backend_helper.createFolderIfNotExists" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Ordner erstellen</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.backend_helper.getNewID">
+<span class="sig-prename descclassname"><span class="pre">app.backend_helper.</span></span><span class="sig-name descname"><span class="pre">getNewID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/backend_helper.html#getNewID"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.backend_helper.getNewID" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Mithilfe dieser Funktion erhalten wir die neue ID des Rezepts</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.backend_helper.savepic">
+<span class="sig-prename descclassname"><span class="pre">app.backend_helper.</span></span><span class="sig-name descname"><span class="pre">savepic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feldname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rfiles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordner</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/app/backend_helper.html#savepic"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.backend_helper.savepic" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Diese Funktion speichert unser Bild ab und anschließend wird es resized.</p>
+</dd></dl>
+
+</section>
+<section id="module-app.forms">
+<span id="app-forms-module"></span><h2>app.forms module<a class="headerlink" href="#module-app.forms" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.d_felder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">d_felder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#d_felder"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.d_felder" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Swip Swap Formular auf der Startseite</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.entry">
+<span class="sig-name descname"><span class="pre">entry</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Kategorie</span> <span class="pre">Pulver</span></em><a class="headerlink" href="#app.forms.d_felder.entry" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.d_felder.homepage_kategorie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">homepage_kategorie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_zutaten</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#d_felder.homepage_kategorie"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.d_felder.homepage_kategorie" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Name der Kategorie und dazugehörige Zutaten</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.homepage_kategorie.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#app.forms.d_felder.homepage_kategorie.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.homepage_kategorie.zutaten">
+<span class="sig-name descname"><span class="pre">zutaten</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#app.forms.d_felder.homepage_kategorie.zutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.kat_zutatsubmits">
+<span class="sig-name descname"><span class="pre">kat_zutatsubmits</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[Zutat:</span> <span class="pre">Brühepulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">17,</span> <span class="pre">Zutat:</span> <span class="pre">Chilipulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">29,</span> <span class="pre">Zutat:</span> <span class="pre">Currypulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">38,</span> <span class="pre">Zutat:</span> <span class="pre">Kakaopulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">94,</span> <span class="pre">Zutat:</span> <span class="pre">Paprikapulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">155,</span> <span class="pre">Zutat:</span> <span class="pre">Vanillepuddingpulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">237,</span> <span class="pre">Zutat:</span> <span class="pre">Zwiebelpulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">262]</span></em><a class="headerlink" href="#app.forms.d_felder.kat_zutatsubmits" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.kategorieName">
+<span class="sig-name descname"><span class="pre">kategorieName</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Pulver'</span></em><a class="headerlink" href="#app.forms.d_felder.kategorieName" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.kategorien">
+<span class="sig-name descname"><span class="pre">kategorien</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;,</span> <span class="pre">&lt;app.forms.d_felder.homepage_kategorie</span> <span class="pre">object&gt;]</span></em><a class="headerlink" href="#app.forms.d_felder.kategorien" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.submitSuchen">
+<span class="sig-name descname"><span class="pre">submitSuchen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Suchen',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.d_felder.submitSuchen" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.suchfeld">
+<span class="sig-name descname"><span class="pre">suchfeld</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Direktsuche',),</span> <span class="pre">{'choices':</span> <span class="pre">['',</span> <span class="pre">'Aceto</span> <span class="pre">balsamico',</span> <span class="pre">'Ahornsirup',</span> <span class="pre">'Ananasstücke',</span> <span class="pre">'Backpulver',</span> <span class="pre">'Bacon',</span> <span class="pre">'Baguette',</span> <span class="pre">'Balsamico',</span> <span class="pre">'Bambussprosse',</span> <span class="pre">'Barbecuesauce',</span> <span class="pre">'Basilikum',</span> <span class="pre">'Basilikumblätter',</span> <span class="pre">'Bier',</span> <span class="pre">'Blattspinat',</span> <span class="pre">'Blätterteig',</span> <span class="pre">'Brötchen',</span> <span class="pre">'Brühe',</span> <span class="pre">'Brühepulver',</span> <span class="pre">'Butter',</span> <span class="pre">'Butterflöckchen',</span> <span class="pre">'Butterkeks',</span> <span class="pre">'Butterschmalz',</span> <span class="pre">'Cashewkerne',</span> <span class="pre">'Cayennepfeffer',</span> <span class="pre">'Champignons',</span> <span class="pre">'Cheddarkäse',</span> <span class="pre">'Cherrytomate',</span> <span class="pre">'Chiliflocken',</span> <span class="pre">'Chilifäden',</span> <span class="pre">'Chilipulver',</span> <span class="pre">'Chilisauce',</span> <span class="pre">'Chilischote',</span> <span class="pre">'Chiliöl',</span> <span class="pre">'chinesische</span> <span class="pre">Eiernudeln',</span> <span class="pre">'Cocktailtomaten',</span> <span class="pre">'Crème</span> <span class="pre">double',</span> <span class="pre">'Crème</span> <span class="pre">fraîche',</span> <span class="pre">'Currypaste',</span> <span class="pre">'Currypulver',</span> <span class="pre">'Dill',</span> <span class="pre">'Drillinge',</span> <span class="pre">'Duftreis',</span> <span class="pre">'Edamer</span> <span class="pre">Käse',</span> <span class="pre">'Ei',</span> <span class="pre">'Emmentaler',</span> <span class="pre">'Erdnussbutter',</span> <span class="pre">'Erdnussöl',</span> <span class="pre">'Erdnüsse',</span> <span class="pre">'Essig',</span> <span class="pre">'Farfalle',</span> <span class="pre">'Salatsaucemischung',</span> <span class="pre">'Fett',</span> <span class="pre">'Fischsauce',</span> <span class="pre">'Fleisch',</span> <span class="pre">'Fleischbrühe',</span> <span class="pre">'Fleur</span> <span class="pre">de</span> <span class="pre">Sel',</span> <span class="pre">'Frischhefe',</span> <span class="pre">'Frischkäse',</span> <span class="pre">'Frühlingszwiebel',</span> <span class="pre">'Frühstücksspeck',</span> <span class="pre">'Garam</span> <span class="pre">Masala',</span> <span class="pre">'Geflügelfleisch',</span> <span class="pre">'Gemüse',</span> <span class="pre">'Gemüsebrühe',</span> <span class="pre">'Gemüsezwiebel',</span> <span class="pre">'Gewürz',</span> <span class="pre">'Gewürzgurke',</span> <span class="pre">'Gnocchi',</span> <span class="pre">'Gouda',</span> <span class="pre">'Gulasch</span> <span class="pre">vom</span> <span class="pre">Schwein',</span> <span class="pre">'Gurke',</span> <span class="pre">'Gurkenflüssigkeit',</span> <span class="pre">'Hackfleisch',</span> <span class="pre">'Hefe',</span> <span class="pre">'Eierspätzle',</span> <span class="pre">'Pizzateig',</span> <span class="pre">'Kartoffelnudeln',</span> <span class="pre">'Mini-Knödel',</span> <span class="pre">'Strudelteig',</span> <span class="pre">'Hokkaidokürbis',</span> <span class="pre">'Honig',</span> <span class="pre">'Hühnerbrust',</span> <span class="pre">'Hühnerbrustfilet',</span> <span class="pre">'Hühnerbrühe',</span> <span class="pre">'Hühnerbrüste',</span> <span class="pre">'Hühnerfleisch',</span> <span class="pre">'Ingwer',</span> <span class="pre">'Ingwerpaste',</span> <span class="pre">'Ingwerwurzel',</span> <span class="pre">'Jasminreis</span> <span class="pre">oder</span> <span class="pre">Duftreis',</span> <span class="pre">'Joghurt',</span> <span class="pre">'Johannisbeeren',</span> <span class="pre">'Kakaopulver',</span> <span class="pre">'Kardamomkapsel',</span> <span class="pre">'Kardamompulver',</span> <span class="pre">'Karotte',</span> <span class="pre">'Kartoffel',</span> <span class="pre">'Kasseler',</span> <span class="pre">'Katenschinken',</span> <span class="pre">'Ketchup',</span> <span class="pre">'Kichererbsen</span> <span class="pre">aus</span> <span class="pre">der</span> <span class="pre">Dose',</span> <span class="pre">'Kirschtomate',</span> <span class="pre">'Knoblauch',</span> <span class="pre">'Knoblauchgranulat',</span> <span class="pre">'Knoblauchpulver',</span> <span class="pre">'Knollensellerie',</span> <span class="pre">'Kochschinken',</span> <span class="pre">'Kokosmilch',</span> <span class="pre">'Koriander',</span> <span class="pre">'Korianderblätter',</span> <span class="pre">'Koriandergrün',</span> <span class="pre">'Kreuzkümmel',</span> <span class="pre">'Kreuzkümmelpulver',</span> <span class="pre">'Kritharaki',</span> <span class="pre">'Kräuter</span> <span class="pre">der</span> <span class="pre">Provence',</span> <span class="pre">'Kräuter',</span> <span class="pre">'Kräuterbutter',</span> <span class="pre">'Kräutersalz</span> <span class="pre">und</span> <span class="pre">Pfeffer',</span> <span class="pre">'Kurkuma',</span> <span class="pre">'Käse',</span> <span class="pre">'Kümmel',</span> <span class="pre">'Kümmelpulver',</span> <span class="pre">'Lachsfilet',</span> <span class="pre">'Lasagneplatte',</span> <span class="pre">'Lauch',</span> <span class="pre">'Lauchzwiebel',</span> <span class="pre">'Liebstöckel</span> <span class="pre">-</span> <span class="pre">Blättchen',</span> <span class="pre">'Limonensaft',</span> <span class="pre">'Linsen',</span> <span class="pre">'Lorbeerblätter',</span> <span class="pre">'Magerquark',</span> <span class="pre">'Maggi',</span> <span class="pre">'Mais',</span> <span class="pre">'Maiskölbchen',</span> <span class="pre">'Majoran',</span> <span class="pre">'Mandel',</span> <span class="pre">'Mandelmehl',</span> <span class="pre">'Margarine',</span> <span class="pre">'Meersalz',</span> <span class="pre">'Mehl',</span> <span class="pre">'Milch',</span> <span class="pre">'Mineralwasser',</span> <span class="pre">'Mozzarella',</span> <span class="pre">'Mungobohnensprossen',</span> <span class="pre">'Muskat',</span> <span class="pre">'Möhre',</span> <span class="pre">'Naturjoghurt',</span> <span class="pre">'Nelke',</span> <span class="pre">'Nudeln',</span> <span class="pre">'Oliven',</span> <span class="pre">'Olivenöl',</span> <span class="pre">'Oregano',</span> <span class="pre">'Palmzucker',</span> <span class="pre">'Paprikapulver',</span> <span class="pre">'Paprikaschote',</span> <span class="pre">'Parmaschinken',</span> <span class="pre">'Parmesan',</span> <span class="pre">'Penne',</span> <span class="pre">'Peperoni',</span> <span class="pre">'Pesto',</span> <span class="pre">'Petersilie',</span> <span class="pre">'Pfeffer',</span> <span class="pre">'Pflanzenöl',</span> <span class="pre">'Piment',</span> <span class="pre">'Pinienkerne',</span> <span class="pre">'Pizzatomaten',</span> <span class="pre">'Porree',</span> <span class="pre">'Preiselbeeren',</span> <span class="pre">'Puderzucker',</span> <span class="pre">'Quark',</span> <span class="pre">'Rapskernöl',</span> <span class="pre">'Reis',</span> <span class="pre">'Rigatoni',</span> <span class="pre">'Rinderbrühe',</span> <span class="pre">'Rinderfond',</span> <span class="pre">'Rindergulasch',</span> <span class="pre">'Rinderhackfleisch',</span> <span class="pre">'Rinderroulade',</span> <span class="pre">'Rindfleisch',</span> <span class="pre">'Rosinen',</span> <span class="pre">'Rosmarin',</span> <span class="pre">'Rosmarinnadeln',</span> <span class="pre">'Rotwein',</span> <span class="pre">'Rucola',</span> <span class="pre">'Räucherlachs</span> <span class="pre">in</span> <span class="pre">Scheiben',</span> <span class="pre">'Räucherschinken',</span> <span class="pre">'Röstzwiebeln',</span> <span class="pre">'Sahne',</span> <span class="pre">'Sahne-Schmelzkäse',</span> <span class="pre">'Salat',</span> <span class="pre">'Salz',</span> <span class="pre">'Sambal</span> <span class="pre">Oelek',</span> <span class="pre">'Saucenbinder',</span> <span class="pre">'Sauerkraut',</span> <span class="pre">'Sauerrahm',</span> <span class="pre">'saure</span> <span class="pre">Sahne',</span> <span class="pre">'Schafskäse',</span> <span class="pre">'Schalotte',</span> <span class="pre">'Schinken',</span> <span class="pre">'Schinkenspeck',</span> <span class="pre">'Schlagsahne',</span> <span class="pre">'Schmand',</span> <span class="pre">'Schmelzkäse',</span> <span class="pre">'Schnittlauch',</span> <span class="pre">'Schupfnudeln</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Kühlregal',</span> <span class="pre">'Schweinefilet',</span> <span class="pre">'Semmelbrösel',</span> <span class="pre">'Senf',</span> <span class="pre">'Sesam',</span> <span class="pre">'Sesamöl',</span> <span class="pre">'Sojasauce',</span> <span class="pre">'Sonnenblumenöl',</span> <span class="pre">'Spargel',</span> <span class="pre">'Speck',</span> <span class="pre">'Speisestärke',</span> <span class="pre">'Spätzle',</span> <span class="pre">'Strauchtomate',</span> <span class="pre">'Szechuanpfeffer',</span> <span class="pre">'süße</span> <span class="pre">Sahne',</span> <span class="pre">'Thai-Basilikum',</span> <span class="pre">'Thymian',</span> <span class="pre">'Toastbrot',</span> <span class="pre">'Tomaten',</span> <span class="pre">'Tomatenketchup',</span> <span class="pre">'Tomatenmark',</span> <span class="pre">'Tomatenpüree',</span> <span class="pre">'Tomatensauce',</span> <span class="pre">'Tortellini',</span> <span class="pre">'Trockenhefe',</span> <span class="pre">'TULIP</span> <span class="pre">Bacon-Scheiben',</span> <span class="pre">'Vanillepuddingpulver',</span> <span class="pre">'Vanilleschote',</span> <span class="pre">'Vanillezucker',</span> <span class="pre">'Veggie-Hack',</span> <span class="pre">'Vollmilch',</span> <span class="pre">'Walnüsse',</span> <span class="pre">'Wasser',</span> <span class="pre">'Weizenmehl',</span> <span class="pre">'Weißwein',</span> <span class="pre">'Weißweinessig',</span> <span class="pre">'Wirsing',</span> <span class="pre">'Worcestersauce',</span> <span class="pre">'Wurzelgemüse',</span> <span class="pre">'Ziegenfrischkäse',</span> <span class="pre">'Zimt',</span> <span class="pre">'Zimtpulver',</span> <span class="pre">'Zimtstange',</span> <span class="pre">'Zitrone',</span> <span class="pre">'Zitronengras',</span> <span class="pre">'Zitronengraspaste</span> <span class="pre">',</span> <span class="pre">'Zitronensaft',</span> <span class="pre">'Zucchini',</span> <span class="pre">'Zucker',</span> <span class="pre">'Zuckerschote',</span> <span class="pre">'Zwiebel',</span> <span class="pre">'Zwiebelpulver',</span> <span class="pre">'Öl',</span> <span class="pre">'Apfel']})&gt;</span></em><a class="headerlink" href="#app.forms.d_felder.suchfeld" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.sumbitAddSuchbegriff">
+<span class="sig-name descname"><span class="pre">sumbitAddSuchbegriff</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Hinzufügen',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.d_felder.sumbitAddSuchbegriff" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.zutatenListe">
+<span class="sig-name descname"><span class="pre">zutatenListe</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Aceto</span> <span class="pre">balsamico',</span> <span class="pre">'Ahornsirup',</span> <span class="pre">'Ananasstücke',</span> <span class="pre">'Backpulver',</span> <span class="pre">'Bacon',</span> <span class="pre">'Baguette',</span> <span class="pre">'Balsamico',</span> <span class="pre">'Bambussprosse',</span> <span class="pre">'Barbecuesauce',</span> <span class="pre">'Basilikum',</span> <span class="pre">'Basilikumblätter',</span> <span class="pre">'Bier',</span> <span class="pre">'Blattspinat',</span> <span class="pre">'Blätterteig',</span> <span class="pre">'Brötchen',</span> <span class="pre">'Brühe',</span> <span class="pre">'Brühepulver',</span> <span class="pre">'Butter',</span> <span class="pre">'Butterflöckchen',</span> <span class="pre">'Butterkeks',</span> <span class="pre">'Butterschmalz',</span> <span class="pre">'Cashewkerne',</span> <span class="pre">'Cayennepfeffer',</span> <span class="pre">'Champignons',</span> <span class="pre">'Cheddarkäse',</span> <span class="pre">'Cherrytomate',</span> <span class="pre">'Chiliflocken',</span> <span class="pre">'Chilifäden',</span> <span class="pre">'Chilipulver',</span> <span class="pre">'Chilisauce',</span> <span class="pre">'Chilischote',</span> <span class="pre">'Chiliöl',</span> <span class="pre">'chinesische</span> <span class="pre">Eiernudeln',</span> <span class="pre">'Cocktailtomaten',</span> <span class="pre">'Crème</span> <span class="pre">double',</span> <span class="pre">'Crème</span> <span class="pre">fraîche',</span> <span class="pre">'Currypaste',</span> <span class="pre">'Currypulver',</span> <span class="pre">'Dill',</span> <span class="pre">'Drillinge',</span> <span class="pre">'Duftreis',</span> <span class="pre">'Edamer</span> <span class="pre">Käse',</span> <span class="pre">'Ei',</span> <span class="pre">'Emmentaler',</span> <span class="pre">'Erdnussbutter',</span> <span class="pre">'Erdnussöl',</span> <span class="pre">'Erdnüsse',</span> <span class="pre">'Essig',</span> <span class="pre">'Farfalle',</span> <span class="pre">'Salatsaucemischung',</span> <span class="pre">'Fett',</span> <span class="pre">'Fischsauce',</span> <span class="pre">'Fleisch',</span> <span class="pre">'Fleischbrühe',</span> <span class="pre">'Fleur</span> <span class="pre">de</span> <span class="pre">Sel',</span> <span class="pre">'Frischhefe',</span> <span class="pre">'Frischkäse',</span> <span class="pre">'Frühlingszwiebel',</span> <span class="pre">'Frühstücksspeck',</span> <span class="pre">'Garam</span> <span class="pre">Masala',</span> <span class="pre">'Geflügelfleisch',</span> <span class="pre">'Gemüse',</span> <span class="pre">'Gemüsebrühe',</span> <span class="pre">'Gemüsezwiebel',</span> <span class="pre">'Gewürz',</span> <span class="pre">'Gewürzgurke',</span> <span class="pre">'Gnocchi',</span> <span class="pre">'Gouda',</span> <span class="pre">'Gulasch</span> <span class="pre">vom</span> <span class="pre">Schwein',</span> <span class="pre">'Gurke',</span> <span class="pre">'Gurkenflüssigkeit',</span> <span class="pre">'Hackfleisch',</span> <span class="pre">'Hefe',</span> <span class="pre">'Eierspätzle',</span> <span class="pre">'Pizzateig',</span> <span class="pre">'Kartoffelnudeln',</span> <span class="pre">'Mini-Knödel',</span> <span class="pre">'Strudelteig',</span> <span class="pre">'Hokkaidokürbis',</span> <span class="pre">'Honig',</span> <span class="pre">'Hühnerbrust',</span> <span class="pre">'Hühnerbrustfilet',</span> <span class="pre">'Hühnerbrühe',</span> <span class="pre">'Hühnerbrüste',</span> <span class="pre">'Hühnerfleisch',</span> <span class="pre">'Ingwer',</span> <span class="pre">'Ingwerpaste',</span> <span class="pre">'Ingwerwurzel',</span> <span class="pre">'Jasminreis</span> <span class="pre">oder</span> <span class="pre">Duftreis',</span> <span class="pre">'Joghurt',</span> <span class="pre">'Johannisbeeren',</span> <span class="pre">'Kakaopulver',</span> <span class="pre">'Kardamomkapsel',</span> <span class="pre">'Kardamompulver',</span> <span class="pre">'Karotte',</span> <span class="pre">'Kartoffel',</span> <span class="pre">'Kasseler',</span> <span class="pre">'Katenschinken',</span> <span class="pre">'Ketchup',</span> <span class="pre">'Kichererbsen</span> <span class="pre">aus</span> <span class="pre">der</span> <span class="pre">Dose',</span> <span class="pre">'Kirschtomate',</span> <span class="pre">'Knoblauch',</span> <span class="pre">'Knoblauchgranulat',</span> <span class="pre">'Knoblauchpulver',</span> <span class="pre">'Knollensellerie',</span> <span class="pre">'Kochschinken',</span> <span class="pre">'Kokosmilch',</span> <span class="pre">'Koriander',</span> <span class="pre">'Korianderblätter',</span> <span class="pre">'Koriandergrün',</span> <span class="pre">'Kreuzkümmel',</span> <span class="pre">'Kreuzkümmelpulver',</span> <span class="pre">'Kritharaki',</span> <span class="pre">'Kräuter</span> <span class="pre">der</span> <span class="pre">Provence',</span> <span class="pre">'Kräuter',</span> <span class="pre">'Kräuterbutter',</span> <span class="pre">'Kräutersalz</span> <span class="pre">und</span> <span class="pre">Pfeffer',</span> <span class="pre">'Kurkuma',</span> <span class="pre">'Käse',</span> <span class="pre">'Kümmel',</span> <span class="pre">'Kümmelpulver',</span> <span class="pre">'Lachsfilet',</span> <span class="pre">'Lasagneplatte',</span> <span class="pre">'Lauch',</span> <span class="pre">'Lauchzwiebel',</span> <span class="pre">'Liebstöckel</span> <span class="pre">-</span> <span class="pre">Blättchen',</span> <span class="pre">'Limonensaft',</span> <span class="pre">'Linsen',</span> <span class="pre">'Lorbeerblätter',</span> <span class="pre">'Magerquark',</span> <span class="pre">'Maggi',</span> <span class="pre">'Mais',</span> <span class="pre">'Maiskölbchen',</span> <span class="pre">'Majoran',</span> <span class="pre">'Mandel',</span> <span class="pre">'Mandelmehl',</span> <span class="pre">'Margarine',</span> <span class="pre">'Meersalz',</span> <span class="pre">'Mehl',</span> <span class="pre">'Milch',</span> <span class="pre">'Mineralwasser',</span> <span class="pre">'Mozzarella',</span> <span class="pre">'Mungobohnensprossen',</span> <span class="pre">'Muskat',</span> <span class="pre">'Möhre',</span> <span class="pre">'Naturjoghurt',</span> <span class="pre">'Nelke',</span> <span class="pre">'Nudeln',</span> <span class="pre">'Oliven',</span> <span class="pre">'Olivenöl',</span> <span class="pre">'Oregano',</span> <span class="pre">'Palmzucker',</span> <span class="pre">'Paprikapulver',</span> <span class="pre">'Paprikaschote',</span> <span class="pre">'Parmaschinken',</span> <span class="pre">'Parmesan',</span> <span class="pre">'Penne',</span> <span class="pre">'Peperoni',</span> <span class="pre">'Pesto',</span> <span class="pre">'Petersilie',</span> <span class="pre">'Pfeffer',</span> <span class="pre">'Pflanzenöl',</span> <span class="pre">'Piment',</span> <span class="pre">'Pinienkerne',</span> <span class="pre">'Pizzatomaten',</span> <span class="pre">'Porree',</span> <span class="pre">'Preiselbeeren',</span> <span class="pre">'Puderzucker',</span> <span class="pre">'Quark',</span> <span class="pre">'Rapskernöl',</span> <span class="pre">'Reis',</span> <span class="pre">'Rigatoni',</span> <span class="pre">'Rinderbrühe',</span> <span class="pre">'Rinderfond',</span> <span class="pre">'Rindergulasch',</span> <span class="pre">'Rinderhackfleisch',</span> <span class="pre">'Rinderroulade',</span> <span class="pre">'Rindfleisch',</span> <span class="pre">'Rosinen',</span> <span class="pre">'Rosmarin',</span> <span class="pre">'Rosmarinnadeln',</span> <span class="pre">'Rotwein',</span> <span class="pre">'Rucola',</span> <span class="pre">'Räucherlachs</span> <span class="pre">in</span> <span class="pre">Scheiben',</span> <span class="pre">'Räucherschinken',</span> <span class="pre">'Röstzwiebeln',</span> <span class="pre">'Sahne',</span> <span class="pre">'Sahne-Schmelzkäse',</span> <span class="pre">'Salat',</span> <span class="pre">'Salz',</span> <span class="pre">'Sambal</span> <span class="pre">Oelek',</span> <span class="pre">'Saucenbinder',</span> <span class="pre">'Sauerkraut',</span> <span class="pre">'Sauerrahm',</span> <span class="pre">'saure</span> <span class="pre">Sahne',</span> <span class="pre">'Schafskäse',</span> <span class="pre">'Schalotte',</span> <span class="pre">'Schinken',</span> <span class="pre">'Schinkenspeck',</span> <span class="pre">'Schlagsahne',</span> <span class="pre">'Schmand',</span> <span class="pre">'Schmelzkäse',</span> <span class="pre">'Schnittlauch',</span> <span class="pre">'Schupfnudeln</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Kühlregal',</span> <span class="pre">'Schweinefilet',</span> <span class="pre">'Semmelbrösel',</span> <span class="pre">'Senf',</span> <span class="pre">'Sesam',</span> <span class="pre">'Sesamöl',</span> <span class="pre">'Sojasauce',</span> <span class="pre">'Sonnenblumenöl',</span> <span class="pre">'Spargel',</span> <span class="pre">'Speck',</span> <span class="pre">'Speisestärke',</span> <span class="pre">'Spätzle',</span> <span class="pre">'Strauchtomate',</span> <span class="pre">'Szechuanpfeffer',</span> <span class="pre">'süße</span> <span class="pre">Sahne',</span> <span class="pre">'Thai-Basilikum',</span> <span class="pre">'Thymian',</span> <span class="pre">'Toastbrot',</span> <span class="pre">'Tomaten',</span> <span class="pre">'Tomatenketchup',</span> <span class="pre">'Tomatenmark',</span> <span class="pre">'Tomatenpüree',</span> <span class="pre">'Tomatensauce',</span> <span class="pre">'Tortellini',</span> <span class="pre">'Trockenhefe',</span> <span class="pre">'TULIP</span> <span class="pre">Bacon-Scheiben',</span> <span class="pre">'Vanillepuddingpulver',</span> <span class="pre">'Vanilleschote',</span> <span class="pre">'Vanillezucker',</span> <span class="pre">'Veggie-Hack',</span> <span class="pre">'Vollmilch',</span> <span class="pre">'Walnüsse',</span> <span class="pre">'Wasser',</span> <span class="pre">'Weizenmehl',</span> <span class="pre">'Weißwein',</span> <span class="pre">'Weißweinessig',</span> <span class="pre">'Wirsing',</span> <span class="pre">'Worcestersauce',</span> <span class="pre">'Wurzelgemüse',</span> <span class="pre">'Ziegenfrischkäse',</span> <span class="pre">'Zimt',</span> <span class="pre">'Zimtpulver',</span> <span class="pre">'Zimtstange',</span> <span class="pre">'Zitrone',</span> <span class="pre">'Zitronengras',</span> <span class="pre">'Zitronengraspaste</span> <span class="pre">',</span> <span class="pre">'Zitronensaft',</span> <span class="pre">'Zucchini',</span> <span class="pre">'Zucker',</span> <span class="pre">'Zuckerschote',</span> <span class="pre">'Zwiebel',</span> <span class="pre">'Zwiebelpulver',</span> <span class="pre">'Öl',</span> <span class="pre">'Apfel']</span></em><a class="headerlink" href="#app.forms.d_felder.zutatenListe" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.d_felder.zutats">
+<span class="sig-name descname"><span class="pre">zutats</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Zutat:</span> <span class="pre">Zwiebelpulver</span> <span class="pre">in</span> <span class="pre">der</span> <span class="pre">Einheit:</span> <span class="pre">None</span> <span class="pre">und</span> <span class="pre">der</span> <span class="pre">ID:</span> <span class="pre">262</span></em><a class="headerlink" href="#app.forms.d_felder.zutats" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.handlungschrittanlegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">handlungschrittanlegen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#handlungschrittanlegen"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.handlungschrittanlegen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Handlungsschrittanzeige Seite in der Verwaltung</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungschrittanlegen.beschreibung">
+<span class="sig-name descname"><span class="pre">beschreibung</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(TextAreaField,</span> <span class="pre">('Beschreibung',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.handlungschrittanlegen.beschreibung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungschrittanlegen.bildupload1">
+<span class="sig-name descname"><span class="pre">bildupload1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(FileField,</span> <span class="pre">('Bild</span> <span class="pre">1',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.handlungschrittanlegen.bildupload1" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungschrittanlegen.bildupload2">
+<span class="sig-name descname"><span class="pre">bildupload2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(FileField,</span> <span class="pre">('Bild</span> <span class="pre">2',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.handlungschrittanlegen.bildupload2" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungschrittanlegen.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.handlungschrittanlegen.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.handlungverknupfer">
+<span id="app.forms.handlungverknüpfer"></span><em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">handlungverknüpfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#handlungverknüpfer"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.handlungverknupfer" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungverknupfer.handlungschritt">
+<span id="app.forms.handlungverknüpfer.handlungschritt"></span><span class="sig-name descname"><span class="pre">handlungschritt</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Handlungschritt',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.handlungverknupfer.handlungschritt" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungverknupfer.position">
+<span id="app.forms.handlungverknüpfer.position"></span><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Position',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.handlungverknupfer.position" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.handlungverknupfer.submit">
+<span id="app.forms.handlungverknüpfer.submit"></span><span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.handlungverknupfer.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.nutzerein">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">nutzerein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#nutzerein"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.nutzerein" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.nutzerein.bildupload">
+<span class="sig-name descname"><span class="pre">bildupload</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(FileField,</span> <span class="pre">('Bild',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.nutzerein.bildupload" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.nutzerein.handlung">
+<span class="sig-name descname"><span class="pre">handlung</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(TextAreaField,</span> <span class="pre">('Handlungschritt',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.nutzerein.handlung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.nutzerein.rname">
+<span class="sig-name descname"><span class="pre">rname</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Name',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.nutzerein.rname" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.nutzerein.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.nutzerein.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rezeptaendern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rezeptaendern"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rezeptaendern" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Rezeptanlege Seite in der Verwaltung</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern.bildupload">
+<span class="sig-name descname"><span class="pre">bildupload</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(FileField,</span> <span class="pre">('Bild',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptaendern.bildupload" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern.handlung">
+<span class="sig-name descname"><span class="pre">handlung</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(TextAreaField,</span> <span class="pre">('Anleitung',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptaendern.handlung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern.rezeptname">
+<span class="sig-name descname"><span class="pre">rezeptname</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Name',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptaendern.rezeptname" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptaendern.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptaendern.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectMultipleField,</span> <span class="pre">('Tag',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptaendern.tags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rezeptanzeige">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rezeptanzeige</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rezeptanzeige"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rezeptanzeige" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptanzeige.submitTest">
+<span class="sig-name descname"><span class="pre">submitTest</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Suchen',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptanzeige.submitTest" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rezeptranking">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rezeptranking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rezeptranking"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rezeptranking" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#app.forms.rezeptsammlung" title="app.forms.rezeptsammlung"><code class="xref py py-class docutils literal notranslate"><span class="pre">app.forms.rezeptsammlung</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptranking.btnSort0">
+<span class="sig-name descname"><span class="pre">btnSort0</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">(),</span> <span class="pre">{'label':</span> <span class="pre">'Bestes</span> <span class="pre">Verhältnis'})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptranking.btnSort0" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptranking.btnSort1">
+<span class="sig-name descname"><span class="pre">btnSort1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">(),</span> <span class="pre">{'label':</span> <span class="pre">'Wenigste</span> <span class="pre">fehlende</span> <span class="pre">Zutaten'})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptranking.btnSort1" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptranking.btnSort2">
+<span class="sig-name descname"><span class="pre">btnSort2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">(),</span> <span class="pre">{'label':</span> <span class="pre">'Meiste</span> <span class="pre">vorhandene</span> <span class="pre">Zutaten'})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptranking.btnSort2" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rezeptsammlung</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rezeptsammlung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rezeptsammlung" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.alleRezeptNamen">
+<span class="sig-name descname"><span class="pre">alleRezeptNamen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['Bauerntopf',</span> <span class="pre">'Blätterteig-Lachs-Schnecken',</span> <span class="pre">'Blätterteig-Schinken-Käse-Stangen',</span> <span class="pre">'Blätterteig-Tomaten-Quadrate',</span> <span class="pre">'Bratkartoffeln</span> <span class="pre">mit</span> <span class="pre">Bacon</span> <span class="pre">und</span> <span class="pre">Parmesan',</span> <span class="pre">'Brauhaus-Gulasch',</span> <span class="pre">'Bunter</span> <span class="pre">Hackfleisch-Gemüse-Eintopf',</span> <span class="pre">'Catharinas</span> <span class="pre">Ofenkartoffeln</span> <span class="pre">nach</span> <span class="pre">Fiefhusener</span> <span class="pre">Art</span> <span class="pre">mit</span> <span class="pre">Kräuterquark',</span> <span class="pre">'Cheese-Burger-Muffins',</span> <span class="pre">'Chili-Lemon-Chicken',</span> <span class="pre">'Cremiger</span> <span class="pre">Nudelauflauf</span> <span class="pre">mit</span> <span class="pre">Tomaten</span> <span class="pre">und</span> <span class="pre">Mozzarella',</span> <span class="pre">'Das</span> <span class="pre">beste</span> <span class="pre">Kartoffelgratin',</span> <span class="pre">'Deftige</span> <span class="pre">Gulaschsuppe',</span> <span class="pre">'Der</span> <span class="pre">beste</span> <span class="pre">Käsekuchen</span> <span class="pre">der</span> <span class="pre">Welt',</span> <span class="pre">'Der</span> <span class="pre">beste</span> <span class="pre">Pizzateig',</span> <span class="pre">'Der</span> <span class="pre">unglaublich</span> <span class="pre">cremige</span> <span class="pre">NY</span> <span class="pre">Cheese</span> <span class="pre">Cake',</span> <span class="pre">'Eckis</span> <span class="pre">italienischer</span> <span class="pre">Nudelsalat</span> <span class="pre">mit</span> <span class="pre">Pesto',</span> <span class="pre">'Eierlasagne</span> <span class="pre">low</span> <span class="pre">carb',</span> <span class="pre">'Filet</span> <span class="pre">im</span> <span class="pre">Speckmantel</span> <span class="pre">mit</span> <span class="pre">Spätzle',</span> <span class="pre">'Filettopf',</span> <span class="pre">'Flammkuchenrolle',</span> <span class="pre">'Franzbrötchen',</span> <span class="pre">'Frühlingshaftes</span> <span class="pre">Spargel-Knödel-Gratin',</span> <span class="pre">'Gebackene</span> <span class="pre">Knoblauch-Kartoffelscheiben',</span> <span class="pre">'Gnocchi</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Ofen</span> <span class="pre">in</span> <span class="pre">Paprika-Tomaten-Sauce',</span> <span class="pre">'Gong</span> <span class="pre">Bao</span> <span class="pre">Chicken',</span> <span class="pre">'Gulasch</span> <span class="pre">nach</span> <span class="pre">Oma</span> <span class="pre">Magda',</span> <span class="pre">'Hackbällchen</span> <span class="pre">Toscana',</span> <span class="pre">'Hackfleisch</span> <span class="pre">-</span> <span class="pre">Sauerkraut</span> <span class="pre">-</span> <span class="pre">Auflauf</span> <span class="pre">mit</span> <span class="pre">Schupfnudeln',</span> <span class="pre">'Hähnchen-Ananas-Curry</span> <span class="pre">mit</span> <span class="pre">Reis',</span> <span class="pre">'Indisches</span> <span class="pre">Butter</span> <span class="pre">Chicken</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Ofen',</span> <span class="pre">'Indisches</span> <span class="pre">Chicken</span> <span class="pre">Korma',</span> <span class="pre">'Italienischer</span> <span class="pre">Nudelsalat</span> <span class="pre">mit</span> <span class="pre">Rucola</span> <span class="pre">und</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten',</span> <span class="pre">'Italienischer</span> <span class="pre">Pizzateig',</span> <span class="pre">'Karottenkuchen,</span> <span class="pre">Rüblikuchen</span> <span class="pre">oder</span> <span class="pre">Möhrenkuchen',</span> <span class="pre">'Kartoffeln</span> <span class="pre">Lorraine',</span> <span class="pre">'Kritharaki-Salat</span> <span class="pre">mit</span> <span class="pre">Hackfleisch',</span> <span class="pre">'Käse-Lauch-Suppe</span> <span class="pre">mit</span> <span class="pre">Hackfleisch',</span> <span class="pre">'Kürbissuppe</span> <span class="pre">mit</span> <span class="pre">Ingwer</span> <span class="pre">und</span> <span class="pre">Kokosmilch',</span> <span class="pre">'Lasagne',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Bauerntopf',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Kräuter-Tomatenpfanne</span> <span class="pre">mit</span> <span class="pre">saftigem</span> <span class="pre">Geflügelfleisch',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Pizzarolle',</span> <span class="pre">'Low</span> <span class="pre">Carb-Keto-Flammkuchen',</span> <span class="pre">'Low-Carb</span> <span class="pre">Big</span> <span class="pre">Mac</span> <span class="pre">Rolle',</span> <span class="pre">'Low-carb</span> <span class="pre">Hähnchenbrust</span> <span class="pre">mit</span> <span class="pre">Zucchini</span> <span class="pre">und</span> <span class="pre">Tomaten</span> <span class="pre">in</span> <span class="pre">cremiger</span> <span class="pre">Frischkäsesauce',</span> <span class="pre">'Low-Carb-Lachs</span> <span class="pre">mit</span> <span class="pre">Ofengemüse',</span> <span class="pre">'Makhani</span> <span class="pre">Hähnchen',</span> <span class="pre">'Mini-Party-Quiches',</span> <span class="pre">'Mozzarella-Hähnchen</span> <span class="pre">in</span> <span class="pre">Basilikum-Sahnesauce',</span> <span class="pre">'NT-Schweinefilet</span> <span class="pre">im</span> <span class="pre">Speckmantel</span> <span class="pre">mit</span> <span class="pre">Champignons</span> <span class="pre">und</span> <span class="pre">Spätzle',</span> <span class="pre">'Nudelsalat</span> <span class="pre">auf</span> <span class="pre">italienisch',</span> <span class="pre">'Nudelsalat</span> <span class="pre">auf</span> <span class="pre">türkische</span> <span class="pre">Art',</span> <span class="pre">'Nudelsalat</span> <span class="pre">mit</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten,</span> <span class="pre">Pinienkernen,</span> <span class="pre">Schafskäse</span> <span class="pre">und</span> <span class="pre">Basilikum',</span> <span class="pre">'Omas</span> <span class="pre">beste</span> <span class="pre">Frikadellen',</span> <span class="pre">'Omas</span> <span class="pre">Pizzasuppe',</span> <span class="pre">'Paprika-Reispfanne</span> <span class="pre">mit</span> <span class="pre">Joghurtsauce',</span> <span class="pre">'Paprika-Sahne-Hähnchen',</span> <span class="pre">'Parmesan-Knoblauch-Kartoffelecken',</span> <span class="pre">'Pesto-</span> <span class="pre">und</span> <span class="pre">Pizza-Babka',</span> <span class="pre">'Pfannkuchen</span> <span class="pre">mit</span> <span class="pre">glasiertem</span> <span class="pre">Bacon</span> <span class="pre">und</span> <span class="pre">Frischkäse',</span> <span class="pre">'Pikante</span> <span class="pre">Thai-Suppe</span> <span class="pre">mit</span> <span class="pre">Kokos</span> <span class="pre">und</span> <span class="pre">Hühnchen',</span> <span class="pre">'Pizza-Bällchen',</span> <span class="pre">'Pizzateig',</span> <span class="pre">'Rigatoni</span> <span class="pre">al</span> <span class="pre">forno',</span> <span class="pre">'Rinderrouladen</span> <span class="pre">klassisch',</span> <span class="pre">'Rote</span> <span class="pre">Linsen-Kokos-Suppe',</span> <span class="pre">'Russischer</span> <span class="pre">Zupfkuchen',</span> <span class="pre">'Saftiger</span> <span class="pre">Kürbis-Gnocchi-Auflauf',</span> <span class="pre">'Schneller</span> <span class="pre">Flammkuchen',</span> <span class="pre">'Schnelles</span> <span class="pre">Thai-Curry</span> <span class="pre">mit</span> <span class="pre">Huhn,</span> <span class="pre">Paprika</span> <span class="pre">und</span> <span class="pre">feiner</span> <span class="pre">Erdnussnote',</span> <span class="pre">'Schupfnudel</span> <span class="pre">-</span> <span class="pre">Hackfleisch</span> <span class="pre">-</span> <span class="pre">Auflauf</span> <span class="pre">mit</span> <span class="pre">Gemüse',</span> <span class="pre">'Schupfnudel-Wirsing-Gratin',</span> <span class="pre">'Schupfnudel-Wirsing-Gratin</span> <span class="pre">mit</span> <span class="pre">Kasseler',</span> <span class="pre">'Schwedische</span> <span class="pre">Kartoffeln',</span> <span class="pre">'Schwedische</span> <span class="pre">Sommersuppe',</span> <span class="pre">'Spinatstrudel</span> <span class="pre">mit</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten</span> <span class="pre">und</span> <span class="pre">Walnüssen',</span> <span class="pre">'Thai</span> <span class="pre">Curry</span> <span class="pre">Erdnuss-Kokos-Hühnchen',</span> <span class="pre">'Thai-Red-Curry</span> <span class="pre">für</span> <span class="pre">mehrere</span> <span class="pre">Variationen',</span> <span class="pre">'Tortellini</span> <span class="pre">alla</span> <span class="pre">panna',</span> <span class="pre">'Toskanischer</span> <span class="pre">Hähnchen-Auflauf',</span> <span class="pre">'Tränenkuchen</span> <span class="pre">-</span> <span class="pre">der</span> <span class="pre">beste</span> <span class="pre">Käsekuchen</span> <span class="pre">der</span> <span class="pre">Welt!',</span> <span class="pre">'Türkischer</span> <span class="pre">Hackfleischauflauf</span> <span class="pre">mit</span> <span class="pre">Schafskäse',</span> <span class="pre">'Vegane</span> <span class="pre">Frühlingsrollen',</span> <span class="pre">'Vegetarische</span> <span class="pre">Frikadellen',</span> <span class="pre">'Würziger</span> <span class="pre">Kichererbseneintopf',</span> <span class="pre">'Zitronenkuchen',</span> <span class="pre">'Zucchini-Karotten-Bandnudeln</span> <span class="pre">mit</span> <span class="pre">Hähnchen</span> <span class="pre">und</span> <span class="pre">Tomate',</span> <span class="pre">'Zucchini-Lasagne',</span> <span class="pre">'Zucchini-Spaghetti']</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.alleRezeptNamen" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.btnSuchen">
+<span class="sig-name descname"><span class="pre">btnSuchen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('🔎',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.btnSuchen" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.entry">
+<span class="sig-name descname"><span class="pre">entry</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rezept</span> <span class="pre">90&gt;</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.entry" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.maxZutaten">
+<span class="sig-name descname"><span class="pre">maxZutaten</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Maximale</span> <span class="pre">Zutaten',),</span> <span class="pre">{'choices':</span> <span class="pre">['',</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">18,</span> <span class="pre">19,</span> <span class="pre">20]})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.maxZutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.rezeptkategorien">
+<span class="sig-name descname"><span class="pre">rezeptkategorien</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Eigenschaft',),</span> <span class="pre">{'choices':</span> <span class="pre">['',</span> <span class="pre">'Vegan',</span> <span class="pre">'Vegetarisch',</span> <span class="pre">'Einfach',</span> <span class="pre">'Fleisch']})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.rezeptkategorien" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptsammlung.rezeptnamen">
+<span class="sig-name descname"><span class="pre">rezeptnamen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Direktsuche',),</span> <span class="pre">{'choices':</span> <span class="pre">['',</span> <span class="pre">'Bauerntopf',</span> <span class="pre">'Blätterteig-Lachs-Schnecken',</span> <span class="pre">'Blätterteig-Schinken-Käse-Stangen',</span> <span class="pre">'Blätterteig-Tomaten-Quadrate',</span> <span class="pre">'Bratkartoffeln</span> <span class="pre">mit</span> <span class="pre">Bacon</span> <span class="pre">und</span> <span class="pre">Parmesan',</span> <span class="pre">'Brauhaus-Gulasch',</span> <span class="pre">'Bunter</span> <span class="pre">Hackfleisch-Gemüse-Eintopf',</span> <span class="pre">'Catharinas</span> <span class="pre">Ofenkartoffeln</span> <span class="pre">nach</span> <span class="pre">Fiefhusener</span> <span class="pre">Art</span> <span class="pre">mit</span> <span class="pre">Kräuterquark',</span> <span class="pre">'Cheese-Burger-Muffins',</span> <span class="pre">'Chili-Lemon-Chicken',</span> <span class="pre">'Cremiger</span> <span class="pre">Nudelauflauf</span> <span class="pre">mit</span> <span class="pre">Tomaten</span> <span class="pre">und</span> <span class="pre">Mozzarella',</span> <span class="pre">'Das</span> <span class="pre">beste</span> <span class="pre">Kartoffelgratin',</span> <span class="pre">'Deftige</span> <span class="pre">Gulaschsuppe',</span> <span class="pre">'Der</span> <span class="pre">beste</span> <span class="pre">Käsekuchen</span> <span class="pre">der</span> <span class="pre">Welt',</span> <span class="pre">'Der</span> <span class="pre">beste</span> <span class="pre">Pizzateig',</span> <span class="pre">'Der</span> <span class="pre">unglaublich</span> <span class="pre">cremige</span> <span class="pre">NY</span> <span class="pre">Cheese</span> <span class="pre">Cake',</span> <span class="pre">'Eckis</span> <span class="pre">italienischer</span> <span class="pre">Nudelsalat</span> <span class="pre">mit</span> <span class="pre">Pesto',</span> <span class="pre">'Eierlasagne</span> <span class="pre">low</span> <span class="pre">carb',</span> <span class="pre">'Filet</span> <span class="pre">im</span> <span class="pre">Speckmantel</span> <span class="pre">mit</span> <span class="pre">Spätzle',</span> <span class="pre">'Filettopf',</span> <span class="pre">'Flammkuchenrolle',</span> <span class="pre">'Franzbrötchen',</span> <span class="pre">'Frühlingshaftes</span> <span class="pre">Spargel-Knödel-Gratin',</span> <span class="pre">'Gebackene</span> <span class="pre">Knoblauch-Kartoffelscheiben',</span> <span class="pre">'Gnocchi</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Ofen</span> <span class="pre">in</span> <span class="pre">Paprika-Tomaten-Sauce',</span> <span class="pre">'Gong</span> <span class="pre">Bao</span> <span class="pre">Chicken',</span> <span class="pre">'Gulasch</span> <span class="pre">nach</span> <span class="pre">Oma</span> <span class="pre">Magda',</span> <span class="pre">'Hackbällchen</span> <span class="pre">Toscana',</span> <span class="pre">'Hackfleisch</span> <span class="pre">-</span> <span class="pre">Sauerkraut</span> <span class="pre">-</span> <span class="pre">Auflauf</span> <span class="pre">mit</span> <span class="pre">Schupfnudeln',</span> <span class="pre">'Hähnchen-Ananas-Curry</span> <span class="pre">mit</span> <span class="pre">Reis',</span> <span class="pre">'Indisches</span> <span class="pre">Butter</span> <span class="pre">Chicken</span> <span class="pre">aus</span> <span class="pre">dem</span> <span class="pre">Ofen',</span> <span class="pre">'Indisches</span> <span class="pre">Chicken</span> <span class="pre">Korma',</span> <span class="pre">'Italienischer</span> <span class="pre">Nudelsalat</span> <span class="pre">mit</span> <span class="pre">Rucola</span> <span class="pre">und</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten',</span> <span class="pre">'Italienischer</span> <span class="pre">Pizzateig',</span> <span class="pre">'Karottenkuchen,</span> <span class="pre">Rüblikuchen</span> <span class="pre">oder</span> <span class="pre">Möhrenkuchen',</span> <span class="pre">'Kartoffeln</span> <span class="pre">Lorraine',</span> <span class="pre">'Kritharaki-Salat</span> <span class="pre">mit</span> <span class="pre">Hackfleisch',</span> <span class="pre">'Käse-Lauch-Suppe</span> <span class="pre">mit</span> <span class="pre">Hackfleisch',</span> <span class="pre">'Kürbissuppe</span> <span class="pre">mit</span> <span class="pre">Ingwer</span> <span class="pre">und</span> <span class="pre">Kokosmilch',</span> <span class="pre">'Lasagne',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Bauerntopf',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Kräuter-Tomatenpfanne</span> <span class="pre">mit</span> <span class="pre">saftigem</span> <span class="pre">Geflügelfleisch',</span> <span class="pre">'Low</span> <span class="pre">Carb</span> <span class="pre">Pizzarolle',</span> <span class="pre">'Low</span> <span class="pre">Carb-Keto-Flammkuchen',</span> <span class="pre">'Low-Carb</span> <span class="pre">Big</span> <span class="pre">Mac</span> <span class="pre">Rolle',</span> <span class="pre">'Low-carb</span> <span class="pre">Hähnchenbrust</span> <span class="pre">mit</span> <span class="pre">Zucchini</span> <span class="pre">und</span> <span class="pre">Tomaten</span> <span class="pre">in</span> <span class="pre">cremiger</span> <span class="pre">Frischkäsesauce',</span> <span class="pre">'Low-Carb-Lachs</span> <span class="pre">mit</span> <span class="pre">Ofengemüse',</span> <span class="pre">'Makhani</span> <span class="pre">Hähnchen',</span> <span class="pre">'Mini-Party-Quiches',</span> <span class="pre">'Mozzarella-Hähnchen</span> <span class="pre">in</span> <span class="pre">Basilikum-Sahnesauce',</span> <span class="pre">'NT-Schweinefilet</span> <span class="pre">im</span> <span class="pre">Speckmantel</span> <span class="pre">mit</span> <span class="pre">Champignons</span> <span class="pre">und</span> <span class="pre">Spätzle',</span> <span class="pre">'Nudelsalat</span> <span class="pre">auf</span> <span class="pre">italienisch',</span> <span class="pre">'Nudelsalat</span> <span class="pre">auf</span> <span class="pre">türkische</span> <span class="pre">Art',</span> <span class="pre">'Nudelsalat</span> <span class="pre">mit</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten,</span> <span class="pre">Pinienkernen,</span> <span class="pre">Schafskäse</span> <span class="pre">und</span> <span class="pre">Basilikum',</span> <span class="pre">'Omas</span> <span class="pre">beste</span> <span class="pre">Frikadellen',</span> <span class="pre">'Omas</span> <span class="pre">Pizzasuppe',</span> <span class="pre">'Paprika-Reispfanne</span> <span class="pre">mit</span> <span class="pre">Joghurtsauce',</span> <span class="pre">'Paprika-Sahne-Hähnchen',</span> <span class="pre">'Parmesan-Knoblauch-Kartoffelecken',</span> <span class="pre">'Pesto-</span> <span class="pre">und</span> <span class="pre">Pizza-Babka',</span> <span class="pre">'Pfannkuchen</span> <span class="pre">mit</span> <span class="pre">glasiertem</span> <span class="pre">Bacon</span> <span class="pre">und</span> <span class="pre">Frischkäse',</span> <span class="pre">'Pikante</span> <span class="pre">Thai-Suppe</span> <span class="pre">mit</span> <span class="pre">Kokos</span> <span class="pre">und</span> <span class="pre">Hühnchen',</span> <span class="pre">'Pizza-Bällchen',</span> <span class="pre">'Pizzateig',</span> <span class="pre">'Rigatoni</span> <span class="pre">al</span> <span class="pre">forno',</span> <span class="pre">'Rinderrouladen</span> <span class="pre">klassisch',</span> <span class="pre">'Rote</span> <span class="pre">Linsen-Kokos-Suppe',</span> <span class="pre">'Russischer</span> <span class="pre">Zupfkuchen',</span> <span class="pre">'Saftiger</span> <span class="pre">Kürbis-Gnocchi-Auflauf',</span> <span class="pre">'Schneller</span> <span class="pre">Flammkuchen',</span> <span class="pre">'Schnelles</span> <span class="pre">Thai-Curry</span> <span class="pre">mit</span> <span class="pre">Huhn,</span> <span class="pre">Paprika</span> <span class="pre">und</span> <span class="pre">feiner</span> <span class="pre">Erdnussnote',</span> <span class="pre">'Schupfnudel</span> <span class="pre">-</span> <span class="pre">Hackfleisch</span> <span class="pre">-</span> <span class="pre">Auflauf</span> <span class="pre">mit</span> <span class="pre">Gemüse',</span> <span class="pre">'Schupfnudel-Wirsing-Gratin',</span> <span class="pre">'Schupfnudel-Wirsing-Gratin</span> <span class="pre">mit</span> <span class="pre">Kasseler',</span> <span class="pre">'Schwedische</span> <span class="pre">Kartoffeln',</span> <span class="pre">'Schwedische</span> <span class="pre">Sommersuppe',</span> <span class="pre">'Spinatstrudel</span> <span class="pre">mit</span> <span class="pre">getrockneten</span> <span class="pre">Tomaten</span> <span class="pre">und</span> <span class="pre">Walnüssen',</span> <span class="pre">'Thai</span> <span class="pre">Curry</span> <span class="pre">Erdnuss-Kokos-Hühnchen',</span> <span class="pre">'Thai-Red-Curry</span> <span class="pre">für</span> <span class="pre">mehrere</span> <span class="pre">Variationen',</span> <span class="pre">'Tortellini</span> <span class="pre">alla</span> <span class="pre">panna',</span> <span class="pre">'Toskanischer</span> <span class="pre">Hähnchen-Auflauf',</span> <span class="pre">'Tränenkuchen</span> <span class="pre">-</span> <span class="pre">der</span> <span class="pre">beste</span> <span class="pre">Käsekuchen</span> <span class="pre">der</span> <span class="pre">Welt!',</span> <span class="pre">'Türkischer</span> <span class="pre">Hackfleischauflauf</span> <span class="pre">mit</span> <span class="pre">Schafskäse',</span> <span class="pre">'Vegane</span> <span class="pre">Frühlingsrollen',</span> <span class="pre">'Vegetarische</span> <span class="pre">Frikadellen',</span> <span class="pre">'Würziger</span> <span class="pre">Kichererbseneintopf',</span> <span class="pre">'Zitronenkuchen',</span> <span class="pre">'Zucchini-Karotten-Bandnudeln</span> <span class="pre">mit</span> <span class="pre">Hähnchen</span> <span class="pre">und</span> <span class="pre">Tomate',</span> <span class="pre">'Zucchini-Lasagne',</span> <span class="pre">'Zucchini-Spaghetti']})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptsammlung.rezeptnamen" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rezeptzutatadder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rezeptzutatadder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rezeptzutatadder"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rezeptzutatadder" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptzutatadder.menge">
+<span class="sig-name descname"><span class="pre">menge</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Menge</span> <span class="pre">der</span> <span class="pre">Zutaten',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptzutatadder.menge" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptzutatadder.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptzutatadder.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rezeptzutatadder.zutat">
+<span class="sig-name descname"><span class="pre">zutat</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Zutat</span> <span class="pre">auswählen',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rezeptzutatadder.zutat" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.rzanlegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">rzanlegen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#rzanlegen"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.rzanlegen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Erstes Formular zum Rezept auswählen</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rzanlegen.rezeptpicker">
+<span class="sig-name descname"><span class="pre">rezeptpicker</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectField,</span> <span class="pre">('Rezept</span> <span class="pre">Picker',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.rzanlegen.rezeptpicker" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.rzanlegen.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Rezept</span> <span class="pre">auswählen',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.rzanlegen.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.taganlegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">taganlegen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#taganlegen"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.taganlegen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.taganlegen.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Name</span> <span class="pre">des</span> <span class="pre">Tags',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.taganlegen.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.taganlegen.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.taganlegen.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.verknupfungsanleger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">verknupfungsanleger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#verknupfungsanleger"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.verknupfungsanleger" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Feld zum Verknüpfungen anlegen</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.verknupfungsanleger.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Einstellungen</span> <span class="pre">speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.verknupfungsanleger.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.verknupfungsanleger.zutaten">
+<span class="sig-name descname"><span class="pre">zutaten</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectMultipleField,</span> <span class="pre">(),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.verknupfungsanleger.zutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.forms.</span></span><span class="sig-name descname"><span class="pre">zutatanlegen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/forms.html#zutatanlegen"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.forms.zutatanlegen" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Zutat anlegen</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen.bildupload">
+<span class="sig-name descname"><span class="pre">bildupload</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(FileField,</span> <span class="pre">('Bild',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.zutatanlegen.bildupload" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen.einheit">
+<span class="sig-name descname"><span class="pre">einheit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Einheit',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.zutatanlegen.einheit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen.kategorie">
+<span class="sig-name descname"><span class="pre">kategorie</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SelectMultipleField,</span> <span class="pre">('Kategorie',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.zutatanlegen.kategorie" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(StringField,</span> <span class="pre">('Name',),</span> <span class="pre">{'validators':</span> <span class="pre">[&lt;wtforms.validators.DataRequired</span> <span class="pre">object&gt;]})&gt;</span></em><a class="headerlink" href="#app.forms.zutatanlegen.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.forms.zutatanlegen.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;UnboundField(SubmitField,</span> <span class="pre">('Speichern',),</span> <span class="pre">{})&gt;</span></em><a class="headerlink" href="#app.forms.zutatanlegen.submit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.rezept">
+<span id="app-rezept-module"></span><h2>app.rezept module<a class="headerlink" href="#module-app.rezept" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.Association">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">Association</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#Association"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.Association" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Das ist die Verknüpfungstabelle zwischen Rezept und Zutat</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.hatzutat">
+<span class="sig-name descname"><span class="pre">hatzutat</span></span><a class="headerlink" href="#app.rezept.Association.hatzutat" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.menge">
+<span class="sig-name descname"><span class="pre">menge</span></span><a class="headerlink" href="#app.rezept.Association.menge" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.optional">
+<span class="sig-name descname"><span class="pre">optional</span></span><a class="headerlink" href="#app.rezept.Association.optional" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.rezept">
+<span class="sig-name descname"><span class="pre">rezept</span></span><a class="headerlink" href="#app.rezept.Association.rezept" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.rid">
+<span class="sig-name descname"><span class="pre">rid</span></span><a class="headerlink" href="#app.rezept.Association.rid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.Association.zid">
+<span class="sig-name descname"><span class="pre">zid</span></span><a class="headerlink" href="#app.rezept.Association.zid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">AssociationRHhat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#AssociationRHhat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.AssociationRHhat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Many to Many Relationship Table bzgl. Rezept und Handlungschritten</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.aid">
+<span class="sig-name descname"><span class="pre">aid</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.aid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.hatid">
+<span class="sig-name descname"><span class="pre">hatid</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.hatid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.hid">
+<span class="sig-name descname"><span class="pre">hid</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.hid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.position">
+<span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.position" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.rezept">
+<span class="sig-name descname"><span class="pre">rezept</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.rezept" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.AssociationRHhat.rid">
+<span class="sig-name descname"><span class="pre">rid</span></span><a class="headerlink" href="#app.rezept.AssociationRHhat.rid" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">handlungsschritt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#handlungsschritt"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.handlungsschritt" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Handlungsschirtt Klasse</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt.bild">
+<span class="sig-name descname"><span class="pre">bild</span></span><a class="headerlink" href="#app.rezept.handlungsschritt.bild" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt.bild2">
+<span class="sig-name descname"><span class="pre">bild2</span></span><a class="headerlink" href="#app.rezept.handlungsschritt.bild2" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.rezept.handlungsschritt.id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt.rezepte">
+<span class="sig-name descname"><span class="pre">rezepte</span></span><a class="headerlink" href="#app.rezept.handlungsschritt.rezepte" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.handlungsschritt.text">
+<span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#app.rezept.handlungsschritt.text" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.kategorie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">kategorie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#kategorie"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.kategorie" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Kategorie für Zutat Klasse</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.kategorie.bkat">
+<span class="sig-name descname"><span class="pre">bkat</span></span><a class="headerlink" href="#app.rezept.kategorie.bkat" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.kategorie.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.rezept.kategorie.id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.kategorie.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.rezept.kategorie.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.rezept">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">rezept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#rezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.rezept" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Rezept Klasse</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.bild">
+<span class="sig-name descname"><span class="pre">bild</span></span><a class="headerlink" href="#app.rezept.rezept.bild" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.handlungsschritte">
+<span class="sig-name descname"><span class="pre">handlungsschritte</span></span><a class="headerlink" href="#app.rezept.rezept.handlungsschritte" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.rezept.rezept.id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.kurzbeschreibung">
+<span class="sig-name descname"><span class="pre">kurzbeschreibung</span></span><a class="headerlink" href="#app.rezept.rezept.kurzbeschreibung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.rezept.rezept.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.tags">
+<span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#app.rezept.rezept.tags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.rezept.zutaten">
+<span class="sig-name descname"><span class="pre">zutaten</span></span><a class="headerlink" href="#app.rezept.rezept.zutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="app.rezept.rthat">
+<span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">rthat</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Table('association_rthat',</span> <span class="pre">MetaData(),</span> <span class="pre">Column('rezept_id',</span> <span class="pre">Integer(),</span> <span class="pre">ForeignKey('rezeptsql.id'),</span> <span class="pre">table=&lt;association_rthat&gt;),</span> <span class="pre">Column('tags_id',</span> <span class="pre">Integer(),</span> <span class="pre">ForeignKey('tags.id'),</span> <span class="pre">table=&lt;association_rthat&gt;),</span> <span class="pre">schema=None)</span></em><a class="headerlink" href="#app.rezept.rthat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Many to Many Relationship Table bzgl. Rezept und Tags</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.tags">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#tags"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.tags" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Tags Klasse</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.tags.belongs">
+<span class="sig-name descname"><span class="pre">belongs</span></span><a class="headerlink" href="#app.rezept.tags.belongs" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.tags.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.rezept.tags.id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.tags.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.rezept.tags.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.rezept.zutat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.rezept.</span></span><span class="sig-name descname"><span class="pre">zutat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/rezept.html#zutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.rezept.zutat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.decl_api.Model</span></code></p>
+<p>Zutaten Klasse</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.bild">
+<span class="sig-name descname"><span class="pre">bild</span></span><a class="headerlink" href="#app.rezept.zutat.bild" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.einheit">
+<span class="sig-name descname"><span class="pre">einheit</span></span><a class="headerlink" href="#app.rezept.zutat.einheit" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#app.rezept.zutat.id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.kategorie">
+<span class="sig-name descname"><span class="pre">kategorie</span></span><a class="headerlink" href="#app.rezept.zutat.kategorie" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#app.rezept.zutat.name" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.rezept.zutat.rezepte">
+<span class="sig-name descname"><span class="pre">rezepte</span></span><a class="headerlink" href="#app.rezept.zutat.rezepte" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.routes_rezept">
+<span id="app-routes-rezept-module"></span><h2>app.routes_rezept module<a class="headerlink" href="#module-app.routes_rezept" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.deleteRezept">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">deleteRezept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#deleteRezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.deleteRezept" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Rezept Objekt entfernen</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.modifyrezept">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">modifyrezept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#modifyrezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.modifyrezept" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.newRezept">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">newRezept</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#newRezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.newRezept" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Kapselung von Rezepte</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.nutzerrezeptein">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">nutzerrezeptein</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#nutzerrezeptein"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.nutzerrezeptein" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Nutzereingabe Menü</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.postrezept">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">postrezept</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#postrezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.postrezept" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>AJAX Methode zum Anlegen der Methode.
+AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.rezeptver2">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">rezeptver2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#rezeptver2"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.rezeptver2" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_rezept.showRezepte">
+<span class="sig-prename descclassname"><span class="pre">app.routes_rezept.</span></span><span class="sig-name descname"><span class="pre">showRezepte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_rezept.html#showRezepte"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_rezept.showRezepte" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-app.routes_tags">
+<span id="app-routes-tags-module"></span><h2>app.routes_tags module<a class="headerlink" href="#module-app.routes_tags" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_tags.CHGrthat">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">CHGrthat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#CHGrthat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.CHGrthat" title="Link zu dieser Definition">¶</a></dt>
 <dd><p>Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.addhandlung">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">addhandlung</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#addhandlung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.addhandlung" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Dies ist der Admin Hauptindex</p>
+<dt class="sig sig-object py" id="app.routes_tags.CHGrthat2">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">CHGrthat2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#CHGrthat2"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.CHGrthat2" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Wir wählen, die Zutaten aus, die wir zum Rezept speichern wollen.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.addrezept">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">addrezept</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#addrezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.addrezept" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Seite um ein neues Rezept anzulegen.</p>
+<dt class="sig sig-object py" id="app.routes_tags.addTags">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">addTags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#addTags"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.addTags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_tags.deleteTags">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">deleteTags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#deleteTags"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.deleteTags" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Tags Objekt entfernen</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.addzutat">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">addzutat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#addzutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.addzutat" title="Link zu dieser Definition">¶</a></dt>
+<dt class="sig sig-object py" id="app.routes_tags.modifyTags">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">modifyTags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#modifyTags"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.modifyTags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_tags.showTags">
+<span class="sig-prename descclassname"><span class="pre">app.routes_tags.</span></span><span class="sig-name descname"><span class="pre">showTags</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_tags.html#showTags"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_tags.showTags" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-app.routes_zutat">
+<span id="app-routes-zutat-module"></span><h2>app.routes_zutat module<a class="headerlink" href="#module-app.routes_zutat" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_zutat.addzutat">
+<span class="sig-prename descclassname"><span class="pre">app.routes_zutat.</span></span><span class="sig-name descname"><span class="pre">addzutat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_zutat.html#addzutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_zutat.addzutat" title="Link zu dieser Definition">¶</a></dt>
 <dd><p>Hiermit wird eine neue Zutat angelegt.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_zutat.deleteZutat">
+<span class="sig-prename descclassname"><span class="pre">app.routes_zutat.</span></span><span class="sig-name descname"><span class="pre">deleteZutat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_zutat.html#deleteZutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_zutat.deleteZutat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Zutaten Objekt entfernen</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_zutat.modifyZutat">
+<span class="sig-prename descclassname"><span class="pre">app.routes_zutat.</span></span><span class="sig-name descname"><span class="pre">modifyZutat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_zutat.html#modifyZutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_zutat.modifyZutat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Hiermit wird eine Zutat modifiziert.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes_zutat.showZutaten">
+<span class="sig-prename descclassname"><span class="pre">app.routes_zutat.</span></span><span class="sig-name descname"><span class="pre">showZutaten</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routes_zutat.html#showZutaten"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routes_zutat.showZutaten" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-app.routesbackend">
+<span id="app-routesbackend-module"></span><h2>app.routesbackend module<a class="headerlink" href="#module-app.routesbackend" title="Link zu dieser Überschrift">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="app.routesbackend.admin">
 <span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">admin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#admin"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.admin" title="Link zu dieser Definition">¶</a></dt>
@@ -76,43 +894,83 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.removeRZhat">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">removeRZhat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#removeRZhat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.removeRZhat" title="Link zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="app.routesbackend.showclass">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">showclass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sortedby</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redirect_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#showclass"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.showclass" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Paginate a section</p>
+</dd></dl>
 
+</section>
+<section id="module-app.routesbackend_function">
+<span id="app-routesbackend-function-module"></span><h2>app.routesbackend_function module<a class="headerlink" href="#module-app.routesbackend_function" title="Link zu dieser Überschrift">¶</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.removeRZhat2">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">removeRZhat2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#removeRZhat2"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.removeRZhat2" title="Link zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.removeRezept">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">removeRezept</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#removeRezept"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.removeRezept" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Löschen eines Rezeptes</p>
+<dt class="sig sig-object py" id="app.routesbackend_function.deleteHandlung">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend_function.</span></span><span class="sig-name descname"><span class="pre">deleteHandlung</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend_function.html#deleteHandlung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend_function.deleteHandlung" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Handlungsschritt Objekt entfernen</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.removeZutat">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">removeZutat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#removeZutat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.removeZutat" title="Link zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="app.routesbackend_function.deleterhhat">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend_function.</span></span><span class="sig-name descname"><span class="pre">deleterhhat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redirect_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend_function.html#deleterhhat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend_function.deleterhhat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Enternen von m:n-Beziehungen zwischen Rezept und Handlungsschritten</p>
+</dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.showRezepte">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">showRezepte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#showRezepte"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.showRezepte" title="Link zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="app.routesbackend_function.deleterthat">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend_function.</span></span><span class="sig-name descname"><span class="pre">deleterthat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend_function.html#deleterthat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend_function.deleterthat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Enternen von m:n-Beziehungen zwischen Rezept und Tags</p>
+</dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="app.routesbackend.showZutaten">
-<span class="sig-prename descclassname"><span class="pre">app.routesbackend.</span></span><span class="sig-name descname"><span class="pre">showZutaten</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend.html#showZutaten"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend.showZutaten" title="Link zu dieser Definition">¶</a></dt>
+<dt class="sig sig-object py" id="app.routesbackend_function.deleterzhat">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend_function.</span></span><span class="sig-name descname"><span class="pre">deleterzhat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redirect_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend_function.html#deleterzhat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend_function.deleterzhat" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Enternen von m:n-Beziehungen zwischen Rezept und Zutat</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routesbackend_function.showData">
+<span class="sig-prename descclassname"><span class="pre">app.routesbackend_function.</span></span><span class="sig-name descname"><span class="pre">showData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesbackend_function.html#showData"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesbackend_function.showData" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>Alle Daten sicherin in Python Syntax</p>
+</dd></dl>
+
+</section>
+<section id="module-app.routesdownload">
+<span id="app-routesdownload-module"></span><h2>app.routesdownload module<a class="headerlink" href="#module-app.routesdownload" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routesdownload.downloadfoto">
+<span class="sig-prename descclassname"><span class="pre">app.routesdownload.</span></span><span class="sig-name descname"><span class="pre">downloadfoto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesdownload.html#downloadfoto"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesdownload.downloadfoto" title="Link zu dieser Definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="module-app.routesfrontend">
 <span id="app-routesfrontend-module"></span><h2>app.routesfrontend module<a class="headerlink" href="#module-app.routesfrontend" title="Link zu dieser Überschrift">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="app.routesfrontend.einkaufliste">
+<span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">einkaufliste</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#einkaufliste"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.einkaufliste" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="app.routesfrontend.home">
 <span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#home"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.home" title="Link zu dieser Definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>alleTags = []
+alleTagNamen = []
+for rez in rezept.query.all():</p>
+<blockquote>
+<div><dl>
+<dt>for tag in rez.tags:</dt><dd><p>alleTags.append(tag.id)
+if not tag.id in alleTagNamen:</p>
+<blockquote>
+<div><p>alleTagNamen.append(tag.id)</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>for tag in alleTagNamen:</dt><dd><p>vorkommen = alleTags.count(tag)
+print(f“{tag} ist {vorkommen} mal“)</p>
+</dd>
+</dl>
+<p>deltags = [64, 65, 66, 67, 20]</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="app.routesfrontend.index">
@@ -124,6 +982,21 @@
 <span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">rezeptanzeige</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#rezeptanzeige"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.rezeptanzeige" title="Link zu dieser Definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routesfrontend.rezeptranking">
+<span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">rezeptranking</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#rezeptranking"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.rezeptranking" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routesfrontend.rezeptsammlung">
+<span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">rezeptsammlung</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#rezeptsammlung"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.rezeptsammlung" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routesfrontend.rezeptsammlung_id">
+<span class="sig-prename descclassname"><span class="pre">app.routesfrontend.</span></span><span class="sig-name descname"><span class="pre">rezeptsammlung_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/routesfrontend.html#rezeptsammlung_id"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.routesfrontend.rezeptsammlung_id" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-app">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app" title="Link zu dieser Überschrift">¶</a></h2>
@@ -132,8 +1005,13 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="_modules/app.html#Config"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#app.Config" title="Link zu dieser Definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="app.Config.REZEPTRANKINGS_PER_PAGE">
+<span class="sig-name descname"><span class="pre">REZEPTRANKINGS_PER_PAGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="headerlink" href="#app.Config.REZEPTRANKINGS_PER_PAGE" title="Link zu dieser Definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="app.Config.SQLALCHEMY_DATABASE_URI">
-<span class="sig-name descname"><span class="pre">SQLALCHEMY_DATABASE_URI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sqlite:////home/urs/git/easy-recipe/app/app.db'</span></em><a class="headerlink" href="#app.Config.SQLALCHEMY_DATABASE_URI" title="Link zu dieser Definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">SQLALCHEMY_DATABASE_URI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sqlite:////root/easy-recipe/app/app.db'</span></em><a class="headerlink" href="#app.Config.SQLALCHEMY_DATABASE_URI" title="Link zu dieser Definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -197,7 +1075,7 @@
       &copy;2022, Urs Braun, Tom Herzberg.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

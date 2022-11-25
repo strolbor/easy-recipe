@@ -32,107 +32,392 @@
           <div class="body" role="main">
             
   <h1>Quellcode für app.routesfrontend</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">flash</span>
-<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">forms</span>
+<span></span><span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">send_file</span>
+<span class="kn">from</span> <span class="nn">werkzeug.utils</span> <span class="kn">import</span> <span class="n">redirect</span>
+
+<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">forms</span><span class="p">,</span> <span class="n">db</span>
+<span class="kn">from</span> <span class="nn">app.RezeptRanking</span> <span class="kn">import</span> <span class="n">getRezepteByZutatNamen</span><span class="p">,</span> <span class="n">getRezepteByZutatIDs</span>
+<span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">zutat</span><span class="p">,</span> <span class="n">rezept</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">Association</span>
+<span class="kn">from</span> <span class="nn">app.Rezeptsammlung</span> <span class="kn">import</span> <span class="n">getRezeptByEigenschaft</span><span class="p">,</span> <span class="n">Rezeptsammlung</span><span class="p">,</span> <span class="n">isVegan</span><span class="p">,</span> <span class="n">isVegetarisch</span><span class="p">,</span> <span class="n">isEinfach</span><span class="p">,</span> <span class="n">isFleisch</span>
+<span class="kn">import</span> <span class="nn">logging</span><span class="o">,</span> <span class="nn">time</span>
 
 
 <div class="viewcode-block" id="index"><a class="viewcode-back" href="../../app.html#app.routesfrontend.index">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/base&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;base.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;base&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="rezeptanzeige"><a class="viewcode-back" href="../../app.html#app.routesfrontend.rezeptanzeige">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezeptanzeige&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">rezeptanzeige</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptanzeige.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Rezeptanzeige&quot;</span><span class="p">)</span></div>
-
-
+<span class="c1">#Zutatwahl</span>
 <span class="n">choices_array</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">alleZutaten</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1">#TODO: irgendwie rezeptranking die rezeptRankings vermitteln, nicht über globale variable</span>
+<span class="n">globalRezeptRankings</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<div class="viewcode-block" id="rezeptranking"><a class="viewcode-back" href="../../app.html#app.routesfrontend.rezeptranking">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezeptranking&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rezeptranking</span><span class="p">():</span>
+
+    <span class="n">ausgewZutaten</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;zutaten&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+    <span class="c1">#Mach int-Array draus wegen kompatibilität</span>
+    <span class="c1">#zutatIDs = list(map(int, request.args[&#39;ids&#39;].split(&#39;|&#39;)))</span>
+
+    <span class="n">testRankings</span> <span class="o">=</span> <span class="n">getRezepteByZutatIDs</span><span class="p">(</span><span class="n">ausgewZutaten</span><span class="o">=</span><span class="n">ausgewZutaten</span><span class="p">,</span> <span class="n">bewertungsmodus</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rezeptranking</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">btnSort1</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">testRankings</span> <span class="o">=</span> <span class="n">getRezepteByZutatNamen</span><span class="p">(</span><span class="n">zutatnamen</span><span class="o">=</span><span class="n">ausgewZutaten</span><span class="p">,</span> <span class="n">bewertungsmodus</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">form</span><span class="o">.</span><span class="n">btnSort2</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">testRankings</span> <span class="o">=</span> <span class="n">getRezepteByZutatNamen</span><span class="p">(</span><span class="n">zutatnamen</span><span class="o">=</span><span class="n">ausgewZutaten</span><span class="p">,</span> <span class="n">bewertungsmodus</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">rezeptSuchbegriff</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">btnSuchen</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rezeptSuchbegriff</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">passendesRezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rezeptSuchbegriff</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung_id&#39;</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">passendesRezept</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="c1"># EIgenschaft aus [vegan, vegetarisch, einfach, fleisch]</span>
+                <span class="n">eigenschaft</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+                <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">testRankings</span><span class="o">.</span><span class="n">copy</span><span class="p">():</span>
+                    <span class="n">rez</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ranking</span><span class="o">.</span><span class="n">rid</span><span class="p">)</span>
+
+                    <span class="n">bedingung</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="n">eigenschaft</span> <span class="o">==</span> <span class="s2">&quot;vegan&quot;</span><span class="p">:</span>
+                        <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isVegan</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">eigenschaft</span> <span class="o">==</span> <span class="s2">&quot;vegetarisch&quot;</span><span class="p">:</span>
+                        <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isVegetarisch</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">eigenschaft</span> <span class="o">==</span> <span class="s2">&quot;fleisch&quot;</span><span class="p">:</span>
+                        <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isFleisch</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">eigenschaft</span> <span class="o">==</span> <span class="s2">&quot;einfach&quot;</span><span class="p">:</span>
+                        <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isEinfach</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">bedingung</span><span class="p">:</span>
+                        <span class="n">testRankings</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ranking</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">maxZutaten</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">maxZutaten</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">maxZutaten</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">ranking</span> <span class="ow">in</span> <span class="n">testRankings</span><span class="o">.</span><span class="n">copy</span><span class="p">():</span>
+                    <span class="n">rez</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ranking</span><span class="o">.</span><span class="n">rid</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">maxZutaten</span><span class="p">:</span>
+                        <span class="n">testRankings</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ranking</span><span class="p">)</span>
+
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptranking.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Rezeptranking&quot;</span><span class="p">,</span> <span class="n">rezeptRankings</span><span class="o">=</span><span class="n">testRankings</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">choices_array</span><span class="o">=</span><span class="n">ausgewZutaten</span><span class="p">)</span></div>
+
+
 <span class="n">home_html</span> <span class="o">=</span> <span class="s2">&quot;home.html&quot;</span>
+<span class="n">alleZutaten</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">zutat</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">alleZutaten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">pass</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
 <div class="viewcode-block" id="home"><a class="viewcode-back" href="../../app.html#app.routesfrontend.home">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
-    <span class="k">global</span> <span class="n">choices_array</span>
+
+    <span class="sd">&quot;&quot;&quot;alleTags = []</span>
+<span class="sd">    alleTagNamen = []</span>
+<span class="sd">    for rez in rezept.query.all():</span>
+<span class="sd">        for tag in rez.tags:</span>
+<span class="sd">            alleTags.append(tag.id)</span>
+<span class="sd">            if not tag.id in alleTagNamen:</span>
+<span class="sd">                alleTagNamen.append(tag.id)</span>
+
+<span class="sd">    for tag in alleTagNamen:</span>
+<span class="sd">        vorkommen = alleTags.count(tag)</span>
+<span class="sd">        print(f&quot;{tag} ist {vorkommen} mal&quot;)</span>
+
+<span class="sd">    deltags = [64, 65, 66, 67, 20]&quot;&quot;&quot;</span>
+
+
     <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">d_felder</span><span class="p">()</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eingabe&quot;</span><span class="p">,</span><span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;selected&quot;</span><span class="p">,</span><span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">global</span> <span class="n">choices_array</span>
+
+    <span class="k">global</span> <span class="n">alleZutaten</span>
+
+    <span class="k">def</span> <span class="nf">updateZutatenlisten</span><span class="p">():</span>
+        <span class="c1">#form.selected.choices = choices_array.copy()</span>
+        <span class="n">verbleibendeZutaten</span> <span class="o">=</span> <span class="n">alleZutaten</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">choices_array</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">verbleibendeZutaten</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+
+        <span class="c1">#form.eingabe.choices = verbleibendeZutaten</span>
+        <span class="c1">#form.suchfeld.choices = [&quot;&quot;] + verbleibendeZutaten</span>
+
+    <span class="n">updateZutatenlisten</span><span class="p">()</span>
+
+    <span class="c1">#print(&quot;eingabe&quot;,form.eingabe.data)</span>
+    <span class="c1">#print(&quot;selected&quot;,form.selected.data)</span>
     <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">error_field</span><span class="p">,</span> <span class="n">error_message</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">error_field</span><span class="p">,</span><span class="n">error_message</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;validate&quot;</span><span class="p">)</span>
-        <span class="n">ver</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">eingabe</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">ver</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">eingabe</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">submit2</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;submit2&quot;</span><span class="p">)</span>
-            <span class="c1"># Item soll hinzugefügt werden</span>
-            <span class="c1"># Neue ausgewählte Elemente werden kopiert</span>
-            <span class="c1"># und hinzugefügt</span>
-            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">ver</span><span class="o">.</span><span class="n">copy</span><span class="p">():</span>
-                <span class="n">choices_array</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">entry</span><span class="p">,</span><span class="n">entry</span><span class="p">])</span>
-            
-            <span class="c1"># Neue List wird kopiert in die Liste</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Input error&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">)</span>
-            <span class="c1"># neues Template an Client senden</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            
-            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
-        
-        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">submit3</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;submit3&quot;</span><span class="p">)</span>
-            <span class="c1"># Item soll aus choices entfernt werden</span>
 
-            <span class="c1"># Aktuelle Auswahl kopieren</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="n">choices_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-            <span class="c1"># Was wir entfernen wollen, kopieren</span>
-            <span class="n">to_delete</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">to_delete</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">to_delete</span><span class="p">:</span>
-                    <span class="n">array</span><span class="o">.</span><span class="n">remove</span><span class="p">([</span><span class="n">entry</span><span class="p">,</span><span class="n">entry</span><span class="p">])</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">choices_array</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">erstes</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="sd">&#39;&#39;&#39;FÜR ERSTEN AUFRUF IMMER MIT NEUEN SUBMIT BUTTONS ANPASSEN!!!!!&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span>  <span class="n">form</span><span class="o">.</span><span class="n">submitSuchen</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">form</span><span class="o">.</span><span class="n">sumbitAddSuchbegriff</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="c1">#prüfe welche Zutat gedrückt wurde</span>
+        <span class="k">for</span> <span class="n">zut</span> <span class="ow">in</span> <span class="n">alleZutaten</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;btn</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">zut</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">zut</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">choices_array</span><span class="p">:</span>
+                    <span class="n">choices_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zut</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">choices_array</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">zut</span><span class="p">)</span>
+                <span class="n">updateZutatenlisten</span><span class="p">()</span>
+                <span class="n">erstes</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Input error&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Success&quot;</span><span class="p">)</span>
+        <span class="c1"># wenn sonst erster Aufruf</span>
+        <span class="k">if</span> <span class="n">erstes</span><span class="p">:</span>
+            <span class="n">choices_array</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">updateZutatenlisten</span><span class="p">()</span>
 
-            
-            <span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">submit4</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">eingabe</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span>
-            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">submitSuchen</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Submit suchen&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Don&#39;t hack this!&quot;</span><span class="p">)</span>
+    <span class="n">updateZutatenlisten</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">submit2</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">submit3</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">submitSuchen</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="c1">#erster Aufruf</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">)</span>
-        <span class="n">choices_array</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span><span class="n">choices_array</span><span class="o">=</span><span class="n">choices_array</span><span class="p">)</span></div>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;last return&quot;</span><span class="p">)</span>
-    <span class="n">form</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices_array</span>
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="n">home_html</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="rezeptanzeige"><a class="viewcode-back" href="../../app.html#app.routesfrontend.rezeptanzeige">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezept&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rezeptanzeige</span><span class="p">():</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">zutaten</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;zutaten&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rezeptanzeige</span><span class="p">()</span>
+    <span class="n">thisrezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="c1">#print(thisrezept.zutaten)</span>
+
+    <span class="k">class</span> <span class="nc">r_zutat</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">einheit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">menge</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">verfuegbar</span> <span class="o">=</span> <span class="s2">&quot;❌&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_einheit</span><span class="p">,</span> <span class="n">_menge</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">einheit</span> <span class="o">=</span> <span class="n">_einheit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menge</span> <span class="o">=</span> <span class="n">_menge</span>
+            <span class="k">for</span> <span class="n">zut</span> <span class="ow">in</span> <span class="n">zutaten</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">_name</span> <span class="o">==</span> <span class="n">zut</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">verfuegbar</span> <span class="o">=</span> <span class="s2">&quot;✅&quot;</span>
+
+
+    <span class="n">r_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+        <span class="n">r_tags</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, &quot;</span>
+    <span class="n">r_tags</span> <span class="o">=</span> <span class="n">r_tags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">r_zutaten</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">zutat</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">zutaten</span><span class="p">:</span>
+        <span class="n">zname</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">zeineit</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">einheit</span>
+        <span class="n">zmenge</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">menge</span>
+        <span class="c1">#wenn menge gleich 0 dann daten kaputt -&gt; nix anzeigen</span>
+        <span class="k">if</span> <span class="n">zmenge</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+            <span class="n">zmenge</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">r_z</span> <span class="o">=</span> <span class="n">r_zutat</span><span class="p">(</span><span class="n">_name</span><span class="o">=</span><span class="n">zname</span><span class="p">,</span> <span class="n">_einheit</span><span class="o">=</span><span class="n">zeineit</span><span class="p">,</span> <span class="n">_menge</span><span class="o">=</span><span class="n">zmenge</span><span class="p">)</span>
+        <span class="n">r_zutaten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_z</span><span class="p">)</span>
+
+
+    <span class="n">r_handl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">handlungsschritt</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="p">:</span>
+        <span class="n">r_handl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handlungsschritt</span><span class="o">.</span><span class="n">hatid</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;ersetze Handlungsschritte temporär durch in Dateien erkannte HS&quot;&quot;&quot;</span>
+        <span class="n">rezPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;webscraper&quot;</span> <span class="o">/</span> <span class="s2">&quot;Rezepte&quot;</span> <span class="o">/</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">txtHandl</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">rezPath</span> <span class="o">/</span> <span class="s2">&quot;handlungsschritte.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">arr_hs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">txtHandl</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="n">arr_hs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+
+        <span class="sd">&quot;&quot;&quot;ersetze Zutaten temporär mit Daten aus Webscraper, EINKAUFLISTE HAUT DANN NICHT GANZ HIN&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;txtZutaten = open(Path(__file__).parent.parent / &quot;webscraper&quot; / &quot;Rezepte&quot; / thisrezept.name / &quot;zutaten.txt&quot;)</span>
+<span class="sd">        arrZutaten =[]</span>
+<span class="sd">        for line in txtZutaten.readlines():</span>
+<span class="sd">            zname = line.strip().split(&quot;|&quot;)[1]</span>
+<span class="sd">            menge = line.strip().split(&quot;|&quot;)[0]</span>
+<span class="sd">            arrZutaten.append(r_zutat(zname, &quot;&quot;, menge))&quot;&quot;&quot;</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+
+    <span class="sd">&quot;&quot;&quot;IN ORIGINAL NIMM r_zutaten statt arrZutaten&quot;&quot;&quot;</span>
+    <span class="c1">#r_zutaten = arrZutaten</span>
+    <span class="c1"># war vorher r_handl statt arr_hs</span>
+    <span class="c1"># r_handl = arr_hs</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptanzeige.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">rezept</span><span class="o">=</span><span class="n">thisrezept</span><span class="p">,</span> <span class="n">r_tags</span><span class="o">=</span><span class="n">r_tags</span><span class="p">,</span> <span class="n">r_zutaten</span><span class="o">=</span><span class="n">r_zutaten</span><span class="p">,</span>
+                           <span class="n">anz_zutaten</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">r_zutaten</span><span class="p">),</span> <span class="n">r_handl</span><span class="o">=</span><span class="n">r_handl</span><span class="p">,</span> <span class="n">anz_handl</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">r_handl</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rezeptsammlung_id"><a class="viewcode-back" href="../../app.html#app.routesfrontend.rezeptsammlung_id">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezeptsammlung/&lt;path:ids&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rezeptsammlung_id</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rezeptanzeige</span><span class="p">()</span>
+    <span class="n">thisrezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="c1">#print(thisrezept.zutaten)</span>
+
+    <span class="k">class</span> <span class="nc">r_zutat</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">einheit</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">menge</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">verfuegbar</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_einheit</span><span class="p">,</span> <span class="n">_menge</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">einheit</span> <span class="o">=</span> <span class="n">_einheit</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">menge</span> <span class="o">=</span> <span class="n">_menge</span>
+            <span class="k">if</span> <span class="n">_name</span> <span class="ow">in</span> <span class="n">choices_array</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">verfuegbar</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">r_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+        <span class="n">r_tags</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, &quot;</span>
+    <span class="n">r_tags</span> <span class="o">=</span> <span class="n">r_tags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">r_zutaten</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">zutat</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">zutaten</span><span class="p">:</span>
+        <span class="n">zname</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">zeineit</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">einheit</span>
+        <span class="n">zmenge</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">menge</span>
+        <span class="c1">#wenn menge gleich 0 dann daten kaputt -&gt; nix anzeigen</span>
+        <span class="k">if</span> <span class="n">zmenge</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+            <span class="n">zmenge</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">r_z</span> <span class="o">=</span> <span class="n">r_zutat</span><span class="p">(</span><span class="n">_name</span><span class="o">=</span><span class="n">zname</span><span class="p">,</span> <span class="n">_einheit</span><span class="o">=</span><span class="n">zeineit</span><span class="p">,</span> <span class="n">_menge</span><span class="o">=</span><span class="n">zmenge</span><span class="p">)</span>
+        <span class="n">r_zutaten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_z</span><span class="p">)</span>
+
+    <span class="n">r_handl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">handlungsschritt</span> <span class="ow">in</span> <span class="n">thisrezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="p">:</span>
+        <span class="n">r_handl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handlungsschritt</span><span class="o">.</span><span class="n">hatid</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+    <span class="sd">&quot;&quot;&quot;ersetze Handlungsschritte temporär durch in Dateien erkannte HS&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;rezPath = Path(__file__).parent.parent / &quot;webscraper&quot; / &quot;Rezepte&quot; / thisrezept.name</span>
+<span class="sd">    txtHandl = open(rezPath / &quot;handlungsschritte.txt&quot;, &quot;r&quot;)</span>
+<span class="sd">    arr_hs = []</span>
+<span class="sd">    for line in txtHandl.readlines():</span>
+<span class="sd">        arr_hs.append(line.replace(&quot;\n&quot;, &quot;&quot;))&quot;&quot;&quot;</span>
+
+
+    <span class="c1"># war vorher r_handl statt arr_hs</span>
+    <span class="c1">#r_handl = arr_hs</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptanzeige.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">rezept</span><span class="o">=</span><span class="n">thisrezept</span><span class="p">,</span> <span class="n">r_tags</span><span class="o">=</span><span class="n">r_tags</span><span class="p">,</span> <span class="n">r_zutaten</span><span class="o">=</span><span class="n">r_zutaten</span><span class="p">,</span>
+                           <span class="n">anz_zutaten</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">r_zutaten</span><span class="p">),</span> <span class="n">r_handl</span><span class="o">=</span><span class="n">r_handl</span><span class="p">,</span> <span class="n">anz_handl</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">r_handl</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rezeptsammlung"><a class="viewcode-back" href="../../app.html#app.routesfrontend.rezeptsammlung">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezeptsammlung&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rezeptsammlung</span><span class="p">():</span>
+    <span class="n">form</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">rezeptsammlung</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">PassendeRezeptliste</span><span class="p">:</span>
+        <span class="n">rezepte</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_rezepte</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rezepte</span> <span class="o">=</span> <span class="n">_rezepte</span>
+
+    <span class="n">passendeRezepte</span> <span class="o">=</span> <span class="n">PassendeRezeptliste</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;aufgerufen&quot;</span><span class="p">)</span>
+
+    <span class="c1">#wenn nicht erster Aufruf:</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">rezeptSuchbegriff</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="n">rezeptSuchbegriff</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">passendesRezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rezeptSuchbegriff</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung_id&#39;</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">passendesRezept</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">btnSuchen</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATA gefunden&quot;</span><span class="p">)</span>
+            <span class="n">rezeptSuchbegriff</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">if</span> <span class="n">rezeptSuchbegriff</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">passendesRezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rezeptSuchbegriff</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung_id&#39;</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">passendesRezept</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">eigenschaft</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="n">passendeRezepte</span> <span class="o">=</span> <span class="n">PassendeRezeptliste</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">getRezeptByEigenschaft</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">eigenschaft</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Rezeptsammlung&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span>
+                                       <span class="n">rezeptsammlungen</span><span class="o">=</span><span class="p">[</span><span class="n">passendeRezepte</span><span class="p">],</span>
+                                       <span class="n">anzRezeptvorschlaege</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">passendeRezepte</span><span class="o">.</span><span class="n">rezepte</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">maxZutaten</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">maxZutaten</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">maxZutaten</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptkategorien</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">rez</span> <span class="ow">in</span> <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">rezepte</span><span class="o">.</span><span class="n">copy</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">rid</span><span class="p">)</span><span class="o">.</span><span class="n">zutaten</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">maxZutaten</span><span class="p">:</span>
+                            <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">rezepte</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="n">Rezeptsammlung</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">rid</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">bild</span><span class="p">)</span> <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">rez</span> <span class="ow">in</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxZutaten</span><span class="p">:</span>
+                            <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">rezepte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Rezeptsammlung</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">rez</span><span class="o">.</span><span class="n">bild</span><span class="p">)</span> <span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Rezeptsammlung&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span>
+                                       <span class="n">rezeptsammlungen</span><span class="o">=</span><span class="p">[</span><span class="n">passendeRezepte</span><span class="p">],</span>
+                                       <span class="n">anzRezeptvorschlaege</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">passendeRezepte</span><span class="o">.</span><span class="n">rezepte</span><span class="p">))</span>
+
+
+    <span class="c1">#wenn erster Aufruf:</span>
+
+    <span class="c1">#genriere iste von zufälligen Rezeptvorschlägen, die Kategorie erfüllen</span>
+    <span class="sd">&quot;&quot;&quot;_veganRezeptListe = random.shuffle(getRezeptByEigenschaft(100, &quot;vegan&quot;))</span>
+<span class="sd">    _fleischRezeptListe = random.shuffle(getRezeptByEigenschaft(100, &quot;fleisch&quot;))</span>
+<span class="sd">    _einfachRezeptListe = random.shuffle(getRezeptByEigenschaft(100, &quot;einfach&quot;))&quot;&quot;&quot;</span>
+    <span class="n">veganes</span> <span class="o">=</span> <span class="n">PassendeRezeptliste</span><span class="p">(</span><span class="n">_rezepte</span><span class="o">=</span><span class="n">getRezeptByEigenschaft</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;vegan&quot;</span><span class="p">),</span> <span class="n">_name</span><span class="o">=</span><span class="s2">&quot;Vegane Rezepte&quot;</span><span class="p">)</span>
+    <span class="n">fleisch</span> <span class="o">=</span> <span class="n">PassendeRezeptliste</span><span class="p">(</span><span class="n">_rezepte</span><span class="o">=</span><span class="n">getRezeptByEigenschaft</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;fleisch&quot;</span><span class="p">),</span> <span class="n">_name</span><span class="o">=</span><span class="s2">&quot;Rezepte mit Fleisch&quot;</span><span class="p">)</span>
+    <span class="n">einfach</span> <span class="o">=</span> <span class="n">PassendeRezeptliste</span><span class="p">(</span><span class="n">_rezepte</span><span class="o">=</span><span class="n">getRezeptByEigenschaft</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;einfach&quot;</span><span class="p">),</span> <span class="n">_name</span><span class="o">=</span><span class="s2">&quot;Einfache Rezepte&quot;</span><span class="p">)</span>
+    <span class="n">rezeptsammlungen</span> <span class="o">=</span> <span class="p">[</span><span class="n">veganes</span><span class="p">,</span> <span class="n">fleisch</span><span class="p">,</span> <span class="n">einfach</span><span class="p">]</span>
+    <span class="n">anzRezeptvorschlaege</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">sammlung</span> <span class="ow">in</span> <span class="n">rezeptsammlungen</span><span class="p">:</span>
+        <span class="n">anzRezeptvorschlaege</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sammlung</span><span class="o">.</span><span class="n">rezepte</span><span class="p">)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">rezeptnamen</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;rezeptsammlung.html&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Rezeptsammlung&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">rezeptsammlungen</span><span class="o">=</span><span class="n">rezeptsammlungen</span><span class="p">,</span>
+                           <span class="n">anzRezeptvorschlaege</span><span class="o">=</span><span class="n">anzRezeptvorschlaege</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="einkaufliste"><a class="viewcode-back" href="../../app.html#app.routesfrontend.einkaufliste">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/einkaufliste&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">einkaufliste</span><span class="p">():</span>
+    <span class="n">zutaten</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;zutaten&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+    <span class="n">rezeptname</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;rezeptname&#39;</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;zutatarray in py  </span><span class="si">{</span><span class="n">zutaten</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;einkaufliste</span><span class="si">{</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;einkauflisten&#39;</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">.txt&quot;</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+        <span class="n">txtZutatenliste</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">filepath</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+        <span class="n">txtZutatenliste</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+
+    <span class="n">txtZutatenliste</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;Einkaufzettel für </span><span class="si">{</span><span class="n">rezeptname</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">zutaten</span><span class="p">))</span>
+
+    <span class="n">txtZutatenliste</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;current path </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">send_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">as_attachment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
 </pre></div>
 
           </div>
@@ -189,7 +474,7 @@
       &copy;2022, Urs Braun, Tom Herzberg.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
