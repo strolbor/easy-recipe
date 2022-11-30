@@ -1,10 +1,8 @@
 import os.path
 from pathlib import Path
 import random
-
 from flask import render_template, flash, url_for, request, send_file
 from werkzeug.utils import redirect
-
 from app import app, forms, db
 from app.RezeptRanking import getRezepteByZutatNamen, getRezepteByZutatIDs
 from app.rezept import zutat, rezept, tags, Association
@@ -92,22 +90,6 @@ except Exception as e:
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-
-    """alleTags = []
-    alleTagNamen = []
-    for rez in rezept.query.all():
-        for tag in rez.tags:
-            alleTags.append(tag.id)
-            if not tag.id in alleTagNamen:
-                alleTagNamen.append(tag.id)
-
-    for tag in alleTagNamen:
-        vorkommen = alleTags.count(tag)
-        print(f"{tag} ist {vorkommen} mal")
-
-    deltags = [64, 65, 66, 67, 20]"""
-
-
     form = forms.d_felder()
 
     global choices_array

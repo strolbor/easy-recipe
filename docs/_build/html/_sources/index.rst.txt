@@ -1,10 +1,10 @@
-.. Easy Recipe documentation master file, created by
-   sphinx-quickstart on Fri Nov 25 13:21:54 2022.
+.. d documentation master file, created by
+   sphinx-quickstart on Wed Nov 30 08:54:39 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Easy Recipe's documentation!
-=======================================
+Welcome to d's documentation!
+=============================
 
 .. toctree::
    :maxdepth: 2

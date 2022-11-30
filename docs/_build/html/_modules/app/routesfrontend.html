@@ -35,10 +35,8 @@
 <span></span><span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span> <span class="nn">random</span>
-
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">send_file</span>
 <span class="kn">from</span> <span class="nn">werkzeug.utils</span> <span class="kn">import</span> <span class="n">redirect</span>
-
 <span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">forms</span><span class="p">,</span> <span class="n">db</span>
 <span class="kn">from</span> <span class="nn">app.RezeptRanking</span> <span class="kn">import</span> <span class="n">getRezepteByZutatNamen</span><span class="p">,</span> <span class="n">getRezepteByZutatIDs</span>
 <span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">zutat</span><span class="p">,</span> <span class="n">rezept</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">Association</span>
@@ -126,22 +124,6 @@
 
 <div class="viewcode-block" id="home"><a class="viewcode-back" href="../../app.html#app.routesfrontend.home">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
-
-    <span class="sd">&quot;&quot;&quot;alleTags = []</span>
-<span class="sd">    alleTagNamen = []</span>
-<span class="sd">    for rez in rezept.query.all():</span>
-<span class="sd">        for tag in rez.tags:</span>
-<span class="sd">            alleTags.append(tag.id)</span>
-<span class="sd">            if not tag.id in alleTagNamen:</span>
-<span class="sd">                alleTagNamen.append(tag.id)</span>
-
-<span class="sd">    for tag in alleTagNamen:</span>
-<span class="sd">        vorkommen = alleTags.count(tag)</span>
-<span class="sd">        print(f&quot;{tag} ist {vorkommen} mal&quot;)</span>
-
-<span class="sd">    deltags = [64, 65, 66, 67, 20]&quot;&quot;&quot;</span>
-
-
     <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">d_felder</span><span class="p">()</span>
 
     <span class="k">global</span> <span class="n">choices_array</span>
