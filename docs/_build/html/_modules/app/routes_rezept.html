@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.routes_rezept &#8212; Easy Recipe  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Quellcode für app.routes_rezept</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">rezept</span><span class="p">,</span> <span class="n">zutat</span><span class="p">,</span> <span class="n">handlungsschritt</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">Association</span><span class="p">,</span> <span class="n">AssociationRHhat</span>
+<span class="kn">from</span> <span class="nn">app.backend_helper</span> <span class="kn">import</span> <span class="n">createArrayHelper</span><span class="p">,</span> <span class="n">savepic</span><span class="p">,</span> <span class="n">createArrayHelper2</span>
+<span class="kn">from</span> <span class="nn">app.routesbackend</span> <span class="kn">import</span> <span class="n">showclass</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">abort</span>
+<span class="kn">from</span> <span class="nn">flask.helpers</span> <span class="kn">import</span> <span class="n">flash</span><span class="p">,</span> <span class="n">url_for</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">desc</span>
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="c1">##############</span>
+<span class="c1">#   Rezept   #</span>
+<span class="c1">##############</span>
+
+
+<div class="viewcode-block" id="showRezepte"><a class="viewcode-back" href="../../app.html#app.routes_rezept.showRezepte">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezept/show/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">showRezepte</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">showclass</span><span class="p">(</span><span class="n">rezept</span><span class="p">,</span> <span class="n">rezept</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;Rezepte&quot;</span><span class="p">,</span> <span class="s2">&quot;showRezepte&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="newRezept"><a class="viewcode-back" href="../../app.html#app.routes_rezept.newRezept">[Doku]</a><span class="k">def</span> <span class="nf">newRezept</span><span class="p">(</span><span class="n">rname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tagarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Kapselung von Rezepte&quot;&quot;&quot;</span>
+
+    <span class="c1"># Rezept anlegen</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="n">rezept</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rname</span><span class="p">)</span>
+
+    <span class="c1"># Tags adden</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">tagarray</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+
+    <span class="sd">&quot;&quot;&quot; Neues Rezept der Datenbank hinzufügen.&quot;&quot;&quot;</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">rnew</span><span class="p">:</span> <span class="n">rezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rname</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">rnew</span><span class="o">.</span><span class="n">id</span></div>
+
+<div class="viewcode-block" id="nutzerrezeptein"><a class="viewcode-back" href="../../app.html#app.routes_rezept.nutzerrezeptein">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/rezept/eingabe/&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">nutzerrezeptein</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Nutzereingabe Menü&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">nutzerein</span><span class="p">()</span>
+    <span class="c1"># Das ist schon so fertig</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">submit</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="c1"># Reload der Seite mit dem Flash, der zeigt, dass es gespeichert wruden ist.</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;nutzerrezeptein&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;nutzer_rezeptanlege.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">zutaten</span><span class="o">=</span><span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="postrezept"><a class="viewcode-back" href="../../app.html#app.routes_rezept.postrezept">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/rezept/eingabe/ctl/&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">postrezept</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;AJAX Methode zum Anlegen der Methode.</span>
+<span class="sd">    AJAX ruft diese Funktion bevor der eigentliche POST-Methode nutzereingabe().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="c1"># Informationen aus Stream abrufen</span>
+        <span class="n">zutaten</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;zutat[]&#39;</span><span class="p">)</span>
+        <span class="n">menge</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;menge[]&#39;</span><span class="p">)</span>
+        <span class="n">rezeptname</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rname&#39;</span><span class="p">)</span>
+        <span class="n">taglist</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;tags[]&#39;</span><span class="p">)</span>
+        <span class="n">handlungsschritttext</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;handlung&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Rezept anlegen</span>
+        <span class="sd">&quot;&quot;&quot; Wenn das Rezept nicht existiert, erstelle es&quot;&quot;&quot;</span>
+        <span class="n">newRezept</span><span class="p">(</span><span class="n">rezeptname</span><span class="p">,</span> <span class="n">taglist</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AJAX hat Rezept </span><span class="si">{</span><span class="n">rezeptname</span><span class="si">}</span><span class="s2"> erstellt&quot;</span><span class="p">)</span>
+        <span class="n">rnew</span><span class="p">:</span> <span class="n">rezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">rezeptname</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+        <span class="c1">#Bild hochladen</span>
+        <span class="n">pic_url</span> <span class="o">=</span> <span class="n">savepic</span><span class="p">(</span><span class="s1">&#39;bildupload&#39;</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;rezept</span><span class="si">{</span><span class="n">rnew</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">pic_url</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span> <span class="ow">or</span> <span class="n">pic_url</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">):</span>
+            <span class="n">rnew</span><span class="o">.</span><span class="n">bild</span> <span class="o">=</span> <span class="n">pic_url</span>
+        
+        <span class="c1"># Zutaten verknüpfen</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">zutaten</span><span class="p">:</span>
+            <span class="c1"># Abfrage, ob Verbindung schon da ist</span>
+            <span class="k">if</span> <span class="n">Association</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">rnew</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="n">entry</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Abfrage, ob es eine gültige Zutat ist. Gültig heißt nicht -1 oder kleiner</span>
+                    <span class="n">zuttmp</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erhalte Zutaten zum hinzufügen: </span><span class="si">{</span><span class="n">zuttmp</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">assoc1</span> <span class="o">=</span> <span class="n">Association</span><span class="p">(</span><span class="n">menge</span><span class="o">=</span><span class="n">menge</span><span class="p">[</span><span class="n">counter</span><span class="p">],</span> <span class="n">optional</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">assoc1</span><span class="o">.</span><span class="n">hatzutat</span> <span class="o">=</span> <span class="n">zuttmp</span>
+                    <span class="k">with</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">no_autoflush</span><span class="p">:</span>
+                        <span class="n">rnew</span><span class="o">.</span><span class="n">zutaten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assoc1</span><span class="p">)</span>
+                <span class="c1"># else: nichts zu tun, weil -1 ungültig ist und für Keine Angabe stehen    </span>
+                <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+                <span class="c1">#flash(f&quot;Diese Verknüpfung ({rnew.id},{entry}) existiert schon.&quot;)</span>
+
+        <span class="c1"># Handlungschritt anlegen</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">handlungsschritttext</span>
+        <span class="n">txtarr</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">posArr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># entry ist ein String</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">txtarr</span><span class="p">:</span>
+            <span class="c1"># Wir müssen neue Associations machen</span>
+            <span class="n">handNew</span> <span class="o">=</span> <span class="n">handlungsschritt</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">entry</span><span class="p">)</span>
+            <span class="n">assocNew</span> <span class="o">=</span> <span class="n">AssociationRHhat</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">posArr</span><span class="p">)</span>
+            <span class="n">handlung</span> <span class="o">=</span> <span class="n">handNew</span>
+            <span class="n">assocNew</span><span class="o">.</span><span class="n">hatid</span> <span class="o">=</span> <span class="n">handlung</span>
+            <span class="k">with</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">no_autoflush</span><span class="p">:</span>
+                <span class="n">rnew</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assocNew</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Neue Assoc&quot;</span><span class="p">)</span>
+            <span class="n">posArr</span> <span class="o">+=</span><span class="mi">1</span>
+                
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="c1"># speichern</span>
+        <span class="c1">#flash(f&quot;{rnew.name} ({rnew.id}) wurde gespeichert!&quot;)</span>
+    <span class="k">return</span> <span class="s2">&quot;ok&quot;</span></div>
+
+<div class="viewcode-block" id="modifyrezept"><a class="viewcode-back" href="../../app.html#app.routes_rezept.modifyrezept">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezept/modify/&lt;path:ids&gt;/&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">modifyrezept</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rezeptaendern</span><span class="p">()</span>
+    <span class="n">zuRezept</span><span class="p">:</span> <span class="n">rezept</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">zuRezept</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showRezepte&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span> <span class="ow">and</span> <span class="n">form</span><span class="o">.</span><span class="n">submit</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="c1"># Rezept bearbeiten</span>
+        <span class="c1"># Und alles mögliche aus dem Formular abspeichern</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Validate&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Name speichern</span>
+        <span class="n">zuRezept</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">rezeptname</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c1"># Bild aktualisieren</span>
+        <span class="n">picure_url</span> <span class="o">=</span> <span class="n">savepic</span><span class="p">(</span><span class="s1">&#39;bildupload&#39;</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;rezept</span><span class="si">{</span><span class="n">ids</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">picure_url</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span> <span class="ow">or</span> <span class="n">picure_url</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">):</span>
+            <span class="n">zuRezept</span><span class="o">.</span><span class="n">bild</span> <span class="o">=</span> <span class="n">picure_url</span>
+
+        <span class="c1"># Handlungsschritt Text bearbeiten</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">handlung</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">txtarr</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">assocArr</span> <span class="o">=</span> <span class="n">zuRezept</span><span class="o">.</span><span class="n">handlungsschritte</span>
+
+        <span class="c1"># Die Position des Array speichern um zu entscheiden, ob wir neue Assocs brauchen oder nicht.</span>
+
+        <span class="n">posArray</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Für jeden Eintrag im Textarea müssen wir ein Eintrag in der Assoc machen</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">txtarr</span><span class="p">:</span>
+            <span class="c1"># Wir können die Handlungschritte überschreiben</span>
+            <span class="k">if</span> <span class="n">posArray</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">assocArr</span><span class="p">):</span>
+                <span class="n">zuRezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="p">[</span><span class="n">posArray</span><span class="p">]</span><span class="o">.</span><span class="n">hatid</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">txtarr</span><span class="p">[</span><span class="n">posArray</span><span class="p">]</span>
+                <span class="c1">#print(f&quot;Ändere {txtarr[posArray]}&quot;)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Wir müssen neue Associations machen</span>
+                <span class="n">handNew</span> <span class="o">=</span> <span class="n">handlungsschritt</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">txtarr</span><span class="p">[</span><span class="n">posArray</span><span class="p">])</span>
+                <span class="n">assocNew</span> <span class="o">=</span> <span class="n">AssociationRHhat</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">posArray</span><span class="p">)</span>
+                <span class="n">handlung</span> <span class="o">=</span> <span class="n">handNew</span>
+                <span class="n">assocNew</span><span class="o">.</span><span class="n">hatid</span> <span class="o">=</span> <span class="n">handlung</span>
+                <span class="k">with</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">no_autoflush</span><span class="p">:</span>
+                    <span class="n">zuRezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assocNew</span><span class="p">)</span>
+                <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="c1">#print(&quot;Neue Assoc&quot;)</span>
+            <span class="n">posArray</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1">#print(assocArr[posArray:])</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">assocArr</span><span class="p">[</span><span class="n">posArray</span><span class="p">:]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;lösche </span><span class="si">{</span><span class="n">entry</span><span class="o">.</span><span class="n">aid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1"># Handlungsschritt löschen</span>
+            <span class="n">rezeptausAssoc</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">hatid</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">rezeptausAssoc</span><span class="p">)</span>
+            <span class="c1"># Association löschen</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">zuRezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="c1"># Tag speichern</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Wenn wir keine Tags anwählen soll nichts passieren</span>
+            <span class="c1"># Bei &quot;Keine Angabe&quot; soll alles gelöscht werden.</span>
+            <span class="n">zuRezept</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tagentry</span> <span class="ow">in</span> <span class="n">form</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">tagentry</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">tmpTag</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tagentry</span><span class="p">)</span>
+                    <span class="n">zuRezept</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpTag</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># Speichern des Eintrages</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">zuRezept</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> wurde gespeichert!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;modifyrezept&#39;</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">))</span>
+
+    <span class="c1"># Anzeigen der Handlungschritte</span>
+    <span class="n">handlarray</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">zuRezept</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="p">:</span>
+        <span class="n">handlarray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">hatid</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">handlung</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">handlarray</span><span class="p">)</span>
+
+    <span class="n">form</span><span class="o">.</span><span class="n">rezeptname</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">zuRezept</span><span class="o">.</span><span class="n">name</span>
+    <span class="c1"># Tags auswahl setzen</span>
+    <span class="n">tagarry</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tagarry</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;-1&quot;</span><span class="p">,</span> <span class="s2">&quot;Keine Angabe&quot;</span><span class="p">])</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">createArrayHelper</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">tagarry</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">tagarry</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_rezept.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">titlet</span><span class="o">=</span><span class="s2">&quot;Rezepts ändern&quot;</span><span class="p">,</span> <span class="n">rid</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">rezept</span><span class="o">=</span><span class="n">zuRezept</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="rezeptver2"><a class="viewcode-back" href="../../app.html#app.routes_rezept.rezeptver2">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/rezept/zutatenedit/&lt;path:rid&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rezeptver2</span><span class="p">(</span><span class="n">rid</span><span class="p">):</span>
+    <span class="n">rezept1</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rid</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rezept1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showZutaten&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rezeptzutatadder</span><span class="p">()</span>
+    <span class="c1"># Zutaten auswählbar machen</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">zutat</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">createArrayHelper</span><span class="p">(</span><span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="c1"># Wir speichern  das Formular</span>
+        <span class="n">assoc1</span> <span class="o">=</span> <span class="n">Association</span><span class="p">(</span><span class="n">menge</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">menge</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">zutat1</span> <span class="o">=</span> <span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">zutat</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">assoc1</span><span class="o">.</span><span class="n">hatzutat</span> <span class="o">=</span> <span class="n">zutat1</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">no_autoflush</span><span class="p">:</span>
+                <span class="n">rezept1</span><span class="o">.</span><span class="n">zutaten</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assoc1</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Gespeichert!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;rezeptver2&#39;</span><span class="p">,</span> <span class="n">rid</span><span class="o">=</span><span class="n">rid</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">IntegrityError</span><span class="p">:</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Fehler: Zutat wurde bereits verknüpft!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_addrzver.html&#39;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span> <span class="n">rezept1</span><span class="o">=</span><span class="n">rezept1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="deleteRezept"><a class="viewcode-back" href="../../app.html#app.routes_rezept.deleteRezept">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/rezept/delete/&lt;path:ids&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">deleteRezept</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Rezept Objekt entfernen&quot;&quot;&quot;</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">repdel</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">repdel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showRezepte&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span>
+
+    <span class="c1"># Handlungsschritte &amp; Verknüpfung löschen</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">repdel</span><span class="o">.</span><span class="n">handlungsschritte</span><span class="p">:</span>
+        <span class="n">handdel</span> <span class="o">=</span> <span class="n">handlungsschritt</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">hid</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">handdel</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+    <span class="c1"># Tags vom Rezept löschen</span>
+    <span class="n">repdel</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="c1"># Rezept löschen</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">repdel</span><span class="p">)</span>
+
+    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showRezepte&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Easy Recipe</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Modul-Quellcode</a><ul>
+  <li><a href="../app.html">app</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Urs Braun, Tom Herzberg.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

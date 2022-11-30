@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.Rezeptsammlung &#8212; Easy Recipe  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Quellcode für app.Rezeptsammlung</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">app</span>
+<span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">zutat</span><span class="p">,</span> <span class="n">rezept</span><span class="p">,</span> <span class="n">kategorie</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.sql.expression</span> <span class="kn">import</span> <span class="n">func</span>
+
+<div class="viewcode-block" id="Rezeptsammlung"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.Rezeptsammlung">[Doku]</a><span class="k">class</span> <span class="nc">Rezeptsammlung</span><span class="p">:</span>
+    <span class="n">rid</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;speichere Arrays wie Tags,vorhandene/fehlendeZutatenNamen als String, damit auf Website schöner angezeigt wird&quot;&quot;&quot;</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">bild</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_rid</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_tags</span><span class="p">,</span> <span class="n">_bild</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rid</span><span class="o">=</span><span class="n">_rid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_name</span>
+
+        <span class="n">r_tags</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">_tags</span><span class="p">:</span>
+            <span class="n">r_tags</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Tag&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
+        <span class="n">r_tags</span> <span class="o">=</span> <span class="n">r_tags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r_tags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">r_tags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bild</span> <span class="o">=</span> <span class="n">_bild</span>
+
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Rezept </span><span class="si">{}</span><span class="s1"> mit ID:</span><span class="si">{}</span><span class="s1"> Tags:</span><span class="si">{}</span><span class="s1"> Bild-URL:</span><span class="si">{}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">rid</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">bild</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rid</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">rid</span></div>
+
+
+<div class="viewcode-block" id="isVegan"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.isVegan">[Doku]</a><span class="k">def</span> <span class="nf">isVegan</span><span class="p">(</span><span class="n">rez</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">zut</span> <span class="ow">in</span> <span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">:</span>
+        <span class="n">fleischkat</span> <span class="o">=</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">kaesekat</span> <span class="o">=</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">milchkat</span> <span class="o">=</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">katzut</span> <span class="ow">in</span> <span class="n">fleischkat</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">katzut</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">zut</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">katzut</span> <span class="ow">in</span> <span class="n">kaesekat</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">katzut</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">zut</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">katzut</span> <span class="ow">in</span> <span class="n">milchkat</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">katzut</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">zut</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="isVegetarisch"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.isVegetarisch">[Doku]</a><span class="k">def</span> <span class="nf">isVegetarisch</span><span class="p">(</span><span class="n">rez</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">zut</span> <span class="ow">in</span> <span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">:</span>
+        <span class="n">fleischkat</span> <span class="o">=</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">katzut</span> <span class="ow">in</span> <span class="n">fleischkat</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">katzut</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">zut</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="isFleisch"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.isFleisch">[Doku]</a><span class="k">def</span> <span class="nf">isFleisch</span><span class="p">(</span><span class="n">rez</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">zut</span> <span class="ow">in</span> <span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">:</span>
+        <span class="n">fleischkat</span> <span class="o">=</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">katzut</span> <span class="ow">in</span> <span class="n">fleischkat</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">katzut</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">zut</span><span class="o">.</span><span class="n">hatzutat</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="isEinfach"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.isEinfach">[Doku]</a><span class="k">def</span> <span class="nf">isEinfach</span><span class="p">(</span><span class="n">rez</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;BISHER EIGENSCHAFT vegan, vegetarisch, fleisch, einfach&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="getRezeptByEigenschaft"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.getRezeptByEigenschaft">[Doku]</a><span class="k">def</span> <span class="nf">getRezeptByEigenschaft</span><span class="p">(</span><span class="n">anzahl</span><span class="p">,</span> <span class="n">eigenschaft</span><span class="p">):</span>
+    <span class="n">passendeRezepte</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">alleRez</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">rez</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span> <span class="n">alleRez</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alleRez</span><span class="p">)):</span>
+        <span class="n">bedingung</span><span class="o">=</span><span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">eigenschaft</span><span class="o">==</span><span class="s2">&quot;vegan&quot;</span><span class="p">:</span>
+            <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isVegan</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">eigenschaft</span><span class="o">==</span><span class="s2">&quot;vegetarisch&quot;</span><span class="p">:</span>
+            <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isVegetarisch</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">eigenschaft</span><span class="o">==</span><span class="s2">&quot;fleisch&quot;</span><span class="p">:</span>
+            <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isFleisch</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">eigenschaft</span><span class="o">==</span><span class="s2">&quot;einfach&quot;</span><span class="p">:</span>
+            <span class="n">bedingung</span> <span class="o">=</span> <span class="n">isEinfach</span><span class="p">(</span><span class="n">rez</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">bedingung</span><span class="p">:</span>
+            <span class="n">neuesRezept</span> <span class="o">=</span> <span class="n">Rezeptsammlung</span><span class="p">(</span><span class="n">_rid</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">_name</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_tags</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">_bild</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">bild</span><span class="p">)</span>
+            <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neuesRezept</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">passendeRezepte</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">anzahl</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">passendeRezepte</span>
+    <span class="k">return</span> <span class="n">passendeRezepte</span></div>
+
+<div class="viewcode-block" id="getRezepteByTag"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.getRezepteByTag">[Doku]</a><span class="k">def</span> <span class="nf">getRezepteByTag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="n">passendeRezepte</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">rez</span> <span class="ow">in</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_tag</span> <span class="ow">in</span> <span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_tag</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">tag</span><span class="p">:</span>
+                <span class="n">neuesRezept</span> <span class="o">=</span> <span class="n">Rezeptsammlung</span><span class="p">(</span><span class="n">_rid</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">_name</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_tags</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">_bild</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">bild</span><span class="p">)</span>
+                <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neuesRezept</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">passendeRezepte</span></div>
+
+<div class="viewcode-block" id="getRezepteByMaxZutaten"><a class="viewcode-back" href="../../app.html#app.Rezeptsammlung.getRezepteByMaxZutaten">[Doku]</a><span class="k">def</span> <span class="nf">getRezepteByMaxZutaten</span><span class="p">(</span><span class="n">anzahl</span><span class="p">):</span>
+    <span class="n">passendeRezepte</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">rez</span> <span class="ow">in</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rez</span><span class="o">.</span><span class="n">zutaten</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">anzahl</span><span class="p">:</span>
+            <span class="n">r_tags</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">rez</span><span class="o">.</span><span class="n">tags</span><span class="p">:</span>
+                <span class="n">r_tags</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="n">r_tags</span> <span class="o">=</span> <span class="n">r_tags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">neuesRezept</span> <span class="o">=</span> <span class="n">Rezeptsammlung</span><span class="p">(</span><span class="n">_rid</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">_name</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_tags</span><span class="o">=</span><span class="n">r_tags</span><span class="p">,</span> <span class="n">_bild</span><span class="o">=</span><span class="n">rez</span><span class="o">.</span><span class="n">bild</span><span class="p">)</span>
+            <span class="n">passendeRezepte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neuesRezept</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">passendeRezepte</span></div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Easy Recipe</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Modul-Quellcode</a><ul>
+  <li><a href="../app.html">app</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Urs Braun, Tom Herzberg.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

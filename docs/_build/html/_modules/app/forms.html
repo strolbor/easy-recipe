@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.forms &#8212; Easy Recipe  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Quellcode für app.forms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">wtforms</span> <span class="kn">import</span> <span class="n">SubmitField</span><span class="p">,</span> <span class="n">SelectMultipleField</span><span class="p">,</span> <span class="n">StringField</span><span class="p">,</span> <span class="n">SelectField</span><span class="p">,</span> <span class="n">TextAreaField</span>
+<span class="kn">from</span> <span class="nn">wtforms.validators</span> <span class="kn">import</span> <span class="n">DataRequired</span>
+<span class="kn">from</span> <span class="nn">flask_wtf</span> <span class="kn">import</span> <span class="n">FlaskForm</span>
+<span class="kn">from</span> <span class="nn">flask_wtf.file</span> <span class="kn">import</span> <span class="n">FileField</span>
+<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">db</span>
+<span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">zutat</span><span class="p">,</span> <span class="n">kategorie</span><span class="p">,</span> <span class="n">rezept</span>
+
+
+<div class="viewcode-block" id="d_felder"><a class="viewcode-back" href="../../app.html#app.forms.d_felder">[Doku]</a><span class="k">class</span> <span class="nc">d_felder</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Swip Swap Formular auf der Startseite &quot;&quot;&quot;</span>
+    <span class="n">zutatenListe</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="c1"># zutatenListe.append([entry.zid,entry.name])</span>
+            <span class="n">zutatenListe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="n">submitSuchen</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;Suchen&quot;</span><span class="p">)</span>
+    <span class="c1"># &quot;Neues&quot; Suchfeld, Script mit Dropdown Menü</span>
+    <span class="n">suchfeld</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Direktsuche&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">zutatenListe</span><span class="p">)</span>
+    <span class="n">sumbitAddSuchbegriff</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;Hinzufügen&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Kategorien mit Buttons für Zutaten und Stringfields für Kategorienamen</span>
+<div class="viewcode-block" id="d_felder.homepage_kategorie"><a class="viewcode-back" href="../../app.html#app.forms.d_felder.homepage_kategorie">[Doku]</a>    <span class="k">class</span> <span class="nc">homepage_kategorie</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Name der Kategorie und dazugehörige Zutaten&quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">zutaten</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_name</span><span class="p">,</span> <span class="n">_zutaten</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zutaten</span> <span class="o">=</span> <span class="n">_zutaten</span></div>
+
+    <span class="c1"># Kategorien beinhaltet Objekte der Klasse oben, jeweils ein Stringfield für Name und Array von Submitfields</span>
+    <span class="n">kategorien</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#alleZutaten = []</span>
+
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">kategorie</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">kategorieName</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">kat_zutatsubmits</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">zutats</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">bkat</span><span class="p">:</span>
+            <span class="c1"># hänge Submitliste einen Button mit der Zutat an, der beim Drücken die Zutat in Auswahl Liste addet</span>
+            <span class="n">kat_zutatsubmits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zutat</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">zutats</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="c1">#alleZutaten.append(zutats)</span>
+
+        <span class="n">kategorien</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">homepage_kategorie</span><span class="p">(</span><span class="n">kategorieName</span><span class="p">,</span> <span class="n">kat_zutatsubmits</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rezeptaendern"><a class="viewcode-back" href="../../app.html#app.forms.rezeptaendern">[Doku]</a><span class="k">class</span> <span class="nc">rezeptaendern</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Rezeptanlege Seite in der Verwaltung &quot;&quot;&quot;</span>
+    <span class="n">rezeptname</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>  <span class="c1"># des Rezepts</span>
+    <span class="n">bildupload</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">(</span><span class="s1">&#39;Bild&#39;</span><span class="p">)</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">SelectMultipleField</span><span class="p">(</span><span class="s1">&#39;Tag&#39;</span><span class="p">)</span>
+    <span class="n">handlung</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span><span class="s2">&quot;Anleitung&quot;</span><span class="p">)</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handlungschrittanlegen"><a class="viewcode-back" href="../../app.html#app.forms.handlungschrittanlegen">[Doku]</a><span class="k">class</span> <span class="nc">handlungschrittanlegen</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Handlungsschrittanzeige Seite in der Verwaltung &quot;&quot;&quot;</span>
+    <span class="n">bildupload1</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">(</span><span class="s1">&#39;Bild 1&#39;</span><span class="p">)</span>
+    <span class="n">bildupload2</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">(</span><span class="s1">&#39;Bild 2&#39;</span><span class="p">)</span>
+    <span class="n">beschreibung</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span>
+        <span class="s1">&#39;Beschreibung&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rzanlegen"><a class="viewcode-back" href="../../app.html#app.forms.rzanlegen">[Doku]</a><span class="k">class</span> <span class="nc">rzanlegen</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Erstes Formular zum Rezept auswählen&quot;&quot;&quot;</span>
+    <span class="n">rezeptpicker</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s1">&#39;Rezept Picker&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Rezept auswählen&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="verknupfungsanleger"><a class="viewcode-back" href="../../app.html#app.forms.verknupfungsanleger">[Doku]</a><span class="k">class</span> <span class="nc">verknupfungsanleger</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>  <span class="c1"># rzzutaten</span>
+    <span class="sd">&quot;&quot;&quot;Feld zum Verknüpfungen anlegen&quot;&quot;&quot;</span>
+    <span class="n">zutaten</span> <span class="o">=</span> <span class="n">SelectMultipleField</span><span class="p">()</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Einstellungen speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="zutatanlegen"><a class="viewcode-back" href="../../app.html#app.forms.zutatanlegen">[Doku]</a><span class="k">class</span> <span class="nc">zutatanlegen</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Zutat anlegen&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">einheit</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;Einheit&#39;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">bildupload</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">(</span><span class="s1">&#39;Bild&#39;</span><span class="p">)</span>
+    <span class="n">kategorie</span> <span class="o">=</span> <span class="n">SelectMultipleField</span><span class="p">(</span><span class="s2">&quot;Kategorie&quot;</span><span class="p">)</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="taganlegen"><a class="viewcode-back" href="../../app.html#app.forms.taganlegen">[Doku]</a><span class="k">class</span> <span class="nc">taganlegen</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;Name des Tags&#39;</span><span class="p">)</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="handlungverknüpfer"><a class="viewcode-back" href="../../app.html#app.forms.handlungverknüpfer">[Doku]</a><span class="k">class</span> <span class="nc">handlungverknüpfer</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s2">&quot;Position&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">handlungschritt</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Handlungschritt&quot;</span><span class="p">)</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s1">&#39;Speichern&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rezeptzutatadder"><a class="viewcode-back" href="../../app.html#app.forms.rezeptzutatadder">[Doku]</a><span class="k">class</span> <span class="nc">rezeptzutatadder</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">zutat</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Zutat auswählen&quot;</span><span class="p">)</span>
+    <span class="c1">#optionaliat = SelectField(&quot;Optionalität&quot;, choices=[&quot;Nein&quot;, &quot;Ja&quot;])</span>
+    <span class="n">menge</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s2">&quot;Menge der Zutaten&quot;</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">DataRequired</span><span class="p">()])</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;Speichern&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="rezeptanzeige"><a class="viewcode-back" href="../../app.html#app.forms.rezeptanzeige">[Doku]</a><span class="k">class</span> <span class="nc">rezeptanzeige</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">submitTest</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;Suchen&quot;</span><span class="p">)</span></div>
+    <span class="c1"># Nicht löschen</span>
+    <span class="c1"># Das heißt nur dämlich mit Test</span>
+
+
+<div class="viewcode-block" id="nutzerein"><a class="viewcode-back" href="../../app.html#app.forms.nutzerein">[Doku]</a><span class="k">class</span> <span class="nc">nutzerein</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">rname</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">)</span><span class="c1">#, validators=[DataRequired()])</span>
+    <span class="n">bildupload</span> <span class="o">=</span> <span class="n">FileField</span><span class="p">(</span><span class="s1">&#39;Bild&#39;</span><span class="p">)</span>
+    <span class="n">handlung</span> <span class="o">=</span> <span class="n">TextAreaField</span><span class="p">(</span><span class="s1">&#39;Handlungschritt&#39;</span><span class="p">)</span><span class="c1">#, validators=[DataRequired()])</span>
+    <span class="n">submit</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;Speichern&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="rezeptsammlung"><a class="viewcode-back" href="../../app.html#app.forms.rezeptsammlung">[Doku]</a><span class="k">class</span> <span class="nc">rezeptsammlung</span><span class="p">(</span><span class="n">FlaskForm</span><span class="p">):</span>
+    <span class="n">btnSuchen</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="s2">&quot;🔎&quot;</span><span class="p">)</span>
+    <span class="n">alleRezeptNamen</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">alleRezeptNamen</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">rezeptnamen</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Direktsuche&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span><span class="o">+</span><span class="n">alleRezeptNamen</span><span class="p">)</span>
+    <span class="n">rezeptkategorien</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Eigenschaft&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s2">&quot;Vegan&quot;</span><span class="p">,</span> <span class="s2">&quot;Vegetarisch&quot;</span><span class="p">,</span> <span class="s2">&quot;Einfach&quot;</span><span class="p">,</span> <span class="s2">&quot;Fleisch&quot;</span><span class="p">])</span>
+    <span class="n">maxZutaten</span> <span class="o">=</span> <span class="n">SelectField</span><span class="p">(</span><span class="s2">&quot;Maximale Zutaten&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="rezeptranking"><a class="viewcode-back" href="../../app.html#app.forms.rezeptranking">[Doku]</a><span class="k">class</span> <span class="nc">rezeptranking</span><span class="p">(</span><span class="n">rezeptsammlung</span><span class="p">):</span>
+    <span class="n">btnSort0</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Bestes Verhältnis&quot;</span><span class="p">)</span>
+    <span class="n">btnSort1</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Wenigste fehlende Zutaten&quot;</span><span class="p">)</span>
+    <span class="n">btnSort2</span> <span class="o">=</span> <span class="n">SubmitField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Meiste vorhandene Zutaten&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Easy Recipe</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Modul-Quellcode</a><ul>
+  <li><a href="../app.html">app</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Urs Braun, Tom Herzberg.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

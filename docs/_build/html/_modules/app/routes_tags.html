@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.routes_tags &#8212; Easy Recipe  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Quellcode für app.routes_tags</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">app.rezept</span> <span class="kn">import</span> <span class="n">rezept</span><span class="p">,</span><span class="n">tags</span>
+<span class="kn">from</span> <span class="nn">app.backend_helper</span> <span class="kn">import</span> <span class="n">createArrayHelper</span>
+<span class="kn">from</span> <span class="nn">app.routesbackend</span> <span class="kn">import</span> <span class="n">showclass</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask.helpers</span> <span class="kn">import</span> <span class="n">flash</span><span class="p">,</span> <span class="n">url_for</span>
+
+<span class="c1">##############</span>
+<span class="c1">#    tags   #</span>
+<span class="c1">##############</span>
+
+<span class="c1"># Um die Tags anzuzeigen</span>
+<div class="viewcode-block" id="showTags"><a class="viewcode-back" href="../../app.html#app.routes_tags.showTags">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/tags/show/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">showTags</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">showclass</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span><span class="n">tags</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;Tags&quot;</span><span class="p">,</span><span class="s2">&quot;showTags&quot;</span><span class="p">)</span></div>
+
+<span class="c1"># Tags hinzufügen</span>
+<div class="viewcode-block" id="addTags"><a class="viewcode-back" href="../../app.html#app.routes_tags.addTags">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/tags/add&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">addTags</span><span class="p">():</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">taganlegen</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="c1"># prüfen, ob Tag schon vorhanden ist</span>
+        <span class="n">isnew</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">isnew</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">newtag</span> <span class="o">=</span> <span class="n">tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">newtag</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Tag &lt;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s1">&gt; wurde erfolgreich angelegt.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fehler: Tag &lt;</span><span class="si">{</span><span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&gt; existiert schon.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;addTags&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_tag.html&#39;</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span></div>
+
+<span class="c1"># Verknüpfunganlegen</span>
+<span class="c1"># Part 1</span>
+<span class="c1"># Auswählen der Rezepte</span>
+<div class="viewcode-block" id="modifyTags"><a class="viewcode-back" href="../../app.html#app.routes_tags.modifyTags">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/tags/modify/&lt;path:ids&gt;&quot;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">modifyTags</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">taganlegen</span><span class="p">()</span>
+    <span class="n">zuTag</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">zuTag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showTags&#39;</span><span class="p">,</span><span class="n">ppage</span><span class="o">=</span><span class="n">page</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="n">zuTag</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">zuTag</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> wurde gespeichert!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;modifyTags&#39;</span><span class="p">,</span><span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">))</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">zuTag</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_tag.html&#39;</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span><span class="n">titlet</span><span class="o">=</span><span class="s2">&quot;Tag ändern&quot;</span><span class="p">)</span></div>
+
+<span class="c1"># Verknüpfunganlegen</span>
+<span class="c1"># Part 2</span>
+<span class="c1"># Tags mit dem vorgenannten Rezept verknüpfen.</span>
+<div class="viewcode-block" id="CHGrthat"><a class="viewcode-back" href="../../app.html#app.routes_tags.CHGrthat">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/tags/relationship1&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">CHGrthat</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Wir wählen zuerst eine Rezept aus um es dann zu bearbeiten&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">rzanlegen</span><span class="p">()</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">rezeptpicker</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">createArrayHelper</span><span class="p">(</span><span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">rezept</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;CHGrthat2&#39;</span><span class="p">,</span><span class="n">ids</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">rezeptpicker</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_rzpicker.html&#39;</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span><span class="n">titlet</span><span class="o">=</span><span class="s2">&quot;Verknüpfung anlegen&quot;</span><span class="p">)</span></div>
+
+<span class="c1"># Verknüpfunganlegen</span>
+<span class="c1"># Part 2a</span>
+<span class="c1"># Tags mit dem vorgenannten Rezept verknüpfen.</span>
+<div class="viewcode-block" id="CHGrthat2"><a class="viewcode-back" href="../../app.html#app.routes_tags.CHGrthat2">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/tags/relationship1/&lt;path:ids&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">CHGrthat2</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wir wählen, die Zutaten aus, die wir zum Rezept speichern wollen.&quot;&quot;&quot;</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">verknupfungsanleger</span><span class="p">()</span>
+    <span class="c1"># Alle Zutaten, die schon verknüpft sind, müssen gelöscht werden</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">zutaten</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">createArrayHelper</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">tags</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="n">auswahl</span> <span class="o">=</span> <span class="n">rezept</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">auswahl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showTags&#39;</span><span class="p">,</span><span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">validate_on_submit</span><span class="p">()</span> <span class="ow">or</span> <span class="n">form</span><span class="o">.</span><span class="n">submit</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; Hier funktioniert validate on submit nicht&quot;&quot;&quot;</span>
+        
+        <span class="n">ausgewählte</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">zutaten</span><span class="o">.</span><span class="n">data</span>
+        <span class="sd">&quot;&quot;&quot;Alle Zutaten, die man ausgewählt holen&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">ausgewählte</span><span class="p">:</span>
+            <span class="n">gettingclass</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="sd">&quot;&quot;&quot; Zielobjekt aus der entsprechen Klasse zum Adden hinzufügen holen&quot;&quot;&quot;</span>
+            <span class="n">auswahl</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gettingclass</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Gespeichert!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;CHGrthat2&#39;</span><span class="p">,</span><span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;admin_rzpickerzutat.html&#39;</span><span class="p">,</span><span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">,</span><span class="n">modus</span><span class="o">=</span><span class="s2">&quot;Tags&quot;</span><span class="p">,</span><span class="n">rezeptnamen</span><span class="o">=</span><span class="n">auswahl</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">inhalt</span><span class="o">=</span><span class="n">auswahl</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deleteTags"><a class="viewcode-back" href="../../app.html#app.routes_tags.deleteTags">[Doku]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/tags/delete/&lt;path:ids&gt;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">deleteTags</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tags Objekt entfernen&quot;&quot;&quot;</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">tagdel</span> <span class="o">=</span> <span class="n">tags</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tagdel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Tag Zugehörigkeiten löschen</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tagdel</span><span class="o">.</span><span class="n">belongs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+        <span class="c1"># Tag löschen</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">tagdel</span><span class="p">)</span>
+
+        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s1">&#39;showTags&#39;</span><span class="p">,</span><span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Easy Recipe</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Modul-Quellcode</a><ul>
+  <li><a href="../app.html">app</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Urs Braun, Tom Herzberg.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
